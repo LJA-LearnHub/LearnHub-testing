@@ -29965,48 +29965,6 @@ window.COURSES = [
             "id": "full-html-01",
             "title": "What is HTML?",
             "readTime": "5 min read"
-          },
-
-          {
-            "type": "lesson",
-            "id": "pentest-l01-02",
-            "title": "Reasons for Penetration Testing",
-            "readTime": "7 min read"
-          },
-
-          {
-            "type": "lesson",
-            "id": "pentest-l01-03",
-            "title": "Who Performs Penetration Tests?",
-            "readTime": "5 min read"
-          },
-
-          {
-            "type": "lesson",
-            "id": "pentest-l01-04",
-            "title": "The CompTIA Penetration Testing Process",
-            "readTime": "6 min read"
-          },
-
-          {
-            "type": "lesson",
-            "id": "pentest-l01-05",
-            "title": "The Cyber Kill Chain",
-            "readTime": "4 min read"
-          },
-
-          {
-            "type": "lesson",
-            "id": "pentest-l01-06",
-            "title": "Tools of the Trade",
-            "readTime": "3 min read"
-          },
-
-          {
-            "type": "lesson",
-            "id": "pentest-l01-07",
-            "title": "Summary",
-            "readTime": "3 min read"
           }
         ]
       }
