@@ -29965,8 +29965,21 @@ window.COURSES = [
             "id": "full-html-01",
             "title": "What is HTML?",
             "readTime": "5 min read"
+          },
+          {
+            "type": "lesson",
+            "id": "full-html-02",
+            "title": "HTML Elements, Tags, and Attributes",
+            "readTime": "10 min read"
+          },
+          {
+            "type": "lesson",
+            "id": "full-html-03",
+            "title": "HTML Content Elements and lists",
+            "readTime": "20 min read"
           }
-        ]
+        ],
+        
       }
     ]
   }
