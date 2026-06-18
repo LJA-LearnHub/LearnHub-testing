@@ -1,0 +1,648 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-3-network-hardware-cabling-and-physical-infrastructure">SECTION 3: Network Hardware, Cabling, and Physical Infrastructure</h1>
+<hr>
+<h2 id="3-1-network-interface-cards-nics-">3.1 Network Interface Cards (NICs)</h2>
+<p>A <strong>NIC (Network Interface Card)</strong> is the hardware that connects a device to a network. It operates at both Layer 1 (physical signaling) and Layer 2 (MAC addressing).</p>
+<p><strong>NIC functions:</strong></p>
+<ul>
+<li>Converts parallel data from the computer bus to serial data for the network</li>
+<li>Generates and detects electrical/optical/radio signals</li>
+<li>Provides a unique MAC address (burned into firmware)</li>
+<li>Handles framing, error detection (FCS)</li>
+<li>Manages access to the shared medium (CSMA/CD or CSMA/CA)</li>
+</ul>
+<p><strong>NIC types:</strong></p>
+<ul>
+<li><strong>Copper (RJ-45):</strong> 10/100/1000 BASE-T, 10GBASE-T</li>
+<li><strong>Fiber (SFP/SFP+/QSFP):</strong> SFP = 1 Gbps, SFP+ = 10 Gbps, QSFP = 40/100 Gbps</li>
+<li><strong>Wireless (Wi-Fi):</strong> 802.11a/b/g/n/ac/ax</li>
+<li><strong>PCIe NIC:</strong> Add-in card for desktop/server</li>
+<li><strong>USB NIC:</strong> Portable, plug-and-play</li>
+</ul>
+<p><strong>Auto-negotiation:</strong> NICs and switches automatically agree on speed (10/100/1000) and duplex (half/full) — IEEE 802.3u.</p>
+<p><strong>Duplex mismatch:</strong> One side set to full-duplex, other to half-duplex — causes collisions and poor performance.</p>
+<hr>
+<h2 id="3-2-ethernet-cabling-standards-copper-">3.2 Ethernet Cabling Standards (Copper)</h2>
+<h3 id="cable-categories">Cable Categories</h3>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Max Speed</th>
+<th>Max Bandwidth</th>
+<th>Max Length</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cat3</td>
+<td>10 Mbps</td>
+<td>16 MHz</td>
+<td>100m</td>
+<td>Legacy voice/data</td>
+</tr>
+<tr>
+<td>Cat5</td>
+<td>100 Mbps</td>
+<td>100 MHz</td>
+<td>100m</td>
+<td>FastEthernet</td>
+</tr>
+<tr>
+<td>Cat5e</td>
+<td>1 Gbps</td>
+<td>100 MHz</td>
+<td>100m</td>
+<td>Most widely deployed</td>
+</tr>
+<tr>
+<td>Cat6</td>
+<td>1 Gbps (10G up to 55m)</td>
+<td>250 MHz</td>
+<td>100m</td>
+<td>Better noise rejection</td>
+</tr>
+<tr>
+<td>Cat6a</td>
+<td>10 Gbps</td>
+<td>500 MHz</td>
+<td>100m</td>
+<td>Augmented, thicker</td>
+</tr>
+<tr>
+<td>Cat7</td>
+<td>10 Gbps</td>
+<td>600 MHz</td>
+<td>100m</td>
+<td>Shielded, GG45 connector</td>
+</tr>
+<tr>
+<td>Cat7a</td>
+<td>40 Gbps (short)</td>
+<td>1000 MHz</td>
+<td>100m</td>
+<td>Future-proof</td>
+</tr>
+<tr>
+<td>Cat8</td>
+<td>25/40 Gbps</td>
+<td>2000 MHz</td>
+<td>30m</td>
+<td>Datacenter only</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cable-construction">Cable Construction</h3>
+<p><strong>UTP (Unshielded Twisted Pair):</strong></p>
+<ul>
+<li>Most common type for LAN</li>
+<li>4 pairs of twisted copper wires</li>
+<li>Twisting reduces <strong>electromagnetic interference (EMI)</strong> and <strong>crosstalk</strong></li>
+<li>No shielding — susceptible to external interference</li>
+</ul>
+<p><strong>STP (Shielded Twisted Pair):</strong></p>
+<ul>
+<li>Has overall foil/braid shield around pairs</li>
+<li>Better EMI protection, used in industrial environments</li>
+<li>Requires grounding; more expensive to install</li>
+</ul>
+<p><strong>ScTP / F/UTP / S/FTP:</strong> Various shielding configurations</p>
+<ul>
+<li><strong>F/UTP:</strong> Foil overall, unshielded pairs</li>
+<li><strong>S/UTP:</strong> Braid overall, unshielded pairs</li>
+<li><strong>S/FTP:</strong> Braid overall + foil per pair (best protection)</li>
+</ul>
+<h3 id="wiring-standards-t568a-and-t568b-">Wiring Standards (T568A and T568B)</h3>
+<p>Both ends must use the <strong>same standard</strong> for straight-through cables.</p>
+<p><strong>T568B (most common in US):</strong></p>
+<pre><code>Pin <span class="hljs-number">1</span>: <span class="hljs-keyword">Orange</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">2</span>: <span class="hljs-keyword">Orange</span>
+Pin <span class="hljs-number">3</span>: <span class="hljs-keyword">Green</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">4</span>: <span class="hljs-keyword">Blue</span>
+Pin <span class="hljs-number">5</span>: <span class="hljs-keyword">Blue</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">6</span>: <span class="hljs-keyword">Green</span>
+Pin <span class="hljs-number">7</span>: <span class="hljs-keyword">Brown</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">8</span>: <span class="hljs-keyword">Brown</span>
+</code></pre><p><strong>T568A:</strong></p>
+<pre><code>Pin <span class="hljs-number">1</span>: <span class="hljs-keyword">Green</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">2</span>: <span class="hljs-keyword">Green</span>
+Pin <span class="hljs-number">3</span>: <span class="hljs-keyword">Orange</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">4</span>: <span class="hljs-keyword">Blue</span>
+Pin <span class="hljs-number">5</span>: <span class="hljs-keyword">Blue</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">6</span>: <span class="hljs-keyword">Orange</span>
+Pin <span class="hljs-number">7</span>: <span class="hljs-keyword">Brown</span>-<span class="hljs-keyword">White</span>
+Pin <span class="hljs-number">8</span>: <span class="hljs-keyword">Brown</span>
+</code></pre><p><strong>Ethernet pin usage:</strong></p>
+<ul>
+<li>Pins 1,2: Transmit (TX)</li>
+<li>Pins 3,6: Receive (RX)</li>
+<li>Pins 4,5,7,8: Unused (10/100) or used (Gigabit uses all 4 pairs)</li>
+</ul>
+<h3 id="cable-types">Cable Types</h3>
+<p><strong>Straight-through:</strong> Both ends same standard (T568A-T568A or T568B-T568B)</p>
+<ul>
+<li>Use between <strong>different</strong> device types: PC ↔ Switch, Router ↔ Switch</li>
+</ul>
+<p><strong>Crossover:</strong> One end T568A, other end T568B (crosses TX and RX)</p>
+<ul>
+<li>Use between <strong>same</strong> device types: Switch ↔ Switch, PC ↔ PC, Router ↔ Router</li>
+<li><strong>Modern switches have Auto-MDIX</strong> — auto-detect and adjust, making cable type irrelevant</li>
+</ul>
+<p><strong>Rollover (Console cable):</strong> Pin 1↔8, 2↔7, 3↔6, 4↔5 — complete reversal</p>
+<ul>
+<li>Used for Cisco console port access (RJ-45 to DB9 or USB)</li>
+<li>Also called &quot;Yost cable&quot;</li>
+</ul>
+<h3 id="rj-45-connector">RJ-45 Connector</h3>
+<ul>
+<li>8-position 8-contact (8P8C) modular connector</li>
+<li>Used for all copper Ethernet</li>
+<li><strong>Crimping:</strong> Attaching connector to cable with a crimping tool</li>
+<li><strong>Punch-down:</strong> Connecting wire to patch panel/keystone jack (110 block)</li>
+</ul>
+<hr>
+<h2 id="3-3-fiber-optic-cabling">3.3 Fiber Optic Cabling</h2>
+<p>Fiber uses <strong>light pulses</strong> instead of electrical signals. Immune to EMI, supports longer distances and higher speeds.</p>
+<h3 id="fiber-types">Fiber Types</h3>
+<p><strong>Multimode Fiber (MMF):</strong></p>
+<ul>
+<li>Larger core (50 or 62.5 micron)</li>
+<li>Multiple light paths (modes) travel simultaneously</li>
+<li>Shorter distances (up to ~2km) due to modal dispersion</li>
+<li>Less expensive, uses LED light source</li>
+<li>Orange jacket (OM1/OM2), Aqua (OM3/OM4), Lime green (OM5)</li>
+<li>Standards: OM1, OM2, OM3, OM4, OM5</li>
+</ul>
+<p><strong>Single-mode Fiber (SMF):</strong></p>
+<ul>
+<li>Very small core (8–9 micron)</li>
+<li>Single light path — no modal dispersion</li>
+<li>Much longer distances (up to 100+ km)</li>
+<li>Uses laser light source</li>
+<li>More expensive</li>
+<li>Yellow jacket (OS1, OS2)</li>
+<li>Standards: OS1 (tight buffer, indoor), OS2 (loose tube, outdoor)</li>
+</ul>
+<h3 id="multimode-fiber-standards">Multimode Fiber Standards</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Core</th>
+<th>Bandwidth</th>
+<th>10G Distance</th>
+<th>40/100G</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OM1</td>
+<td>62.5µm</td>
+<td>200 MHz·km</td>
+<td>33m</td>
+<td>—</td>
+</tr>
+<tr>
+<td>OM2</td>
+<td>50µm</td>
+<td>500 MHz·km</td>
+<td>82m</td>
+<td>—</td>
+</tr>
+<tr>
+<td>OM3</td>
+<td>50µm</td>
+<td>2000 MHz·km</td>
+<td>300m</td>
+<td>100m</td>
+</tr>
+<tr>
+<td>OM4</td>
+<td>50µm</td>
+<td>4700 MHz·km</td>
+<td>550m</td>
+<td>150m</td>
+</tr>
+<tr>
+<td>OM5</td>
+<td>50µm</td>
+<td>28000 MHz·km</td>
+<td>550m</td>
+<td>440m (SWDM)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fiber-connectors">Fiber Connectors</h3>
+<table>
+<thead>
+<tr>
+<th>Connector</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SC</strong></td>
+<td>Snap/click</td>
+<td>Square, common in datacenters</td>
+</tr>
+<tr>
+<td><strong>LC</strong></td>
+<td>Lucent/Little</td>
+<td>Half-size SC; most common in modern deployments</td>
+</tr>
+<tr>
+<td><strong>ST</strong></td>
+<td>Bayonet twist</td>
+<td>Round, older</td>
+</tr>
+<tr>
+<td><strong>FC</strong></td>
+<td>Screw-on</td>
+<td>Very stable; telecom/test equipment</td>
+</tr>
+<tr>
+<td><strong>MTP/MPO</strong></td>
+<td>Multi-fiber push-on</td>
+<td>12 or 24 fibers; used in 40G/100G</td>
+</tr>
+<tr>
+<td><strong>MTRJ</strong></td>
+<td>Duplex small form</td>
+<td>Both fibers in one connector</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Polishing types:</strong></p>
+<ul>
+<li><strong>PC (Physical Contact):</strong> Flat polish; basic return loss</li>
+<li><strong>UPC (Ultra Physical Contact):</strong> Domed polish; better return loss</li>
+<li><strong>APC (Angled Physical Contact):</strong> 8° angle; best return loss; green color</li>
+</ul>
+<p><strong>Fiber issues:</strong></p>
+<ul>
+<li><strong>Attenuation:</strong> Signal loss with distance (dB/km)</li>
+<li><strong>Modal dispersion:</strong> Different modes arrive at different times (MMF only)</li>
+<li><strong>Chromatic dispersion:</strong> Different wavelengths travel at different speeds</li>
+<li><strong>Connector dirt:</strong> #1 cause of fiber problems — clean with fiber cleaning tool</li>
+<li><strong>Bend radius:</strong> Too tight a bend → signal loss (macrobending)</li>
+<li><strong>Microbending:</strong> Tiny bends from installation stress</li>
+</ul>
+<h3 id="fiber-wavelengths">Fiber Wavelengths</h3>
+<ul>
+<li>Multimode: 850nm (short wavelength), 1300nm</li>
+<li>Single-mode: 1310nm, 1550nm</li>
+</ul>
+<p><strong>WDM (Wavelength Division Multiplexing):</strong></p>
+<ul>
+<li>Carry multiple wavelengths (colors) on one fiber</li>
+<li><strong>CWDM:</strong> Coarse WDM — up to 18 channels, wider spacing</li>
+<li><strong>DWDM:</strong> Dense WDM — up to 80+ channels, narrow spacing; used in long-haul</li>
+</ul>
+<hr>
+<h2 id="3-4-sfp-and-transceiver-modules">3.4 SFP and Transceiver Modules</h2>
+<p><strong>SFP (Small Form-factor Pluggable):</strong> Hot-swappable module providing fiber or copper interface</p>
+<ul>
+<li>SFP: 1 Gbps</li>
+<li>SFP+ (enhanced): 10 Gbps</li>
+<li>SFP28: 25 Gbps</li>
+<li>QSFP: 40 Gbps (4×10 Gbps)</li>
+<li>QSFP+: 40 Gbps</li>
+<li>QSFP28: 100 Gbps</li>
+<li>OSFP/QSFP-DD: 400 Gbps</li>
+</ul>
+<p><strong>Common SFP types:</strong></p>
+<ul>
+<li><strong>SX:</strong> Short wavelength multimode (850nm)</li>
+<li><strong>LX:</strong> Long wavelength single-mode (1310nm)</li>
+<li><strong>ZX:</strong> Extended range single-mode (1550nm)</li>
+<li><strong>BiDi:</strong> Bidirectional — TX and RX on same fiber (different wavelengths)</li>
+<li><strong>DAC (Direct Attach Copper):</strong> Short copper cable with SFP on each end (datacenter)</li>
+<li><strong>AOC (Active Optical Cable):</strong> Like DAC but fiber (longer reach)</li>
+</ul>
+<hr>
+<h2 id="3-5-coaxial-cable">3.5 Coaxial Cable</h2>
+<p><strong>Coax construction:</strong> Center conductor → insulator → braided shield → outer jacket</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>RG-6:</strong> Cable TV, satellite, DOCSIS (cable internet)</li>
+<li><strong>RG-59:</strong> Older CCTV, short runs</li>
+<li><strong>RG-8/RG-11:</strong> Thick Ethernet (10Base5), legacy</li>
+</ul>
+<p><strong>Connectors:</strong></p>
+<ul>
+<li><strong>F-connector:</strong> Cable TV and satellite (screw-on)</li>
+<li><strong>BNC:</strong> Legacy 10Base2, CCTV (bayonet)</li>
+<li><strong>N-type:</strong> Outdoor, RF equipment</li>
+</ul>
+<hr>
+<h2 id="3-6-network-devices-deep-dive">3.6 Network Devices — Deep Dive</h2>
+<h3 id="hub-layer-1-">Hub (Layer 1)</h3>
+<ul>
+<li><strong>Repeats</strong> electrical signals to all ports</li>
+<li>Creates one <strong>collision domain</strong> (all ports share bandwidth)</li>
+<li>Creates one <strong>broadcast domain</strong></li>
+<li>Half-duplex operation only</li>
+<li>No intelligence — no MAC table</li>
+<li>Obsolete — replaced by switches</li>
+<li><strong>Passive hub:</strong> Just splits/repeats signal</li>
+<li><strong>Active hub:</strong> Regenerates signal (repeater)</li>
+</ul>
+<h3 id="switch-layer-2-">Switch (Layer 2)</h3>
+<ul>
+<li>Makes forwarding decisions based on <strong>MAC addresses</strong></li>
+<li>Each port = separate <strong>collision domain</strong></li>
+<li>All ports share same <strong>broadcast domain</strong> (unless VLANs)</li>
+<li><strong>Full-duplex</strong> operation on each port</li>
+<li>Builds and maintains a <strong>MAC address table (CAM table)</strong></li>
+</ul>
+<p><strong>Switch MAC address table operations:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Process</th>
+<th>Trigger</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Learning</strong></td>
+<td>Frame received</td>
+<td>Record source MAC + port in table</td>
+</tr>
+<tr>
+<td><strong>Forwarding</strong></td>
+<td>Known unicast destination</td>
+<td>Forward only to correct port</td>
+</tr>
+<tr>
+<td><strong>Filtering</strong></td>
+<td>Source = destination port</td>
+<td>Don&#39;t forward</td>
+</tr>
+<tr>
+<td><strong>Flooding</strong></td>
+<td>Unknown unicast, multicast, broadcast</td>
+<td>Forward to all ports except source</td>
+</tr>
+<tr>
+<td><strong>Aging</strong></td>
+<td>Timer expires (default 300s)</td>
+<td>Remove stale MAC entries</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Switch forwarding methods:</strong></p>
+<ul>
+<li><strong>Store-and-forward:</strong> Receive entire frame, check FCS, then forward. Detects errors. Higher latency.</li>
+<li><strong>Cut-through:</strong> Forward after reading destination MAC. Lower latency. No error checking.<ul>
+<li><strong>Fast-forward:</strong> Forward immediately after dest MAC</li>
+<li><strong>Fragment-free:</strong> Forward after 64 bytes (avoids runts)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Port speeds and auto-negotiation:</strong></p>
+<ul>
+<li>10/100/1000 Mbps auto-negotiation (IEEE 802.3u)</li>
+<li>If one side forces speed/duplex, other auto-negotiates → duplex mismatch risk</li>
+</ul>
+<p><strong>PoE (Power over Ethernet):</strong></p>
+<ul>
+<li>Delivers electrical power over Ethernet cable</li>
+<li><strong>802.3af (PoE):</strong> 15.4W per port</li>
+<li><strong>802.3at (PoE+):</strong> 30W per port</li>
+<li><strong>802.3bt (PoE++):</strong> 60W (Type 3) or 100W (Type 4) per port</li>
+<li>Used by: IP phones, wireless APs, IP cameras, IoT devices</li>
+</ul>
+<p><strong>Managed vs Unmanaged switches:</strong></p>
+<ul>
+<li><strong>Unmanaged:</strong> Plug-and-play, no configuration, simple networks</li>
+<li><strong>Managed:</strong> Full control — VLANs, STP, port security, SNMP, QoS, port mirroring</li>
+<li><strong>Smart/Web-managed:</strong> Limited management via web GUI (between managed and unmanaged)</li>
+</ul>
+<h3 id="router-layer-3-">Router (Layer 3)</h3>
+<ul>
+<li>Routes packets between <strong>different networks</strong> using IP addresses</li>
+<li>Each interface = separate <strong>broadcast domain</strong> and <strong>collision domain</strong></li>
+<li>Maintains a <strong>routing table</strong> to determine best path</li>
+<li>Runs routing protocols (OSPF, EIGRP, BGP)</li>
+<li>Provides NAT, DHCP relay, ACLs, QoS</li>
+</ul>
+<p><strong>Router interface types:</strong></p>
+<ul>
+<li><strong>LAN interfaces:</strong> Ethernet (RJ-45 or SFP) — connects to internal networks</li>
+<li><strong>WAN interfaces:</strong> Serial (T1/E1), DSL, cellular modem, fiber</li>
+<li><strong>Loopback interfaces:</strong> Virtual, always up — used for management, BGP, OSPF</li>
+</ul>
+<p><strong>Router decision process:</strong></p>
+<ol>
+<li>Check if destination is directly connected</li>
+<li>Check routing table for most specific match (longest prefix)</li>
+<li>If no match, use default route (0.0.0.0/0)</li>
+<li>If no default, drop and send ICMP unreachable</li>
+</ol>
+<h3 id="layer-3-switch-multilayer-switch-">Layer 3 Switch (Multilayer Switch)</h3>
+<ul>
+<li>Combines switching and routing in hardware</li>
+<li>Performs routing at wire-speed (faster than traditional routers)</li>
+<li>Uses ASICs (Application-Specific Integrated Circuits)</li>
+<li>Ideal for inter-VLAN routing within a campus</li>
+<li>Also called <strong>MLS (Multilayer Switch)</strong></li>
+</ul>
+<h3 id="firewall">Firewall</h3>
+<ul>
+<li>Controls traffic based on configured rules</li>
+<li>Can operate at multiple OSI layers</li>
+</ul>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Packet filter (stateless):</strong> Rules based on IP/port/protocol only; no session tracking</li>
+<li><strong>Stateful firewall:</strong> Tracks TCP/UDP connection state; allows return traffic automatically</li>
+<li><strong>Application-layer / proxy firewall:</strong> Deep packet inspection; understands application protocols</li>
+<li><strong>NGFW (Next-Generation Firewall):</strong> IPS, URL filtering, SSL inspection, application awareness, user-based policies</li>
+<li><strong>UTM (Unified Threat Management):</strong> All-in-one appliance (firewall + IPS + AV + VPN + DLP)</li>
+</ul>
+<p><strong>Firewall zones:</strong></p>
+<ul>
+<li><strong>Inside (trusted):</strong> Internal LAN</li>
+<li><strong>Outside (untrusted):</strong> Internet</li>
+<li><strong>DMZ:</strong> Servers accessible from internet (web, email, DNS)</li>
+</ul>
+<p><strong>Firewall rule processing:</strong> Top-down, first match wins. Implicit deny at bottom.</p>
+<h3 id="access-point-ap-">Access Point (AP)</h3>
+<ul>
+<li>Provides wireless connectivity (Layer 2)</li>
+<li>Bridges wireless and wired networks</li>
+<li><strong>BSS (Basic Service Set):</strong> Single AP + its clients; BSSID = AP&#39;s MAC</li>
+<li><strong>ESS (Extended Service Set):</strong> Multiple APs, same SSID — seamless roaming</li>
+<li><strong>IBSS (Independent BSS / Ad-hoc):</strong> No AP, peer-to-peer wireless</li>
+<li><strong>Mesh:</strong> APs communicate wirelessly, one or more connect to wired network</li>
+</ul>
+<p><strong>Wireless modes:</strong></p>
+<ul>
+<li><strong>Infrastructure mode:</strong> Client connects to AP</li>
+<li><strong>Ad-hoc mode:</strong> Client-to-client direct (no AP)</li>
+<li><strong>Monitor mode:</strong> Passive capture of all frames (used by Wireshark, aircrack)</li>
+</ul>
+<h3 id="load-balancer">Load Balancer</h3>
+<ul>
+<li>Distributes traffic across multiple servers</li>
+<li><strong>Layer 4 LB:</strong> Routes based on IP/TCP/UDP port</li>
+<li><strong>Layer 7 LB (Application Delivery Controller):</strong> Routes based on HTTP headers, URL, cookies</li>
+<li><strong>Methods:</strong> Round-robin, least connections, IP hash, weighted, random</li>
+<li><strong>Health checks:</strong> Periodically test servers; remove failed servers</li>
+<li><strong>SSL offloading:</strong> Handle SSL at load balancer, HTTP to servers</li>
+<li><strong>Session persistence (sticky sessions):</strong> Route same client to same server</li>
+</ul>
+<h3 id="ids-and-ips">IDS and IPS</h3>
+<ul>
+<li><strong>IDS (Intrusion Detection System):</strong> Monitors and <strong>alerts</strong> on suspicious activity<ul>
+<li><strong>Passive:</strong> Out-of-band, receives copy of traffic (SPAN/mirror port or TAP)</li>
+<li>No impact on traffic flow if device fails</li>
+</ul>
+</li>
+<li><strong>IPS (Intrusion Prevention System):</strong> Monitors and <strong>blocks</strong> suspicious activity<ul>
+<li><strong>Inline:</strong> All traffic passes through</li>
+<li>Can cause network outage if device fails (fail-open vs fail-closed)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Detection methods:</strong></p>
+<ul>
+<li><strong>Signature-based:</strong> Matches known attack signatures; fast, low false positives, misses zero-days</li>
+<li><strong>Anomaly-based:</strong> Establishes baseline, alerts on deviations; catches unknowns, higher false positives</li>
+<li><strong>Policy-based:</strong> Alerts on policy violations</li>
+<li><strong>Heuristic/behavioral:</strong> Analyzes behavior patterns over time</li>
+</ul>
+<h3 id="proxy-server">Proxy Server</h3>
+<ul>
+<li>Acts as intermediary between clients and servers</li>
+<li><strong>Forward proxy:</strong> Client sends requests to proxy, proxy forwards to internet<ul>
+<li>Web filtering, caching, anonymization</li>
+</ul>
+</li>
+<li><strong>Reverse proxy:</strong> Internet clients connect to proxy, which forwards to internal servers<ul>
+<li>Load balancing, SSL termination, caching, hide backend</li>
+</ul>
+</li>
+</ul>
+<h3 id="content-delivery-network-cdn-">Content Delivery Network (CDN)</h3>
+<ul>
+<li>Geographically distributed servers caching content close to users</li>
+<li>Reduces latency, origin server load, and bandwidth</li>
+<li>Examples: Cloudflare, Akamai, AWS CloudFront</li>
+</ul>
+<h3 id="wlan-controller-wlc-">WLAN Controller (WLC)</h3>
+<ul>
+<li>Centrally manages multiple access points</li>
+<li><strong>Lightweight APs (LAPs):</strong> APs managed by controller (CAPWAP protocol)</li>
+<li><strong>CAPWAP (Control and Provisioning of Wireless Access Points):</strong> UDP 5246 (control), 5247 (data)</li>
+<li>Handles roaming, RF management, firmware updates, security policies</li>
+</ul>
+<h3 id="network-tap-test-access-point-">Network TAP (Test Access Point)</h3>
+<ul>
+<li>Hardware device that copies all traffic for monitoring</li>
+<li><strong>Passive TAP:</strong> No power needed, splits light/signal</li>
+<li><strong>Active TAP:</strong> Powered, regenerates signal</li>
+<li>Unlike SPAN ports — doesn&#39;t use switch CPU, captures all traffic including errors</li>
+</ul>
+<hr>
+<h2 id="3-7-cabling-infrastructure">3.7 Cabling Infrastructure</h2>
+<h3 id="structured-cabling-standards-tia-568-">Structured Cabling Standards (TIA-568)</h3>
+<p>The TIA-568 standard defines commercial building cabling.</p>
+<p><strong>Six subsystems:</strong></p>
+<ol>
+<li><strong>Entrance facility:</strong> Where service providers enter the building</li>
+<li><strong>Equipment room (ER):</strong> Central cabling hub, main servers</li>
+<li><strong>Backbone cabling (vertical):</strong> Between floors/equipment rooms; fiber</li>
+<li><strong>Telecommunications room (TR):</strong> Floor-level distribution; patch panels</li>
+<li><strong>Horizontal cabling:</strong> From TR to work area outlets; Cat5e/6/6a max 90m</li>
+<li><strong>Work area:</strong> From outlet to device; patch cord max 10m</li>
+</ol>
+<p><strong>90-10 rule:</strong> Horizontal cable max 90m + 10m for patch cords = 100m total</p>
+<h3 id="patch-panel">Patch Panel</h3>
+<ul>
+<li>Organized termination point for horizontal cabling</li>
+<li>Allows easy connection/reconnection with patch cords</li>
+<li>110-block punchdown on back, RJ-45 on front</li>
+<li>Available in 24-port, 48-port configurations</li>
+</ul>
+<h3 id="66-block-and-110-block">66-block and 110-block</h3>
+<ul>
+<li><strong>66-block:</strong> Older telephone/voice wiring standard</li>
+<li><strong>110-block:</strong> Newer, supports higher speeds; used in Cat5e+</li>
+</ul>
+<h3 id="cable-management">Cable Management</h3>
+<ul>
+<li><strong>Cable tray:</strong> Open tray for cable routing (above ceiling, under floor)</li>
+<li><strong>Conduit:</strong> Protects cables; EMT (metal) or PVC (plastic)</li>
+<li><strong>Ladder rack:</strong> Open design for heavy cable bundles</li>
+<li><strong>Cable ties / Velcro:</strong> Bundle cables</li>
+<li><strong>Labeling:</strong> Every cable, port, and device should be labeled</li>
+</ul>
+<h3 id="tools">Tools</h3>
+<ul>
+<li><strong>Crimper:</strong> Attaches RJ-45 connectors to cable</li>
+<li><strong>Punch-down tool:</strong> Connects wire to patch panel/keystone jack</li>
+<li><strong>Cable stripper:</strong> Removes cable jacket without damaging conductors</li>
+<li><strong>Tone generator + probe (Fox and Hound):</strong> Trace cables through walls</li>
+<li><strong>Cable tester:</strong> Verifies pin-out connectivity</li>
+<li><strong>Cable certifier (Fluke):</strong> Certifies cable meets standard performance (bandwidth, attenuation)</li>
+<li><strong>OTDR (Optical Time-Domain Reflectometer):</strong> Tests fiber — finds breaks, measures length</li>
+<li><strong>Light meter:</strong> Tests fiber signal strength</li>
+<li><strong>Visual fault locator (VFL):</strong> Red laser to locate fiber breaks</li>
+<li><strong>Multimeter:</strong> Tests DC/AC voltage, continuity</li>
+</ul>
+<h3 id="cable-testing-terms">Cable Testing Terms</h3>
+<ul>
+<li><strong>Attenuation:</strong> Signal loss over distance (should be &lt; maximum spec)</li>
+<li><strong>Near-end crosstalk (NEXT):</strong> Signal bleed from transmitting pair to adjacent pair (near the source)</li>
+<li><strong>Far-end crosstalk (FEXT):</strong> Crosstalk at the far end</li>
+<li><strong>Return loss:</strong> Signal reflected back from connector/cable imperfections</li>
+<li><strong>Propagation delay:</strong> Time for signal to traverse cable</li>
+<li><strong>Delay skew:</strong> Difference in propagation delay between pairs (Gigabit requires pairs arrive within 50ns)</li>
+</ul>
+<hr>
+<h2 id="3-8-data-center-infrastructure">3.8 Data Center Infrastructure</h2>
+<h3 id="rack-units-u-">Rack Units (U)</h3>
+<ul>
+<li>1U = 1.75 inches</li>
+<li>Standard rack = 42U or 48U</li>
+<li>Equipment height measured in rack units: 1U switch, 2U server, 4U chassis</li>
+</ul>
+<h3 id="power">Power</h3>
+<ul>
+<li><strong>UPS (Uninterruptible Power Supply):</strong> Battery backup; protects against outages<ul>
+<li><strong>Standby UPS:</strong> Switches to battery on failure (brief transfer time)</li>
+<li><strong>Line-interactive UPS:</strong> Conditions power, faster battery switch</li>
+<li><strong>Online/double-conversion UPS:</strong> Always on battery, no transfer time</li>
+</ul>
+</li>
+<li><strong>PDU (Power Distribution Unit):</strong> Distributes power within rack</li>
+<li><strong>ATS (Automatic Transfer Switch):</strong> Switches between power sources</li>
+<li><strong>Generator:</strong> Long-term backup power</li>
+</ul>
+<h3 id="cooling">Cooling</h3>
+<ul>
+<li><strong>CRAC (Computer Room Air Conditioner):</strong> Dedicated cooling unit</li>
+<li><strong>Hot aisle / cold aisle:</strong> Alternating rack orientations direct airflow<ul>
+<li>Cold aisle: Front of racks face each other → cold air flows in</li>
+<li>Hot aisle: Back of racks face each other → hot air exhausted</li>
+</ul>
+</li>
+<li><strong>In-row cooling:</strong> Cooling between rows of racks</li>
+<li><strong>Liquid cooling:</strong> High-density compute</li>
+</ul>
+<h3 id="structured-cabling-in-datacenter">Structured Cabling in Datacenter</h3>
+<ul>
+<li><strong>MDA (Main Distribution Area):</strong> Core switches</li>
+<li><strong>HDA (Horizontal Distribution Area):</strong> Access switches</li>
+<li><strong>EDA (Equipment Distribution Area):</strong> Servers</li>
+</ul>
+<hr>
+</body></html>

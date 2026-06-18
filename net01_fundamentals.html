@@ -1,0 +1,759 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-1-networking-fundamentals">SECTION 1: Networking Fundamentals</h1>
+<hr>
+<h2 id="1-1-what-is-a-network-">1.1 What Is a Network?</h2>
+<p>A <strong>computer network</strong> is a collection of interconnected devices (nodes) that can communicate and share resources. Networks enable file sharing, internet access, communication, centralized management, and distributed computing.</p>
+<p><strong>Key components of any network:</strong></p>
+<ul>
+<li><strong>End devices (hosts):</strong> Computers, phones, servers, printers, IoT devices</li>
+<li><strong>Intermediary devices:</strong> Routers, switches, firewalls, access points</li>
+<li><strong>Media:</strong> The physical or wireless path data travels (cables, radio waves, fiber)</li>
+<li><strong>Services:</strong> DHCP, DNS, HTTP, email — what the network provides</li>
+</ul>
+<p><strong>Network representations:</strong></p>
+<ul>
+<li><strong>Physical topology:</strong> The actual physical layout — where cables run, device locations</li>
+<li><strong>Logical topology:</strong> How data flows — IP addressing, routing paths</li>
+</ul>
+<hr>
+<h2 id="1-2-the-osi-reference-model-deep-dive-">1.2 The OSI Reference Model (Deep Dive)</h2>
+<p>The <strong>OSI (Open Systems Interconnection)</strong> model is a conceptual framework that standardizes network communication into 7 layers. It was developed by ISO in 1984. It is <strong>not</strong> a protocol itself — it is a <em>model</em> for understanding and designing networks.</p>
+<p><strong>Mnemonic (top to bottom):</strong> &quot;All People Seem To Need Data Processing&quot;<br><strong>Mnemonic (bottom to top):</strong> &quot;Please Do Not Throw Sausage Pizza Away&quot;</p>
+<hr>
+<h3 id="layer-7-application">Layer 7 — Application</h3>
+<p><strong>Function:</strong> Interface between user applications and the network. This is NOT the user application itself, but the protocols that applications use.</p>
+<p><strong>Key protocols:</strong></p>
+<ul>
+<li><strong>HTTP/HTTPS</strong> — Web browsing (ports 80/443)</li>
+<li><strong>FTP/FTPS</strong> — File transfer (ports 21/20 and 990)</li>
+<li><strong>SMTP</strong> — Sending email (ports 25/587/465)</li>
+<li><strong>POP3/IMAP</strong> — Receiving email (ports 110/995 and 143/993)</li>
+<li><strong>DNS</strong> — Name resolution (port 53)</li>
+<li><strong>DHCP</strong> — IP assignment (ports 67/68)</li>
+<li><strong>SSH</strong> — Secure remote shell (port 22)</li>
+<li><strong>Telnet</strong> — Insecure remote shell (port 23)</li>
+<li><strong>SNMP</strong> — Network management (ports 161/162)</li>
+<li><strong>NTP</strong> — Time synchronization (port 123)</li>
+<li><strong>LDAP/LDAPS</strong> — Directory services (ports 389/636)</li>
+<li><strong>RDP</strong> — Remote desktop (port 3389)</li>
+<li><strong>SIP</strong> — VoIP signaling (ports 5060/5061)</li>
+<li><strong>SMB</strong> — File sharing (port 445)</li>
+</ul>
+<p><strong>Data unit:</strong> Data</p>
+<hr>
+<h3 id="layer-6-presentation">Layer 6 — Presentation</h3>
+<p><strong>Function:</strong> Data translation, encoding, compression, and encryption/decryption. Ensures data from the application layer of one system can be read by the application layer of another.</p>
+<p><strong>Key functions:</strong></p>
+<ul>
+<li><strong>Encoding/decoding:</strong> ASCII, Unicode, EBCDIC</li>
+<li><strong>Encryption/decryption:</strong> TLS/SSL operates here</li>
+<li><strong>Compression:</strong> JPEG, MPEG, GIF compression</li>
+<li><strong>Serialization:</strong> Converting objects to transmittable format (JSON, XML)</li>
+</ul>
+<p><strong>Examples:</strong> JPEG, MPEG, TLS, SSL, ASCII, Unicode, MIME</p>
+<p><strong>Data unit:</strong> Data</p>
+<hr>
+<h3 id="layer-5-session">Layer 5 — Session</h3>
+<p><strong>Function:</strong> Establishes, manages, and terminates communication sessions between applications. Handles session checkpointing and recovery.</p>
+<p><strong>Key functions:</strong></p>
+<ul>
+<li><strong>Session establishment:</strong> Creating a dialogue between applications</li>
+<li><strong>Session maintenance:</strong> Keeping the session alive</li>
+<li><strong>Session termination:</strong> Properly closing connections</li>
+<li><strong>Dialog control:</strong> Half-duplex vs full-duplex management</li>
+<li><strong>Synchronization:</strong> Checkpoints for long data transfers</li>
+</ul>
+<p><strong>Examples:</strong> NetBIOS, RPC (Remote Procedure Call), SQL sessions, NFS, SMB sessions, PPTP</p>
+<p><strong>Data unit:</strong> Data</p>
+<hr>
+<h3 id="layer-4-transport">Layer 4 — Transport</h3>
+<p><strong>Function:</strong> End-to-end reliable (or unreliable) delivery between applications. Provides port numbering for multiplexing, segmentation, flow control, and error correction.</p>
+<p><strong>Key protocols:</strong></p>
+<ul>
+<li><p><strong>TCP (Transmission Control Protocol):</strong></p>
+<ul>
+<li>Connection-oriented — 3-way handshake (SYN, SYN-ACK, ACK)</li>
+<li>Guaranteed delivery — acknowledgments (ACKs)</li>
+<li>Ordered delivery — sequence numbers</li>
+<li>Flow control — sliding window</li>
+<li>Congestion control — slow start, congestion avoidance</li>
+<li>Error detection — checksum</li>
+<li>Use: HTTP, SSH, FTP, SMTP, IMAP</li>
+</ul>
+</li>
+<li><p><strong>UDP (User Datagram Protocol):</strong></p>
+<ul>
+<li>Connectionless — no handshake</li>
+<li>Best-effort delivery — no ACKs</li>
+<li>No ordering — datagrams may arrive out of order</li>
+<li>Fast and lightweight — low overhead</li>
+<li>Use: DNS, DHCP, streaming video/audio, VoIP, gaming, TFTP, SNMP</li>
+</ul>
+</li>
+</ul>
+<p><strong>TCP vs UDP comparison:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection</td>
+<td>3-way handshake</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Guaranteed (ACK)</td>
+<td>Best-effort</td>
+</tr>
+<tr>
+<td>Ordering</td>
+<td>Sequence numbers</td>
+<td>No guarantee</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Slower (overhead)</td>
+<td>Faster</td>
+</tr>
+<tr>
+<td>Header size</td>
+<td>20–60 bytes</td>
+<td>8 bytes</td>
+</tr>
+<tr>
+<td>Flow control</td>
+<td>Yes (window)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Error recovery</td>
+<td>Yes (retransmit)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Use case</td>
+<td>Web, email, file</td>
+<td>Streaming, DNS, VoIP</td>
+</tr>
+</tbody>
+</table>
+<p><strong>TCP 3-Way Handshake:</strong></p>
+<pre><code>Client                    Server
+  |<span class="hljs-string">------- SYN (seq=x) -------&gt;</span>|<span class="hljs-string">   "I want to connect"
+  </span>|<span class="hljs-string">&lt;-- SYN-ACK (seq=y,ack=x+1)--</span>|<span class="hljs-string">   "OK, I agree"
+  </span>|<span class="hljs-string">------- ACK (ack=y+1) ------&gt;</span>|<span class="hljs-string">   "Acknowledged"
+  </span>|<span class="hljs-string">======= DATA TRANSFER ========</span>|
+</code></pre><p><strong>TCP 4-Way Termination:</strong></p>
+<pre><code><span class="hljs-comment">Client</span>                    <span class="hljs-comment">Server</span>
+  <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">FIN</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt;<span class="hljs-comment">|</span>
+  <span class="hljs-comment">|</span>&lt;<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">ACK</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">|</span>
+  <span class="hljs-comment">|</span>&lt;<span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">FIN</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-comment">|</span>
+  <span class="hljs-comment">|</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span> <span class="hljs-comment">ACK</span> <span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span><span class="hljs-literal">-</span>&gt;<span class="hljs-comment">|</span>
+</code></pre><p><strong>TCP Header fields:</strong></p>
+<ul>
+<li>Source Port (16 bits)</li>
+<li>Destination Port (16 bits)</li>
+<li>Sequence Number (32 bits)</li>
+<li>Acknowledgment Number (32 bits)</li>
+<li>Data Offset / Flags (SYN, ACK, FIN, RST, PSH, URG)</li>
+<li>Window Size (16 bits) — flow control</li>
+<li>Checksum (16 bits)</li>
+<li>Urgent Pointer (16 bits)</li>
+</ul>
+<p><strong>TCP Flags:</strong></p>
+<ul>
+<li><strong>SYN</strong> — Synchronize (initiate connection)</li>
+<li><strong>ACK</strong> — Acknowledge</li>
+<li><strong>FIN</strong> — Finish (graceful close)</li>
+<li><strong>RST</strong> — Reset (abrupt close)</li>
+<li><strong>PSH</strong> — Push (don&#39;t buffer, deliver immediately)</li>
+<li><strong>URG</strong> — Urgent data</li>
+<li><strong>ECE</strong> — ECN Echo</li>
+<li><strong>CWR</strong> — Congestion Window Reduced</li>
+</ul>
+<p><strong>Port ranges:</strong></p>
+<ul>
+<li><strong>Well-known ports:</strong> 0–1023 (assigned by IANA, require root/admin)</li>
+<li><strong>Registered ports:</strong> 1024–49151 (registered applications)</li>
+<li><strong>Dynamic/Ephemeral ports:</strong> 49152–65535 (temporary client ports)</li>
+</ul>
+<p><strong>Data unit:</strong> Segment (TCP) / Datagram (UDP)</p>
+<hr>
+<h3 id="layer-3-network">Layer 3 — Network</h3>
+<p><strong>Function:</strong> Logical addressing and routing. Determines the best path from source to destination across multiple networks.</p>
+<p><strong>Key protocols:</strong></p>
+<ul>
+<li><strong>IPv4</strong> — 32-bit logical addressing</li>
+<li><strong>IPv6</strong> — 128-bit logical addressing</li>
+<li><strong>ICMP</strong> — Internet Control Message Protocol (ping, traceroute, errors)</li>
+<li><strong>ICMPv6</strong> — ICMP for IPv6 (includes Neighbor Discovery)</li>
+<li><strong>OSPF</strong> — Open Shortest Path First (routing protocol)</li>
+<li><strong>EIGRP</strong> — Enhanced Interior Gateway Routing Protocol</li>
+<li><strong>BGP</strong> — Border Gateway Protocol (internet routing)</li>
+<li><strong>RIP</strong> — Routing Information Protocol (legacy)</li>
+<li><strong>ARP</strong> — Address Resolution Protocol (Layer 2/3 boundary)</li>
+</ul>
+<p><strong>Devices:</strong> Routers, Layer 3 switches, firewalls</p>
+<p><strong>Key functions:</strong></p>
+<ul>
+<li>Logical addressing (IP addresses)</li>
+<li>Routing (forwarding packets)</li>
+<li>Path determination (best route)</li>
+<li>Packet fragmentation (splitting for MTU)</li>
+<li>TTL (Time to Live) — prevents infinite loops</li>
+</ul>
+<p><strong>IPv4 Packet Header:</strong></p>
+<ul>
+<li>Version (4 bits) — 4 for IPv4</li>
+<li>IHL — Internet Header Length</li>
+<li>DSCP/ECN — QoS markings</li>
+<li>Total Length</li>
+<li>Identification, Flags, Fragment Offset</li>
+<li>TTL (8 bits) — decremented at each hop; drop at 0</li>
+<li>Protocol (8 bits) — 6=TCP, 17=UDP, 1=ICMP, 89=OSPF</li>
+<li>Header Checksum</li>
+<li>Source IP (32 bits)</li>
+<li>Destination IP (32 bits)</li>
+<li>Options (variable)</li>
+</ul>
+<p><strong>Data unit:</strong> Packet</p>
+<hr>
+<h3 id="layer-2-data-link">Layer 2 — Data Link</h3>
+<p><strong>Function:</strong> Physical addressing (MAC addresses), framing, error detection on a single link. Governs access to the physical medium.</p>
+<p><strong>Sub-layers:</strong></p>
+<ul>
+<li><strong>LLC (Logical Link Control):</strong> Interface between Layer 2 and Layer 3; identifies upper-layer protocol</li>
+<li><strong>MAC (Media Access Control):</strong> Physical addressing, access control to the medium</li>
+</ul>
+<p><strong>Key protocols:</strong></p>
+<ul>
+<li><strong>Ethernet (802.3)</strong> — Wired LAN</li>
+<li><strong>Wi-Fi (802.11)</strong> — Wireless LAN</li>
+<li><strong>PPP</strong> — Point-to-Point Protocol (WAN links)</li>
+<li><strong>HDLC</strong> — High-Level Data Link Control (Cisco default serial)</li>
+<li><strong>Frame Relay</strong> — Legacy WAN (mostly obsolete)</li>
+<li><strong>ATM</strong> — Asynchronous Transfer Mode (legacy)</li>
+<li><strong>ARP</strong> — Address Resolution Protocol (maps IP to MAC)</li>
+</ul>
+<p><strong>Devices:</strong> Switches, bridges, NICs</p>
+<p><strong>MAC Addresses:</strong></p>
+<ul>
+<li>48-bit (6-byte) hardware address burned into NIC</li>
+<li>Written as hexadecimal: <code>00:1A:2B:3C:4D:5E</code></li>
+<li>First 3 bytes = OUI (Organizationally Unique Identifier) — manufacturer</li>
+<li>Last 3 bytes = Device identifier</li>
+<li><strong>Unicast:</strong> Specific device (LSB of first byte = 0)</li>
+<li><strong>Multicast:</strong> Group of devices (LSB of first byte = 1)</li>
+<li><strong>Broadcast:</strong> All devices on segment (<code>FF:FF:FF:FF:FF:FF</code>)</li>
+</ul>
+<p><strong>Ethernet Frame:</strong></p>
+<pre><code>|<span class="hljs-string"> Preamble </span>|<span class="hljs-string"> SFD </span>|<span class="hljs-string"> Dest MAC </span>|<span class="hljs-string"> Src MAC </span>|<span class="hljs-string"> EtherType/Len </span>|<span class="hljs-string"> Payload </span>|<span class="hljs-string"> FCS </span>|
+|<span class="hljs-string">  7 bytes </span>|<span class="hljs-string"> 1 B </span>|<span class="hljs-string">  6 bytes </span>|<span class="hljs-string"> 6 bytes </span>|<span class="hljs-string">    2 bytes    </span>|<span class="hljs-string"> 46-1500B</span>|<span class="hljs-string"> 4 B </span>|
+</code></pre><ul>
+<li><strong>Preamble:</strong> 10101010... — clock synchronization</li>
+<li><strong>SFD (Start Frame Delimiter):</strong> 10101011 — marks start</li>
+<li><strong>EtherType:</strong> 0x0800=IPv4, 0x0806=ARP, 0x86DD=IPv6, 0x8100=VLAN tagged</li>
+<li><strong>FCS (Frame Check Sequence):</strong> CRC error detection</li>
+</ul>
+<p><strong>Data unit:</strong> Frame</p>
+<hr>
+<h3 id="layer-1-physical">Layer 1 — Physical</h3>
+<p><strong>Function:</strong> Transmits raw bits over a physical medium. Defines electrical signals, voltages, frequencies, and connector types.</p>
+<p><strong>Key standards:</strong></p>
+<ul>
+<li><strong>Ethernet:</strong> IEEE 802.3 — defines copper and fiber physical layer</li>
+<li><strong>Wi-Fi:</strong> IEEE 802.11 — wireless physical and MAC layer</li>
+<li><strong>USB, Bluetooth, RS-232</strong></li>
+</ul>
+<p><strong>Devices:</strong> Hubs, repeaters, cables, connectors, modems (physical aspects)</p>
+<p><strong>Signal types:</strong></p>
+<ul>
+<li><strong>Digital:</strong> Discrete states (0 or 1) — used by most modern networks</li>
+<li><strong>Analog:</strong> Continuous waveform — used in DSL, cable modems</li>
+<li><strong>Optical:</strong> Light pulses in fiber — fastest, longest distance</li>
+</ul>
+<p><strong>Data unit:</strong> Bit</p>
+<p><strong>Transmission modes:</strong></p>
+<ul>
+<li><strong>Simplex:</strong> One direction only (radio broadcast)</li>
+<li><strong>Half-duplex:</strong> Both directions, not simultaneously (walkie-talkie, hub)</li>
+<li><strong>Full-duplex:</strong> Both directions simultaneously (switch, modern NICs)</li>
+</ul>
+<hr>
+<h2 id="1-3-encapsulation-and-decapsulation">1.3 Encapsulation and Decapsulation</h2>
+<p>As data moves <strong>down</strong> the OSI stack at the sender, each layer adds its own header (and sometimes trailer). This is <strong>encapsulation</strong>.</p>
+<pre><code>Application: [  DATA  ]
+Transport:   [ TCP HDR |  <span class="hljs-type">DATA</span>  ]  ← Segment
+Network:     [ IP HDR | <span class="hljs-type">TCP</span> HDR | <span class="hljs-type">DATA</span> ]  ← Packet
+Data Link:   [ ETH HDR | <span class="hljs-type">IP</span> HDR | <span class="hljs-type">TCP</span> HDR | <span class="hljs-type">DATA</span> | <span class="hljs-type">FCS</span> ]  ← Frame
+Physical:    <span class="hljs-number">01101000110101.</span>..  ← Bits
+</code></pre><p>At the receiver, each layer <strong>decapsulates</strong> (removes its header) and passes the data up.</p>
+<p><strong>Protocol Data Units (PDUs) by layer:</strong></p>
+<ul>
+<li>Layer 7/6/5: <strong>Message / Data</strong></li>
+<li>Layer 4: <strong>Segment</strong> (TCP) / <strong>Datagram</strong> (UDP)</li>
+<li>Layer 3: <strong>Packet</strong></li>
+<li>Layer 2: <strong>Frame</strong></li>
+<li>Layer 1: <strong>Bit</strong></li>
+</ul>
+<hr>
+<h2 id="1-4-the-tcp-ip-model">1.4 The TCP/IP Model</h2>
+<p>The TCP/IP model (also called the Internet model or DoD model) is the practical model used by the internet. It consolidates the OSI layers:</p>
+<table>
+<thead>
+<tr>
+<th>TCP/IP Layer</th>
+<th>OSI Equivalent</th>
+<th>Key Protocols</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>5, 6, 7</td>
+<td>HTTP, FTP, DNS, SMTP, SSH</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>4</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>3</td>
+<td>IP, ICMP, ARP</td>
+</tr>
+<tr>
+<td>Network Access</td>
+<td>1, 2</td>
+<td>Ethernet, Wi-Fi, PPP</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-5-network-communication-types">1.5 Network Communication Types</h2>
+<p><strong>Unicast:</strong> One-to-one communication. A single source sends to a single destination.</p>
+<ul>
+<li>Example: Web browser → web server</li>
+</ul>
+<p><strong>Broadcast:</strong> One-to-all communication. Sent to all devices on a network segment.</p>
+<ul>
+<li>IPv4 broadcast: <code>255.255.255.255</code> (limited) or <code>x.x.x.255</code> (directed)</li>
+<li>Layer 2 broadcast: <code>FF:FF:FF:FF:FF:FF</code></li>
+<li>IPv6 has NO broadcast — uses multicast instead</li>
+</ul>
+<p><strong>Multicast:</strong> One-to-many communication. Sent only to devices that have joined a multicast group.</p>
+<ul>
+<li>IPv4 multicast range: <code>224.0.0.0 – 239.255.255.255</code> (Class D)</li>
+<li>IPv6 multicast prefix: <code>FF00::/8</code></li>
+<li>Used by: streaming video, routing protocols (OSPF uses 224.0.0.5/6)</li>
+</ul>
+<p><strong>Anycast:</strong> One-to-nearest. Packet sent to nearest member of a group.</p>
+<ul>
+<li>Used by: IPv6, CDNs, DNS root servers</li>
+<li>Multiple servers share the same IP; routing sends to closest</li>
+</ul>
+<hr>
+<h2 id="1-6-network-bandwidth-and-throughput-concepts">1.6 Network Bandwidth and Throughput Concepts</h2>
+<p><strong>Bandwidth:</strong> Maximum theoretical data rate a medium can support (e.g., 1 Gbps Ethernet). Measured in bits per second (bps).</p>
+<p><strong>Throughput:</strong> Actual data rate achieved in practice. Always less than bandwidth due to overhead, collisions, protocol inefficiency.</p>
+<p><strong>Goodput:</strong> Useful application-level throughput. Excludes protocol headers and retransmissions.</p>
+<p><strong>Latency:</strong> Time for a packet to travel from source to destination. Measured in milliseconds (ms).</p>
+<ul>
+<li><strong>Propagation delay:</strong> Time for signal to travel the medium (speed of light)</li>
+<li><strong>Transmission delay:</strong> Time to push all bits onto the wire (packet size ÷ bandwidth)</li>
+<li><strong>Processing delay:</strong> Time for device to process packet (routing table lookup)</li>
+<li><strong>Queuing delay:</strong> Time packet waits in buffer</li>
+</ul>
+<p><strong>Jitter:</strong> Variation in latency between packets. Critical for VoIP and video.</p>
+<p><strong>RTT (Round Trip Time):</strong> Time for packet to reach destination and reply to return. What <code>ping</code> measures.</p>
+<p><strong>Bandwidth delay product:</strong> Bandwidth × Latency = How much data can be &quot;in flight&quot;</p>
+<p><strong>Speed units:</strong></p>
+<ul>
+<li>1 Kbps = 1,000 bps</li>
+<li>1 Mbps = 1,000,000 bps</li>
+<li>1 Gbps = 1,000,000,000 bps</li>
+<li>Note: Storage uses bytes (KB/MB/GB), networking uses bits (Kbps/Mbps/Gbps)</li>
+<li>1 byte = 8 bits</li>
+</ul>
+<hr>
+<h2 id="1-7-key-networking-protocols-reference">1.7 Key Networking Protocols Reference</h2>
+<h3 id="icmp-internet-control-message-protocol-">ICMP (Internet Control Message Protocol)</h3>
+<ul>
+<li>Layer 3 protocol used for error reporting and diagnostics</li>
+<li><strong>Type 0</strong> — Echo Reply (ping response)</li>
+<li><strong>Type 3</strong> — Destination Unreachable (with codes: 0=net, 1=host, 3=port, 4=fragmentation needed)</li>
+<li><strong>Type 5</strong> — Redirect</li>
+<li><strong>Type 8</strong> — Echo Request (ping)</li>
+<li><strong>Type 11</strong> — Time Exceeded (TTL expired — used by traceroute)</li>
+<li><strong>Type 12</strong> — Parameter Problem</li>
+<li>Does NOT use TCP or UDP — directly encapsulated in IP (Protocol 1)</li>
+</ul>
+<h3 id="arp-address-resolution-protocol-">ARP (Address Resolution Protocol)</h3>
+<ul>
+<li>Resolves IPv4 address → MAC address on local segment</li>
+<li><strong>ARP Request:</strong> Broadcast asking &quot;Who has IP x.x.x.x? Tell IP y.y.y.y&quot;</li>
+<li><strong>ARP Reply:</strong> Unicast response with MAC address</li>
+<li><strong>ARP Cache:</strong> Table of IP→MAC mappings (cached for efficiency)</li>
+<li><strong>Gratuitous ARP:</strong> Device announces its own IP→MAC (used for updates or attacks)</li>
+<li><strong>Proxy ARP:</strong> Router responds to ARP requests on behalf of another host</li>
+<li>ARP is IPv4 only; IPv6 uses <strong>Neighbor Discovery Protocol (NDP)</strong> with ICMPv6</li>
+</ul>
+<h3 id="ndp-neighbor-discovery-protocol-ipv6">NDP (Neighbor Discovery Protocol) — IPv6</h3>
+<ul>
+<li>Replaces ARP for IPv6</li>
+<li>Uses ICMPv6 message types:<ul>
+<li><strong>133 — Router Solicitation (RS):</strong> Hosts request router info</li>
+<li><strong>134 — Router Advertisement (RA):</strong> Routers announce prefix info</li>
+<li><strong>135 — Neighbor Solicitation (NS):</strong> Like ARP request (find MAC)</li>
+<li><strong>136 — Neighbor Advertisement (NA):</strong> Like ARP reply</li>
+<li><strong>137 — Redirect:</strong> Inform host of better next-hop</li>
+</ul>
+</li>
+</ul>
+<h3 id="dns-domain-name-system-">DNS (Domain Name System)</h3>
+<ul>
+<li>Translates domain names to IP addresses</li>
+<li>Port 53 (UDP for queries, TCP for zone transfers and large responses)</li>
+<li>Hierarchical distributed database</li>
+</ul>
+<p><strong>DNS Resolution process:</strong></p>
+<pre><code>1. Client checks local <span class="hljs-keyword">cache</span>
+<span class="hljs-number">2.</span> <span class="hljs-keyword">Client</span> queries <span class="hljs-keyword">Recursive</span> Resolver (ISP <span class="hljs-keyword">or</span> <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>)
+<span class="hljs-number">3.</span> Resolver queries Root Nameservers (<span class="hljs-number">13</span> root servers, a-m.root-servers.net)
+<span class="hljs-number">4.</span> Root refers <span class="hljs-keyword">to</span> TLD nameserver (.com, .org, .net)
+<span class="hljs-number">5.</span> TLD refers <span class="hljs-keyword">to</span> Authoritative nameserver (ns1.example.com)
+<span class="hljs-number">6.</span> Authoritative <span class="hljs-keyword">returns</span> the IP address
+<span class="hljs-number">7.</span> Resolver caches <span class="hljs-keyword">and</span> <span class="hljs-keyword">returns</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">client</span> (TTL governs <span class="hljs-keyword">cache</span> <span class="hljs-keyword">time</span>)
+</code></pre><p><strong>DNS record types:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>IPv4 address</td>
+<td>example.com → 93.184.216.34</td>
+</tr>
+<tr>
+<td>AAAA</td>
+<td>IPv6 address</td>
+<td>example.com → 2606:2800::1</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>Canonical name (alias)</td>
+<td>www → example.com</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>Mail exchanger</td>
+<td>10 mail.example.com</td>
+</tr>
+<tr>
+<td>NS</td>
+<td>Nameserver</td>
+<td>ns1.example.com</td>
+</tr>
+<tr>
+<td>PTR</td>
+<td>Reverse DNS</td>
+<td>34.216.184.93.in-addr.arpa → example.com</td>
+</tr>
+<tr>
+<td>SOA</td>
+<td>Start of Authority</td>
+<td>Zone metadata, serial, refresh</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>Text record</td>
+<td>SPF, DKIM, domain verification</td>
+</tr>
+<tr>
+<td>SRV</td>
+<td>Service locator</td>
+<td>_sip._tcp.example.com</td>
+</tr>
+<tr>
+<td>CAA</td>
+<td>CA Authorization</td>
+<td>Which CAs can issue certs</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DNS security:</strong></p>
+<ul>
+<li><strong>DNSSEC:</strong> Digitally signs DNS records to prevent spoofing</li>
+<li><strong>DoT (DNS over TLS):</strong> Encrypts DNS queries (port 853)</li>
+<li><strong>DoH (DNS over HTTPS):</strong> DNS in HTTPS (port 443)</li>
+</ul>
+<h3 id="dhcp-dynamic-host-configuration-protocol-">DHCP (Dynamic Host Configuration Protocol)</h3>
+<ul>
+<li>Automatically assigns IP configuration to clients</li>
+<li>Ports: 67 (server), 68 (client)</li>
+<li>Uses UDP broadcast</li>
+</ul>
+<p><strong>DORA Process:</strong></p>
+<pre><code><span class="hljs-built_in">Client</span> → DHCP Discover  (broadcast — <span class="hljs-string">"I need an IP"</span>)
+<span class="hljs-built_in">Server</span> → DHCP Offer     (unicast — <span class="hljs-string">"Here's an IP offer"</span>)
+<span class="hljs-built_in">Client</span> → DHCP Request   (broadcast — <span class="hljs-string">"I accept that IP"</span>)
+<span class="hljs-built_in">Server</span> → DHCP ACK       (unicast — <span class="hljs-string">"Confirmed, here's the lease"</span>)
+</code></pre><p><strong>DHCP provides:</strong></p>
+<ul>
+<li>IP address</li>
+<li>Subnet mask</li>
+<li>Default gateway</li>
+<li>DNS server(s)</li>
+<li>Lease duration</li>
+<li>WINS server (legacy)</li>
+<li>Domain name</li>
+<li>NTP server</li>
+<li>TFTP server (for PXE boot)</li>
+</ul>
+<p><strong>DHCP options (common):</strong></p>
+<ul>
+<li>Option 3: Router (default gateway)</li>
+<li>Option 6: DNS server</li>
+<li>Option 15: Domain name</li>
+<li>Option 43: Vendor-specific info</li>
+<li>Option 51: Lease time</li>
+<li>Option 53: DHCP message type</li>
+<li>Option 66: TFTP server</li>
+<li>Option 82: Relay agent info</li>
+</ul>
+<p><strong>DHCP Relay Agent:</strong> Forwards DHCP broadcasts across router boundaries. Configured with <code>ip helper-address</code> on Cisco routers.</p>
+<p><strong>DHCPv6:</strong> IPv6 equivalent</p>
+<ul>
+<li><strong>Stateful DHCPv6:</strong> Assigns full IPv6 address + info (like DHCP)</li>
+<li><strong>Stateless DHCPv6 (SLAAC+):</strong> Provides options (DNS, NTP) but not address</li>
+<li><strong>SLAAC (Stateless Address Autoconfiguration):</strong> IPv6 client generates own address from prefix</li>
+</ul>
+<hr>
+<h2 id="1-8-network-topologies">1.8 Network Topologies</h2>
+<h3 id="physical-topologies">Physical Topologies</h3>
+<p><strong>Bus:</strong></p>
+<ul>
+<li>All devices connected to a single cable (backbone)</li>
+<li>Termination resistors at each end</li>
+<li>Single point of failure — one break kills the network</li>
+<li>Cheap but not scalable; legacy (10Base2, 10Base5)</li>
+</ul>
+<p><strong>Star:</strong></p>
+<ul>
+<li>All devices connect to a central device (switch/hub)</li>
+<li>Most common modern topology</li>
+<li>Failure of central device kills network; single device failure isolated</li>
+<li>Easy to add/remove nodes</li>
+</ul>
+<p><strong>Ring:</strong></p>
+<ul>
+<li>Devices connected in a circle</li>
+<li>Data travels in one or both directions</li>
+<li>Used by: Token Ring (IEEE 802.5), SONET, FDDI</li>
+<li>Dual ring provides redundancy</li>
+</ul>
+<p><strong>Mesh:</strong></p>
+<ul>
+<li>Every device connected to every other device</li>
+<li>Full mesh: n(n-1)/2 connections needed</li>
+<li>Highly redundant, expensive, complex</li>
+<li>Used by WAN cores, internet backbone</li>
+</ul>
+<p><strong>Partial mesh:</strong></p>
+<ul>
+<li>Most nodes meshed, some not</li>
+<li>Balance of redundancy and cost</li>
+</ul>
+<p><strong>Hybrid:</strong></p>
+<ul>
+<li>Combination of topologies (e.g., star-bus, star-ring)</li>
+</ul>
+<p><strong>Tree (Hierarchical):</strong></p>
+<ul>
+<li>Layered star topology</li>
+<li>Root → Distribution → Access layers</li>
+<li>Used in enterprise campus networks</li>
+</ul>
+<h3 id="logical-topologies">Logical Topologies</h3>
+<p>How data flows, regardless of physical layout:</p>
+<ul>
+<li><strong>Logical bus:</strong> Even in physical star, hubs create logical bus (shared medium)</li>
+<li><strong>Logical ring:</strong> Token passing even in physical ring or star (Token Ring)</li>
+</ul>
+<hr>
+<h2 id="1-9-lan-wan-man-pan-and-other-network-types">1.9 LAN, WAN, MAN, PAN, and Other Network Types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Full Name</th>
+<th>Coverage</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PAN</td>
+<td>Personal Area Network</td>
+<td>~10 meters</td>
+<td>Bluetooth headset, USB</td>
+</tr>
+<tr>
+<td>LAN</td>
+<td>Local Area Network</td>
+<td>Building/campus</td>
+<td>Office network</td>
+</tr>
+<tr>
+<td>WLAN</td>
+<td>Wireless LAN</td>
+<td>Building/campus</td>
+<td>Wi-Fi</td>
+</tr>
+<tr>
+<td>CAN</td>
+<td>Campus Area Network</td>
+<td>Multiple buildings</td>
+<td>University campus</td>
+</tr>
+<tr>
+<td>MAN</td>
+<td>Metropolitan Area Network</td>
+<td>City/region</td>
+<td>City fiber ring</td>
+</tr>
+<tr>
+<td>WAN</td>
+<td>Wide Area Network</td>
+<td>Country/world</td>
+<td>Internet, MPLS</td>
+</tr>
+<tr>
+<td>SAN</td>
+<td>Storage Area Network</td>
+<td>Datacenter</td>
+<td>Fiber Channel</td>
+</tr>
+<tr>
+<td>VLAN</td>
+<td>Virtual LAN</td>
+<td>Logical (any size)</td>
+<td>Segmented switch</td>
+</tr>
+<tr>
+<td>VPN</td>
+<td>Virtual Private Network</td>
+<td>Overlay</td>
+<td>Encrypted tunnel</td>
+</tr>
+<tr>
+<td>SDWAN</td>
+<td>Software-Defined WAN</td>
+<td>WAN</td>
+<td>Centrally managed WAN</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="1-10-network-architecture-models">1.10 Network Architecture Models</h2>
+<h3 id="client-server">Client-Server</h3>
+<ul>
+<li>Centralized servers provide resources; clients request them</li>
+<li>Advantages: Centralized management, security, backups</li>
+<li>Disadvantages: Server = single point of failure, cost</li>
+<li>Examples: Web servers, file servers, email servers</li>
+</ul>
+<h3 id="peer-to-peer-p2p-">Peer-to-Peer (P2P)</h3>
+<ul>
+<li>Each device acts as both client and server</li>
+<li>No dedicated servers</li>
+<li>Advantages: Simple, cheap, no single point of failure</li>
+<li>Disadvantages: Hard to manage, decentralized security</li>
+<li>Examples: Home networks, BitTorrent, blockchain</li>
+</ul>
+<h3 id="three-tier-architecture">Three-Tier Architecture</h3>
+<ul>
+<li><strong>Access Layer:</strong> Connects end users (access switches)</li>
+<li><strong>Distribution Layer:</strong> Aggregates access layer, applies policies (routing, ACLs)</li>
+<li><strong>Core Layer:</strong> High-speed backbone, maximum performance</li>
+</ul>
+<h3 id="spine-leaf-architecture">Spine-Leaf Architecture</h3>
+<ul>
+<li>Modern datacenter design</li>
+<li><strong>Spine:</strong> High-capacity backbone switches</li>
+<li><strong>Leaf:</strong> Access switches (servers connect here)</li>
+<li>Every leaf connects to every spine (2-hop maximum)</li>
+<li>Eliminates STP, supports ECMP</li>
+</ul>
+<h3 id="software-defined-networking-sdn-">Software-Defined Networking (SDN)</h3>
+<ul>
+<li>Separates <strong>control plane</strong> (decisions) from <strong>data plane</strong> (forwarding)</li>
+<li><strong>Controller:</strong> Centralized intelligence (OpenFlow controller)</li>
+<li><strong>Southbound APIs:</strong> Controller to devices (OpenFlow, NETCONF)</li>
+<li><strong>Northbound APIs:</strong> Applications to controller (REST APIs)</li>
+<li>Benefits: Centralized management, automation, programmability</li>
+</ul>
+<hr>
+<h2 id="1-11-network-standards-bodies">1.11 Network Standards Bodies</h2>
+<table>
+<thead>
+<tr>
+<th>Organization</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IEEE</strong></td>
+<td>LAN/MAN standards (802.3 Ethernet, 802.11 Wi-Fi)</td>
+</tr>
+<tr>
+<td><strong>IETF</strong></td>
+<td>Internet protocols (RFCs for TCP/IP, HTTP, DNS)</td>
+</tr>
+<tr>
+<td><strong>IANA</strong></td>
+<td>IP address allocation, port assignments, protocol numbers</td>
+</tr>
+<tr>
+<td><strong>ARIN/RIPE/APNIC</strong></td>
+<td>Regional IP address allocation</td>
+</tr>
+<tr>
+<td><strong>ITU</strong></td>
+<td>International telecom standards</td>
+</tr>
+<tr>
+<td><strong>ISO</strong></td>
+<td>OSI model, international standards</td>
+</tr>
+<tr>
+<td><strong>TIA/EIA</strong></td>
+<td>Physical cabling standards (TIA-568)</td>
+</tr>
+<tr>
+<td><strong>ANSI</strong></td>
+<td>US national standards</td>
+</tr>
+<tr>
+<td><strong>3GPP</strong></td>
+<td>Cellular (LTE, 5G)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</body></html>

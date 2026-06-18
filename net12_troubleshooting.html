@@ -1,0 +1,998 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-12-network-troubleshooting-tools-and-methodology">SECTION 12: Network Troubleshooting Tools and Methodology</h1>
+<hr>
+<h2 id="12-1-troubleshooting-methodology">12.1 Troubleshooting Methodology</h2>
+<h3 id="comptia-7-step-method">CompTIA 7-Step Method</h3>
+<ol>
+<li><strong>Identify the problem</strong> — Gather information, question users, identify symptoms, duplicate the problem, approach multiple problems individually</li>
+<li><strong>Establish a theory of probable cause</strong> — Question the obvious; consider multiple approaches</li>
+<li><strong>Test the theory</strong> — Confirm or deny the theory; if not confirmed, re-establish a new theory</li>
+<li><strong>Establish a plan of action</strong> — Resolve the problem with minimal impact on users</li>
+<li><strong>Implement the solution or escalate</strong> — Apply fix; if unable, escalate to next tier</li>
+<li><strong>Verify full system functionality</strong> — Confirm the fix worked; implement preventive measures</li>
+<li><strong>Document findings, actions, and outcomes</strong> — Record for future reference</li>
+</ol>
+<h3 id="osi-layer-troubleshooting-approach">OSI-Layer Troubleshooting Approach</h3>
+<p><strong>Bottom-Up (Physical → Application):</strong> Start at Layer 1; good when issue seems physical or you have no clues.</p>
+<p><strong>Top-Down (Application → Physical):</strong> Start at Layer 7; good when application-specific issue.</p>
+<p><strong>Divide-and-Conquer:</strong> Start in the middle (Layer 3/4); ping tests tell you if physical and data-link are OK.</p>
+<p><strong>Follow-the-Path:</strong> Trace the path a packet takes from source to destination.</p>
+<p><strong>Compare Configurations:</strong> Compare working vs non-working device configs.</p>
+<p><strong>Swap Components:</strong> Replace suspected faulty hardware to isolate.</p>
+<h3 id="common-questions-to-ask-users">Common Questions to Ask Users</h3>
+<ul>
+<li>What exactly is the problem? (Be specific)</li>
+<li>When did it start?</li>
+<li>What changed recently? (New software, config change, hardware)</li>
+<li>Who else is affected? (One user, a department, everyone)</li>
+<li>Can you reproduce it? Is it intermittent?</li>
+<li>What have you already tried?</li>
+<li>Does it work from a different device/location?</li>
+</ul>
+<hr>
+<h2 id="12-2-command-line-troubleshooting-tools">12.2 Command-Line Troubleshooting Tools</h2>
+<h3 id="ping-basic-connectivity-test">ping — Basic Connectivity Test</h3>
+<p><code>ping</code> sends ICMP Echo Request packets and waits for ICMP Echo Reply.</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Linux</span>
+<span class="hljs-attribute">ping</span> <span class="hljs-number">8.8.8.8</span>                          <span class="hljs-comment"># Default (infinite)</span>
+ping -c <span class="hljs-number">4</span> <span class="hljs-number">8.8.8.8</span>                     <span class="hljs-comment"># Send 4 packets</span>
+ping -c <span class="hljs-number">4</span> -i <span class="hljs-number">0</span>.<span class="hljs-number">2</span> <span class="hljs-number">8.8.8.8</span>             <span class="hljs-comment"># 0.2s interval (faster)</span>
+ping -c <span class="hljs-number">100</span> -q <span class="hljs-number">8.8.8.8</span>               <span class="hljs-comment"># 100 packets, quiet output</span>
+ping -s <span class="hljs-number">1472</span> <span class="hljs-number">8.8.8.8</span>                  <span class="hljs-comment"># 1472-byte payload (1500 MTU - 28 headers)</span>
+ping -M do -s <span class="hljs-number">1472</span> <span class="hljs-number">8.8.8.8</span>           <span class="hljs-comment"># Don't fragment (path MTU discovery)</span>
+ping -t <span class="hljs-number">5</span> <span class="hljs-number">8.8.8.8</span>                     <span class="hljs-comment"># TTL=5 (traceroute-like behavior)</span>
+ping -I eth0 <span class="hljs-number">8.8.8.8</span>                  <span class="hljs-comment"># Send from specific interface</span>
+ping -<span class="hljs-number">6</span> <span class="hljs-number">2001</span>:<span class="hljs-number">4860</span>:<span class="hljs-number">4860</span>::<span class="hljs-number">8888</span>          <span class="hljs-comment"># IPv6 ping</span>
+ping6 ::<span class="hljs-number">1</span>                             <span class="hljs-comment"># IPv6 loopback</span>
+
+<span class="hljs-comment"># Windows</span>
+ping <span class="hljs-number">8.8.8.8</span>                          <span class="hljs-comment"># 4 packets by default</span>
+ping -t <span class="hljs-number">8.8.8.8</span>                       <span class="hljs-comment"># Continuous (Ctrl+C to stop)</span>
+ping -n <span class="hljs-number">10</span> <span class="hljs-number">8.8.8.8</span>                    <span class="hljs-comment"># 10 packets</span>
+ping -l <span class="hljs-number">1472</span> <span class="hljs-number">8.8.8.8</span>                  <span class="hljs-comment"># Payload size 1472</span>
+ping -f -l <span class="hljs-number">1472</span> <span class="hljs-number">8.8.8.8</span>              <span class="hljs-comment"># Don't fragment</span>
+ping -<span class="hljs-number">6</span> <span class="hljs-number">2001</span>:<span class="hljs-number">4860</span>:<span class="hljs-number">4860</span>::<span class="hljs-number">8888</span>          <span class="hljs-comment"># IPv6</span>
+
+<span class="hljs-comment"># Interpreting results</span>
+<span class="hljs-comment"># ! = Success</span>
+<span class="hljs-comment"># . = Timeout (no reply)</span>
+<span class="hljs-comment"># U = Unreachable (ICMP Unreachable received)</span>
+<span class="hljs-comment"># Request timeout  = ICMP not getting back (firewall? routing issue?)</span>
+<span class="hljs-comment"># Destination host unreachable = No route to host</span>
+<span class="hljs-comment"># TTL expired in transit = Loop or too many hops</span>
+</code></pre>
+<p><strong>Reading ping statistics:</strong></p>
+<pre><code>--- <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span> ping statistics ---
+<span class="hljs-number">4</span> packets transmitted, <span class="hljs-number">4</span> received, <span class="hljs-number">0</span>% packet loss, time <span class="hljs-number">3004</span>ms
+rtt min/avg/max/mdev = <span class="hljs-number">10.123</span>/<span class="hljs-number">11.456</span>/<span class="hljs-number">13.789</span>/<span class="hljs-number">1.234</span> ms
+
+# packet loss &gt; <span class="hljs-number">0</span>% = congestion or link issues
+# high mdev (variation) = jitter (bad for VoIP)
+# high RTT = congestion, long path, or processing delay
+</code></pre><h3 id="traceroute-tracert-path-discovery">traceroute / tracert — Path Discovery</h3>
+<p><code>traceroute</code> reveals the path packets take by sending packets with incrementing TTL values.</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Linux</span>
+<span class="hljs-attribute">traceroute</span> <span class="hljs-number">8.8.8.8</span>                    <span class="hljs-comment"># Default (UDP probes)</span>
+traceroute -I <span class="hljs-number">8.8.8.8</span>                 <span class="hljs-comment"># ICMP mode (like Windows tracert)</span>
+traceroute -T -p <span class="hljs-number">80</span> <span class="hljs-number">8.8.8.8</span>          <span class="hljs-comment"># TCP mode (port 80, bypasses some firewalls)</span>
+traceroute -n <span class="hljs-number">8.8.8.8</span>                 <span class="hljs-comment"># No hostname resolution (faster)</span>
+traceroute -m <span class="hljs-number">30</span> <span class="hljs-number">8.8.8.8</span>             <span class="hljs-comment"># Max 30 hops (default)</span>
+traceroute -w <span class="hljs-number">3</span> <span class="hljs-number">8.8.8.8</span>              <span class="hljs-comment"># 3-second timeout per hop</span>
+traceroute6 <span class="hljs-number">2001</span>:<span class="hljs-number">4860</span>:<span class="hljs-number">4860</span>::<span class="hljs-number">8888</span>     <span class="hljs-comment"># IPv6</span>
+
+<span class="hljs-comment"># Windows</span>
+tracert <span class="hljs-number">8.8.8.8</span>                       <span class="hljs-comment"># ICMP mode</span>
+tracert -d <span class="hljs-number">8.8.8.8</span>                    <span class="hljs-comment"># No DNS resolution</span>
+tracert -h <span class="hljs-number">20</span> <span class="hljs-number">8.8.8.8</span>                <span class="hljs-comment"># Max 20 hops</span>
+tracert -w <span class="hljs-number">2000</span> <span class="hljs-number">8.8.8.8</span>              <span class="hljs-comment"># 2000ms timeout</span>
+
+<span class="hljs-comment"># Interpreting output</span>
+<span class="hljs-comment"># * * * = No response from that hop (firewall drops TTL-exceeded, or no response)</span>
+<span class="hljs-comment"># High latency spike = congestion or slow link at that hop</span>
+<span class="hljs-comment"># Asymmetric path = return path different from forward path (normal but confusing)</span>
+<span class="hljs-comment"># Same IP repeated = routing loop</span>
+</code></pre>
+<h3 id="mtr-my-traceroute-combines-ping-traceroute-">MTR — My Traceroute (Combines ping + traceroute)</h3>
+<pre><code class="lang-bash"><span class="hljs-attribute">mtr</span> <span class="hljs-number">8.8.8.8</span>                           <span class="hljs-comment"># Interactive mode</span>
+mtr --report <span class="hljs-number">8.8.8.8</span>                  <span class="hljs-comment"># Report mode (collect then print)</span>
+mtr --report --report-cycles <span class="hljs-number">100</span> <span class="hljs-number">8.8.8.8</span>  <span class="hljs-comment"># 100 probes</span>
+mtr -n <span class="hljs-number">8.8.8.8</span>                        <span class="hljs-comment"># No DNS resolution</span>
+mtr --tcp -P <span class="hljs-number">80</span> <span class="hljs-number">8.8.8.8</span>              <span class="hljs-comment"># TCP mode</span>
+mtr --udp -P <span class="hljs-number">53</span> <span class="hljs-number">8.8.8.8</span>              <span class="hljs-comment"># UDP mode</span>
+
+<span class="hljs-comment"># MTR columns:</span>
+<span class="hljs-comment"># Loss% - packet loss at that hop</span>
+<span class="hljs-comment"># Snt   - packets sent</span>
+<span class="hljs-comment"># Last  - last RTT</span>
+<span class="hljs-comment"># Avg   - average RTT</span>
+<span class="hljs-comment"># Best  - best RTT</span>
+<span class="hljs-comment"># Wrst  - worst RTT</span>
+<span class="hljs-comment"># StDev - jitter (standard deviation)</span>
+
+<span class="hljs-comment"># Key insight: if loss% shows at hop 5 but hop 6 is fine → that router just</span>
+<span class="hljs-comment"># deprioritizes ICMP (not a real problem). Only worry if loss continues downstream.</span>
+</code></pre>
+<h3 id="nslookup-dig-host-dns-queries">nslookup / dig / host — DNS Queries</h3>
+<pre><code class="lang-bash"># nslookup (Windows <span class="hljs-built_in">and</span> Linux)
+nslookup example.<span class="hljs-keyword">com</span>                   # Basic A lookup
+nslookup -<span class="hljs-built_in">type</span>=MX example.<span class="hljs-keyword">com</span>         # MX records
+nslookup -<span class="hljs-built_in">type</span>=NS example.<span class="hljs-keyword">com</span>         # Name servers
+nslookup -<span class="hljs-built_in">type</span>=ANY example.<span class="hljs-keyword">com</span>        # All records
+nslookup example.<span class="hljs-keyword">com</span> <span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span>          # Use specific DNS server
+nslookup <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span>                 # Reverse lookup
+# Interactive <span class="hljs-keyword">mode</span>:
+nslookup
+&gt; <span class="hljs-keyword">set</span> <span class="hljs-built_in">type</span>=MX
+&gt; example.<span class="hljs-keyword">com</span>
+&gt; server <span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span>
+&gt; example.<span class="hljs-keyword">com</span>
+
+# <span class="hljs-keyword">dig</span> (Linux — more detail than nslookup)
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span>                        # A record
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> MX                     # MX record
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> NS                     # Name servers
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> SOA                    # SOA record
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> TXT                    # TXT records
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> ANY                    # All records
+<span class="hljs-keyword">dig</span> @<span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span> example.<span class="hljs-keyword">com</span>              # Use specific DNS server
+<span class="hljs-keyword">dig</span> +short example.<span class="hljs-keyword">com</span>                 # IP <span class="hljs-keyword">only</span> output
+<span class="hljs-keyword">dig</span> -<span class="hljs-keyword">x</span> <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span>                  # Reverse lookup
+<span class="hljs-keyword">dig</span> +trace example.<span class="hljs-keyword">com</span>                 # Full resolution trace from root
+<span class="hljs-keyword">dig</span> +nocmd +noall +answer example.<span class="hljs-keyword">com</span>  # Clean output
+<span class="hljs-keyword">dig</span> +dnssec example.<span class="hljs-keyword">com</span>               # Show DNSSEC records
+<span class="hljs-keyword">dig</span> AXFR @ns1.example.<span class="hljs-keyword">com</span> example.<span class="hljs-keyword">com</span> # Zone transfer attempt
+
+# host (simpler than <span class="hljs-keyword">dig</span>)
+host example.<span class="hljs-keyword">com</span>
+host -t MX example.<span class="hljs-keyword">com</span>
+host -t NS example.<span class="hljs-keyword">com</span>
+host -<span class="hljs-keyword">a</span> example.<span class="hljs-keyword">com</span>                    # All records
+host <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span>                    # Reverse lookup
+
+# PowerShell
+Resolve-DnsName example.<span class="hljs-keyword">com</span>
+Resolve-DnsName example.<span class="hljs-keyword">com</span> -Type MX
+Resolve-DnsName example.<span class="hljs-keyword">com</span> -Server <span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span>
+</code></pre>
+<h3 id="netstat-ss-connection-status">netstat / ss — Connection Status</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># netstat (older, still widely available)</span>
+netstat -an                            <span class="hljs-comment"># All connections (numeric)</span>
+netstat -tulnp                         <span class="hljs-comment"># TCP/UDP listening ports with process</span>
+netstat -tn                            <span class="hljs-comment"># TCP connections</span>
+netstat -un                            <span class="hljs-comment"># UDP connections</span>
+netstat -rn                            <span class="hljs-comment"># Routing table</span>
+netstat -i                             <span class="hljs-comment"># Interface statistics</span>
+netstat -<span class="hljs-keyword">s</span>                             <span class="hljs-comment"># Protocol statistics (drops, errors)</span>
+netstat -c                             <span class="hljs-comment"># Continuous output</span>
+netstat -an | <span class="hljs-keyword">grep</span> ESTABLISHED         <span class="hljs-comment"># Only established connections</span>
+netstat -an | <span class="hljs-keyword">grep</span> LISTEN              <span class="hljs-comment"># Only listening ports</span>
+netstat -an | <span class="hljs-keyword">grep</span> :<span class="hljs-number">80</span>                 <span class="hljs-comment"># Connections on port 80</span>
+
+<span class="hljs-comment"># Windows netstat</span>
+netstat -an                            <span class="hljs-comment"># All connections</span>
+netstat -b                             <span class="hljs-comment"># Show owning process/executable</span>
+netstat -o                             <span class="hljs-comment"># Show PID</span>
+netstat -r                             <span class="hljs-comment"># Routing table</span>
+netstat -e                             <span class="hljs-comment"># Ethernet statistics</span>
+netstat -<span class="hljs-keyword">s</span>                             <span class="hljs-comment"># Per-protocol statistics</span>
+
+<span class="hljs-comment"># ss (modern replacement for netstat — faster, more detail)</span>
+ss -an                                 <span class="hljs-comment"># All sockets (numeric)</span>
+ss -tulnp                              <span class="hljs-comment"># TCP/UDP listening with process</span>
+ss -tn                                 <span class="hljs-comment"># TCP connections</span>
+ss -un                                 <span class="hljs-comment"># UDP connections</span>
+ss -tp                                 <span class="hljs-comment"># TCP with process</span>
+ss -<span class="hljs-keyword">s</span>                                  <span class="hljs-comment"># Summary statistics</span>
+ss <span class="hljs-keyword">state</span> established                   <span class="hljs-comment"># Only established</span>
+ss <span class="hljs-keyword">state</span> listening                     <span class="hljs-comment"># Only listening</span>
+ss dst <span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span>                        <span class="hljs-comment"># Connections to specific IP</span>
+ss dport = :<span class="hljs-number">80</span>                        <span class="hljs-comment"># Connections to port 80</span>
+ss sport = :<span class="hljs-number">22</span>                        <span class="hljs-comment"># Connections from port 22</span>
+ss -K dst <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>               <span class="hljs-comment"># Kill connections to IP</span>
+
+<span class="hljs-comment"># Useful patterns</span>
+<span class="hljs-comment"># Find what's listening on a port</span>
+ss -tlnp | <span class="hljs-keyword">grep</span> <span class="hljs-string">':80'</span>
+netstat -tlnp | <span class="hljs-keyword">grep</span> <span class="hljs-string">':443'</span>
+
+<span class="hljs-comment"># Find connections to external IPs (potential exfil)</span>
+netstat -an | <span class="hljs-keyword">grep</span> ESTABLISHED | <span class="hljs-keyword">grep</span> -v <span class="hljs-string">"127.0.0.1\|::1\|192.168\|10\."</span>
+
+<span class="hljs-comment"># Count connections per remote IP</span>
+netstat -an | <span class="hljs-keyword">grep</span> ESTABLISHED | awk <span class="hljs-string">'{print $5}'</span> | cut -d: -f1 | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+</code></pre>
+<h3 id="ip-ifconfig-interface-configuration">ip / ifconfig — Interface Configuration</h3>
+<pre><code class="lang-bash"># Modern (<span class="hljs-built_in">ip</span> command — preferred)
+<span class="hljs-built_in">ip</span> addr show                           # All interfaces <span class="hljs-keyword">and</span> addresses
+<span class="hljs-built_in">ip</span> addr show eth0                      # Specific interface
+<span class="hljs-built_in">ip</span> link show                           # Link layer info
+<span class="hljs-built_in">ip</span> link show eth0
+<span class="hljs-built_in">ip</span> route show                          # Routing table
+<span class="hljs-built_in">ip</span> route show <span class="hljs-meta">default</span>                  # <span class="hljs-meta">Default</span> route only
+<span class="hljs-built_in">ip</span> neigh show                          # ARP/neighbor table
+<span class="hljs-built_in">ip</span> -<span class="hljs-number">6</span> addr show                        # IPv6 addresses
+<span class="hljs-built_in">ip</span> -s link show eth0                   # Interface statistics (packets, bytes, errors)
+<span class="hljs-built_in">ip</span> -s -s link show eth0               # More statistics
+
+# Configuration (temporary — lost on reboot)
+<span class="hljs-built_in">ip</span> addr <span class="hljs-keyword">add</span> <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.10</span>/<span class="hljs-number">24</span> dev eth0  # <span class="hljs-keyword">Add</span> <span class="hljs-built_in">IP</span>
+<span class="hljs-built_in">ip</span> addr del <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.10</span>/<span class="hljs-number">24</span> dev eth0  # Remove <span class="hljs-built_in">IP</span>
+<span class="hljs-built_in">ip</span> link set eth0 <span class="hljs-meta">up</span>                    # Enable interface
+<span class="hljs-built_in">ip</span> link set eth0 <span class="hljs-meta">down</span>                  # Disable interface
+<span class="hljs-built_in">ip</span> link set eth0 mtu <span class="hljs-number">1500</span>             # Set MTU
+<span class="hljs-built_in">ip</span> route <span class="hljs-keyword">add</span> <span class="hljs-meta">default</span> via <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>  # <span class="hljs-keyword">Add</span> <span class="hljs-meta">default</span> route
+<span class="hljs-built_in">ip</span> route <span class="hljs-keyword">add</span> <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span>/<span class="hljs-number">8</span> via <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.254</span>  # <span class="hljs-keyword">Add</span> static route
+<span class="hljs-built_in">ip</span> route del <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span>/<span class="hljs-number">8</span>               # Delete route
+<span class="hljs-built_in">ip</span> neigh flush dev eth0               # Clear ARP cache
+
+# ifconfig (older — still <span class="hljs-meta">common</span>)
+ifconfig                               # All interfaces
+ifconfig eth0                          # Specific interface
+ifconfig eth0 <span class="hljs-meta">up</span>                       # Enable
+ifconfig eth0 <span class="hljs-meta">down</span>                     # Disable
+ifconfig eth0 <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.10</span> netmask <span class="hljs-number">255.255</span><span class="hljs-meta">.255</span><span class="hljs-meta">.0</span>  # Set <span class="hljs-built_in">IP</span>
+
+# Windows
+ipconfig                               # Basic <span class="hljs-built_in">IP</span> info
+ipconfig /all                          # Full details (MAC, DNS, DHCP server, etc.)
+ipconfig /release                      # Release DHCP lease
+ipconfig /renew                        # Renew DHCP lease
+ipconfig /flushdns                     # Clear DNS cache
+ipconfig /displaydns                   # Show DNS cache
+ipconfig /registerdns                  # Re-register DNS
+</code></pre>
+<h3 id="arp-arp-cache-management">arp — ARP Cache Management</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># Linux</span>
+arp <span class="hljs-_">-a</span>                                 <span class="hljs-comment"># Show ARP cache (BSD format)</span>
+arp -n                                 <span class="hljs-comment"># Numeric (no hostname resolution)</span>
+ip neigh show                          <span class="hljs-comment"># Modern equivalent</span>
+arp <span class="hljs-_">-d</span> 192.168.1.100                  <span class="hljs-comment"># Delete entry</span>
+arp <span class="hljs-_">-s</span> 192.168.1.100 aa:bb:cc:dd:ee:ff  <span class="hljs-comment"># Add static entry</span>
+
+<span class="hljs-comment"># Windows</span>
+arp <span class="hljs-_">-a</span>                                 <span class="hljs-comment"># Show ARP cache</span>
+arp <span class="hljs-_">-a</span> 192.168.1.100                  <span class="hljs-comment"># Show specific entry</span>
+arp <span class="hljs-_">-d</span> 192.168.1.100                  <span class="hljs-comment"># Delete entry</span>
+arp <span class="hljs-_">-s</span> 192.168.1.100 aa-bb-cc-dd-ee-ff  <span class="hljs-comment"># Add static (note dash separator on Windows)</span>
+
+<span class="hljs-comment"># Uses</span>
+<span class="hljs-comment"># Find MAC address of known IP</span>
+arp <span class="hljs-_">-a</span> | grep 192.168.1.100
+<span class="hljs-comment"># Check for ARP poisoning (two IPs same MAC, or same IP multiple MACs)</span>
+arp <span class="hljs-_">-a</span> | awk <span class="hljs-string">'{print $4}'</span> | sort | uniq <span class="hljs-_">-d</span>    <span class="hljs-comment"># Duplicate MACs</span>
+</code></pre>
+<h3 id="route-routing-table">route — Routing Table</h3>
+<pre><code class="lang-bash"># Linux
+route -n                               # Show routing table (numeric)
+ip route show                          # Modern equivalent
+ip route get <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                  # Find route for specific destination
+
+# Adding routes (temporary)
+route add -net <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">8</span> gw <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.254</span>
+route add <span class="hljs-section">default</span> gw <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>
+
+# Windows
+route print                            # Show routing table
+route add <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> mask <span class="hljs-number">255.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.254</span>   # Add route
+route add <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> mask <span class="hljs-number">255.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.254</span> -p  # Persistent
+route delete <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>                  # Delete route
+
+# Find routing issues
+ip route get <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                  # What route will be used?
+# If this shows an unexpected interface or gateway → routing misconfiguration
+</code></pre>
+<h3 id="nc-netcat-the-swiss-army-knife">nc (netcat) — The Swiss Army Knife</h3>
+<pre><code class="lang-bash"># Test TCP port connectivity
+nc -zv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">22</span>                    # Test if port <span class="hljs-number">22</span> is open (-z = scan only)
+nc -zv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">80</span> <span class="hljs-number">443</span> <span class="hljs-number">8080</span>          # Test multiple ports
+nc -zvw <span class="hljs-number">3</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">443</span>               # <span class="hljs-number">3</span>-second timeout
+for port in <span class="hljs-number">22</span> <span class="hljs-number">80</span> <span class="hljs-number">443</span> <span class="hljs-number">3389</span>; do nc -zv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> $port <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>; done
+
+# Test UDP port
+nc -zvu <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">53</span>                   # Test UDP port <span class="hljs-number">53</span>
+
+# Banner grabbing
+echo <span class="hljs-string">""</span> | nc -nv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">80</span>         # HTTP banner
+echo <span class="hljs-string">""</span> | nc -nv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">22</span>         # SSH banner
+echo <span class="hljs-string">""</span> | nc -nv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">25</span>         # SMTP banner
+
+# Simple port listener (for testing connectivity back)
+nc -l -p <span class="hljs-number">4444</span>                          # Listen on TCP <span class="hljs-number">4444</span>
+nc -lu -p <span class="hljs-number">53</span>                           # Listen on UDP <span class="hljs-number">53</span>
+
+# File transfer
+nc -l -p <span class="hljs-number">9999</span> &gt; received_file.txt     # Receiver
+nc <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span> <span class="hljs-number">9999</span> &lt; file_to_send.txt  # Sender
+
+# Port scanning without nmap
+for port in {<span class="hljs-number">1.</span><span class="hljs-number">.1024</span>}; do
+  nc -zv <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> $port <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span> | grep -v refused
+done
+
+# Chat (quick test of two-way connectivity)
+nc -l -p <span class="hljs-number">4444</span>                          # Server side
+nc <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">4444</span>                       # Client side
+</code></pre>
+<h3 id="curl-wget-http-testing">curl / wget — HTTP Testing</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># curl</span>
+curl http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>               <span class="hljs-comment"># Basic HTTP request</span>
+curl -v http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>            <span class="hljs-comment"># Verbose (show headers)</span>
+curl -I http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>            <span class="hljs-comment"># HEAD only (headers)</span>
+curl -k https:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>           <span class="hljs-comment"># Skip SSL verification</span>
+curl -L http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>            <span class="hljs-comment"># Follow redirects</span>
+curl -o output.html http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> <span class="hljs-comment"># Save to file</span>
+curl -w <span class="hljs-string">"%{http_code}"</span> http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>  <span class="hljs-comment"># Just the status code</span>
+curl -w <span class="hljs-string">"\n%{time_total}s\n"</span> http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>  <span class="hljs-comment"># Show total time</span>
+curl --max-time <span class="hljs-number">5</span> http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>  <span class="hljs-comment"># 5-second timeout</span>
+curl -u admin:password http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>  <span class="hljs-comment"># Basic auth</span>
+curl -H <span class="hljs-string">"Host: example.com"</span> http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>  <span class="hljs-comment"># Custom host header</span>
+curl -H <span class="hljs-string">"Authorization: Bearer TOKEN"</span> http:<span class="hljs-regexp">//</span>api.example.com<span class="hljs-regexp">/v1/</span>data
+
+<span class="hljs-comment"># Test DNS resolution separately from HTTP</span>
+curl --resolve example.com:<span class="hljs-number">80</span>:<span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> http:<span class="hljs-regexp">//</span>example.com
+
+<span class="hljs-comment"># wget</span>
+wget http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>               <span class="hljs-comment"># Download to file</span>
+wget -q --spider http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>   <span class="hljs-comment"># Check URL without downloading</span>
+wget --server-response http:<span class="hljs-regexp">//</span><span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span> -O <span class="hljs-regexp">/dev/</span>null <span class="hljs-number">2</span>&gt;&amp;<span class="hljs-number">1</span>  <span class="hljs-comment"># Show response headers</span>
+</code></pre>
+<h3 id="nmap-quick-reference">nmap Quick Reference</h3>
+<pre><code class="lang-bash"># Discovery
+nmap -sn <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>              # Ping sweep (live hosts)
+nmap -Pn <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                    # Skip ping, scan anyway (host may block ICMP)
+
+# Quick scans
+nmap <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                         # Top <span class="hljs-number">1000</span> ports (SYN scan if root)
+nmap -F <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                      # Fast scan (top <span class="hljs-number">100</span> ports)
+nmap -p <span class="hljs-number">80</span>,<span class="hljs-number">443</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>              # Specific ports only
+
+# Detailed scans
+nmap -sV <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                     # Service version detection
+nmap -O <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                      # OS detection
+nmap -A <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                      # Aggressive (all detection + scripts)
+nmap -p- <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                     # All <span class="hljs-number">65535</span> ports
+
+# Show open ports only
+nmap <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> --open               # Only show open ports
+nmap <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> --open -oG - | grep <span class="hljs-string">"open"</span>  # Grepable open ports
+
+# OS and service fingerprinting
+nmap -sV --version-intensity <span class="hljs-number">9</span> -O <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>
+
+# Timing
+nmap -T4 <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>                     # Aggressive timing (fast networks)
+nmap --scan-delay <span class="hljs-number">1</span>s <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>        # Slow down (avoid rate limiting)
+
+# Script scanning
+nmap --script=<span class="hljs-section">default</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>       # Default safe scripts
+nmap --script=vuln <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>          # Vulnerability checks
+</code></pre>
+<h3 id="windows-specific-tools">Windows-Specific Tools</h3>
+<pre><code class="lang-powershell"><span class="hljs-meta"># PowerShell network commands</span>
+Test-NetConnection <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                           <span class="hljs-meta"># Basic connectivity</span>
+Test-NetConnection <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span> -Port <span class="hljs-number">443</span>                 <span class="hljs-meta"># Port test</span>
+Test-NetConnection <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span> -TraceRoute               <span class="hljs-meta"># Traceroute</span>
+Test-NetConnection <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span> -InformationLevel Detailed <span class="hljs-meta"># Full info</span>
+
+<span class="hljs-keyword">Get</span>-NetIPAddress                                      <span class="hljs-meta"># All IP addresses</span>
+<span class="hljs-keyword">Get</span>-NetIPAddress -AddressFamily IPv4                  <span class="hljs-meta"># IPv4 only</span>
+<span class="hljs-keyword">Get</span>-NetAdapter                                        <span class="hljs-meta"># Network adapters</span>
+<span class="hljs-keyword">Get</span>-NetAdapterStatistics                              <span class="hljs-meta"># Interface stats</span>
+<span class="hljs-keyword">Get</span>-NetRoute                                          <span class="hljs-meta"># Routing table</span>
+<span class="hljs-keyword">Get</span>-NetTCPConnection                                  <span class="hljs-meta"># TCP connections</span>
+<span class="hljs-keyword">Get</span>-NetTCPConnection -State Established               <span class="hljs-meta"># Established only</span>
+<span class="hljs-keyword">Get</span>-NetTCPConnection -LocalPort <span class="hljs-number">443</span>                   <span class="hljs-meta"># Port 443</span>
+<span class="hljs-keyword">Get</span>-NetUDPEndpoint                                    <span class="hljs-meta"># UDP endpoints</span>
+
+<span class="hljs-meta"># DNS</span>
+Resolve-DnsName example.com
+Clear-DnsClientCache                                  <span class="hljs-meta"># Flush DNS</span>
+<span class="hljs-keyword">Get</span>-DnsClientCache                                    <span class="hljs-meta"># View cache</span>
+
+<span class="hljs-meta"># Firewall</span>
+<span class="hljs-keyword">Get</span>-NetFirewallRule | <span class="hljs-keyword">Where</span>-<span class="hljs-built_in">Object</span> Enabled -eq <span class="hljs-literal">True</span>   <span class="hljs-meta"># Enabled rules</span>
+<span class="hljs-keyword">Get</span>-NetFirewallRule -DisplayName <span class="hljs-string">"Web*"</span>               <span class="hljs-meta"># Search by name</span>
+<span class="hljs-keyword">New</span>-NetFirewallRule -DisplayName <span class="hljs-string">"Test"</span> -Direction Inbound -Protocol TCP -LocalPort <span class="hljs-number">8080</span> -Action Allow
+
+<span class="hljs-meta"># pathping (Windows — combines ping + tracert with statistics)</span>
+pathping <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>
+pathping -n <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                                   <span class="hljs-meta"># No DNS resolution</span>
+pathping -h <span class="hljs-number">20</span> <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                               <span class="hljs-meta"># Max 20 hops</span>
+
+<span class="hljs-meta"># PsPing (Sysinternals — TCP/UDP/ICMP ping)</span>
+psping <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                                        <span class="hljs-meta"># ICMP ping</span>
+psping <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>:<span class="hljs-number">443</span>                                    <span class="hljs-meta"># TCP ping (measures TCP latency)</span>
+psping -u <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>:<span class="hljs-number">53</span>                                  <span class="hljs-meta"># UDP ping</span>
+psping -l <span class="hljs-number">1000</span> <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>                               <span class="hljs-meta"># 1000-byte payload</span>
+
+<span class="hljs-meta"># Wireshark on Windows</span>
+<span class="hljs-meta"># netsh trace (built-in packet capture)</span>
+netsh trace start capture=yes tracefile=C:\capture.etl
+<span class="hljs-meta"># Do something...</span>
+netsh trace <span class="hljs-keyword">stop</span>
+<span class="hljs-meta"># Convert ETL to pcap: Microsoft Network Monitor or Wireshark</span>
+</code></pre>
+<hr>
+<h2 id="12-3-cisco-ios-troubleshooting-commands">12.3 Cisco IOS Troubleshooting Commands</h2>
+<h3 id="general-diagnostics">General Diagnostics</h3>
+<pre><code class="lang-cisco">! Hardware <span class="hljs-keyword">and</span> <span class="hljs-built_in">system</span> info
+Router# <span class="hljs-built_in">show</span> version
+Router# <span class="hljs-built_in">show</span> inventory                  ! Physical hardware list
+Router# <span class="hljs-built_in">show</span> platform
+Router# <span class="hljs-built_in">show</span> environment                ! Temperature, power, fans
+Router# <span class="hljs-built_in">show</span> memory statistics          ! Memory usage
+Router# <span class="hljs-built_in">show</span> processes cpu              ! CPU utilization
+Router# <span class="hljs-built_in">show</span> processes cpu history      ! CPU history graph
+Router# <span class="hljs-built_in">show</span> clock                      ! System <span class="hljs-built_in">time</span>
+
+! Configuration comparison
+Router# <span class="hljs-built_in">show</span> startup-config            ! Saved config
+Router# <span class="hljs-built_in">show</span> running-config            ! Active config
+Router# <span class="hljs-built_in">show</span> running-config | section ospf  ! Filter to OSPF section
+Router# <span class="hljs-built_in">show</span> running-config interface gi0/<span class="hljs-number">0</span>  ! Specific interface config
+
+! Archive <span class="hljs-keyword">and</span> change tracking
+Router# <span class="hljs-built_in">show</span> archive <span class="hljs-built_in">log</span> config         ! Recent config changes
+</code></pre>
+<h3 id="interface-troubleshooting">Interface Troubleshooting</h3>
+<pre><code class="lang-cisco">! Quick status <span class="hljs-keyword">check</span>
+Router# <span class="hljs-keyword">show</span> ip <span class="hljs-keyword">interface</span> brief
+! <span class="hljs-keyword">Column</span> meanings:
+! <span class="hljs-keyword">Interface</span> = <span class="hljs-keyword">name</span>
+! IP-Address = configured IP (<span class="hljs-keyword">or</span> unassigned)
+! OK? = IP stack <span class="hljs-keyword">initialized</span> (usually YES)
+! Method = how IP was assigned (<span class="hljs-keyword">manual</span>/DHCP)
+! <span class="hljs-keyword">Status</span> = Layer <span class="hljs-number">1</span>: up/administratively down/down
+! Protocol = Layer <span class="hljs-number">2</span>: up/down
+
+! Detailed <span class="hljs-keyword">interface</span> info
+Router# <span class="hljs-keyword">show</span> interfaces GigabitEthernet0/<span class="hljs-number">0</span>
+! <span class="hljs-keyword">Key</span> <span class="hljs-keyword">fields</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">check</span>:
+!   GigabitEthernet0/<span class="hljs-number">0</span> <span class="hljs-keyword">is</span> up, line protocol <span class="hljs-keyword">is</span> up ← <span class="hljs-keyword">both</span> should be up
+!   Hardware is... (hardware <span class="hljs-keyword">type</span>)
+!   Internet address <span class="hljs-keyword">is</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>/<span class="hljs-number">24</span>
+!   MTU <span class="hljs-number">1500</span> <span class="hljs-keyword">bytes</span>, BW <span class="hljs-number">1000000</span> Kbit/sec, DLY <span class="hljs-number">10</span> usec
+!   <span class="hljs-keyword">Last</span> <span class="hljs-keyword">input</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">02</span>, <span class="hljs-keyword">output</span> <span class="hljs-number">00</span>:<span class="hljs-number">00</span>:<span class="hljs-number">01</span>  ← <span class="hljs-keyword">when</span> <span class="hljs-keyword">last</span> traffic seen
+!   <span class="hljs-keyword">Input</span> queue: <span class="hljs-number">0</span>/<span class="hljs-number">75</span>/<span class="hljs-number">0</span>/<span class="hljs-number">0</span> (<span class="hljs-keyword">size</span>/<span class="hljs-keyword">max</span>/drops/flushes)
+!   <span class="hljs-number">5</span> <span class="hljs-keyword">minute</span> <span class="hljs-keyword">input</span> rate <span class="hljs-number">0</span> bits/sec, <span class="hljs-number">0</span> packets/sec
+!   <span class="hljs-number">0</span> <span class="hljs-keyword">input</span> <span class="hljs-keyword">errors</span>, <span class="hljs-number">0</span> CRC, <span class="hljs-number">0</span> frame, <span class="hljs-number">0</span> overrun, <span class="hljs-number">0</span> ignored
+!   <span class="hljs-number">0</span> <span class="hljs-keyword">output</span> <span class="hljs-keyword">errors</span>, <span class="hljs-number">0</span> collisions, <span class="hljs-number">0</span> <span class="hljs-keyword">interface</span> resets
+
+! <span class="hljs-keyword">Error</span> indicators:
+!   <span class="hljs-keyword">input</span> <span class="hljs-keyword">errors</span> → CRC, frame <span class="hljs-keyword">errors</span> → bad cable, duplex mismatch
+!   <span class="hljs-keyword">output</span> drops → outbound congestion (QoS <span class="hljs-keyword">or</span> speed issue)
+!   <span class="hljs-keyword">interface</span> resets → keepalive failures, encapsulation issues
+
+Router# <span class="hljs-keyword">show</span> interfaces counters <span class="hljs-keyword">errors</span>  ! <span class="hljs-keyword">Error</span> counters <span class="hljs-keyword">for</span> all interfaces
+
+! <span class="hljs-keyword">Clear</span> counters (<span class="hljs-keyword">reset</span> <span class="hljs-keyword">statistics</span>)
+Router# <span class="hljs-keyword">clear</span> counters GigabitEthernet0/<span class="hljs-number">0</span>
+
+! CDP neighbor verification
+Router# <span class="hljs-keyword">show</span> cdp neighbors              ! Summary <span class="hljs-keyword">of</span> connected Cisco devices
+Router# <span class="hljs-keyword">show</span> cdp neighbors detail       ! <span class="hljs-keyword">Full</span> details (IPs, IOS <span class="hljs-keyword">version</span>)
+Router# <span class="hljs-keyword">show</span> cdp entry R2               ! Info about specific neighbor
+
+! LLDP (<span class="hljs-keyword">open</span> standard)
+Router# <span class="hljs-keyword">show</span> lldp neighbors
+Router# <span class="hljs-keyword">show</span> lldp neighbors detail
+</code></pre>
+<h3 id="layer-2-troubleshooting">Layer 2 Troubleshooting</h3>
+<pre><code class="lang-cisco">! ARP table
+Router<span class="hljs-meta"># show arp</span>
+Router<span class="hljs-meta"># show ip arp                    ! Same</span>
+Router<span class="hljs-meta"># show ip arp 192.168.1.100     ! Specific host</span>
+Router<span class="hljs-meta"># clear arp-cache               ! Clear ARP table</span>
+
+! MAC address table (<span class="hljs-keyword">switch</span>)
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show mac address-table</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show mac address-table dynamic                 ! Dynamic entries only</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show mac address-table vlan 10                ! Specific VLAN</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show mac address-table address aa:bb:cc:dd:ee:ff</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show mac address-table interface fa0/1        ! Entries for interface</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># clear mac address-table dynamic               ! Clear dynamic entries</span>
+
+! VLAN troubleshooting
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show vlan brief</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show vlan id 10</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show interfaces FastEthernet0/1 switchport</span>
+!   Administrative Mode: static access <span class="hljs-built_in">OR</span> trunk
+!   Operational Mode: static access <span class="hljs-built_in">OR</span> trunk
+!   Access Mode VLAN: <span class="hljs-number">10</span>
+!   Trunking Native Mode VLAN: <span class="hljs-number">1</span>
+
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show interfaces trunk</span>
+!   Port  Mode  Encapsulation  Status   Native vlan
+!   Gi0/<span class="hljs-number">1</span> on    <span class="hljs-number">802.1</span>q         trunking <span class="hljs-number">1</span>
+
+! STP troubleshooting
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show spanning-tree</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show spanning-tree vlan 10</span>
+!   Root ID: <span class="hljs-built_in">priority</span>, MAC, Cost, Port
+!   Bridge ID: <span class="hljs-built_in">priority</span>, MAC
+!   Interface Role Sts Cost Prio.Nbr <span class="hljs-built_in">Type</span>
+!   Gi0/<span class="hljs-number">1</span>   Root FWD <span class="hljs-number">4</span>    <span class="hljs-number">128.1</span>   P2p
+!   Gi0/<span class="hljs-number">2</span>   Desg FWD <span class="hljs-number">4</span>    <span class="hljs-number">128.2</span>   P2p
+!   Fa0/<span class="hljs-number">10</span>  Altn BLK <span class="hljs-number">19</span>   <span class="hljs-number">128.10</span>  P2p  ← This port is blocking
+
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show spanning-tree blockedports</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show spanning-tree inconsistentports  ! Root guard or BPDU guard issues</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show spanning-tree detail             ! Detailed info with timers</span>
+</code></pre>
+<h3 id="layer-3-troubleshooting">Layer 3 Troubleshooting</h3>
+<pre><code class="lang-cisco">! Routing table
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>             ! Route for specific destination
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route <span class="hljs-number">10</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span> <span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">255</span>.<span class="hljs-number">0</span>  ! Exact match
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route connected            ! Connected routes only
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route static              ! Static routes only
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route ospf               ! OSPF routes only
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route eigrp              ! EIGRP routes only
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route summary            ! Route count <span class="hljs-keyword">by </span>type
+
+! Test routing decision
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> route <span class="hljs-number">8</span>.<span class="hljs-number">8</span>.<span class="hljs-number">8</span>.<span class="hljs-number">8</span>            ! Which route would <span class="hljs-keyword">be </span>used?
+
+! OSPF
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf                      ! OSPF process <span class="hljs-meta">info</span>
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf neighbor            ! Neighbor table — should show FULL
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf neighbor detail     ! Detailed neighbor <span class="hljs-meta">info</span>
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf database           ! LSDB — all LSAs
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf database router    ! Type <span class="hljs-number">1</span> LSAs
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf database network   ! Type <span class="hljs-number">2</span> LSAs (DR-generated)
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf database summary   ! Type <span class="hljs-number">3</span> LSAs (ABR-generated)
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf database external  ! Type <span class="hljs-number">5</span> LSAs (redistributed)
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf interface          ! OSPF config on each interface
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> ospf interface gi0/<span class="hljs-number">0</span>    ! Specific interface
+!   Key: Hello/Dead interval, DR/<span class="hljs-keyword">BDR, </span>Cost, State
+
+! OSPF neighbor state should <span class="hljs-keyword">be </span>FULL (or <span class="hljs-number">2</span>-WAY for DROthers)
+! <span class="hljs-meta">If</span> stuck at EXSTART/EXCHANGE: MTU mismatch
+! <span class="hljs-meta">If</span> stuck at <span class="hljs-number">2</span>-WAY: DR/<span class="hljs-keyword">BDR </span>election only (DROthers are in <span class="hljs-number">2</span>-way with each other)
+! <span class="hljs-meta">If</span> stuck at LOADING: LSDB sync issue
+
+! EIGRP
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> eigrp neighbors
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> eigrp topology           ! Topology table (successor + FSs)
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> eigrp topology all-links ! All paths including those not meeting FC
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> eigrp interfaces         ! EIGRP-enabled interfaces
+<span class="hljs-symbol">Router</span># show <span class="hljs-built_in">ip</span> eigrp traffic            ! Packet counts
+
+! <span class="hljs-keyword">BGP
+</span><span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span>summary                 ! Neighbor table with state
+<span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span>                        ! Full <span class="hljs-keyword">BGP </span>table
+<span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span><span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">0</span>.<span class="hljs-number">0</span>            ! Specific prefix <span class="hljs-meta">info</span> (<span class="hljs-keyword">best </span>path shown)
+<span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span>neighbors              ! Detailed neighbor <span class="hljs-meta">info</span>
+<span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span>neighbors <span class="hljs-number">203</span>.<span class="hljs-number">0</span>.<span class="hljs-number">113</span>.<span class="hljs-number">2</span> advertised-routes
+<span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span>neighbors <span class="hljs-number">203</span>.<span class="hljs-number">0</span>.<span class="hljs-number">113</span>.<span class="hljs-number">2</span> received-routes
+<span class="hljs-symbol">Router</span># show <span class="hljs-keyword">bgp </span>neighbors <span class="hljs-number">203</span>.<span class="hljs-number">0</span>.<span class="hljs-number">113</span>.<span class="hljs-number">2</span> routes  ! Routes actually installed from this peer
+
+! <span class="hljs-keyword">BGP </span>neighbor states:
+! Idle → Active → Connect → OpenSent → OpenConfirm → Established
+! Should <span class="hljs-keyword">be </span>Established for working <span class="hljs-keyword">BGP </span>session
+</code></pre>
+<h3 id="ping-and-traceroute-cisco-">Ping and Traceroute (Cisco)</h3>
+<pre><code class="lang-cisco">! Standard ping
+Router# ping <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>
+Router# ping <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span> repeat <span class="hljs-number">100</span>      ! <span class="hljs-number">100</span> packets
+Router# ping <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span> size <span class="hljs-number">1500</span>       ! Large packet
+Router# ping <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span> timeout <span class="hljs-number">2</span>       ! <span class="hljs-number">2</span>-second timeout
+Router# ping <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span> source gi0/<span class="hljs-number">0</span>    ! From specific interface
+
+! Extended ping (interactive)
+Router# ping
+Protocol [<span class="hljs-built_in">ip</span>]: <span class="hljs-built_in">ip</span>
+Target <span class="hljs-built_in">IP</span> address: <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>
+Repeat count [<span class="hljs-number">5</span>]: <span class="hljs-number">100</span>
+Datagram size [<span class="hljs-number">100</span>]: <span class="hljs-number">1472</span>
+Timeout <span class="hljs-keyword">in</span> seconds [<span class="hljs-number">2</span>]: <span class="hljs-number">2</span>
+Extended commands [n]: y
+Source address <span class="hljs-keyword">or</span> interface: GigabitEthernet0/<span class="hljs-number">0</span>
+Type of service [<span class="hljs-number">0</span>]:
+Set DF bit <span class="hljs-keyword">in</span> <span class="hljs-built_in">IP</span> header? [no]: yes        ! <span class="hljs-keyword">Test</span> MTU
+...
+
+! Traceroute
+Router# traceroute <span class="hljs-number">8.8</span><span class="hljs-meta">.8</span><span class="hljs-meta">.8</span>
+Router# traceroute <span class="hljs-number">8.8</span><span class="hljs-meta">.8</span><span class="hljs-meta">.8</span> source Loopback0
+Router# traceroute <span class="hljs-number">8.8</span><span class="hljs-meta">.8</span><span class="hljs-meta">.8</span> probe <span class="hljs-number">5</span>       ! <span class="hljs-number">5</span> probes per hop (<span class="hljs-meta">default</span> <span class="hljs-number">3</span>)
+Router# traceroute <span class="hljs-number">8.8</span><span class="hljs-meta">.8</span><span class="hljs-meta">.8</span> ttl <span class="hljs-number">1</span> <span class="hljs-number">10</span>     ! Only show hops <span class="hljs-number">1</span>-<span class="hljs-number">10</span>
+</code></pre>
+<h3 id="debug-commands">Debug Commands</h3>
+<blockquote>
+<p>⚠️ Use debug carefully in production — can cause high CPU and console spam.</p>
+</blockquote>
+<pre><code class="lang-cisco">! Always check CPU <span class="hljs-keyword">first</span>
+Router# show processes cpu | exclude <span class="hljs-number">0.00</span>%__0.<span class="hljs-number">00</span>%__0.<span class="hljs-number">00</span>%
+
+! Limit <span class="hljs-keyword">debug</span> output (<span class="hljs-keyword">only</span> <span class="hljs-keyword">to</span> this terminal, not <span class="hljs-keyword">all</span>)
+Router# terminal monitor               ! See <span class="hljs-keyword">debug</span> <span class="hljs-keyword">on</span> vty (already <span class="hljs-keyword">on</span> <span class="hljs-keyword">if</span> console)
+Router# <span class="hljs-keyword">no</span> terminal monitor           ! Stop seeing syslog <span class="hljs-keyword">on</span> vty
+
+! OSPF debugging
+Router# <span class="hljs-keyword">debug</span> ip ospf hello            ! Hello packets
+Router# <span class="hljs-keyword">debug</span> ip ospf adj             ! Adjacency events
+Router# <span class="hljs-keyword">debug</span> ip ospf events          ! All OSPF events
+
+! EIGRP debugging
+Router# <span class="hljs-keyword">debug</span> eigrp packets           ! All EIGRP packets
+Router# <span class="hljs-keyword">debug</span> eigrp neighbors         ! Neighbor events
+Router# <span class="hljs-keyword">debug</span> ip eigrp                ! EIGRP events
+
+! Routing debugging
+Router# <span class="hljs-keyword">debug</span> ip routing              ! Route table <span class="hljs-keyword">changes</span>
+
+! NAT debugging
+Router# <span class="hljs-keyword">debug</span> ip nat                  ! NAT translations
+Router# <span class="hljs-keyword">debug</span> ip nat detailed         ! More detail
+
+! ALWAYS turn off <span class="hljs-keyword">debug</span> when done:
+Router# undebug <span class="hljs-keyword">all</span>
+Router# <span class="hljs-keyword">no</span> <span class="hljs-keyword">debug</span> <span class="hljs-keyword">all</span>
+Router# <span class="hljs-keyword">u</span> <span class="hljs-keyword">all</span>                         ! Shorthand
+</code></pre>
+<hr>
+<h2 id="12-4-common-network-problems-and-solutions">12.4 Common Network Problems and Solutions</h2>
+<h3 id="physical-layer-layer-1-issues">Physical Layer (Layer 1) Issues</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interface down/down</td>
+<td>No cable or broken cable</td>
+<td>Check cable, try different cable</td>
+</tr>
+<tr>
+<td>Interface up/down</td>
+<td>Layer 2 issue (duplex, STP)</td>
+<td>Check duplex/speed, STP</td>
+</tr>
+<tr>
+<td>Admin down</td>
+<td><code>shutdown</code> command</td>
+<td><code>no shutdown</code></td>
+</tr>
+<tr>
+<td>High CRC errors</td>
+<td>Bad cable, connector, EMI</td>
+<td>Replace cable, re-crimp connector</td>
+</tr>
+<tr>
+<td>High input errors</td>
+<td>Duplex mismatch</td>
+<td>Force same duplex on both ends</td>
+</tr>
+<tr>
+<td>Interface flapping</td>
+<td>Intermittent cable/NIC issue</td>
+<td>Check cable, NIC, SFP</td>
+</tr>
+<tr>
+<td>No link light</td>
+<td>Cable wrong, no power</td>
+<td>Check cable type, power</td>
+</tr>
+<tr>
+<td>Short range on fiber</td>
+<td>Dirty connector</td>
+<td>Clean with fiber cleaning tool</td>
+</tr>
+<tr>
+<td>No link on fiber</td>
+<td>Wrong duplex fiber (TX-TX)</td>
+<td>Flip fiber pair</td>
+</tr>
+</tbody>
+</table>
+<h3 id="layer-2-issues">Layer 2 Issues</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No communication between same subnet</td>
+<td>VLAN misconfiguration</td>
+<td>Check access VLAN on both ports</td>
+</tr>
+<tr>
+<td>Trunk not passing all VLANs</td>
+<td>Trunk allowed VLAN list</td>
+<td>Check <code>show interfaces trunk</code></td>
+</tr>
+<tr>
+<td>STP blocking needed port</td>
+<td>Wrong root bridge</td>
+<td>Adjust priority; check STP</td>
+</tr>
+<tr>
+<td>Broadcast storm</td>
+<td>Loop in network</td>
+<td>Enable STP; check for duplicate links</td>
+</tr>
+<tr>
+<td>Slow network, high CPU on switch</td>
+<td>MAC flood attack</td>
+<td>Enable port security</td>
+</tr>
+<tr>
+<td>DHCP not working</td>
+<td>Rogue DHCP or snooping issue</td>
+<td>Check DHCP snooping trust ports</td>
+</tr>
+<tr>
+<td>Native VLAN mismatch</td>
+<td>Different native VLANs on trunk</td>
+<td>Make native VLAN same on both sides</td>
+</tr>
+</tbody>
+</table>
+<h3 id="layer-3-issues">Layer 3 Issues</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can&#39;t ping default gateway</td>
+<td>No IP, wrong IP, wrong subnet</td>
+<td>Check <code>show ip int brief</code></td>
+</tr>
+<tr>
+<td>Can ping gateway, not internet</td>
+<td>No default route on router</td>
+<td>Add <code>ip route 0.0.0.0 0.0.0.0 ISP-IP</code></td>
+</tr>
+<tr>
+<td>Can&#39;t ping across routers</td>
+<td>Missing route</td>
+<td>Check routing table; add static/dynamic</td>
+</tr>
+<tr>
+<td>Routing not converging</td>
+<td>Routing protocol misconfigured</td>
+<td>Check neighbors, authentication, timers</td>
+</tr>
+<tr>
+<td>Asymmetric routing</td>
+<td>Multiple paths, different routes</td>
+<td>Check routing metrics; use route policy</td>
+</tr>
+<tr>
+<td>Duplicate IP address</td>
+<td>IP conflict</td>
+<td><code>arp -a</code> to find conflicting MAC</td>
+</tr>
+<tr>
+<td>Wrong subnet mask</td>
+<td>IP in different network</td>
+<td>Correct subnet mask on both devices</td>
+</tr>
+<tr>
+<td>OSPF not forming</td>
+<td>Area/timer/auth mismatch</td>
+<td>Check <code>show ip ospf interface</code> on both</td>
+</tr>
+<tr>
+<td>Route not in table</td>
+<td>Network statement wrong</td>
+<td>Check wildcard mask in OSPF/EIGRP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="application-layer-issues">Application Layer Issues</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely Cause</th>
+<th>Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DNS not resolving</td>
+<td>Wrong DNS server, server down</td>
+<td><code>dig @8.8.8.8 example.com</code> to test</td>
+</tr>
+<tr>
+<td>DHCP not getting IP</td>
+<td>DHCP server down, pool exhausted</td>
+<td>Check <code>show ip dhcp binding</code></td>
+</tr>
+<tr>
+<td>Can ping IP, not hostname</td>
+<td>DNS misconfiguration</td>
+<td>Check <code>/etc/resolv.conf</code> or Windows DNS</td>
+</tr>
+<tr>
+<td>Slow web browsing</td>
+<td>High latency, DNS slow</td>
+<td>Test with <code>curl -w &quot;%{time_total}&quot;</code></td>
+</tr>
+<tr>
+<td>Can connect, no data</td>
+<td>Firewall blocking return traffic</td>
+<td>Check stateful firewall rules</td>
+</tr>
+<tr>
+<td>SSH not connecting</td>
+<td>Wrong port, host-based firewall</td>
+<td><code>nc -zv host 22</code> to test</td>
+</tr>
+<tr>
+<td>Certificate errors</td>
+<td>Self-signed, expired cert</td>
+<td>Check cert expiry; add CA to trust store</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mtu-and-fragmentation-issues">MTU and Fragmentation Issues</h3>
+<pre><code class="lang-bash"><span class="hljs-meta"># Test path MTU (common issue with VPNs, tunnels, MPLS)</span>
+ping -s <span class="hljs-number">1472</span> -M <span class="hljs-keyword">do</span> <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>   # Linux (<span class="hljs-number">1472</span> + <span class="hljs-number">28</span> header = <span class="hljs-number">1500</span>)
+ping -l <span class="hljs-number">1472</span> -f <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>      # Windows
+
+<span class="hljs-meta"># If 1472 fails, try smaller:</span>
+ping -s <span class="hljs-number">1400</span> -M <span class="hljs-keyword">do</span> <span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>   # Still <span class="hljs-number">1500</span> MTU? No — works → MTU between <span class="hljs-number">1428</span><span class="hljs-number">-1500</span>
+
+<span class="hljs-meta"># Binary search for MTU</span>
+<span class="hljs-meta"># Start: 1472 (fail) → 1400 (fail) → 1200 (pass) → 1300 (pass) → 1350 (pass) → 1400 (fail) → 1380 ...</span>
+
+<span class="hljs-meta"># Common MTU values:</span>
+<span class="hljs-meta"># 1500 = Standard Ethernet</span>
+<span class="hljs-meta"># 1480 = PPPoE (1500 - 8 byte PPPoE header - 20 byte IP - 8 byte UDP = ~1440 for VPN)</span>
+<span class="hljs-meta"># 1440 = Standard VPN over Ethernet</span>
+<span class="hljs-meta"># 1400 = Double encapsulation (VPN over PPPoE)</span>
+<span class="hljs-meta"># 9000 = Jumbo frames (datacenter)</span>
+
+<span class="hljs-meta"># On Cisco router, set MTU</span>
+Router(config-<span class="hljs-keyword">if</span>)# ip mtu <span class="hljs-number">1400</span>                ! IP MTU (fragmentation threshold)
+Router(config-<span class="hljs-keyword">if</span>)# mtu <span class="hljs-number">1500</span>                   ! Physical MTU
+
+<span class="hljs-meta"># TCP MSS clamping (prevents TCP black hole — fragments TCP at SYN)</span>
+Router(config-<span class="hljs-keyword">if</span>)# ip tcp adjust-mss <span class="hljs-number">1452</span>     ! Sets TCP MSS to avoid fragmentation
+</code></pre>
+<hr>
+<h2 id="12-5-network-performance-analysis">12.5 Network Performance Analysis</h2>
+<h3 id="bandwidth-testing">Bandwidth Testing</h3>
+<pre><code class="lang-bash"># iperf3 — measure bandwidth between two hosts
+# Server side:
+iperf3 -s                              # Listen on port <span class="hljs-number">5201</span>
+
+# Client side:
+iperf3 -c <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span>               # TCP bandwidth <span class="hljs-keyword">test</span>
+iperf3 -c <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span> -t <span class="hljs-number">30</span>         # <span class="hljs-number">30</span>-second <span class="hljs-keyword">test</span>
+iperf3 -c <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span> -P <span class="hljs-number">4</span>         # <span class="hljs-number">4</span> parallel streams (saturate link)
+iperf3 -c <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span> -u -b 100M  # UDP <span class="hljs-keyword">test</span> <span class="hljs-meta">at</span> <span class="hljs-number">100</span> Mbps
+iperf3 -c <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span> -R           # Reverse (server sends to client)
+iperf3 -c <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span> -b <span class="hljs-number">0</span> -u     # Unlimited bandwidth UDP flood
+
+# nuttcp (alternative bandwidth tester)
+nuttcp -S                              # Server mode
+nuttcp <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span>                  # <span class="hljs-keyword">Test</span> to server
+
+# speedtest-<span class="hljs-keyword">cli</span> (Internet speed <span class="hljs-keyword">test</span>)
+pip install speedtest-<span class="hljs-keyword">cli</span>
+speedtest-<span class="hljs-keyword">cli</span>
+speedtest-<span class="hljs-keyword">cli</span> --simple
+speedtest-<span class="hljs-keyword">cli</span> --share                  # Share link
+
+# curl download <span class="hljs-keyword">test</span>
+curl -o /dev/null https://speed.cloudflare.com/__<span class="hljs-meta">down</span>?bytes=<span class="hljs-number">100000000</span>
+</code></pre>
+<h3 id="latency-and-jitter-analysis">Latency and Jitter Analysis</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># Measure jitter (variation in ping RTT)</span>
+<span class="hljs-attribute">ping</span> -c <span class="hljs-number">100</span> -i <span class="hljs-number">0</span>.<span class="hljs-number">1</span> <span class="hljs-number">8.8.8.8</span> | tail -<span class="hljs-number">2</span>
+
+<span class="hljs-comment"># Parse RTT values</span>
+ping -c <span class="hljs-number">100</span> <span class="hljs-number">8.8.8.8</span> | awk -F<span class="hljs-string">'/'</span> <span class="hljs-string">'END {print "avg=" <span class="hljs-variable">$5</span> " max=" <span class="hljs-variable">$6</span> " jitter=" <span class="hljs-variable">$7</span>}'</span>
+
+<span class="hljs-comment"># Measure one-way latency (requires synchronized clocks)</span>
+<span class="hljs-comment"># Use traceroute with timestamps</span>
+
+<span class="hljs-comment"># Qperf (latency and bandwidth for network fabrics)</span>
+qperf                                  <span class="hljs-comment"># Server</span>
+qperf <span class="hljs-number">192.168.1.100</span> tcp_lat           <span class="hljs-comment"># TCP latency</span>
+qperf <span class="hljs-number">192.168.1.100</span> udp_lat           <span class="hljs-comment"># UDP latency</span>
+qperf <span class="hljs-number">192.168.1.100</span> tcp_bw            <span class="hljs-comment"># TCP bandwidth</span>
+
+<span class="hljs-comment"># Check for QoS issues</span>
+<span class="hljs-comment"># High jitter + packet loss + latency → likely congestion</span>
+<span class="hljs-comment"># Check interface for drops:</span>
+Router<span class="hljs-comment"># show interfaces gi0/0 | include drops|output queue</span>
+<span class="hljs-comment"># Output queue drops = congestion; QoS needed</span>
+</code></pre>
+<h3 id="interface-statistics-analysis">Interface Statistics Analysis</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># Linux interface stats (detailed)</span>
+ip -s link show eth0
+cat /<span class="hljs-keyword">proc</span>/net/dev                      #<span class="hljs-title"> All</span> interface<span class="hljs-title"> stats</span>
+ethtool -S<span class="hljs-title"> eth0</span>                        #<span class="hljs-title"> Detailed</span> NIC<span class="hljs-title"> statistics</span>
+
+#<span class="hljs-title"> Watch</span> real-time (update<span class="hljs-title"> every</span> second)<span class="hljs-title">
+watch</span> -n 1 "cat /<span class="hljs-keyword">proc</span>/net/dev"<span class="hljs-title">
+watch</span> -n 1 "ip -s<span class="hljs-title"> link</span> show<span class="hljs-title"> eth0"</span>
+
+#<span class="hljs-title"> iftop</span> —<span class="hljs-title"> real-time</span> bandwidth<span class="hljs-title"> by</span> connection<span class="hljs-title">
+iftop</span> -i<span class="hljs-title"> eth0</span>                          #<span class="hljs-title"> Interactive</span> (press<span class="hljs-title"> h</span> for<span class="hljs-title"> help)</span>
+iftop -i<span class="hljs-title"> eth0</span> -n                       #<span class="hljs-title"> No</span> DNS<span class="hljs-title"> resolution</span>
+
+#<span class="hljs-title"> nload</span> —<span class="hljs-title"> real-time</span> bandwidth<span class="hljs-title"> by</span> interface<span class="hljs-title">
+nload</span> eth0
+
+#<span class="hljs-title"> vnstat</span> —<span class="hljs-title"> historical</span> bandwidth<span class="hljs-title"> statistics</span>
+vnstat -i<span class="hljs-title"> eth0</span>                         #<span class="hljs-title"> Summary</span>
+vnstat -i<span class="hljs-title"> eth0</span> -h                      #<span class="hljs-title"> By</span> hour<span class="hljs-title">
+vnstat</span> -i<span class="hljs-title"> eth0</span> -d                      #<span class="hljs-title"> By</span> day<span class="hljs-title">
+vnstat</span> -i<span class="hljs-title"> eth0</span> -m                      #<span class="hljs-title"> By</span> month
+
+#<span class="hljs-title"> nethogs</span> —<span class="hljs-title"> bandwidth</span> per<span class="hljs-title"> process</span>
+nethogs<span class="hljs-title"> eth0</span>
+
+#<span class="hljs-title"> Cisco</span> interface<span class="hljs-title"> statistics</span>
+Router#<span class="hljs-title"> show</span> interfaces<span class="hljs-title"> counters</span>        !<span class="hljs-title"> Packet/byte</span> counters<span class="hljs-title">
+Router#</span> show<span class="hljs-title"> interfaces</span> GigabitEthernet0/0 |<span class="hljs-title"> include</span> rate
+! 5<span class="hljs-title"> minute</span> input<span class="hljs-title"> rate</span> 23456<span class="hljs-title"> bits/sec,</span> 15<span class="hljs-title"> packets/sec</span>
+! 5<span class="hljs-title"> minute</span> output<span class="hljs-title"> rate</span> 45678<span class="hljs-title"> bits/sec,</span> 30<span class="hljs-title"> packets/sec</span>
+</code></pre>
+<hr>
+<h2 id="12-6-troubleshooting-checklists">12.6 Troubleshooting Checklists</h2>
+<h3 id="new-network-not-working">New Network Not Working</h3>
+<pre><code>□ <span class="hljs-keyword">Check</span> <span class="hljs-keyword">physical</span> connections (cables, lights)
+□ <span class="hljs-keyword">Verify</span> IP address, subnet <span class="hljs-keyword">mask</span>, <span class="hljs-keyword">default</span> gateway (<span class="hljs-keyword">show</span> ip <span class="hljs-built_in">int</span> brief / ipconfig /all)
+□ Ping <span class="hljs-keyword">default</span> gateway (verifies Layer <span class="hljs-number">3</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">local</span> <span class="hljs-keyword">segment</span>)
+□ Ping a known <span class="hljs-keyword">external</span> IP (<span class="hljs-number">8.8</span><span class="hljs-number">.8</span><span class="hljs-number">.8</span>) — verifies routing/internet
+□ Ping <span class="hljs-keyword">by</span> hostname — verifies DNS
+□ <span class="hljs-keyword">Check</span> <span class="hljs-keyword">for</span> firewall blocks (try disabling temporarily <span class="hljs-keyword">to</span> <span class="hljs-keyword">test</span>)
+□ <span class="hljs-keyword">Verify</span> VLAN assignment <span class="hljs-keyword">if</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">managed</span> <span class="hljs-keyword">switch</span>
+□ <span class="hljs-keyword">Check</span> routing <span class="hljs-keyword">table</span> <span class="hljs-keyword">for</span> correct routes
+□ <span class="hljs-keyword">Verify</span> NAT <span class="hljs-keyword">if</span> behind router
+</code></pre><h3 id="ospf-neighbor-not-forming">OSPF Neighbor Not Forming</h3>
+<pre><code>□ Layer 1/2 working? (can ping neighbor's IP?)
+□ Same area ID on both sides? (<span class="hljs-keyword">show</span> ip ospf <span class="hljs-keyword">interface</span>)
+□ Same Hello/Dead intervals? (<span class="hljs-keyword">default</span>: <span class="hljs-number">10</span>/<span class="hljs-number">40</span> <span class="hljs-keyword">on</span> broadcast, <span class="hljs-number">30</span>/<span class="hljs-number">120</span> <span class="hljs-keyword">on</span> point-<span class="hljs-keyword">to</span>-point)
+□ Same subnet <span class="hljs-keyword">and</span> <span class="hljs-keyword">mask</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">both</span> interfaces?
+□ Same MTU? (<span class="hljs-keyword">check</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">disable</span> MTU mismatch <span class="hljs-keyword">check</span> <span class="hljs-keyword">if</span> needed: ip ospf mtu-<span class="hljs-keyword">ignore</span>)
+□ Same <span class="hljs-keyword">authentication</span>? (<span class="hljs-keyword">key</span>, <span class="hljs-keyword">type</span>)
+□ Same stub flags?
+□ OSPF process running? (<span class="hljs-keyword">show</span> ip ospf)
+□ ACL blocking multicast <span class="hljs-number">224.0</span><span class="hljs-number">.0</span><span class="hljs-number">.5</span>?
+□ <span class="hljs-keyword">Duplicate</span> Router IDs? (<span class="hljs-keyword">show</span> ip ospf | <span class="hljs-keyword">include</span> Router <span class="hljs-keyword">ID</span>)
+</code></pre><h3 id="dhcp-not-working">DHCP Not Working</h3>
+<pre><code>□ DHCP server running and reachable?
+□ IP pool not exhausted? (<span class="hljs-keyword">show</span> ip dhcp pool / <span class="hljs-keyword">show</span> ip dhcp binding)
+□ DHCP relay configured <span class="hljs-keyword">if</span> <span class="hljs-keyword">server</span> <span class="hljs-keyword">on</span> different subnet? (ip helper-address)
+□ Relay <span class="hljs-keyword">agent</span> sending <span class="hljs-keyword">to</span> correct DHCP <span class="hljs-keyword">server</span> IP?
+□ Firewall blocking UDP <span class="hljs-number">67</span>/<span class="hljs-number">68</span>?
+□ DHCP snooping blocking request? (<span class="hljs-keyword">check</span> trust port configuration)
+□ Correct pool/<span class="hljs-keyword">scope</span> <span class="hljs-keyword">for</span> <span class="hljs-keyword">client</span><span class="hljs-string">'s subnet?
+□ Client'</span>s NIC functioning? (manually assign IP — does that <span class="hljs-keyword">work</span>?)
+□ Conflict <span class="hljs-keyword">with</span> statically-assigned IPs <span class="hljs-keyword">in</span> DHCP <span class="hljs-keyword">range</span>?
+</code></pre><h3 id="vpn-not-connecting-ipsec-">VPN Not Connecting (IPsec)</h3>
+<pre><code>□ Can reach peer IP? (ping peer IP)
+□ IKE Phase <span class="hljs-number">1</span> — policies match? (encryption, hash, auth <span class="hljs-function"><span class="hljs-keyword">method</span>, <span class="hljs-title">DH</span> <span class="hljs-title">group</span>, <span class="hljs-title">lifetime</span>)
+□ <span class="hljs-title">Pre</span>-<span class="hljs-title">shared</span> <span class="hljs-title">keys</span> <span class="hljs-title">match</span> <span class="hljs-title">exactly</span>? <span class="hljs-params">(<span class="hljs-keyword">case</span>-sensitive)</span>
+□ <span class="hljs-title">Firewall</span> <span class="hljs-title">allowing</span> <span class="hljs-title">UDP</span> 500, <span class="hljs-title">UDP</span> 4500 <span class="hljs-params">(NAT-T)</span>, <span class="hljs-title">ESP</span> <span class="hljs-params">(protocol 50)</span>?
+□ <span class="hljs-title">show</span> <span class="hljs-title">crypto</span> <span class="hljs-title">isakmp</span> <span class="hljs-title">sa</span> — <span class="hljs-title">should</span> <span class="hljs-title">show</span> <span class="hljs-title">QM_IDLE</span> <span class="hljs-params">(active)</span>
+□ <span class="hljs-title">IKE</span> <span class="hljs-title">Phase</span> 2 — <span class="hljs-title">transform</span> <span class="hljs-title">sets</span> <span class="hljs-title">match</span>? <span class="hljs-params">(ESP encryption, auth)</span>
+□ <span class="hljs-title">Interesting</span> <span class="hljs-title">traffic</span> <span class="hljs-title">ACLs</span> <span class="hljs-title">matching</span> <span class="hljs-title">on</span> <span class="hljs-title">both</span> <span class="hljs-title">sides</span> <span class="hljs-params">(mirror <span class="hljs-keyword">of</span> <span class="hljs-keyword">each</span> other)</span>?
+□ <span class="hljs-title">NAT</span> <span class="hljs-title">exemption</span> <span class="hljs-title">configured</span> <span class="hljs-title">for</span> <span class="hljs-title">VPN</span> <span class="hljs-title">traffic</span>?
+□ <span class="hljs-title">PFS</span> <span class="hljs-title">mismatch</span>?
+□ <span class="hljs-title">debug</span> <span class="hljs-title">crypto</span> <span class="hljs-title">isakmp</span> / <span class="hljs-title">debug</span> <span class="hljs-title">crypto</span> <span class="hljs-title">ipsec</span> <span class="hljs-title">for</span> <span class="hljs-title">detailed</span> <span class="hljs-title">info</span></span>
+</code></pre><hr>
+</body></html>

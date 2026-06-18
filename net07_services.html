@@ -1,0 +1,908 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-7-network-services-and-wan-technologies">SECTION 7: Network Services and WAN Technologies</h1>
+<hr>
+<h2 id="7-1-dns-deep-dive">7.1 DNS Deep Dive</h2>
+<h3 id="dns-architecture">DNS Architecture</h3>
+<p>DNS is a <strong>distributed, hierarchical</strong> database. No single server holds all records — queries are delegated through the hierarchy.</p>
+<p><strong>DNS hierarchy:</strong></p>
+<pre><code>.                          ← Root zone (<span class="hljs-number">13</span> root server clusters)
+├── com.
+│   ├── example<span class="hljs-selector-class">.com</span>.       ← Authoritative <span class="hljs-keyword">for</span> example<span class="hljs-selector-class">.com</span>
+│   └── google<span class="hljs-selector-class">.com</span>.
+├── org.
+│   └── wikipedia<span class="hljs-selector-class">.org</span>.
+└── net.
+</code></pre><p><strong>Root servers:</strong> 13 logical clusters (A through M) operated by different organizations. Distributed via anycast — actually hundreds of physical servers.</p>
+<ul>
+<li>a.root-servers.net (VeriSign)</li>
+<li>b.root-servers.net (USC-ISI)</li>
+<li>f.root-servers.net (Internet Systems Consortium)</li>
+</ul>
+<p><strong>DNS resolver types:</strong></p>
+<ul>
+<li><strong>Stub resolver:</strong> Client&#39;s built-in resolver (just queries the configured DNS server)</li>
+<li><strong>Recursive resolver:</strong> Does the full lookup work on behalf of clients (ISP DNS, 8.8.8.8)</li>
+<li><strong>Authoritative server:</strong> Has the actual records for a domain; answers with authority</li>
+<li><strong>Forwarder:</strong> Passes queries to another server (forwarding DNS)</li>
+</ul>
+<h3 id="dns-query-types">DNS Query Types</h3>
+<p><strong>Recursive query:</strong> Client asks resolver to do all the work and return the final answer.</p>
+<p><strong>Iterative query:</strong> Resolver asks each server in turn, getting referrals until it finds the authoritative server.</p>
+<p><strong>Reverse lookup:</strong> IP address → hostname. Uses PTR records in the <code>in-addr.arpa.</code> domain.</p>
+<pre><code><span class="hljs-selector-tag">IP</span>: 192<span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.100</span>
+<span class="hljs-selector-tag">Reverse</span> <span class="hljs-selector-tag">zone</span>: 1<span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.192</span><span class="hljs-selector-class">.in-addr</span><span class="hljs-selector-class">.arpa</span>.
+<span class="hljs-selector-tag">PTR</span> <span class="hljs-selector-tag">record</span>: 100<span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.192</span><span class="hljs-selector-class">.in-addr</span><span class="hljs-selector-class">.arpa</span>. → <span class="hljs-selector-tag">host</span><span class="hljs-selector-class">.example</span><span class="hljs-selector-class">.com</span>.
+</code></pre><h3 id="dns-caching-and-ttl">DNS Caching and TTL</h3>
+<ul>
+<li><strong>TTL (Time to Live):</strong> How long records can be cached (in seconds)</li>
+<li>Short TTL: Frequent updates, slower resolution (more queries)</li>
+<li>Long TTL: Fewer queries but slower propagation of changes</li>
+<li>Typical: 300 (5 min) to 86400 (24 hours) for production; lower during migrations</li>
+</ul>
+<p><strong>Negative caching:</strong> Cache &quot;record not found&quot; responses (TTL from SOA MINIMUM field)</p>
+<p><strong>Local hosts file:</strong> <code>/etc/hosts</code> (Linux) or <code>C:\Windows\System32\drivers\etc\hosts</code> (Windows) — checked before DNS; overrides DNS</p>
+<h3 id="dns-record-types-complete-">DNS Record Types (Complete)</h3>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>IPv4 address</td>
+<td><code>www.example.com. A 93.184.216.34</code></td>
+</tr>
+<tr>
+<td><strong>AAAA</strong></td>
+<td>IPv6 address</td>
+<td><code>www.example.com. AAAA 2606:2800::1</code></td>
+</tr>
+<tr>
+<td><strong>CNAME</strong></td>
+<td>Canonical name (alias)</td>
+<td><code>www.example.com. CNAME example.com.</code></td>
+</tr>
+<tr>
+<td><strong>MX</strong></td>
+<td>Mail exchanger (priority, server)</td>
+<td><code>example.com. MX 10 mail.example.com.</code></td>
+</tr>
+<tr>
+<td><strong>NS</strong></td>
+<td>Authoritative nameserver</td>
+<td><code>example.com. NS ns1.example.com.</code></td>
+</tr>
+<tr>
+<td><strong>SOA</strong></td>
+<td>Start of Authority (zone info)</td>
+<td>Serial, refresh, retry, expire, minimum TTL</td>
+</tr>
+<tr>
+<td><strong>PTR</strong></td>
+<td>Pointer for reverse DNS</td>
+<td><code>34.216.184.93.in-addr.arpa. PTR example.com.</code></td>
+</tr>
+<tr>
+<td><strong>TXT</strong></td>
+<td>Text records</td>
+<td>SPF, DKIM, domain verification</td>
+</tr>
+<tr>
+<td><strong>SRV</strong></td>
+<td>Service locator</td>
+<td><code>_sip._tcp.example.com. SRV 0 5 5060 sip.example.com.</code></td>
+</tr>
+<tr>
+<td><strong>CAA</strong></td>
+<td>CA Authorization</td>
+<td>Restricts which CAs can issue certs</td>
+</tr>
+<tr>
+<td><strong>DNSKEY</strong></td>
+<td>DNSSEC public key</td>
+<td>Zone signing key</td>
+</tr>
+<tr>
+<td><strong>DS</strong></td>
+<td>Delegation Signer</td>
+<td>Trust anchor for child zone (DNSSEC)</td>
+</tr>
+<tr>
+<td><strong>RRSIG</strong></td>
+<td>DNSSEC signature</td>
+<td>Signs a set of records</td>
+</tr>
+<tr>
+<td><strong>NAPTR</strong></td>
+<td>Naming Authority Pointer</td>
+<td>ENUM, SIP</td>
+</tr>
+<tr>
+<td><strong>TLSA</strong></td>
+<td>TLS certificate association (DANE)</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>SSHFP</strong></td>
+<td>SSH fingerprint</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dns-security">DNS Security</h3>
+<p><strong>DNS Cache Poisoning / DNS Spoofing:</strong></p>
+<ul>
+<li>Inject false DNS records into resolver cache</li>
+<li>Victim queries resolver → resolver has poisoned entry → victim goes to attacker server</li>
+<li><strong>Kaminsky attack (2008):</strong> Exploited predictable transaction IDs to poison resolvers at scale</li>
+<li><strong>Fix:</strong> Randomize source ports and transaction IDs; use DNSSEC</li>
+</ul>
+<p><strong>DNSSEC (DNS Security Extensions):</strong></p>
+<ul>
+<li>Digitally signs DNS records — verifies authenticity and integrity</li>
+<li>Does NOT encrypt DNS traffic</li>
+<li>Zone signing: RRSIG records sign each RRset</li>
+<li>Chain of trust: from root → TLD → domain</li>
+</ul>
+<p><strong>DoT (DNS over TLS):</strong> Port 853 — encrypts DNS traffic
+<strong>DoH (DNS over HTTPS):</strong> Port 443 — DNS within HTTPS (harder to block/inspect)
+<strong>DoQ (DNS over QUIC):</strong> Newer — DNS over QUIC protocol</p>
+<p><strong>Split DNS / Split-brain DNS:</strong></p>
+<ul>
+<li>Internal clients get internal IPs; external clients get public IPs for same hostname</li>
+<li>Two DNS servers (or views) with different answers for same zone</li>
+</ul>
+<h3 id="dns-troubleshooting-commands">DNS Troubleshooting Commands</h3>
+<pre><code class="lang-bash"># nslookup (Windows/Linux)
+nslookup example.<span class="hljs-keyword">com</span>                     # Basic A lookup
+nslookup -<span class="hljs-built_in">type</span>=MX example.<span class="hljs-keyword">com</span>            # MX records
+nslookup -<span class="hljs-built_in">type</span>=NS example.<span class="hljs-keyword">com</span>            # NS records
+nslookup example.<span class="hljs-keyword">com</span> <span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span>             # Use specific DNS server
+
+# <span class="hljs-keyword">dig</span> (Linux/Mac)
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span>                          # A record
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> MX                       # MX records
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> NS                       # NS records
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> ANY                      # All records
+<span class="hljs-keyword">dig</span> +short example.<span class="hljs-keyword">com</span>                   # Short output (just IP)
+<span class="hljs-keyword">dig</span> @<span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span> example.<span class="hljs-keyword">com</span>                 # Query specific server
+<span class="hljs-keyword">dig</span> -<span class="hljs-keyword">x</span> <span class="hljs-number">93.184</span>.<span class="hljs-number">216.34</span>                     # Reverse lookup
+<span class="hljs-keyword">dig</span> +trace example.<span class="hljs-keyword">com</span>                   # Full delegation trace
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> +dnssec                  # DNSSEC validation
+<span class="hljs-keyword">dig</span> example.<span class="hljs-keyword">com</span> +nocmd +noall +answer    # Clean answer section <span class="hljs-keyword">only</span>
+
+# host (Linux)
+host example.<span class="hljs-keyword">com</span>
+host -t MX example.<span class="hljs-keyword">com</span>
+
+# Windows
+Resolve-DnsName example.<span class="hljs-keyword">com</span> -Type MX -Server <span class="hljs-number">8.8</span>.<span class="hljs-number">8.8</span>
+ipconfig /displaydns                     # Show DNS cache
+ipconfig /flushdns                       # Clear DNS cache
+</code></pre>
+<hr>
+<h2 id="7-2-dhcp-deep-dive">7.2 DHCP Deep Dive</h2>
+<h3 id="dhcp-lease-process-detail">DHCP Lease Process Detail</h3>
+<pre><code>Client (no IP)                        DHCP Server
+     |<span class="hljs-string">                                     </span>|
+     |<span class="hljs-string">-- DHCPDISCOVER (broadcast) --------&gt;</span>|<span class="hljs-string">  "I need an IP"
+     </span>|<span class="hljs-string">   src: 0.0.0.0:68                   </span>|
+     |<span class="hljs-string">   dst: 255.255.255.255:67           </span>|
+     |<span class="hljs-string">                                     </span>|
+     |<span class="hljs-string">&lt;- DHCPOFFER (broadcast/unicast) ----</span>|<span class="hljs-string">  "Use 192.168.1.50"
+     </span>|<span class="hljs-string">   src: 192.168.1.1:67              </span>|
+     |<span class="hljs-string">   Offered IP: 192.168.1.50         </span>|
+     |<span class="hljs-string">   Lease time: 86400s               </span>|
+     |<span class="hljs-string">                                     </span>|
+     |<span class="hljs-string">-- DHCPREQUEST (broadcast) ---------&gt;</span>|<span class="hljs-string">  "I want 192.168.1.50"
+     </span>|<span class="hljs-string">   (broadcast so other servers       </span>|
+     |<span class="hljs-string">    know this offer was accepted)    </span>|
+     |<span class="hljs-string">                                     </span>|
+     |<span class="hljs-string">&lt;- DHCPACK (broadcast/unicast) ------</span>|<span class="hljs-string">  "Confirmed, 192.168.1.50 is yours"
+     </span>|<span class="hljs-string">                                     </span>|
+     |<span class="hljs-string">=== Client configures 192.168.1.50 ==</span>|
+</code></pre><p><strong>Lease renewal:</strong></p>
+<ul>
+<li>At 50% of lease time: Client sends DHCPREQUEST directly to server (unicast)</li>
+<li>At 87.5% of lease time: Client broadcasts DHCPREQUEST (if server didn&#39;t respond)</li>
+<li>At 100%: Client must stop using IP and start over</li>
+</ul>
+<p><strong>DHCPRELEASE:</strong> Client tells server it&#39;s done with IP (when cleanly shutting down)
+<strong>DHCPDECLINE:</strong> Client found IP is already in use (after ARP check) — declines it
+<strong>DHCPINFORM:</strong> Client has static IP but wants other options (DNS, NTP) from server
+<strong>DHCPNAK:</strong> Server tells client it can&#39;t have requested IP (wrong subnet, expired binding)</p>
+<h3 id="dhcp-server-configuration-isc-dhcp-">DHCP Server Configuration (ISC DHCP)</h3>
+<pre><code># /etc/dhcp/dhcpd.conf
+
+# <span class="hljs-meta">Global</span> options
+<span class="hljs-meta">option</span> domain-name <span class="hljs-string">"example.com"</span><span class="hljs-comment">;</span>
+<span class="hljs-meta">option</span> domain-name-servers <span class="hljs-number">8.8</span><span class="hljs-meta">.8</span><span class="hljs-meta">.8</span>, <span class="hljs-number">8.8</span><span class="hljs-meta">.4</span><span class="hljs-meta">.4</span><span class="hljs-comment">;</span>
+<span class="hljs-meta">default</span>-lease-time <span class="hljs-number">86400</span><span class="hljs-comment">;     # 24 hours</span>
+max-lease-time <span class="hljs-number">172800</span><span class="hljs-comment">;        # 48 hours</span>
+
+# Subnet declaration
+subnet <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span> netmask <span class="hljs-number">255.255</span><span class="hljs-meta">.255</span><span class="hljs-meta">.0</span> {
+  range <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.100</span> <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.200</span><span class="hljs-comment">;</span>
+  <span class="hljs-meta">option</span> routers <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span><span class="hljs-comment">;</span>
+  <span class="hljs-meta">option</span> subnet-mask <span class="hljs-number">255.255</span><span class="hljs-meta">.255</span><span class="hljs-meta">.0</span><span class="hljs-comment">;</span>
+  <span class="hljs-meta">option</span> broadcast-address <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.255</span><span class="hljs-comment">;</span>
+  <span class="hljs-meta">option</span> domain-name-servers <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span><span class="hljs-comment">;</span>
+  <span class="hljs-meta">option</span> ntp-servers <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span><span class="hljs-comment">;</span>
+}
+
+# Static reservation (by MAC address)
+host printer01 {
+  hardware ethernet <span class="hljs-number">00</span>:<span class="hljs-number">11</span>:<span class="hljs-number">22</span>:<span class="hljs-number">33</span>:<span class="hljs-number">44</span>:<span class="hljs-number">55</span><span class="hljs-comment">;</span>
+  fixed-address <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.50</span><span class="hljs-comment">;</span>
+  <span class="hljs-meta">option</span> host-name <span class="hljs-string">"printer01"</span><span class="hljs-comment">;</span>
+}
+</code></pre><h3 id="dhcp-snooping-network-security-">DHCP Snooping (Network Security)</h3>
+<ul>
+<li>Switch feature that validates DHCP messages</li>
+<li>Prevents <strong>rogue DHCP servers</strong> from assigning incorrect IPs to clients</li>
+<li>Builds a <strong>DHCP binding table</strong> (MAC → IP → VLAN → port)</li>
+<li>Used by DAI (Dynamic ARP Inspection) and IPSG</li>
+</ul>
+<pre><code class="lang-cisco"><span class="hljs-built_in">ip</span> dhcp snooping
+<span class="hljs-built_in">ip</span> dhcp snooping vlan <span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span>
+no <span class="hljs-built_in">ip</span> dhcp snooping information <span class="hljs-meta">option</span>   ! Remove <span class="hljs-meta">option</span> <span class="hljs-number">82</span> if causing issues
+
+interface GigabitEthernet0/<span class="hljs-number">24</span>            ! Uplink to real DHCP server
+ <span class="hljs-built_in">ip</span> dhcp snooping trust
+
+show <span class="hljs-built_in">ip</span> dhcp snooping
+show <span class="hljs-built_in">ip</span> dhcp snooping binding
+show <span class="hljs-built_in">ip</span> dhcp snooping statistics
+</code></pre>
+<hr>
+<h2 id="7-3-ntp-network-time-protocol-">7.3 NTP (Network Time Protocol)</h2>
+<p>Synchronizes clocks across network devices. Critical for logging, security certificates, Kerberos authentication, and digital signatures.</p>
+<p><strong>Port:</strong> UDP 123</p>
+<p><strong>Stratum levels:</strong></p>
+<ul>
+<li><strong>Stratum 0:</strong> Reference clocks (atomic clocks, GPS, radio clocks) — NOT on network</li>
+<li><strong>Stratum 1:</strong> Directly synchronized to stratum 0 (primary time servers)</li>
+<li><strong>Stratum 2:</strong> Synchronized to stratum 1</li>
+<li><strong>Stratum 15:</strong> Last usable stratum</li>
+<li><strong>Stratum 16:</strong> Unsynchronized (clock not trusted)</li>
+</ul>
+<p><strong>NTP accuracy:</strong></p>
+<ul>
+<li>Over internet: ~10 ms</li>
+<li>Over LAN: &lt; 1 ms</li>
+<li>With GPS: &lt; 1 µs</li>
+</ul>
+<p><strong>NTP modes:</strong></p>
+<ul>
+<li><strong>Client/server:</strong> Client requests time from server</li>
+<li><strong>Peer:</strong> Two servers synchronize with each other (equal relationship)</li>
+<li><strong>Broadcast:</strong> Server broadcasts; clients listen (not recommended — no authentication)</li>
+</ul>
+<p><strong>NTPv3 vs NTPv4:</strong></p>
+<ul>
+<li>NTPv4: More accurate, better security, IPv6 support</li>
+</ul>
+<p><strong>PTP (Precision Time Protocol, IEEE 1588):</strong></p>
+<ul>
+<li>Microsecond accuracy (vs milliseconds for NTP)</li>
+<li>Used in financial trading, manufacturing, telecom</li>
+</ul>
+<pre><code class="lang-cisco">! Cisco NTP configuration
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ntp server 0.pool.ntp.org</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ntp server 1.pool.ntp.org prefer</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ntp update-calendar                ! Sync hardware clock</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ntp authenticate</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ntp authentication-key 1 md5 NTPsecret</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ntp trusted-key 1</span>
+
+Router<span class="hljs-meta"># show ntp status</span>
+Router<span class="hljs-meta"># show ntp associations</span>
+Router<span class="hljs-meta"># show clock detail</span>
+</code></pre>
+<pre><code class="lang-bash"><span class="hljs-comment"># Linux NTP</span>
+<span class="hljs-string">timedatectl </span><span class="hljs-string">status
+</span><span class="hljs-string">timedatectl </span><span class="hljs-built_in">set-ntp</span> <span class="hljs-string">true
+</span><span class="hljs-string">systemctl </span><span class="hljs-string">status </span><span class="hljs-string">systemd-timesyncd
+</span><span class="hljs-string">ntpq </span>-p                        <span class="hljs-comment"># Show NTP peers and status</span>
+<span class="hljs-string">chronyc </span><span class="hljs-string">tracking </span>              <span class="hljs-comment"># chrony status</span>
+<span class="hljs-string">chronyc </span><span class="hljs-string">sources </span>-v             <span class="hljs-comment"># chrony sources</span>
+</code></pre>
+<hr>
+<h2 id="7-4-snmp-simple-network-management-protocol-">7.4 SNMP (Simple Network Management Protocol)</h2>
+<p>SNMP manages and monitors network devices. Collects metrics, alerts on events, and can change configuration.</p>
+<p><strong>Port:</strong> UDP 161 (queries), UDP 162 (traps)</p>
+<p><strong>Components:</strong></p>
+<ul>
+<li><strong>Manager (NMS):</strong> Network Management System — polls agents, receives traps (Cacti, PRTG, SolarWinds)</li>
+<li><strong>Agent:</strong> Software on managed device — responds to queries, sends traps</li>
+<li><strong>MIB (Management Information Base):</strong> Database defining manageable objects</li>
+<li><strong>OID (Object Identifier):</strong> Dot-notation address for each MIB object</li>
+</ul>
+<p><strong>Example OIDs:</strong></p>
+<pre><code><span class="hljs-number">1.3</span><span class="hljs-number">.6</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>   = sysDescr (system description)
+<span class="hljs-number">1.3</span><span class="hljs-number">.6</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><span class="hljs-number">.3</span><span class="hljs-number">.0</span>   = sysUpTime
+<span class="hljs-number">1.3</span><span class="hljs-number">.6</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span><span class="hljs-number">.2</span>     = interfaces table
+<span class="hljs-number">1.3</span><span class="hljs-number">.6</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span><span class="hljs-number">.1</span><span class="hljs-number">.25</span><span class="hljs-number">.3</span><span class="hljs-number">.3</span>  = hrProcessorLoad
+</code></pre><h3 id="snmp-versions">SNMP Versions</h3>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Security</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SNMPv1</strong></td>
+<td>Community string (plaintext)</td>
+<td>Original; avoid</td>
+</tr>
+<tr>
+<td><strong>SNMPv2c</strong></td>
+<td>Community string (plaintext)</td>
+<td>Improved bulk transfer; still plaintext auth</td>
+</tr>
+<tr>
+<td><strong>SNMPv3</strong></td>
+<td>MD5/SHA auth + AES/DES encryption</td>
+<td><strong>Use this in production</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>SNMPv2c Community strings:</strong></p>
+<ul>
+<li><strong>Read-only (ro):</strong> &quot;public&quot; — poll data only</li>
+<li><strong>Read-write (rw):</strong> &quot;private&quot; — poll and change settings</li>
+<li>Change default community strings! They are essentially passwords.</li>
+</ul>
+<p><strong>SNMPv3 Security Levels:</strong></p>
+<ul>
+<li><strong>noAuthNoPriv:</strong> No authentication, no encryption</li>
+<li><strong>authNoPriv:</strong> MD5/SHA authentication, no encryption</li>
+<li><strong>authPriv:</strong> MD5/SHA authentication + DES/AES encryption (use this)</li>
+</ul>
+<h3 id="snmp-operations">SNMP Operations</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Direction</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Get</strong></td>
+<td>Manager → Agent</td>
+<td>Get single OID value</td>
+</tr>
+<tr>
+<td><strong>GetNext</strong></td>
+<td>Manager → Agent</td>
+<td>Get next OID in tree</td>
+</tr>
+<tr>
+<td><strong>GetBulk</strong></td>
+<td>Manager → Agent</td>
+<td>Get multiple OIDs efficiently (v2c+)</td>
+</tr>
+<tr>
+<td><strong>Set</strong></td>
+<td>Manager → Agent</td>
+<td>Change OID value</td>
+</tr>
+<tr>
+<td><strong>Trap</strong></td>
+<td>Agent → Manager</td>
+<td>Unsolicited notification (no ACK)</td>
+</tr>
+<tr>
+<td><strong>Inform</strong></td>
+<td>Agent → Manager</td>
+<td>Trap with acknowledgment (v2c+)</td>
+</tr>
+<tr>
+<td><strong>Response</strong></td>
+<td>Agent → Manager</td>
+<td>Reply to Get/Set</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="lang-cisco">! Cisco SNMPv3 configuration
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server group MONITORING v3 priv</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server user monuser MONITORING v3 auth sha AuthPass priv aes 128 PrivPass</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server host 192.168.1.10 version 3 priv monuser</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server enable traps</span>
+
+! Legacy SNMPv2c (change community strings!)
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server community Str0ngR0C v1 ro</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server community Str0ngRW v1 rw</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># snmp-server host 192.168.1.10 version 2c Str0ngR0C</span>
+
+Router<span class="hljs-meta"># show snmp</span>
+Router<span class="hljs-meta"># show snmp user</span>
+Router<span class="hljs-meta"># show snmp group</span>
+</code></pre>
+<hr>
+<h2 id="7-5-syslog">7.5 Syslog</h2>
+<p>Standard protocol for sending log messages from devices to a central log server.</p>
+<p><strong>Port:</strong> UDP 514 (traditional), TCP 514 or 6514 (TLS)</p>
+<h3 id="syslog-severity-levels-0-7-">Syslog Severity Levels (0–7)</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>Description</th>
+<th>Memory Aid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><strong>Emergency</strong></td>
+<td>System unusable</td>
+<td>Emergencies</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>Alert</strong></td>
+<td>Immediate action needed</td>
+<td>Always</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Critical</strong></td>
+<td>Critical conditions</td>
+<td>Cause</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Error</strong></td>
+<td>Error conditions</td>
+<td>Errors</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Warning</strong></td>
+<td>Warning conditions</td>
+<td>Whenever</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Notice</strong></td>
+<td>Normal but significant</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Informational</strong></td>
+<td>Information messages</td>
+<td>Information</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Debug</strong></td>
+<td>Debug-level details</td>
+<td>Debugs</td>
+</tr>
+</tbody>
+</table>
+<p>Mnemonic: <strong>&quot;Every Awesome Cisco Engineer Will Need Ice Daily&quot;</strong></p>
+<h3 id="syslog-facilities">Syslog Facilities</h3>
+<p>Categories of log source:</p>
+<ul>
+<li><strong>kern (0):</strong> Kernel messages</li>
+<li><strong>user (1):</strong> User-level messages</li>
+<li><strong>mail (2):</strong> Mail system</li>
+<li><strong>daemon (3):</strong> System daemons</li>
+<li><strong>auth (4):</strong> Security/auth messages</li>
+<li><strong>syslog (5):</strong> Syslog daemon</li>
+<li><strong>local0–7 (16–23):</strong> Locally defined — commonly used for network devices</li>
+</ul>
+<p><strong>Cisco syslog configuration:</strong></p>
+<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging 192.168.1.20           ! Syslog server IP</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging trap informational     ! Send info and above to server</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging buffered 65536 debugging ! Local buffer</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># service timestamps log datetime msec</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging source-interface Loopback0</span>
+
+Router<span class="hljs-meta"># show logging</span>
+</code></pre>
+<p><strong>Popular syslog servers:</strong></p>
+<ul>
+<li><strong>rsyslog/syslog-ng:</strong> Linux open-source</li>
+<li><strong>Graylog:</strong> Open-source with web UI</li>
+<li><strong>Splunk:</strong> Enterprise — also SIEM</li>
+<li><strong>ELK Stack:</strong> Elasticsearch + Logstash + Kibana</li>
+<li><strong>SIEM:</strong> Security Information and Event Management (correlates logs)</li>
+</ul>
+<hr>
+<h2 id="7-6-qos-quality-of-service-">7.6 QoS (Quality of Service)</h2>
+<p>QoS prioritizes certain types of traffic to ensure performance for time-sensitive applications (VoIP, video conferencing).</p>
+<h3 id="why-qos-">Why QoS?</h3>
+<p>Problems QoS solves:</p>
+<ul>
+<li><strong>Delay (latency):</strong> Time for packet to reach destination</li>
+<li><strong>Jitter:</strong> Variation in delay (critical for VoIP — causes choppy audio)</li>
+<li><strong>Packet loss:</strong> Dropped packets cause retransmission (TCP) or gaps (UDP/VoIP)</li>
+<li><strong>Bandwidth:</strong> Insufficient bandwidth causes congestion</li>
+</ul>
+<p><strong>VoIP requirements:</strong></p>
+<ul>
+<li>Delay: &lt; 150 ms one-way</li>
+<li>Jitter: &lt; 30 ms</li>
+<li>Packet loss: &lt; 1%</li>
+</ul>
+<h3 id="qos-models">QoS Models</h3>
+<p><strong>Best Effort (default):</strong> No QoS — all packets treated equally. FIFO queuing.</p>
+<p><strong>IntServ (Integrated Services):</strong></p>
+<ul>
+<li>Per-flow reservation using RSVP (Resource Reservation Protocol)</li>
+<li>Strong guarantees but doesn&#39;t scale (state per flow)</li>
+</ul>
+<p><strong>DiffServ (Differentiated Services):</strong></p>
+<ul>
+<li>Mark packets and treat classes differently</li>
+<li>Scales well — most widely deployed model</li>
+</ul>
+<h3 id="diffserv-markings">DiffServ Markings</h3>
+<p><strong>DSCP (Differentiated Services Code Point):</strong> 6 bits in IP header TOS field</p>
+<ul>
+<li>64 possible values (0–63)</li>
+</ul>
+<p><strong>Per-Hop Behaviors (PHBs):</strong></p>
+<table>
+<thead>
+<tr>
+<th>PHB</th>
+<th>DSCP</th>
+<th>Value</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Default (BE)</strong></td>
+<td>000000</td>
+<td>0</td>
+<td>Best effort</td>
+</tr>
+<tr>
+<td><strong>EF (Expedited Forwarding)</strong></td>
+<td>101110</td>
+<td>46</td>
+<td>Voice — lowest delay, jitter, loss</td>
+</tr>
+<tr>
+<td><strong>AF11</strong></td>
+<td>001010</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF12</strong></td>
+<td>001100</td>
+<td>12</td>
+<td>Low priority data</td>
+</tr>
+<tr>
+<td><strong>AF13</strong></td>
+<td>001110</td>
+<td>14</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF21</strong></td>
+<td>010010</td>
+<td>18</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF22</strong></td>
+<td>010100</td>
+<td>20</td>
+<td>Medium priority data</td>
+</tr>
+<tr>
+<td><strong>AF23</strong></td>
+<td>010110</td>
+<td>22</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF31</strong></td>
+<td>011010</td>
+<td>26</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF32</strong></td>
+<td>011100</td>
+<td>28</td>
+<td>High priority data</td>
+</tr>
+<tr>
+<td><strong>AF33</strong></td>
+<td>011110</td>
+<td>30</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF41</strong></td>
+<td>100010</td>
+<td>34</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>AF42</strong></td>
+<td>100100</td>
+<td>36</td>
+<td>Video</td>
+</tr>
+<tr>
+<td><strong>AF43</strong></td>
+<td>100110</td>
+<td>38</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>CS1–CS7</strong></td>
+<td>x01000</td>
+<td>8,16,24,32,40,48,56</td>
+<td>Class Selector (legacy IPP compat)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CoS (Class of Service):</strong> 802.1p 3-bit field in 802.1Q Ethernet header (Layer 2 marking)</p>
+<ul>
+<li>0–7; maps to DSCP for QoS consistency across L2 and L3</li>
+</ul>
+<h3 id="qos-mechanisms">QoS Mechanisms</h3>
+<p><strong>Classification:</strong> Identify traffic type</p>
+<ul>
+<li>ACL match, DSCP/CoS value, NBAR (application-aware), deep packet inspection</li>
+</ul>
+<p><strong>Marking:</strong> Set DSCP/CoS value</p>
+<ul>
+<li>Mark as close to the source as possible (&quot;trust boundary&quot;)</li>
+<li>Don&#39;t trust markings from end users — remark at switch</li>
+</ul>
+<p><strong>Queuing:</strong> Hold packets in priority queues:</p>
+<ul>
+<li><strong>FIFO:</strong> First in, first out — no priority</li>
+<li><strong>PQ (Priority Queuing):</strong> 4 queues; high priority always served first — can starve others</li>
+<li><strong>WFQ (Weighted Fair Queuing):</strong> Fair but weighted; low bandwidth flows get proportional service</li>
+<li><strong>CBWFQ (Class-Based WFQ):</strong> Assign bandwidth % to classes</li>
+<li><strong>LLQ (Low Latency Queuing):</strong> CBWFQ + strict priority queue for voice — best for VoIP</li>
+</ul>
+<p><strong>Scheduling:</strong> How queues are served:</p>
+<ul>
+<li>Strict priority: High queue always first</li>
+<li>Round-robin: Each queue served in turn</li>
+<li>Weighted round-robin: Proportional to weights</li>
+</ul>
+<p><strong>Shaping:</strong> Delay excess traffic to conform to rate limit (smooth/buffer)</p>
+<ul>
+<li>Traffic is buffered and sent later</li>
+<li>Introduces delay; prevents upstream drops</li>
+</ul>
+<p><strong>Policing:</strong> Drop or re-mark excess traffic (harder enforcement)</p>
+<ul>
+<li>Traffic over limit is dropped or re-marked to lower DSCP</li>
+<li>No buffering — drops immediately</li>
+</ul>
+<p><strong>Congestion avoidance (WRED — Weighted Random Early Detection):</strong></p>
+<ul>
+<li>Randomly drop packets before queue fills up</li>
+<li>Drop lower-priority traffic more aggressively</li>
+<li>Prevents TCP synchronization (global synchronization)</li>
+</ul>
+<pre><code class="lang-cisco">! Cisco QoS <span class="hljs-keyword">with</span> MQC (Modular QoS CLI)
+! Step <span class="hljs-number">1</span>: Class-maps (identify traffic)
+Router(<span class="hljs-keyword">config</span>)# <span class="hljs-keyword">class</span>-map match-any VOICE
+Router(<span class="hljs-keyword">config</span>-cmap)# match dscp ef                ! EF marked traffic
+Router(<span class="hljs-keyword">config</span>)# <span class="hljs-keyword">class</span>-map match-any VIDEO
+Router(<span class="hljs-keyword">config</span>-cmap)# match dscp af41 af42 af43
+
+! Step <span class="hljs-number">2</span>: Policy-map (what to <span class="hljs-keyword">do</span> <span class="hljs-keyword">with</span> each <span class="hljs-keyword">class</span>)
+Router(<span class="hljs-keyword">config</span>)# policy-map WAN-POLICY
+Router(<span class="hljs-keyword">config</span>-pmap)# <span class="hljs-keyword">class</span> VOICE
+Router(<span class="hljs-keyword">config</span>-pmap-c)# <span class="hljs-keyword">priority</span> <span class="hljs-number">512</span>               ! LLQ — <span class="hljs-number">512</span> Kbps strict <span class="hljs-keyword">priority</span>
+Router(<span class="hljs-keyword">config</span>-pmap-c)# <span class="hljs-keyword">class</span> VIDEO
+Router(<span class="hljs-keyword">config</span>-pmap-c)# bandwidth percent <span class="hljs-number">30</span>       ! <span class="hljs-number">30</span>% bandwidth guarantee
+Router(<span class="hljs-keyword">config</span>-pmap-c)# <span class="hljs-keyword">class</span> <span class="hljs-keyword">class</span>-<span class="hljs-keyword">default</span>
+Router(<span class="hljs-keyword">config</span>-pmap-c)# fair-queue                 ! WFQ <span class="hljs-keyword">for</span> the rest
+
+! Step <span class="hljs-number">3</span>: Service-policy (apply to <span class="hljs-keyword">interface</span>)
+Router(<span class="hljs-keyword">config</span>)# <span class="hljs-keyword">interface</span> Serial0/<span class="hljs-number">0</span>
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# service-policy <span class="hljs-keyword">output</span> WAN-POLICY
+
+Router# show policy-map <span class="hljs-keyword">interface</span> Serial0/<span class="hljs-number">0</span>
+Router# show <span class="hljs-keyword">class</span>-map
+</code></pre>
+<hr>
+<h2 id="7-7-wan-technologies">7.7 WAN Technologies</h2>
+<h3 id="leased-lines">Leased Lines</h3>
+<p><strong>T-carrier (North America):</strong></p>
+<ul>
+<li><strong>T1:</strong> 1.544 Mbps, 24 DS0 channels (each 64 Kbps)</li>
+<li><strong>T3:</strong> 44.736 Mbps (28 T1s)</li>
+<li><strong>Fractional T1:</strong> Subset of T1 channels</li>
+</ul>
+<p><strong>E-carrier (Europe):</strong></p>
+<ul>
+<li><strong>E1:</strong> 2.048 Mbps, 32 channels</li>
+<li><strong>E3:</strong> 34.368 Mbps (16 E1s)</li>
+</ul>
+<p><strong>OC (Optical Carrier) / SONET:</strong></p>
+<ul>
+<li><strong>OC-1:</strong> 51.84 Mbps</li>
+<li><strong>OC-3:</strong> 155.52 Mbps</li>
+<li><strong>OC-12:</strong> 622.08 Mbps</li>
+<li><strong>OC-48:</strong> 2.488 Gbps</li>
+<li><strong>OC-192:</strong> 9.953 Gbps</li>
+</ul>
+<h3 id="dsl-digital-subscriber-line-">DSL (Digital Subscriber Line)</h3>
+<p>Uses existing telephone copper pairs. <strong>Distance-limited</strong> (quality degrades with distance from CO).</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Down</th>
+<th>Up</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADSL</td>
+<td>8 Mbps</td>
+<td>1 Mbps</td>
+<td>Asymmetric; most common consumer</td>
+</tr>
+<tr>
+<td>ADSL2+</td>
+<td>24 Mbps</td>
+<td>3.5 Mbps</td>
+<td>Extended ADSL</td>
+</tr>
+<tr>
+<td>VDSL</td>
+<td>52 Mbps</td>
+<td>16 Mbps</td>
+<td>Very short distance</td>
+</tr>
+<tr>
+<td>VDSL2</td>
+<td>200 Mbps</td>
+<td>100 Mbps</td>
+<td>Even shorter distance</td>
+</tr>
+<tr>
+<td>G.fast</td>
+<td>1 Gbps</td>
+<td>500 Mbps</td>
+<td>Very short (&lt; 100m)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CPE (Customer Premises Equipment):</strong> DSL modem + router</p>
+<h3 id="cable-internet-docsis-">Cable Internet (DOCSIS)</h3>
+<p>Uses coaxial TV cable infrastructure.</p>
+<ul>
+<li><strong>DOCSIS 3.0:</strong> Up to 1 Gbps down, 200 Mbps up</li>
+<li><strong>DOCSIS 3.1:</strong> Up to 10 Gbps down, 1 Gbps up</li>
+<li><strong>DOCSIS 4.0:</strong> Full duplex — symmetrical multi-Gbps</li>
+</ul>
+<h3 id="fiber-ftth-fttp-">Fiber (FTTH/FTTP)</h3>
+<ul>
+<li><strong>GPON (Gigabit Passive Optical Network):</strong> 2.5 Gbps down, 1.25 Gbps up, shared among 32–128 users</li>
+<li><strong>XGS-PON:</strong> 10 Gbps symmetrical</li>
+<li><strong>EPON:</strong> Ethernet-based PON</li>
+</ul>
+<h3 id="mpls-multiprotocol-label-switching-">MPLS (Multiprotocol Label Switching)</h3>
+<p>MPLS is not a routing protocol — it&#39;s a <strong>forwarding mechanism</strong> that uses <strong>labels</strong> instead of IP addresses.</p>
+<p><strong>How MPLS works:</strong></p>
+<ol>
+<li><strong>Ingress LSR (Label Edge Router):</strong> Adds a label to incoming packet</li>
+<li><strong>Transit LSR (P router):</strong> Forwards based on label (no IP lookup!) — very fast</li>
+<li><strong>Egress LSR:</strong> Removes label, forwards based on IP</li>
+</ol>
+<p><strong>Label format (4 bytes):</strong></p>
+<pre><code>|<span class="hljs-string"> Label (20 bits) </span>|<span class="hljs-string"> Exp/TC (3 bits) </span>|<span class="hljs-string"> S (1 bit) </span>|<span class="hljs-string"> TTL (8 bits) </span>|
+</code></pre><ul>
+<li><strong>Label:</strong> Forwarding identifier</li>
+<li><strong>Exp/TC:</strong> Traffic Class (QoS)</li>
+<li><strong>S (Bottom of Stack):</strong> 1 = last label in stack</li>
+<li><strong>TTL:</strong> Prevent loops</li>
+</ul>
+<p><strong>MPLS benefits:</strong></p>
+<ul>
+<li>Fast forwarding (label lookup faster than IP routing)</li>
+<li>Traffic engineering (explicit path control)</li>
+<li>QoS support via Exp bits</li>
+<li>VPN support (MPLS VPN — L2VPN and L3VPN)</li>
+</ul>
+<p><strong>MPLS VPN:</strong></p>
+<ul>
+<li><strong>L3VPN:</strong> PE router participates in customer routing; uses VRF (Virtual Routing and Forwarding) to separate customers</li>
+<li><strong>L2VPN/VPLS:</strong> Extends customer Layer 2 across MPLS backbone (customers see it as a single LAN)</li>
+</ul>
+<p><strong>LDP (Label Distribution Protocol):</strong> Distributes label-to-FEC (Forwarding Equivalence Class) bindings between LSRs
+<strong>RSVP-TE:</strong> Traffic engineering — explicitly routes LSPs (Label Switched Paths)</p>
+<h3 id="sd-wan-software-defined-wan-">SD-WAN (Software-Defined WAN)</h3>
+<p>Software-defined approach to managing WAN connections:</p>
+<ul>
+<li>Central controller manages all WAN routers/appliances</li>
+<li>Abstract underlying transport (MPLS, internet, LTE, satellite)</li>
+<li>Dynamic path selection based on application and network conditions</li>
+<li>Zero-touch provisioning</li>
+<li>Centralized policy and visibility</li>
+</ul>
+<p><strong>Benefits over traditional WAN:</strong></p>
+<ul>
+<li>Use cheap internet links alongside expensive MPLS</li>
+<li>Application-aware routing (Office365 goes direct to internet, SAP goes via MPLS)</li>
+<li>Automated failover between links</li>
+<li>Centralized management</li>
+<li>Better visibility and analytics</li>
+</ul>
+<p><strong>Vendors:</strong> Cisco Viptela, VMware VeloCloud, Silver Peak, Fortinet, Palo Alto Prisma SD-WAN</p>
+<h3 id="cellular-wan-lte-5g-">Cellular WAN (LTE/5G)</h3>
+<ul>
+<li>Used for backup WAN or primary connection where fiber/cable unavailable</li>
+<li><strong>LTE:</strong> 50–150 Mbps typical; latency ~30–50ms</li>
+<li><strong>5G Sub-6 GHz:</strong> 100–900 Mbps; latency ~10–20ms</li>
+<li><strong>5G mmWave:</strong> Multi-Gbps; very short range; latency ~1ms</li>
+<li>Requires SIM card and cellular plan</li>
+</ul>
+<h3 id="satellite">Satellite</h3>
+<ul>
+<li>Useful where terrestrial options unavailable (rural, maritime, aviation)</li>
+<li><strong>GEO (Geostationary):</strong> 35,786 km altitude; ~600ms latency (problematic for VoIP/gaming)<ul>
+<li>Viasat, HughesNet</li>
+</ul>
+</li>
+<li><strong>LEO (Low Earth Orbit):</strong> 550–1200 km; ~20ms latency; requires more satellites<ul>
+<li><strong>Starlink:</strong> SpaceX; 150–500 Mbps; 20–40ms latency; rapidly expanding</li>
+<li>OneWeb, Amazon Kuiper</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="7-8-nat-configuration-cisco-">7.8 NAT Configuration (Cisco)</h2>
+<pre><code class="lang-cisco">! Define inside and outside interfaces
+Router(config)# interface GigabitEthernet0/<span class="hljs-number">0</span>          ! LAN
+Router(config-if)# ip nat inside
+Router(config-if)# interface GigabitEthernet0/<span class="hljs-number">1</span>       ! WAN/Internet
+Router(config-if)# ip nat outside
+
+! PAT (overload) — most common
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">1</span> permit <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.255</span>
+Router(config)# ip nat inside source <span class="hljs-type">list</span> <span class="hljs-number">1</span> interface GigabitEthernet0/<span class="hljs-number">1</span> overload
+
+! Static NAT (one-to-one)
+Router(config)# ip nat inside source static <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.10</span> <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.10</span>
+
+! Static PAT (port forwarding) — forward port <span class="hljs-number">80</span> to internal web server
+Router(config)# ip nat inside source static tcp <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.20</span> <span class="hljs-number">80</span> <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.1</span> <span class="hljs-number">80</span>
+
+! Dynamic NAT with pool
+Router(config)# ip nat pool PUBLIC-IPS <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.10</span> <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.20</span> netmask <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span>
+Router(config)# ip nat inside source <span class="hljs-type">list</span> <span class="hljs-number">1</span> pool PUBLIC-IPS
+
+! Verification
+Router# show ip nat translations
+Router# show ip nat translations verbose
+Router# show ip nat statistics
+Router# debug ip nat
+</code></pre>
+<hr>
+</body></html>

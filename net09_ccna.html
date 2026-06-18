@@ -1,0 +1,635 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-9-cisco-ccna-200-301-complete-guide">SECTION 9: Cisco CCNA 200-301 — Complete Guide</h1>
+<hr>
+<h2 id="9-1-ccna-exam-overview">9.1 CCNA Exam Overview</h2>
+<p><strong>Exam Code:</strong> 200-301<br><strong>Questions:</strong> ~100 (multiple-choice, drag-and-drop, simulation)<br><strong>Time Limit:</strong> 120 minutes<br><strong>Passing Score:</strong> ~825 (on a 300–1000 scale)</p>
+<h3 id="domain-breakdown">Domain Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Network Fundamentals</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>2. Network Access</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>3. IP Connectivity</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>4. IP Services</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>5. Security Fundamentals</td>
+<td>15%</td>
+</tr>
+<tr>
+<td>6. Automation and Programmability</td>
+<td>10%</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="9-2-cisco-ios-fundamentals">9.2 Cisco IOS Fundamentals</h2>
+<h3 id="ios-cli-modes">IOS CLI Modes</h3>
+<pre><code>Router&gt;           User EXEC Mode        — <span class="hljs-keyword">Basic </span>view<span class="hljs-comment">; limited commands</span>
+Router<span class="hljs-comment">#           Privileged EXEC Mode  — Full read access; configure, copy, debug</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment">#   Global Config Mode    — Change global settings</span>
+Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># Interface Config     — Configure specific interface</span>
+Router(<span class="hljs-built_in">config</span>-line)<span class="hljs-comment"># Line Config       — Configure console/VTY lines</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># Router Config   — Configure routing protocols</span>
+Router(<span class="hljs-built_in">config</span>-vlan)<span class="hljs-comment"># VLAN Config       — Configure VLAN (Switch)</span>
+</code></pre><p><strong>Mode navigation:</strong></p>
+<pre><code class="lang-cisco">Router&gt; enable                          ! User → Privileged
+Router# configure terminal              ! Privileged → <span class="hljs-keyword">Global</span> Config
+Router(config)# <span class="hljs-keyword">interface</span> gi0/<span class="hljs-number">0</span>        ! <span class="hljs-keyword">Global</span> → <span class="hljs-keyword">Interface</span> Config
+Router(config-<span class="hljs-keyword">if</span>)# <span class="hljs-keyword">exit</span>                ! One level up
+Router(config-<span class="hljs-keyword">if</span>)# <span class="hljs-keyword">end</span>                 ! Jump directly <span class="hljs-keyword">to</span> Privileged
+Ctrl+Z                                 ! Same <span class="hljs-keyword">as</span> <span class="hljs-keyword">end</span>
+Router# disable                        ! Privileged → User
+Router# <span class="hljs-keyword">exit</span>                           ! Log <span class="hljs-keyword">out</span>
+</code></pre>
+<h3 id="essential-cli-shortcuts">Essential CLI Shortcuts</h3>
+<pre><code>?                  Context-sensitive <span class="hljs-keyword">help</span>
+Tab                <span class="hljs-keyword">Auto</span>-<span class="hljs-keyword">complete</span> command
+Ctrl+A             <span class="hljs-keyword">Move</span> <span class="hljs-keyword">cursor</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">beginning</span> <span class="hljs-keyword">of</span> line
+Ctrl+E             <span class="hljs-keyword">Move</span> <span class="hljs-keyword">cursor</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">end</span> <span class="hljs-keyword">of</span> line
+Ctrl+U             <span class="hljs-keyword">Delete</span> entire line
+Ctrl+W             <span class="hljs-keyword">Delete</span> word <span class="hljs-keyword">to</span> the <span class="hljs-keyword">left</span>
+Ctrl+C             Interrupt command
+Ctrl+Z             <span class="hljs-keyword">Return</span> <span class="hljs-keyword">to</span> privileged <span class="hljs-keyword">mode</span>
+Up/Down arrows     Command history
+<span class="hljs-keyword">show</span> history       <span class="hljs-keyword">View</span> command history
+terminal history <span class="hljs-keyword">size</span> <span class="hljs-number">50</span>    <span class="hljs-keyword">Set</span> history buffer
+</code></pre><h3 id="abbreviations">Abbreviations</h3>
+<p>IOS accepts minimum unambiguous abbreviations:</p>
+<pre><code class="lang-cisco"><span class="hljs-keyword">show</span> → sh
+configure terminal → conf t
+<span class="hljs-keyword">interface</span> → <span class="hljs-built_in">int</span>
+GigabitEthernet → gi <span class="hljs-keyword">or</span> gig
+FastEthernet → fa <span class="hljs-keyword">or</span> <span class="hljs-keyword">fast</span>
+<span class="hljs-keyword">no</span> <span class="hljs-keyword">shutdown</span> → <span class="hljs-keyword">no</span> shut
+copy running-config <span class="hljs-keyword">startup</span>-config → copy run <span class="hljs-keyword">start</span>
+</code></pre>
+<hr>
+<h2 id="9-3-basic-device-configuration">9.3 Basic Device Configuration</h2>
+<h3 id="initial-setup">Initial Setup</h3>
+<pre><code class="lang-cisco">! Hostname
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># hostname R1</span>
+
+! Prevent DNS lookup on typos (often annoying in lab)
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no ip domain-lookup</span>
+
+! Set passwords
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># enable secret Cisco123!           ! Privileged mode password (MD5 hashed)</span>
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># service password-encryption       ! Encrypt all plaintext passwords</span>
+
+! <span class="hljs-built_in">Console</span> password
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># <span class="hljs-meta-keyword">line</span> console 0</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># password ConsolePass</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># login</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># logging synchronous          ! Prevents log messages interrupting typing</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># exec-timeout 5 0            ! 5-minute idle timeout</span>
+
+! VTY (Telnet/SSH) password
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># <span class="hljs-meta-keyword">line</span> vty 0 4</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># password VTYPass</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># login local                  ! Use local database</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># transport input ssh         ! SSH only</span>
+
+! Local user account
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># username admin privilege 15 secret AdminPass</span>
+
+! Banner
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># banner motd <span class="hljs-meta-string">"Authorized access only!"</span></span>
+
+! SSH <span class="hljs-built_in">setup</span>
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip domain-name example.com</span>
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># crypto key generate rsa modulus 2048</span>
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip ssh version 2</span>
+</code></pre>
+<h3 id="saving-configuration">Saving Configuration</h3>
+<pre><code class="lang-cisco">! View configs
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show running-config           ! Current active config (in RAM)</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show startup-config           ! Saved config (in NVRAM)</span>
+
+! Save config
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># copy running-config startup-config    ! Save to NVRAM</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># write memory                          ! Same thing (shorthand)</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># wr                                    ! Even shorter</span>
+
+! Backup to TFTP
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># copy running-config tftp://192.168.1.200/R1-backup.cfg</span>
+
+! Restore from TFTP
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># copy tftp://192.168.1.200/R1-backup.cfg running-config</span>
+
+! Erase startup config
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># erase startup-config</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># delete flash:vlan.dat         ! Delete VLAN database on switch</span>
+
+! Reset to factory defaults
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># erase startup-config</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># reload</span>
+</code></pre>
+<hr>
+<h2 id="9-4-interface-configuration">9.4 Interface Configuration</h2>
+<h3 id="router-interfaces">Router Interfaces</h3>
+<pre><code class="lang-cisco">! Physical interface
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/0</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># description Link to Switch SW1</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 192.168.1.1 255.255.255.0</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown                    ! Enable interface (default is shutdown)</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># duplex full</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># speed 1000</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># bandwidth 1000000             ! Sets bandwidth for routing metric (Kbps)</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># clock rate 64000             ! Required on DCE end of serial link</span>
+
+! Loopback interface (always up, never physical)
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface Loopback0</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 1.1.1.1 255.255.255.255</span>
+
+! <span class="hljs-built_in">Serial</span> interface
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface Serial0/0/0</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 10.0.0.1 255.255.255.252</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># encapsulation ppp             ! Or hdlc (default on Cisco)</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown</span>
+
+! Interface ranges
+R1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface range GigabitEthernet0/0 - 3</span>
+R1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>-range)<span class="hljs-meta"># shutdown               ! Shut down multiple at once</span>
+</code></pre>
+<h3 id="interface-verification">Interface Verification</h3>
+<pre><code class="lang-cisco"><span class="hljs-built_in">R1</span># show interfaces                          ! All interface status <span class="hljs-keyword">and</span> stats
+<span class="hljs-built_in">R1</span># show interfaces GigabitEthernet0/<span class="hljs-number">0</span>       ! Specific interface
+<span class="hljs-built_in">R1</span># show interfaces GigabitEthernet0/<span class="hljs-number">0</span> status  ! Brief status
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> interface                        ! <span class="hljs-built_in">IP</span> info for all interfaces
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> interface brief                  ! Quick status table (most used!)
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> interface GigabitEthernet0/<span class="hljs-number">0</span>     ! <span class="hljs-built_in">IP</span> details for interface
+
+! Show <span class="hljs-built_in">ip</span> <span class="hljs-keyword">int</span> brief output:
+! Interface       <span class="hljs-built_in">IP</span>-Address      OK?   Method  Status    Protocol
+! GigabitEthernet0/<span class="hljs-number">0</span>  <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>  YES  manual  <span class="hljs-meta">up</span>        <span class="hljs-meta">up</span>
+! GigabitEthernet0/<span class="hljs-number">1</span>  unassigned   YES  unset   administratively <span class="hljs-meta">down</span>  <span class="hljs-meta">down</span>
+
+! Status column: <span class="hljs-meta">up</span> / administratively <span class="hljs-meta">down</span> (shutdown) / <span class="hljs-meta">down</span> (no cable)
+! Protocol column: <span class="hljs-meta">up</span> / <span class="hljs-meta">down</span> (Layer <span class="hljs-number">2</span> issue)
+
+<span class="hljs-built_in">R1</span># show controllers Serial0/<span class="hljs-number">0</span>/<span class="hljs-number">0</span>            ! Shows if DCE <span class="hljs-keyword">or</span> DTE
+</code></pre>
+<hr>
+<h2 id="9-5-switch-configuration">9.5 Switch Configuration</h2>
+<h3 id="basic-switch-commands">Basic Switch Commands</h3>
+<pre><code class="lang-cisco">! VLANs (already covered in switching section)
+SW1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># vlan 10</span>
+SW1(<span class="hljs-built_in">config</span>-vlan)<span class="hljs-meta"># name Sales</span>
+
+! Access port
+SW1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface FastEthernet0/1</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport mode access</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport access vlan 10</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown</span>
+
+! Trunk port
+SW1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/1</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport trunk encapsulation dot1q    ! Some switches require this first</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport mode trunk</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport trunk native vlan 99</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport trunk allowed vlan 10,20,30</span>
+
+! Management IP (SVI <span class="hljs-built_in">for</span> VLAN <span class="hljs-number">1</span> or mgmt VLAN)
+SW1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface vlan 1</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 192.168.1.100 255.255.255.0</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown</span>
+SW1(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip default-gateway 192.168.1.1</span>
+
+! Switch verification
+SW1<span class="hljs-meta"># show vlan brief</span>
+SW1<span class="hljs-meta"># show interfaces trunk</span>
+SW1<span class="hljs-meta"># show mac address-table</span>
+SW1<span class="hljs-meta"># show mac address-table dynamic</span>
+SW1<span class="hljs-meta"># show mac address-table vlan 10</span>
+SW1<span class="hljs-meta"># show interfaces FastEthernet0/1 switchport</span>
+SW1<span class="hljs-meta"># show spanning-tree</span>
+SW1<span class="hljs-meta"># show spanning-tree summary</span>
+</code></pre>
+<h3 id="switch-port-security">Switch Port Security</h3>
+<pre><code class="lang-cisco">SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport port-security</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport port-security maximum 3</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport port-security mac-address sticky</span>
+SW1(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># switchport port-security violation restrict</span>
+
+SW1<span class="hljs-meta"># show port-security interface fa0/1</span>
+SW1<span class="hljs-meta"># show port-security</span>
+</code></pre>
+<hr>
+<h2 id="9-6-routing-configuration">9.6 Routing Configuration</h2>
+<h3 id="static-routes">Static Routes</h3>
+<pre><code class="lang-cisco">! Basic static route
+R1(config)# ip route <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span>      ! Via next-hop
+R1(config)# ip route <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> GigabitEthernet0/<span class="hljs-number">1</span>  ! Via interface
+R1(config)# ip route <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> GigabitEthernet0/<span class="hljs-number">1</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span>  ! Both
+
+! Default route
+R1(config)# ip route <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.1</span>
+
+! Floating static (AD <span class="hljs-number">200</span> — only used if OSPF route disappears)
+R1(config)# ip route <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> <span class="hljs-number">10.255</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> <span class="hljs-number">200</span>
+
+! Verify routing
+R1# show ip route
+R1# show ip route <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>
+R1# show ip route static
+R1# show ip route connected
+R1# ping <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>
+R1# ping <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> source GigabitEthernet0/<span class="hljs-number">0</span>    ! Ping from specific interface
+R1# traceroute <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>
+</code></pre>
+<h3 id="ospf-configuration-ccna-level-">OSPF Configuration (CCNA level)</h3>
+<pre><code class="lang-cisco">! Basic OSPF
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># router ospf 1</span>
+<span class="hljs-built_in">R1</span>(config-router)<span class="hljs-meta"># router-id 1.1.1.1</span>
+<span class="hljs-built_in">R1</span>(config-router)<span class="hljs-meta"># network 192.168.1.0 0.0.0.255 area 0</span>
+<span class="hljs-built_in">R1</span>(config-router)<span class="hljs-meta"># network 10.0.0.0 0.0.0.3 area 0</span>
+<span class="hljs-built_in">R1</span>(config-router)<span class="hljs-meta"># passive-interface GigabitEthernet0/0   ! Don't send Hellos on LAN</span>
+
+! OSPF on specific interface (alternative)
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/1</span>
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># ip ospf 1 area 0</span>
+
+! Adjust cost
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/1</span>
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># ip ospf cost 100</span>
+
+! Advertise default route into OSPF
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># router ospf 1</span>
+<span class="hljs-built_in">R1</span>(config-router)<span class="hljs-meta"># default-information originate</span>
+
+! Verification
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ip ospf neighbor</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ip ospf</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ip ospf interface brief</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ip ospf interface GigabitEthernet0/1</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ip ospf database</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ip route ospf</span>
+</code></pre>
+<h3 id="eigrp-configuration-ccna-level-">EIGRP Configuration (CCNA level)</h3>
+<pre><code class="lang-cisco"><span class="hljs-built_in">R1</span>(config)# router eigrp <span class="hljs-number">100</span>
+<span class="hljs-built_in">R1</span>(config-router)# network <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span> <span class="hljs-number">0.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.255</span>
+<span class="hljs-built_in">R1</span>(config-router)# network <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span> <span class="hljs-number">0.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.3</span>
+<span class="hljs-built_in">R1</span>(config-router)# no auto-summary
+<span class="hljs-built_in">R1</span>(config-router)# passive-interface GigabitEthernet0/<span class="hljs-number">0</span>
+<span class="hljs-built_in">R1</span>(config-router)# eigrp router-id <span class="hljs-number">1.1</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>
+
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> eigrp neighbors
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> eigrp topology
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> route eigrp
+</code></pre>
+<hr>
+<h2 id="9-7-dhcp-on-cisco-router">9.7 DHCP on Cisco Router</h2>
+<pre><code class="lang-cisco">! DHCP pool
+<span class="hljs-built_in">R1</span>(config)# <span class="hljs-built_in">ip</span> dhcp pool LAN-CLIENTS
+<span class="hljs-built_in">R1</span>(dhcp-config)# network <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span> <span class="hljs-number">255.255</span><span class="hljs-meta">.255</span><span class="hljs-meta">.0</span>
+<span class="hljs-built_in">R1</span>(dhcp-config)# <span class="hljs-meta">default</span>-router <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>
+<span class="hljs-built_in">R1</span>(dhcp-config)# dns-server <span class="hljs-number">8.8</span><span class="hljs-meta">.8</span><span class="hljs-meta">.8</span> <span class="hljs-number">8.8</span><span class="hljs-meta">.4</span><span class="hljs-meta">.4</span>
+<span class="hljs-built_in">R1</span>(dhcp-config)# domain-name example.com
+<span class="hljs-built_in">R1</span>(dhcp-config)# lease <span class="hljs-number">7</span>                          ! <span class="hljs-number">7</span>-day lease
+<span class="hljs-built_in">R1</span>(dhcp-config)# lease infinite
+
+! Exclude IPs from pool (router IPs, servers, etc.)
+<span class="hljs-built_in">R1</span>(config)# <span class="hljs-built_in">ip</span> dhcp excluded-address <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span> <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.20</span>
+
+! DHCP Relay (forward DHCP to server on another subnet)
+<span class="hljs-built_in">R1</span>(config)# interface GigabitEthernet0/<span class="hljs-number">0</span>          ! Client-facing interface
+<span class="hljs-built_in">R1</span>(config-if)# <span class="hljs-built_in">ip</span> helper-address <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.100</span>       ! DHCP server <span class="hljs-built_in">IP</span>
+
+! Verification
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> dhcp pool
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> dhcp binding
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> dhcp conflict
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> dhcp server statistics
+</code></pre>
+<hr>
+<h2 id="9-8-nat-configuration-ccna-level-">9.8 NAT Configuration (CCNA Level)</h2>
+<pre><code class="lang-cisco">! Identify inside/outside
+<span class="hljs-built_in">R1</span>(config)# interface GigabitEthernet0/<span class="hljs-number">0</span>          ! LAN
+<span class="hljs-built_in">R1</span>(config-if)# <span class="hljs-built_in">ip</span> nat inside
+
+<span class="hljs-built_in">R1</span>(config)# interface GigabitEthernet0/<span class="hljs-number">1</span>          ! WAN/Internet
+<span class="hljs-built_in">R1</span>(config-if)# <span class="hljs-built_in">ip</span> nat outside
+
+! PAT (most <span class="hljs-meta">common</span>)
+<span class="hljs-built_in">R1</span>(config)# access-list <span class="hljs-number">1</span> permit <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span> <span class="hljs-number">0.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.255</span>
+<span class="hljs-built_in">R1</span>(config)# <span class="hljs-built_in">ip</span> nat inside source list <span class="hljs-number">1</span> interface GigabitEthernet0/<span class="hljs-number">1</span> overload
+
+! Static NAT
+<span class="hljs-built_in">R1</span>(config)# <span class="hljs-built_in">ip</span> nat inside source static <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.10</span> <span class="hljs-number">203.0</span><span class="hljs-meta">.113</span><span class="hljs-meta">.10</span>
+
+! Port forwarding (static PAT)
+<span class="hljs-built_in">R1</span>(config)# <span class="hljs-built_in">ip</span> nat inside source static tcp <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.10</span> <span class="hljs-number">80</span> <span class="hljs-number">203.0</span><span class="hljs-meta">.113</span><span class="hljs-meta">.1</span> <span class="hljs-number">80</span>
+
+! Verification
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> nat translations
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> nat translations verbose
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> nat statistics
+<span class="hljs-built_in">R1</span># debug <span class="hljs-built_in">ip</span> nat
+</code></pre>
+<hr>
+<h2 id="9-9-ipv6-configuration">9.9 IPv6 Configuration</h2>
+<pre><code class="lang-cisco">! Enable IPv6 routing
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># ipv6 unicast-routing</span>
+
+! Manual address
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/0</span>
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># ipv6 address 2001:db8:1::1/64</span>
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># ipv6 address FE80::1 link-local     ! Manual link-local</span>
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># no shutdown</span>
+
+! SLAAC (device automatically configures address from RA)
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># ipv6 address autoconfig              ! On client interface</span>
+
+! OSPFv3 for IPv6
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># ipv6 router ospf 1</span>
+<span class="hljs-built_in">R1</span>(config-rtr)<span class="hljs-meta"># router-id 1.1.1.1</span>
+
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/0</span>
+<span class="hljs-built_in">R1</span>(config-if)<span class="hljs-meta"># ipv6 ospf 1 area 0</span>
+
+! IPv6 static routes
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># ipv6 route 2001:db8:2::/64 2001:db8:ff::2</span>
+<span class="hljs-built_in">R1</span>(config)<span class="hljs-meta"># ipv6 route ::/0 2001:db8:ff::1           ! Default route</span>
+
+! Verification
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ipv6 interface brief</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ipv6 interface GigabitEthernet0/0</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ipv6 route</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># show ipv6 neighbors</span>
+<span class="hljs-built_in">R1</span><span class="hljs-meta"># ping ipv6 2001:db8:2::1</span>
+</code></pre>
+<hr>
+<h2 id="9-10-cisco-troubleshooting-methodology">9.10 Cisco Troubleshooting Methodology</h2>
+<h3 id="7-step-process-comptia-cisco-approach">7-Step Process (CompTIA) / Cisco Approach</h3>
+<ol>
+<li><strong>Define the problem</strong> — Gather symptoms, affected users, scope</li>
+<li><strong>Gather information</strong> — Show commands, logs, user reports</li>
+<li><strong>Analyze information</strong> — Compare to expected behavior</li>
+<li><strong>Eliminate possible causes</strong> — Narrow down</li>
+<li><strong>Propose hypothesis</strong> — Most likely cause</li>
+<li><strong>Test hypothesis</strong> — Verify or disprove</li>
+<li><strong>Solve and document</strong> — Fix, verify, document</li>
+</ol>
+<h3 id="key-troubleshooting-commands">Key Troubleshooting Commands</h3>
+<pre><code class="lang-cisco">! Layer <span class="hljs-number">1</span>
+<span class="hljs-built_in">R1</span># show interfaces GigabitEthernet0/<span class="hljs-number">0</span>   ! Look for: <span class="hljs-meta">up</span>/<span class="hljs-meta">up</span>, errors, input/output drops
+<span class="hljs-built_in">R1</span># show interfaces counters errors        ! Input/output errors
+! Status: <span class="hljs-meta">up</span>/<span class="hljs-meta">up</span> = good, admin <span class="hljs-meta">down</span> = shut, <span class="hljs-meta">down</span>/<span class="hljs-meta">down</span> = cable/hardware issue
+
+! Layer <span class="hljs-number">2</span>
+SW1# show mac address-table              ! Check MAC learning
+SW1# show interfaces trunk               ! Verify trunk links
+SW1# show spanning-tree                  ! Check for blocked ports, root bridge
+SW1# show vlan brief                     ! Verify VLAN assignments
+
+! Layer <span class="hljs-number">3</span>
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> interface brief              ! All interface IPs <span class="hljs-keyword">and</span> status
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> route                        ! Routing table
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> arp                         ! ARP cache
+<span class="hljs-built_in">R1</span># ping <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span>                       ! Basic connectivity
+<span class="hljs-built_in">R1</span># traceroute <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span>                 ! Path to destination
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> protocols                   ! Running routing protocols
+
+! OSPF troubleshooting
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> ospf neighbor               ! Should show FULL adjacency
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> ospf database               ! LSDB
+<span class="hljs-built_in">R1</span># debug <span class="hljs-built_in">ip</span> ospf hello                 ! Watch Hello packets
+<span class="hljs-built_in">R1</span># debug <span class="hljs-built_in">ip</span> ospf events                ! OSPF events
+
+! EIGRP troubleshooting
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> eigrp neighbors             ! Neighbor table
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> eigrp topology             ! Topology table (FSs visible)
+<span class="hljs-built_in">R1</span># debug eigrp packets                ! Packet-level debug
+
+! Show commands for CCNA exam
+<span class="hljs-built_in">R1</span># show version                        ! IOS version, uptime, hardware
+<span class="hljs-built_in">R1</span># show running-config                 ! Current config
+<span class="hljs-built_in">R1</span># show <span class="hljs-built_in">ip</span> bgp summary                ! BGP neighbor status
+<span class="hljs-built_in">R1</span># show cdp neighbors                 ! Discover directly connected Cisco devices
+<span class="hljs-built_in">R1</span># show cdp neighbors detail          ! <span class="hljs-built_in">IP</span> addresses of neighbors
+<span class="hljs-built_in">R1</span># show lldp neighbors                ! Open standard neighbor discovery
+
+! <span class="hljs-meta">Common</span> issues <span class="hljs-keyword">and</span> checks:
+! No route → check <span class="hljs-string">'show ip route'</span>
+! Wrong subnet → check <span class="hljs-built_in">ip</span> address <span class="hljs-keyword">and</span> mask on both ends
+! OSPF <span class="hljs-keyword">not</span> forming → check area, timers, MTU, authentication
+! Can<span class="hljs-string">'t ping across router → check no shutdown, ip address, routing</span>
+</code></pre>
+<h3 id="ping-extended-options">Ping Extended Options</h3>
+<pre><code class="lang-cisco"><span class="hljs-built_in">R1</span># ping <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span> repeat <span class="hljs-number">100</span>           ! Send <span class="hljs-number">100</span> pings
+<span class="hljs-built_in">R1</span># ping <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span> size <span class="hljs-number">1500</span>            ! Large packet (<span class="hljs-keyword">test</span> MTU)
+<span class="hljs-built_in">R1</span># ping <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span> source Loopback0    ! From loopback
+<span class="hljs-built_in">R1</span># ping <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span> timeout <span class="hljs-number">2</span>           ! <span class="hljs-number">2</span>-second timeout
+<span class="hljs-built_in">R1</span># ping <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.1</span> df-bit              ! Don<span class="hljs-string">'t fragment (path MTU test)
+
+! Extended ping (interactive)
+R1# ping
+Protocol [ip]:
+Target IP address: 10.0.0.1
+Repeat count [5]: 100
+Datagram size [100]: 1500
+Timeout in seconds [2]:
+Extended commands [n]: y
+Source address or interface: 192.168.1.1
+...</span>
+</code></pre>
+<hr>
+<h2 id="9-11-network-automation-and-programmability-ccna-">9.11 Network Automation and Programmability (CCNA)</h2>
+<h3 id="key-concepts">Key Concepts</h3>
+<p><strong>SDN (Software-Defined Networking):</strong></p>
+<ul>
+<li>Separates control plane from data plane</li>
+<li>Centralized intelligence in controller</li>
+<li>Northbound APIs (apps ↔ controller): REST, RESTCONF</li>
+<li>Southbound APIs (controller ↔ devices): OpenFlow, NETCONF, YANG</li>
+</ul>
+<p><strong>Controller-based networking:</strong></p>
+<ul>
+<li><strong>Cisco DNA Center:</strong> SDN controller for campus networks</li>
+<li><strong>Cisco ACI (Application Centric Infrastructure):</strong> SDN for datacenter</li>
+<li><strong>OpenDaylight:</strong> Open-source SDN controller</li>
+</ul>
+<p><strong>DNA Center benefits:</strong></p>
+<ul>
+<li>Centralized network management</li>
+<li>Network intent (describe what you want, not how)</li>
+<li>Automation of routine tasks</li>
+<li>Assurance (monitoring, troubleshooting)</li>
+</ul>
+<h3 id="apis">APIs</h3>
+<p><strong>REST (Representational State Transfer) API:</strong></p>
+<ul>
+<li>Uses HTTP methods: GET, POST, PUT, PATCH, DELETE</li>
+<li>Data format: JSON or XML</li>
+<li>Stateless — each request is independent</li>
+</ul>
+<pre><code class="lang-python"><span class="hljs-built_in">import</span> requests
+<span class="hljs-built_in">import</span> json
+
+<span class="hljs-comment"># Cisco DNA Center API example</span>
+<span class="hljs-attr">url</span> = <span class="hljs-string">"https://sandboxdnac.cisco.com/dna/intent/api/v1/network-device"</span>
+<span class="hljs-attr">headers</span> = {
+    <span class="hljs-string">"Content-Type"</span>: <span class="hljs-string">"application/json"</span>,
+    <span class="hljs-string">"X-Auth-Token"</span>: <span class="hljs-string">"your-token-here"</span>
+}
+
+<span class="hljs-attr">response</span> = requests.get(url, <span class="hljs-attr">headers=headers,</span> <span class="hljs-attr">verify=False)</span>
+<span class="hljs-attr">devices</span> = response.json()
+for device <span class="hljs-keyword">in</span> devices[<span class="hljs-string">"response"</span>]:
+    print(device[<span class="hljs-string">"hostname"</span>], device[<span class="hljs-string">"managementIpAddress"</span>])
+</code></pre>
+<h3 id="data-formats">Data Formats</h3>
+<p><strong>JSON (JavaScript Object Notation):</strong></p>
+<pre><code class="lang-json">{
+  <span class="hljs-attr">"hostname"</span>: <span class="hljs-string">"R1"</span>,
+  <span class="hljs-attr">"ip"</span>: <span class="hljs-string">"192.168.1.1"</span>,
+  <span class="hljs-attr">"interfaces"</span>: [
+    {<span class="hljs-attr">"name"</span>: <span class="hljs-string">"Gi0/0"</span>, <span class="hljs-attr">"status"</span>: <span class="hljs-string">"up"</span>},
+    {<span class="hljs-attr">"name"</span>: <span class="hljs-string">"Gi0/1"</span>, <span class="hljs-attr">"status"</span>: <span class="hljs-string">"down"</span>}
+  ]
+}
+</code></pre>
+<p><strong>XML (eXtensible Markup Language):</strong></p>
+<pre><code class="lang-xml"><span class="hljs-tag">&lt;<span class="hljs-name">device</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">hostname</span>&gt;</span>R1<span class="hljs-tag">&lt;/<span class="hljs-name">hostname</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ip</span>&gt;</span>192.168.1.1<span class="hljs-tag">&lt;/<span class="hljs-name">ip</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">interfaces</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">interface</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Gi0/0<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">status</span>&gt;</span>up<span class="hljs-tag">&lt;/<span class="hljs-name">status</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">interface</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">interfaces</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">device</span>&gt;</span>
+</code></pre>
+<p><strong>YAML (YAML Ain&#39;t Markup Language):</strong></p>
+<pre><code class="lang-yaml"><span class="hljs-attribute">hostname</span>: R1
+<span class="hljs-attribute">ip</span>: <span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>
+<span class="hljs-attribute">interfaces</span>:
+  - <span class="hljs-attribute">name</span>: Gi0/<span class="hljs-number">0</span>
+    <span class="hljs-attribute">status</span>: up
+  - <span class="hljs-attribute">name</span>: Gi0/<span class="hljs-number">1</span>
+    <span class="hljs-attribute">status</span>: down
+</code></pre>
+<h3 id="netconf-and-yang">NETCONF and YANG</h3>
+<p><strong>NETCONF:</strong> Network management protocol using XML over SSH/TLS</p>
+<ul>
+<li>Uses YANG data models to describe network configuration</li>
+<li>Operations: get, get-config, edit-config, copy-config, delete-config, lock, unlock</li>
+</ul>
+<p><strong>YANG:</strong> Data modeling language for network configuration</p>
+<pre><code class="lang-yang"><span class="hljs-class"><span class="hljs-keyword">module</span> <span class="hljs-title">interfaces</span> {</span>
+  container interfaces {
+    list interface {
+      key <span class="hljs-string">"name"</span>;
+      leaf name { <span class="hljs-keyword">type</span> string; }
+      leaf status { <span class="hljs-keyword">type</span> enumeration { <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">up</span>;</span> <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">down</span>;</span> } }
+      leaf ip-address { <span class="hljs-keyword">type</span> string; }
+    }
+  }
+}
+</code></pre>
+<h3 id="ansible-for-network-automation">Ansible for Network Automation</h3>
+<pre><code class="lang-yaml"><span class="hljs-comment"># Cisco IOS configuration playbook</span>
+<span class="hljs-meta">---</span>
+<span class="hljs-attr">- name:</span> Configure Cisco Router
+<span class="hljs-attr">  hosts:</span> routers
+<span class="hljs-attr">  gather_facts:</span> <span class="hljs-literal">no</span>
+
+<span class="hljs-attr">  tasks:</span>
+<span class="hljs-attr">    - name:</span> Set hostname
+<span class="hljs-attr">      ios_hostname:</span>
+<span class="hljs-attr">        config:</span> R1
+
+<span class="hljs-attr">    - name:</span> Configure interfaces
+<span class="hljs-attr">      ios_interfaces:</span>
+<span class="hljs-attr">        config:</span>
+<span class="hljs-attr">          - name:</span> GigabitEthernet0/<span class="hljs-number">0</span>
+<span class="hljs-attr">            description:</span> LAN
+<span class="hljs-attr">            enabled:</span> <span class="hljs-literal">true</span>
+<span class="hljs-attr">        state:</span> merged
+
+<span class="hljs-attr">    - name:</span> Configure OSPF
+<span class="hljs-attr">      ios_ospfv2:</span>
+<span class="hljs-attr">        config:</span>
+<span class="hljs-attr">          processes:</span>
+<span class="hljs-attr">            - process_id:</span> <span class="hljs-number">1</span>
+<span class="hljs-attr">              router_id:</span> <span class="hljs-number">1.1</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>
+<span class="hljs-attr">              areas:</span>
+<span class="hljs-attr">                - area_id:</span> <span class="hljs-string">"0"</span>
+<span class="hljs-attr">                  ranges:</span>
+<span class="hljs-attr">                    - address:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>
+
+<span class="hljs-comment"># Inventory file</span>
+[routers]
+R1 ansible_host=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span> ansible_user=admin ansible_password=Cisco123! ansible_connection=network_cli ansible_network_os=ios
+</code></pre>
+<h3 id="python-for-network-automation">Python for Network Automation</h3>
+<pre><code class="lang-python"><span class="hljs-comment"># Netmiko — simplifies SSH connections to network devices</span>
+from netmiko <span class="hljs-built_in">import</span> ConnectHandler
+
+<span class="hljs-attr">device</span> = {
+    <span class="hljs-string">"device_type"</span>: <span class="hljs-string">"cisco_ios"</span>,
+    <span class="hljs-string">"host"</span>: <span class="hljs-string">"192.168.1.1"</span>,
+    <span class="hljs-string">"username"</span>: <span class="hljs-string">"admin"</span>,
+    <span class="hljs-string">"password"</span>: <span class="hljs-string">"Cisco123!"</span>,
+    <span class="hljs-string">"secret"</span>: <span class="hljs-string">"Enable123!"</span>
+}
+
+<span class="hljs-keyword">with</span> ConnectHandler(**device) as conn:
+    conn.enable()
+
+    <span class="hljs-comment"># Show command</span>
+    <span class="hljs-attr">output</span> = conn.send_command(<span class="hljs-string">"show ip interface brief"</span>)
+    print(output)
+
+    <span class="hljs-comment"># Configuration</span>
+    <span class="hljs-attr">config_commands</span> = [
+        <span class="hljs-string">"interface GigabitEthernet0/0"</span>,
+        <span class="hljs-string">"description Configured by Netmiko"</span>,
+        <span class="hljs-string">"ip address 192.168.2.1 255.255.255.0"</span>,
+        <span class="hljs-string">"no shutdown"</span>
+    ]
+    conn.send_config_set(config_commands)
+    conn.save_config()
+
+<span class="hljs-comment"># NAPALM — vendor-neutral network automation</span>
+from napalm <span class="hljs-built_in">import</span> get_network_driver
+
+<span class="hljs-attr">driver</span> = get_network_driver(<span class="hljs-string">"ios"</span>)
+<span class="hljs-attr">device</span> = driver(
+    <span class="hljs-attr">hostname="192.168.1.1",</span>
+    <span class="hljs-attr">username="admin",</span>
+    <span class="hljs-attr">password="Cisco123!",</span>
+    <span class="hljs-attr">optional_args={"secret":</span> <span class="hljs-string">"Enable123!"</span>}
+)
+
+device.open()
+<span class="hljs-attr">facts</span> = device.get_facts()
+<span class="hljs-attr">interfaces</span> = device.get_interfaces_ip()
+<span class="hljs-attr">bgp_neighbors</span> = device.get_bgp_neighbors()
+device.close()
+</code></pre>
+<hr>
+<h2 id="9-12-ccna-quick-reference">9.12 CCNA Quick Reference</h2>
+<p><strong>OSI Layers:</strong> Physical → Data Link → Network → Transport → Session → Presentation → Application<br><strong>PDUs:</strong> Bits → Frames → Packets → Segments → Data<br><strong>TCP 3-way:</strong> SYN → SYN-ACK → ACK<br><strong>Subnetting hosts:</strong> 2^n - 2 (n = host bits)<br><strong>Show ip int brief:</strong> Quick interface status check<br><strong>OSPF neighbor states:</strong> Down → Init → 2-Way → ExStart → Exchange → Loading → Full<br><strong>OSPF DR/BDR:</strong> Highest priority, then highest RID; not preemptive<br><strong>OSPF cost:</strong> 100Mbps / interface bandwidth<br><strong>EIGRP metric:</strong> (10^7/BW) + delay<br><strong>Admin distances:</strong> Connected=0, Static=1, EIGRP=90, OSPF=110, RIP=120<br><strong>STP root bridge:</strong> Lowest BID (priority + MAC)<br><strong>STP port states (802.1D):</strong> Blocking → Listening → Learning → Forwarding<br><strong>HSRP:</strong> Virtual IP; highest priority is active; Cisco proprietary<br><strong>VRRP:</strong> IEEE standard FHRP; real IP can be virtual IP<br><strong>PortFast:</strong> Skip listening/learning on access ports (use only on access!)<br><strong>BPDU Guard:</strong> Disable port if BPDU received (protects PortFast ports)</p>
+<hr>
+</body></html>

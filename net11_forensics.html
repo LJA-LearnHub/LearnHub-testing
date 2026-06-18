@@ -1,0 +1,892 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-11-network-forensics">SECTION 11: Network Forensics</h1>
+<hr>
+<h2 id="11-1-what-is-network-forensics-">11.1 What Is Network Forensics?</h2>
+<p>Network forensics is the capture, recording, and analysis of network events to discover the source of security attacks or other problem incidents. Unlike traditional disk forensics, network data is transient — if you don&#39;t capture it in time, it&#39;s gone.</p>
+<p><strong>Goals of network forensics:</strong></p>
+<ul>
+<li>Identify unauthorized access or data exfiltration</li>
+<li>Reconstruct attack timelines</li>
+<li>Attribute attacks to sources</li>
+<li>Gather evidence for legal proceedings</li>
+<li>Understand scope and impact of an incident</li>
+<li>Inform remediation and prevention</li>
+</ul>
+<p><strong>Two primary approaches:</strong></p>
+<ul>
+<li><strong>&quot;Catch-it-as-you-can&quot;:</strong> Full packet capture at all times (storage-intensive)</li>
+<li><strong>&quot;Stop-look-listen&quot;:</strong> Capture only during suspected incidents</li>
+</ul>
+<hr>
+<h2 id="11-2-evidence-collection-principles">11.2 Evidence Collection Principles</h2>
+<h3 id="chain-of-custody">Chain of Custody</h3>
+<p>Every piece of evidence must be tracked from collection through presentation:</p>
+<ul>
+<li><strong>Who</strong> collected it, <strong>when</strong>, <strong>where</strong>, <strong>how</strong></li>
+<li>Document every person who handled evidence</li>
+<li>Store evidence securely (write-protected media, locked room)</li>
+<li>Create forensic copies — <strong>never work on original evidence</strong></li>
+<li>Hashes verify evidence integrity (MD5, SHA-256)</li>
+</ul>
+<h3 id="order-of-volatility">Order of Volatility</h3>
+<p>Collect most volatile evidence first (it disappears soonest):</p>
+<ol>
+<li><strong>CPU registers, cache</strong> — lost when process ends</li>
+<li><strong>RAM (memory)</strong> — lost when power off</li>
+<li><strong>Network state</strong> — active connections, ARP cache, routing tables</li>
+<li><strong>Running processes</strong> — current process list, open files</li>
+<li><strong>Disk (temporary files, swap)</strong> — survive reboots, can be overwritten</li>
+<li><strong>Remote logging and monitoring data</strong> — may roll over</li>
+<li><strong>Physical media (HDD/SSD)</strong> — most persistent</li>
+<li><strong>Backup media, printed records</strong> — longest lasting</li>
+</ol>
+<h3 id="network-evidence-sources">Network Evidence Sources</h3>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Type</th>
+<th>Volatility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packet captures (pcap)</td>
+<td>Full content</td>
+<td>High (if live) / Low (if saved)</td>
+</tr>
+<tr>
+<td>NetFlow/IPFIX records</td>
+<td>Metadata only</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Firewall logs</td>
+<td>Connection records</td>
+<td>Medium-Low</td>
+</tr>
+<tr>
+<td>IDS/IPS alerts</td>
+<td>Signature matches</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>DHCP logs</td>
+<td>IP-to-MAC assignments</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>DNS logs</td>
+<td>Name resolution history</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Syslog / Event logs</td>
+<td>System events</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>SIEM aggregated logs</td>
+<td>Correlated events</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Web proxy logs</td>
+<td>HTTP requests</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="11-3-wireshark-complete-reference">11.3 Wireshark — Complete Reference</h2>
+<p>Wireshark is the most widely used network protocol analyzer. It captures and decodes packets in real time or from saved capture files.</p>
+<h3 id="installation-and-interface">Installation and Interface</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># Install</span>
+sudo apt install wireshark tshark
+sudo usermod <span class="hljs-_">-a</span>G wireshark <span class="hljs-variable">$USER</span>    <span class="hljs-comment"># Allow non-root capture</span>
+newgrp wireshark
+
+<span class="hljs-comment"># Launch</span>
+wireshark                           <span class="hljs-comment"># GUI</span>
+tshark                              <span class="hljs-comment"># Command-line version</span>
+</code></pre>
+<h3 id="capture-filters-bpf-syntax-">Capture Filters (BPF Syntax)</h3>
+<p>Capture filters are applied <strong>before</strong> packets are captured — only matching packets are recorded.</p>
+<pre><code class="lang-bash"># Host filters
+host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>                  # Traffic to or from host
+src host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>             # Traffic from host
+dst host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>             # Traffic to host
+not host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>               # Exclude host
+
+# Network filters
+net <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>                  # Traffic in subnet
+src net <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>/<span class="hljs-number">8</span>                 # From subnet
+dst net <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>             # To subnet
+
+# Port filters
+port <span class="hljs-number">80</span>                             # TCP or UDP port <span class="hljs-number">80</span>
+src port <span class="hljs-number">443</span>                        # Source port <span class="hljs-number">443</span>
+dst port <span class="hljs-number">22</span>                         # Destination port <span class="hljs-number">22</span>
+portrange <span class="hljs-number">8080</span><span class="hljs-number">-8090</span>                 # Port range
+not port <span class="hljs-number">22</span>                         # Exclude SSH
+
+# Protocol filters
+tcp                                 # TCP only
+udp                                 # UDP only
+icmp                                # ICMP only
+arp                                 # ARP only
+ip                                  # IPv4 only
+ip6                                 # IPv6 only
+not arp and not ip6                 # No ARP or IPv6
+
+# Combinations
+tcp and host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>          # TCP to/from specific host
+tcp port <span class="hljs-number">80</span> or tcp port <span class="hljs-number">443</span>         # HTTP or HTTPS
+host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span> and not port <span class="hljs-number">22</span>  # Host, excluding SSH
+src host <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.5</span> and dst port <span class="hljs-number">80</span>  # HTTP from specific host
+</code></pre>
+<h3 id="display-filters-wireshark-syntax-">Display Filters (Wireshark Syntax)</h3>
+<p>Display filters are applied <strong>after</strong> capture — filter what&#39;s shown from captured packets.</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># IP address filters</span>
+ip.<span class="hljs-attr">addr</span> == <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>           <span class="hljs-comment"># Either direction</span>
+ip.<span class="hljs-attr">src</span> == <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>            <span class="hljs-comment"># Source</span>
+ip.<span class="hljs-attr">dst</span> == <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>            <span class="hljs-comment"># Destination</span>
+ip.<span class="hljs-attr">addr</span> == <span class="hljs-number">192.168</span>.<span class="hljs-number">1.0</span>/<span class="hljs-number">24</span>          <span class="hljs-comment"># Subnet</span>
+!(ip.<span class="hljs-attr">addr</span> == <span class="hljs-number">192.168</span>.<span class="hljs-number">1.1</span>)          <span class="hljs-comment"># Exclude</span>
+
+<span class="hljs-comment"># TCP/UDP port filters</span>
+tcp.<span class="hljs-attr">port</span> == <span class="hljs-number">80</span>                      <span class="hljs-comment"># Either direction</span>
+tcp.<span class="hljs-attr">srcport</span> == <span class="hljs-number">443</span>
+tcp.<span class="hljs-attr">dstport</span> == <span class="hljs-number">22</span>
+udp.<span class="hljs-attr">port</span> == <span class="hljs-number">53</span>
+tcp.port <span class="hljs-keyword">in</span> {<span class="hljs-number">80</span> <span class="hljs-number">443</span> <span class="hljs-number">8080</span> <span class="hljs-number">8443</span>}     <span class="hljs-comment"># Multiple ports</span>
+
+<span class="hljs-comment"># Protocol filters (just type protocol name)</span>
+http                                <span class="hljs-comment"># HTTP</span>
+https (actually: tls <span class="hljs-literal">or</span> ssl)        <span class="hljs-comment"># HTTPS (decoded as TLS)</span>
+dns                                 <span class="hljs-comment"># DNS</span>
+dhcp                                <span class="hljs-comment"># DHCP (or bootp)</span>
+arp                                 <span class="hljs-comment"># ARP</span>
+icmp                                <span class="hljs-comment"># ICMP</span>
+icmpv6                              <span class="hljs-comment"># ICMPv6</span>
+smtp                                <span class="hljs-comment"># SMTP</span>
+ftp                                 <span class="hljs-comment"># FTP</span>
+ssh                                 <span class="hljs-comment"># SSH</span>
+rdp                                 <span class="hljs-comment"># RDP</span>
+smb <span class="hljs-literal">or</span> smb2                        <span class="hljs-comment"># SMB</span>
+ldap                                <span class="hljs-comment"># LDAP</span>
+kerberos                            <span class="hljs-comment"># Kerberos</span>
+
+<span class="hljs-comment"># TCP flags</span>
+tcp.flags.<span class="hljs-attr">syn</span> == <span class="hljs-number">1</span>                  <span class="hljs-comment"># SYN packets</span>
+tcp.flags.<span class="hljs-attr">fin</span> == <span class="hljs-number">1</span>                  <span class="hljs-comment"># FIN packets</span>
+tcp.flags.<span class="hljs-attr">rst</span> == <span class="hljs-number">1</span>                  <span class="hljs-comment"># RST packets</span>
+tcp.flags.<span class="hljs-attr">syn</span> == <span class="hljs-number">1</span> <span class="hljs-literal">and</span> tcp.flags.<span class="hljs-attr">ack</span> == <span class="hljs-number">0</span>  <span class="hljs-comment"># SYN only (new connections)</span>
+tcp.analysis.retransmission        <span class="hljs-comment"># Retransmissions</span>
+tcp.analysis.duplicate_ack        <span class="hljs-comment"># Duplicate ACKs (congestion)</span>
+
+<span class="hljs-comment"># HTTP filters</span>
+http.request.<span class="hljs-attr">method</span> == <span class="hljs-string">"POST"</span>      <span class="hljs-comment"># HTTP POST requests</span>
+http.request.uri contains <span class="hljs-string">"login"</span>  <span class="hljs-comment"># URLs with "login"</span>
+http.response.<span class="hljs-attr">code</span> == <span class="hljs-number">200</span>          <span class="hljs-comment"># HTTP 200 OK</span>
+http.response.code &gt;= <span class="hljs-number">400</span>          <span class="hljs-comment"># HTTP errors</span>
+http.<span class="hljs-attr">host</span> == <span class="hljs-string">"example.com"</span>         <span class="hljs-comment"># Specific host</span>
+http.cookie contains <span class="hljs-string">"session"</span>     <span class="hljs-comment"># Cookies with session</span>
+
+<span class="hljs-comment"># DNS filters</span>
+dns.qry.<span class="hljs-attr">name</span> == <span class="hljs-string">"example.com"</span>      <span class="hljs-comment"># DNS query for domain</span>
+dns.qry.<span class="hljs-attr">type</span> == <span class="hljs-number">1</span>                  <span class="hljs-comment"># A record queries</span>
+dns.flags.rcode != <span class="hljs-number">0</span>               <span class="hljs-comment"># DNS errors (not NOERROR)</span>
+dns.resp.name contains <span class="hljs-string">"malware"</span>   <span class="hljs-comment"># Response with suspicious name</span>
+
+<span class="hljs-comment"># Content filters</span>
+frame contains <span class="hljs-string">"password"</span>           <span class="hljs-comment"># Any frame containing text</span>
+tcp contains <span class="hljs-string">"USER"</span>                 <span class="hljs-comment"># TCP payload containing USER (FTP login)</span>
+http.request.uri contains <span class="hljs-string">"shell"</span>  <span class="hljs-comment"># Shell in URL (webshell attempt?)</span>
+data contains <span class="hljs-number">66</span>:<span class="hljs-number">65</span>:<span class="hljs-number">65</span>             <span class="hljs-comment"># Hex bytes in data</span>
+
+<span class="hljs-comment"># Length-based</span>
+frame.len &gt; <span class="hljs-number">1400</span>                   <span class="hljs-comment"># Large frames (possible data exfil)</span>
+ip.<span class="hljs-attr">len</span> == <span class="hljs-number">0</span>                        <span class="hljs-comment"># IP length 0 (scanning trick)</span>
+tcp.len &gt; <span class="hljs-number">0</span>                        <span class="hljs-comment"># TCP packets with payload (not pure ACKs)</span>
+
+<span class="hljs-comment"># Time-based (relative to start of capture)</span>
+frame.time_relative &gt; <span class="hljs-number">10</span> <span class="hljs-literal">and</span> frame.time_relative &lt; <span class="hljs-number">20</span>  <span class="hljs-comment"># Specific time window</span>
+
+<span class="hljs-comment"># Combinations</span>
+ip.<span class="hljs-attr">src</span> == <span class="hljs-number">192.168</span>.<span class="hljs-number">1.5</span> <span class="hljs-literal">and</span> http.request.<span class="hljs-attr">method</span> == <span class="hljs-string">"POST"</span>
+dns.qry.name matches <span class="hljs-string">".*\.ru$"</span>     <span class="hljs-comment"># DNS queries for .ru domains</span>
+tcp.flags.<span class="hljs-attr">syn</span> == <span class="hljs-number">1</span> <span class="hljs-literal">and</span> ip.src != <span class="hljs-number">192.168</span>.<span class="hljs-number">1.0</span>/<span class="hljs-number">24</span>  <span class="hljs-comment"># External SYN packets (inbound)</span>
+
+<span class="hljs-comment"># Useful for intrusion analysis</span>
+tcp.analysis.flags                  <span class="hljs-comment"># Any TCP analysis flag</span>
+!tcp.analysis.flags                 <span class="hljs-comment"># Healthy TCP (no issues)</span>
+tcp.analysis.zero_window            <span class="hljs-comment"># Zero window (receiver buffer full)</span>
+tcp.analysis.window_full            <span class="hljs-comment"># Sender filling window</span>
+</code></pre>
+<h3 id="wireshark-gui-features">Wireshark GUI Features</h3>
+<p><strong>Follow stream:</strong></p>
+<ul>
+<li>Right-click packet → Follow → TCP Stream / UDP Stream / HTTP Stream</li>
+<li>Shows complete conversation in human-readable form</li>
+<li>Great for seeing credentials, commands, file contents</li>
+</ul>
+<p><strong>Statistics menu:</strong></p>
+<ul>
+<li><strong>Conversations:</strong> All unique src/dst IP pairs with byte counts</li>
+<li><strong>Protocol Hierarchy:</strong> Breakdown of protocols by percentage</li>
+<li><strong>IO Graphs:</strong> Plot traffic over time (visualize spikes)</li>
+<li><strong>Endpoints:</strong> List all unique IP/MAC addresses</li>
+<li><strong>HTTP requests:</strong> All HTTP requests with timing</li>
+</ul>
+<p><strong>Expert Information (Analyze menu):</strong></p>
+<ul>
+<li>Shows Wireshark-detected issues (errors, warnings, notes)</li>
+<li>Retransmissions, duplicate ACKs, RSTs, zero-window warnings</li>
+</ul>
+<p><strong>Name Resolution:</strong></p>
+<ul>
+<li>Edit → Preferences → Name Resolution</li>
+<li>Enable DNS resolution to see hostnames instead of IPs</li>
+</ul>
+<p><strong>Coloring Rules:</strong></p>
+<ul>
+<li>View → Coloring Rules</li>
+<li>Red = RST packets (connection resets)</li>
+<li>Dark red = checksum errors</li>
+<li>Blue = DNS queries</li>
+</ul>
+<h3 id="wireshark-for-security-analysis">Wireshark for Security Analysis</h3>
+<p><strong>Find credentials in traffic:</strong></p>
+<pre><code><span class="hljs-meta"># FTP credentials (plaintext)</span>
+ftp contains <span class="hljs-string">"PASS"</span>
+<span class="hljs-meta"># Or: Follow TCP stream on port 21</span>
+
+<span class="hljs-meta"># HTTP Basic Auth</span>
+http.authorization contains <span class="hljs-string">"Basic"</span>
+<span class="hljs-meta"># Decode: base64(username:password)</span>
+
+<span class="hljs-meta"># Telnet (all plaintext)</span>
+telnet
+<span class="hljs-meta"># Follow TCP stream to see entire session</span>
+
+<span class="hljs-meta"># SMTP AUTH</span>
+smtp contains <span class="hljs-string">"AUTH"</span>
+smtp contains <span class="hljs-string">"MAIL FROM"</span>
+
+<span class="hljs-meta"># POP3 credentials</span>
+pop.request.command == <span class="hljs-string">"USER"</span> or pop.request.command == <span class="hljs-string">"PASS"</span>
+</code></pre><p><strong>Detect scanning:</strong></p>
+<pre><code><span class="hljs-comment"># Port scan (many SYNs, no data)</span>
+tcp.<span class="hljs-attr">flags</span> == <span class="hljs-number">0</span>x002                 <span class="hljs-comment"># SYN only</span>
+<span class="hljs-comment"># Look for: one source IP, many destination ports, no SYN-ACK responses</span>
+
+<span class="hljs-comment"># ICMP sweep</span>
+icmp.<span class="hljs-attr">type</span> == <span class="hljs-number">8</span>                     <span class="hljs-comment"># Echo requests</span>
+<span class="hljs-comment"># Look for: one source, many destinations</span>
+
+<span class="hljs-comment"># UDP scan</span>
+udp <span class="hljs-literal">and</span> icmp.<span class="hljs-attr">type</span> == <span class="hljs-number">3</span>            <span class="hljs-comment"># UDP probe + ICMP port unreachable responses</span>
+</code></pre><p><strong>Detect ARP poisoning:</strong></p>
+<pre><code>arp                                # Show all ARP traffic
+<span class="hljs-meta"># Look for:</span>
+<span class="hljs-meta"># 1. ARP replies without corresponding requests (gratuitous ARP)</span>
+<span class="hljs-meta"># 2. Multiple MAC addresses claiming the same IP</span>
+<span class="hljs-meta"># 3. One MAC claiming to be many different IPs</span>
+</code></pre><p><strong>Detect DNS tunneling:</strong></p>
+<pre><code>dns
+<span class="hljs-meta"># Look for:</span>
+<span class="hljs-meta"># - Very long DNS query names (data encoded in subdomains)</span>
+<span class="hljs-meta"># - High frequency of DNS queries (data stream)</span>
+<span class="hljs-meta"># - Unusual TXT record content</span>
+<span class="hljs-meta"># - Queries for random-looking subdomains</span>
+dns.qry.name.len &gt; <span class="hljs-number">50</span>             # Suspiciously <span class="hljs-keyword">long</span> domain names
+dns.resp.type == <span class="hljs-number">16</span>               # TXT record responses (common <span class="hljs-keyword">for</span> exfil)
+</code></pre><p><strong>Detect data exfiltration:</strong></p>
+<pre><code><span class="hljs-comment"># Large outbound transfers</span>
+ip.dst != <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span>          <span class="hljs-comment"># Outbound traffic</span>
+frame.<span class="hljs-built_in">len</span> &gt; <span class="hljs-number">1400</span>                   <span class="hljs-comment"># Large packets</span>
+
+<span class="hljs-comment"># Statistics → Conversations (sort by bytes to see who is sending most data)</span>
+<span class="hljs-comment"># Statistics → IO Graphs (look for sustained high throughput spikes)</span>
+</code></pre><hr>
+<h2 id="11-4-tcpdump-reference">11.4 Tcpdump Reference</h2>
+<p>Command-line packet analyzer — essential when no GUI is available.</p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Basic capture</span>
+tcpdump -i eth<span class="hljs-number">0</span>                    <span class="hljs-comment"># Capture on eth0</span>
+tcpdump -i any                     <span class="hljs-comment"># All interfaces</span>
+tcpdump -i eth<span class="hljs-number">0</span> -n                 <span class="hljs-comment"># No hostname resolution</span>
+tcpdump -i eth<span class="hljs-number">0</span> -nn                <span class="hljs-comment"># No hostname or port resolution</span>
+tcpdump -i eth<span class="hljs-number">0</span> -v                 <span class="hljs-comment"># Verbose (more detail)</span>
+tcpdump -i eth<span class="hljs-number">0</span> -vv                <span class="hljs-comment"># Very verbose</span>
+tcpdump -i eth<span class="hljs-number">0</span> -X                 <span class="hljs-comment"># Show hex and ASCII payload</span>
+tcpdump -i eth<span class="hljs-number">0</span> -A                 <span class="hljs-comment"># Show ASCII payload only</span>
+tcpdump -i eth<span class="hljs-number">0</span> -e                 <span class="hljs-comment"># Show Ethernet header (MAC addresses)</span>
+
+<span class="hljs-comment"># Save and read captures</span>
+tcpdump -i eth<span class="hljs-number">0</span> -w capture.pcap   <span class="hljs-comment"># Save to file</span>
+tcpdump -r capture.pcap            <span class="hljs-comment"># Read from file</span>
+tcpdump -r capture.pcap -n         <span class="hljs-comment"># Read with no resolution</span>
+tcpdump -r capture.pcap | <span class="hljs-keyword">grep</span> <span class="hljs-string">"GET"</span>   <span class="hljs-comment"># Pipe to grep</span>
+
+<span class="hljs-comment"># Packet count and size</span>
+tcpdump -i eth<span class="hljs-number">0</span> -c <span class="hljs-number">100</span>             <span class="hljs-comment"># Capture 100 packets then stop</span>
+tcpdump -i eth<span class="hljs-number">0</span> -<span class="hljs-keyword">s</span> <span class="hljs-number">0</span>               <span class="hljs-comment"># Full packet capture (no truncation)</span>
+tcpdump -i eth<span class="hljs-number">0</span> -<span class="hljs-keyword">s</span> <span class="hljs-number">65535</span>           <span class="hljs-comment"># Same — capture full packets</span>
+
+<span class="hljs-comment"># Rotating capture files (useful for long-term capture)</span>
+tcpdump -i eth<span class="hljs-number">0</span> -G <span class="hljs-number">3600</span> -w /captures/capture-%Y%m%d%H%M%S.pcap -z gzip
+<span class="hljs-comment"># -G = rotate every 3600 seconds, -z = compress with gzip</span>
+
+<span class="hljs-comment"># Filters (BPF syntax — same as Wireshark capture filters)</span>
+tcpdump -i eth<span class="hljs-number">0</span> host <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>
+tcpdump -i eth<span class="hljs-number">0</span> src <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>
+tcpdump -i eth<span class="hljs-number">0</span> dst <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span>
+tcpdump -i eth<span class="hljs-number">0</span> port <span class="hljs-number">80</span>
+tcpdump -i eth<span class="hljs-number">0</span> portrange <span class="hljs-number">8080</span>-<span class="hljs-number">8090</span>
+tcpdump -i eth<span class="hljs-number">0</span> net <span class="hljs-number">192.168</span>.<span class="hljs-number">1.0</span>/<span class="hljs-number">24</span>
+tcpdump -i eth<span class="hljs-number">0</span> tcp
+tcpdump -i eth<span class="hljs-number">0</span> udp
+tcpdump -i eth<span class="hljs-number">0</span> icmp
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-keyword">not</span> arp
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'tcp port 80 or tcp port 443'</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'host 192.168.1.100 and port 22'</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'not port 22 and not port 53'</span>
+
+<span class="hljs-comment"># TCP flag filtering</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'tcp[tcpflags] &amp; tcp-syn != 0'</span>           <span class="hljs-comment"># SYN packets</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'tcp[tcpflags] &amp; (tcp-syn|tcp-ack) == tcp-syn'</span>  <span class="hljs-comment"># SYN only</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'tcp[tcpflags] &amp; tcp-rst != 0'</span>           <span class="hljs-comment"># RST packets</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'tcp[tcpflags] &amp; tcp-fin != 0'</span>           <span class="hljs-comment"># FIN packets</span>
+
+<span class="hljs-comment"># Packet content matching</span>
+tcpdump -i eth<span class="hljs-number">0</span> -A <span class="hljs-string">'tcp port 80'</span> | <span class="hljs-keyword">grep</span> <span class="hljs-string">"GET\|POST\|Host:"</span>
+tcpdump -i eth<span class="hljs-number">0</span> <span class="hljs-string">'tcp[20:4] = 0x47455420'</span>  <span class="hljs-comment"># Hex for "GET "</span>
+
+<span class="hljs-comment"># Useful one-liners</span>
+<span class="hljs-comment"># Capture HTTP traffic and show URLs</span>
+tcpdump -i eth<span class="hljs-number">0</span> -A -<span class="hljs-keyword">s</span> <span class="hljs-number">0</span> <span class="hljs-string">'tcp port 80'</span> | <span class="hljs-keyword">grep</span> -oP <span class="hljs-string">'(?&lt;=GET |POST )[^ ]+'</span>
+
+<span class="hljs-comment"># Show all unique source IPs</span>
+tcpdump -i eth<span class="hljs-number">0</span> -n <span class="hljs-string">'not src net 192.168.1.0/24'</span> | awk <span class="hljs-string">'{print $3}'</span> | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+
+<span class="hljs-comment"># Monitor DNS queries</span>
+tcpdump -i eth<span class="hljs-number">0</span> -n port <span class="hljs-number">53</span> -A <span class="hljs-number">2</span>&gt;<span class="hljs-regexp">/dev/null</span> | <span class="hljs-keyword">grep</span> -E <span class="hljs-string">"A\?|AAAA\?"</span>
+
+<span class="hljs-comment"># Capture DHCP traffic</span>
+tcpdump -i eth<span class="hljs-number">0</span> -n port <span class="hljs-number">67</span> <span class="hljs-keyword">or</span> port <span class="hljs-number">68</span>
+
+<span class="hljs-comment"># Watch for SSH brute force (many connections to port 22)</span>
+tcpdump -i eth<span class="hljs-number">0</span> -n <span class="hljs-string">'tcp[tcpflags] == tcp-syn and dst port 22'</span> | \
+  awk <span class="hljs-string">'{print $3}'</span> | cut -d. -f1-<span class="hljs-number">4</span> | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+</code></pre>
+<hr>
+<h2 id="11-5-tshark-wireshark-cli-">11.5 Tshark (Wireshark CLI)</h2>
+<p>Tshark is the command-line version of Wireshark. Supports Wireshark display filter syntax.</p>
+<pre><code class="lang-bash"># Basic <span class="hljs-keyword">capture</span>
+tshark -i eth0                     # Live <span class="hljs-keyword">capture</span>
+tshark -r <span class="hljs-keyword">capture</span>.pcap             # <span class="hljs-keyword">Read</span> <span class="hljs-keyword">file</span>
+tshark -r <span class="hljs-keyword">capture</span>.pcap -V         # Verbose (all protocol details)
+
+# <span class="hljs-keyword">Display</span> filters (same <span class="hljs-keyword">as</span> Wireshark GUI)
+tshark -i eth0 -Y <span class="hljs-string">"http.request.method == POST"</span>
+tshark -r <span class="hljs-keyword">capture</span>.pcap -Y <span class="hljs-string">"dns.qry.name contains malware"</span>
+
+# Extract specific fields
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T fields -<span class="hljs-keyword">e</span> ip.src -<span class="hljs-keyword">e</span> ip.dst -<span class="hljs-keyword">e</span> tcp.dstport
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T fields -<span class="hljs-keyword">e</span> http.request.uri -Y <span class="hljs-string">"http.request"</span>
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T fields -<span class="hljs-keyword">e</span> dns.qry.name -Y <span class="hljs-string">"dns.qry.name"</span>
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T fields -<span class="hljs-keyword">e</span> frame.time -<span class="hljs-keyword">e</span> ip.src -<span class="hljs-keyword">e</span> ip.dst -<span class="hljs-keyword">e</span> tcp.dstport -<span class="hljs-keyword">E</span> separator=,
+
+# Output formats
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T json     # JSON output
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T json | jq '.[].ip.src'   # <span class="hljs-keyword">Parse</span> with jq
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T pdml     # XML/PDML <span class="hljs-keyword">format</span>
+tshark -r <span class="hljs-keyword">capture</span>.pcap -T tabs     # <span class="hljs-keyword">Tab</span>-separated
+
+# Statistics
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z io,stat,1           # IO stats per second
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z conv,tcp            # TCP conversations
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z proto,colinfo,ip,ip.addr  # Protocol info
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z http,tree           # HTTP request tree
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z dns,tree            # DNS statistics
+
+# Follow streams
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z follow,tcp,ascii,0  # Follow stream 0 <span class="hljs-keyword">as</span> ASCII
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z follow,tcp,hex,0    # Follow stream 0 <span class="hljs-keyword">as</span> hex
+
+# <span class="hljs-keyword">Capture</span> with <span class="hljs-keyword">file</span> rotation
+tshark -i eth0 -b filesize:102400 -b files:10 -w /tmp/<span class="hljs-keyword">capture</span>.pcap
+# <span class="hljs-keyword">Rotate</span> at 100MB, <span class="hljs-keyword">keep</span> last 10 files
+
+# Credential hunting
+tshark -r <span class="hljs-keyword">capture</span>.pcap -Y <span class="hljs-string">"ftp contains PASS"</span> -T fields -<span class="hljs-keyword">e</span> ftp.request.arg
+tshark -r <span class="hljs-keyword">capture</span>.pcap -Y <span class="hljs-string">"http.authbasic"</span> -T fields -<span class="hljs-keyword">e</span> http.authbasic
+tshark -r <span class="hljs-keyword">capture</span>.pcap -Y <span class="hljs-string">"telnet"</span> -T fields -<span class="hljs-keyword">e</span> telnet.data
+
+# Find large data transfers
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z conv,ip | <span class="hljs-keyword">sort</span> -k 5 -rn | head -20
+
+# Detect port scanning
+tshark -r <span class="hljs-keyword">capture</span>.pcap -q -z endpoints,tcp | <span class="hljs-keyword">sort</span> -k 2 -rn
+</code></pre>
+<hr>
+<h2 id="11-6-network-log-analysis">11.6 Network Log Analysis</h2>
+<h3 id="firewall-log-analysis">Firewall Log Analysis</h3>
+<p><strong>iptables / nftables log format:</strong></p>
+<pre><code>Jan <span class="hljs-number">15</span> <span class="hljs-number">10</span>:<span class="hljs-number">23</span>:<span class="hljs-number">45</span> fw01 kernel: [<span class="hljs-number">12345.678</span>] <span class="hljs-attr">IN=eth0</span> <span class="hljs-attr">OUT=</span> <span class="hljs-attr">MAC=aa:bb:cc:dd:ee:ff:11:22:33:44:55:66:08:00</span> 
+<span class="hljs-attr">SRC=203.0.113.100</span> <span class="hljs-attr">DST=192.168.1.10</span> <span class="hljs-attr">LEN=44</span> <span class="hljs-attr">TOS=0x00</span> <span class="hljs-attr">PREC=0x00</span> <span class="hljs-attr">TTL=50</span> <span class="hljs-attr">ID=12345</span> <span class="hljs-attr">PROTO=TCP</span> 
+<span class="hljs-attr">SPT=54321</span> <span class="hljs-attr">DPT=22</span> <span class="hljs-attr">WINDOW=64240</span> <span class="hljs-attr">RES=0x00</span> SYN <span class="hljs-attr">URGP=0</span>
+
+<span class="hljs-comment"># Fields:</span>
+<span class="hljs-comment"># IN/OUT = interface direction</span>
+<span class="hljs-comment"># SRC/DST = source/destination IP</span>
+<span class="hljs-comment"># PROTO = protocol</span>
+<span class="hljs-comment"># SPT/DPT = source/destination port</span>
+<span class="hljs-comment"># SYN = TCP SYN flag set</span>
+</code></pre><p><strong>Analyzing firewall logs:</strong></p>
+<pre><code class="lang-bash"># <span class="hljs-keyword">Count</span> dropped connections <span class="hljs-keyword">by</span> source IP (potential scanner)
+grep <span class="hljs-string">"DPT=22"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/iptables.<span class="hljs-keyword">log</span> | grep <span class="hljs-string">"SYN"</span> | \
+  awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$8}</span>' | cut -<span class="hljs-keyword">d</span>= -f2 | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn | head -20
+
+# Find all unique destination ports being probed
+grep <span class="hljs-string">"IN=eth0"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/iptables.<span class="hljs-keyword">log</span> | \
+  awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$23}</span>' | cut -<span class="hljs-keyword">d</span>= -f2 | <span class="hljs-keyword">sort</span> -<span class="hljs-keyword">n</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+
+# Check <span class="hljs-keyword">for</span> specific attack patterns
+grep <span class="hljs-string">"DPT=3389"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/iptables.<span class="hljs-keyword">log</span> | grep <span class="hljs-string">"SYN"</span> | wc -<span class="hljs-keyword">l</span>  # RDP scan attempts
+grep <span class="hljs-string">"DPT=445"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/iptables.<span class="hljs-keyword">log</span> | wc -<span class="hljs-keyword">l</span>               # SMB probes
+</code></pre>
+<h3 id="web-server-log-analysis">Web Server Log Analysis</h3>
+<p><strong>Apache/Nginx access log format:</strong></p>
+<pre><code><span class="hljs-number">203.0.113.100</span> - alice <span class="hljs-string">[15/Jan/2024:10:23:45 +0000]</span> <span class="hljs-string">"<span class="hljs-keyword">GET</span> /admin/config.php HTTP/1.1"</span> 
+<span class="hljs-number">200</span> <span class="hljs-number">1234</span> <span class="hljs-string">"https://example.com"</span> <span class="hljs-string">"Mozilla/5.0 (..."</span>
+
+# Fields: IP, ident, user, time, request, status, bytes, referer, user-agent
+</code></pre><p><strong>Log analysis commands:</strong></p>
+<pre><code class="lang-bash"># Top 10 source IPs <span class="hljs-keyword">by</span> request <span class="hljs-keyword">count</span>
+awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$1}</span>' /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span> | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn | head -10
+
+# Failed login attempts (HTTP 401)
+grep <span class="hljs-string">" 401 "</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span> | awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$1}</span>' | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+
+# Suspicious user agents
+grep -i <span class="hljs-string">"sqlmap\|nikto\|nessus\|masscan\|nmap\|burpsuite\|hydra\|metasploit"</span> \
+  /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-built_in">log</span>
+
+# Web application attack patterns
+grep -<span class="hljs-keyword">E</span> <span class="hljs-string">"union.*select|' OR|1=1|&lt;script&gt;|\.\.\/\.\.\/"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-built_in">log</span>
+
+# Large downloads (potential data exfiltration)
+awk '<span class="hljs-variable">$10</span> &gt; 10000000 {<span class="hljs-keyword">print</span> <span class="hljs-variable">$0}</span>' /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span>  # &gt; 10MB responses
+
+# 404 errors (scanning/probing)
+grep <span class="hljs-string">" 404 "</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span> | awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$7}</span>' | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn | head -20
+
+# Requests from specific country (using geoip)
+geoiplookup 203.0.113.100
+# Or: with MaxMind GeoIP database
+
+# Timeline of attack
+grep <span class="hljs-string">"203.0.113.100"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/nginx/access.<span class="hljs-keyword">log</span> | awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$4}</span>' | \
+  cut -<span class="hljs-keyword">d</span>: -f1,2 | <span class="hljs-keyword">sort</span> | uniq -c
+</code></pre>
+<h3 id="dns-log-analysis">DNS Log Analysis</h3>
+<pre><code class="lang-bash"># Analyze BIND/named <span class="hljs-keyword">query</span> logs
+# /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/named/<span class="hljs-keyword">query</span>.<span class="hljs-keyword">log</span> <span class="hljs-keyword">format</span>:
+# client 192.168.1.100#54321 (example.com): <span class="hljs-keyword">query</span>: example.com <span class="hljs-keyword">IN</span> A
+
+# Most queried domains
+awk '/<span class="hljs-keyword">query</span>:/ {<span class="hljs-keyword">print</span> <span class="hljs-variable">$8}</span>' /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/named/<span class="hljs-keyword">query</span>.<span class="hljs-keyword">log</span> | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn | head -20
+
+# Clients making most requests
+awk '/<span class="hljs-keyword">query</span>:/ {<span class="hljs-keyword">print</span> <span class="hljs-variable">$2}</span>' /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/named/<span class="hljs-keyword">query</span>.<span class="hljs-keyword">log</span> | cut -<span class="hljs-keyword">d</span># -f1 | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+
+# NXDOMAIN (non-existent) responses (potential DGA/botnet)
+grep <span class="hljs-string">"NXDOMAIN"</span> /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/named/<span class="hljs-keyword">query</span>.<span class="hljs-keyword">log</span> | awk '{<span class="hljs-keyword">print</span> <span class="hljs-variable">$8}</span>' | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn | head -20
+
+# Detect DNS tunneling (long queries)
+awk '/<span class="hljs-keyword">query</span>:/ {<span class="hljs-keyword">if</span> (<span class="hljs-built_in">length</span>(<span class="hljs-variable">$8</span>) &gt; 50) <span class="hljs-keyword">print</span> <span class="hljs-variable">$0}</span>' /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/named/<span class="hljs-keyword">query</span>.<span class="hljs-built_in">log</span>
+
+# Queries <span class="hljs-keyword">for</span> unusual TLDs
+awk '/<span class="hljs-keyword">query</span>:/ {<span class="hljs-keyword">print</span> <span class="hljs-variable">$8}</span>' /<span class="hljs-keyword">var</span>/<span class="hljs-keyword">log</span>/named/<span class="hljs-keyword">query</span>.<span class="hljs-keyword">log</span> | rev | cut -<span class="hljs-keyword">d</span>. -f1 | rev | \
+  <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn | grep -v <span class="hljs-string">"com\|net\|org\|edu\|gov\|io"</span>
+</code></pre>
+<h3 id="dhcp-log-analysis">DHCP Log Analysis</h3>
+<pre><code class="lang-bash"># ISC DHCP server <span class="hljs-built_in">log</span> (/var/<span class="hljs-built_in">log</span>/dhcpd.<span class="hljs-built_in">log</span>)
+# Example entrie<span class="hljs-variable">s:</span>
+# DHCPREQUEST <span class="hljs-keyword">for</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span> from <span class="hljs-keyword">a</span><span class="hljs-variable">a:bb</span>:<span class="hljs-keyword">cc</span>:dd:ee:ff via eth0
+# DHCPACK <span class="hljs-keyword">on</span> <span class="hljs-number">192.168</span>.<span class="hljs-number">1.100</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">a</span><span class="hljs-variable">a:bb</span>:<span class="hljs-keyword">cc</span>:dd:ee:ff (<span class="hljs-built_in">hostname</span>) via eth0
+
+# Build IP-<span class="hljs-keyword">to</span>-MAC mapping at specific time
+<span class="hljs-keyword">grep</span> <span class="hljs-string">"DHCPACK"</span> /var/<span class="hljs-built_in">log</span>/dhcpd.<span class="hljs-built_in">log</span> | <span class="hljs-keyword">grep</span> <span class="hljs-string">"Jan 15"</span> | \
+  awk <span class="hljs-string">'{print $8, $10, $11}'</span> | <span class="hljs-keyword">sort</span> | uniq
+
+# Find <span class="hljs-keyword">all</span> IPs assigned <span class="hljs-keyword">to</span> <span class="hljs-keyword">a</span> specific MAC
+<span class="hljs-keyword">grep</span> <span class="hljs-string">"aa:bb:cc:dd:ee:ff"</span> /var/<span class="hljs-built_in">log</span>/dhcpd.<span class="hljs-built_in">log</span> | <span class="hljs-keyword">grep</span> <span class="hljs-string">"DHCPACK"</span>
+
+# Find MAC <span class="hljs-keyword">for</span> <span class="hljs-keyword">a</span> specific IP at <span class="hljs-keyword">a</span> specific time
+<span class="hljs-keyword">grep</span> <span class="hljs-string">"192.168.1.100"</span> /var/<span class="hljs-built_in">log</span>/dhcpd.<span class="hljs-built_in">log</span> | <span class="hljs-keyword">grep</span> <span class="hljs-string">"DHCPACK"</span> | tail -<span class="hljs-number">20</span>
+
+# Detect MAC address <span class="hljs-keyword">changes</span> (same IP, different MAC = possible spoofing)
+<span class="hljs-keyword">grep</span> <span class="hljs-string">"DHCPACK"</span> /var/<span class="hljs-built_in">log</span>/dhcpd.<span class="hljs-built_in">log</span> | <span class="hljs-keyword">grep</span> <span class="hljs-string">"192.168.1.100"</span> | \
+  awk <span class="hljs-string">'{print $10}'</span> | <span class="hljs-keyword">sort</span> | uniq
+</code></pre>
+<h3 id="syslog-analysis">Syslog Analysis</h3>
+<pre><code class="lang-bash"><span class="hljs-meta"># Authentication failures (Linux)</span>
+grep <span class="hljs-string">"Failed password"</span> /<span class="hljs-keyword">var</span>/log/auth.log | \
+  awk <span class="hljs-string">'{print $11}'</span> | sort | uniq -c | sort -rn | head <span class="hljs-number">-20</span>  # By source IP
+
+grep <span class="hljs-string">"Failed password"</span> /<span class="hljs-keyword">var</span>/log/auth.log | \
+  awk <span class="hljs-string">'{print $9}'</span> | sort | uniq -c | sort -rn              # By username
+
+<span class="hljs-meta"># Successful logins after failures (potential brute force success)</span>
+grep <span class="hljs-string">"Accepted password"</span> /<span class="hljs-keyword">var</span>/log/auth.log
+
+<span class="hljs-meta"># Sudo usage</span>
+grep <span class="hljs-string">"sudo"</span> /<span class="hljs-keyword">var</span>/log/auth.log | grep <span class="hljs-string">"COMMAND"</span>
+
+<span class="hljs-meta"># New user creation</span>
+grep <span class="hljs-string">"useradd\|adduser"</span> /<span class="hljs-keyword">var</span>/log/auth.log
+
+<span class="hljs-meta"># Windows Event Log analysis</span>
+<span class="hljs-meta"># Event IDs to monitor:</span>
+<span class="hljs-meta"># 4624 - Successful logon</span>
+<span class="hljs-meta"># 4625 - Failed logon</span>
+<span class="hljs-meta"># 4634 - Logoff</span>
+<span class="hljs-meta"># 4648 - Explicit credentials logon</span>
+<span class="hljs-meta"># 4672 - Special privileges assigned</span>
+<span class="hljs-meta"># 4688 - Process created</span>
+<span class="hljs-meta"># 4698 - Scheduled task created</span>
+<span class="hljs-meta"># 4720 - User account created</span>
+<span class="hljs-meta"># 4728 - Member added to security group</span>
+<span class="hljs-meta"># 4768 - Kerberos authentication request (TGT)</span>
+<span class="hljs-meta"># 4769 - Kerberos service ticket request (TGS)</span>
+<span class="hljs-meta"># 4771 - Kerberos pre-authentication failed</span>
+<span class="hljs-meta"># 4776 - NTLM authentication</span>
+<span class="hljs-meta"># 5140 - Network share accessed</span>
+<span class="hljs-meta"># 7045 - Service installed</span>
+
+<span class="hljs-meta"># Parse Windows event logs on Linux</span>
+wevtutil qe Security /format:text /q:<span class="hljs-string">"*[System/EventID=4625]"</span>  # On Windows
+python3-evtx /mnt/windows/System32/winevt/Logs/Security.evtx   # On Linux
+
+<span class="hljs-meta"># Look for Kerberos attacks</span>
+<span class="hljs-meta"># AS-REP Roasting: EventID 4768 with no pre-auth (etype 23)</span>
+<span class="hljs-meta"># Pass-the-ticket: TGS requests without prior TGT</span>
+<span class="hljs-meta"># Kerberoasting: Unusual TGS requests for service accounts</span>
+</code></pre>
+<hr>
+<h2 id="11-7-incident-response-network-focus">11.7 Incident Response — Network Focus</h2>
+<h3 id="network-ir-process">Network IR Process</h3>
+<p><strong>1. Preparation</strong></p>
+<ul>
+<li>Deploy packet capture sensors (TAPs, SPAN ports)</li>
+<li>Configure NetFlow collection</li>
+<li>Ensure log aggregation (SIEM)</li>
+<li>Document normal traffic baselines</li>
+<li>Prepare forensic tools and jump bag</li>
+</ul>
+<p><strong>2. Detection and Analysis</strong></p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Quick triage — identify scope</span>
+netstat -an | <span class="hljs-keyword">grep</span> ESTABLISHED | awk <span class="hljs-string">'{print $5}'</span> | cut -d: -f1 | <span class="hljs-keyword">sort</span> | uniq -c | <span class="hljs-keyword">sort</span> -rn
+<span class="hljs-comment"># Find: unusual external connections, many connections to one host</span>
+
+<span class="hljs-comment"># Check for unusual listening ports</span>
+netstat -tlnp
+ss -tlnp
+
+<span class="hljs-comment"># Identify all network connections of suspicious process</span>
+lsof -i -p &lt;PID&gt;
+netstat -np | <span class="hljs-keyword">grep</span> &lt;PID&gt;
+
+<span class="hljs-comment"># DNS exfiltration check</span>
+tcpdump -i eth<span class="hljs-number">0</span> udp port <span class="hljs-number">53</span> -nn -A | <span class="hljs-keyword">grep</span> -E <span class="hljs-string">"\.{40,}"</span>  <span class="hljs-comment"># Long DNS queries</span>
+
+<span class="hljs-comment"># Check for large outbound transfers (last 24 hours)</span>
+vnstat -h                          <span class="hljs-comment"># By hour</span>
+iftop -i eth<span class="hljs-number">0</span> -n                   <span class="hljs-comment"># Real-time</span>
+
+<span class="hljs-comment"># Look for connections to known bad IPs</span>
+<span class="hljs-comment"># Download threat intel feed</span>
+wget https:<span class="hljs-regexp">//feodotracker</span>.abuse.ch/downloads/ipblocklist.txt
+<span class="hljs-comment"># Check connections against it</span>
+netstat -an | <span class="hljs-keyword">grep</span> ESTABLISHED | awk <span class="hljs-string">'{print $5}'</span> | cut -d: -f1 | \
+  <span class="hljs-keyword">while</span> <span class="hljs-keyword">read</span> ip; <span class="hljs-keyword">do</span> <span class="hljs-keyword">grep</span> <span class="hljs-string">"^$ip"</span> ipblocklist.txt &amp;&amp; echo <span class="hljs-string">"MATCH: $ip"</span>; done
+</code></pre>
+<p><strong>3. Containment</strong></p>
+<pre><code class="lang-bash"><span class="hljs-meta"># Block suspicious IP at firewall</span>
+iptables -I INPUT -s <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.100</span> -j <span class="hljs-built_in">DROP</span>
+iptables -I <span class="hljs-keyword">OUTPUT</span> -d <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.100</span> -j <span class="hljs-built_in">DROP</span>
+
+<span class="hljs-meta"># Isolate compromised host (block all traffic except forensics)</span>
+iptables -I FORWARD -s <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.50</span> -j <span class="hljs-built_in">DROP</span>
+iptables -I FORWARD -d <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.50</span> -j <span class="hljs-built_in">DROP</span>
+<span class="hljs-meta"># Or: disable port on switch</span>
+SW1(config)<span class="hljs-meta"># interface fa0/10</span>
+SW1(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># shutdown</span>
+
+<span class="hljs-meta"># Capture traffic during containment</span>
+tcpdump -i eth0 -w /forensics/incident-$(<span class="hljs-built_in">date</span> +%Y%m%d%H%M%S).pcap &amp;
+</code></pre>
+<p><strong>4. Evidence Collection</strong></p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Capture RAM (most volatile)</span>
+<span class="hljs-comment"># Using LiME (Linux Memory Extractor)</span>
+insmod lime-$(uname -r).ko <span class="hljs-string">"path=/forensics/memory.lime format=lime"</span>
+
+<span class="hljs-comment"># Network state</span>
+netstat -an &gt; <span class="hljs-regexp">/forensics/netstat</span>.txt
+arp -a &gt; <span class="hljs-regexp">/forensics/arp</span>.txt
+ip route &gt; <span class="hljs-regexp">/forensics/routes</span>.txt
+ss -anp &gt; <span class="hljs-regexp">/forensics/sockets</span>.txt
+cat /proc/net/tcp &gt; <span class="hljs-regexp">/forensics/tcp</span>_connections.txt
+
+<span class="hljs-comment"># Capture active connections' traffic</span>
+<span class="hljs-keyword">for</span> ip <span class="hljs-keyword">in</span> $(netstat -an <span class="hljs-params">| grep ESTABLISHED |</span> awk <span class="hljs-string">'{print $5}'</span> <span class="hljs-params">| cut -d: -f1 |</span> sort -u); <span class="hljs-keyword">do</span>
+  tcpdump -i eth<span class="hljs-number">0</span> -w /forensics/conn-$ip.pcap host $ip -c <span class="hljs-number">10000</span> &amp;
+done
+
+<span class="hljs-comment"># Hash all evidence files</span>
+sha256sum /forensics/* &gt; <span class="hljs-regexp">/forensics/hashes</span>.sha256
+</code></pre>
+<p><strong>5. Analysis</strong></p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Timeline reconstruction</span>
+<span class="hljs-comment"># Extract timestamps from pcap</span>
+tshark -r capture.pcap -T fields <span class="hljs-_">-e</span> frame.time <span class="hljs-_">-e</span> ip.src <span class="hljs-_">-e</span> ip.dst <span class="hljs-_">-e</span> tcp.dstport \
+  -E separator=, &gt; timeline.csv
+
+<span class="hljs-comment"># DNS query timeline (detect DGA — fast-flux domain generation)</span>
+tshark -r capture.pcap -Y <span class="hljs-string">"dns.qry.name"</span> -T fields <span class="hljs-_">-e</span> frame.time <span class="hljs-_">-e</span> ip.src <span class="hljs-_">-e</span> dns.qry.name | \
+  awk <span class="hljs-string">'{print $1, $2, $3}'</span> | sort &gt; dns_timeline.txt
+
+<span class="hljs-comment"># HTTP request timeline</span>
+tshark -r capture.pcap -Y <span class="hljs-string">"http.request"</span> -T fields \
+  <span class="hljs-_">-e</span> frame.time <span class="hljs-_">-e</span> ip.src <span class="hljs-_">-e</span> http.host <span class="hljs-_">-e</span> http.request.uri | sort &gt; http_timeline.txt
+
+<span class="hljs-comment"># Extract files from pcap</span>
+tcpflow -r capture.pcap -o /forensics/files/   <span class="hljs-comment"># Extract TCP streams</span>
+networkminer capture.pcap                       <span class="hljs-comment"># GUI file extraction</span>
+
+<span class="hljs-comment"># Wireshark file export: File → Export Objects → HTTP (or SMB, DICOM, etc.)</span>
+</code></pre>
+<p><strong>6. IOC (Indicators of Compromise) Extraction</strong></p>
+<pre><code class="lang-bash"><span class="hljs-comment"># Extract all unique IPs from pcap</span>
+tshark -r capture.pcap -T fields <span class="hljs-_">-e</span> ip.src <span class="hljs-_">-e</span> ip.dst | tr <span class="hljs-string">'\t'</span> <span class="hljs-string">'\n'</span> | sort -u &gt; ips.txt
+
+<span class="hljs-comment"># Extract domains from DNS queries</span>
+tshark -r capture.pcap -Y <span class="hljs-string">"dns.qry.name"</span> -T fields <span class="hljs-_">-e</span> dns.qry.name | sort -u &gt; domains.txt
+
+<span class="hljs-comment"># Extract URLs</span>
+tshark -r capture.pcap -Y <span class="hljs-string">"http.request"</span> -T fields <span class="hljs-_">-e</span> http.host <span class="hljs-_">-e</span> http.request.uri | \
+  awk <span class="hljs-string">'{print "http://"$1$2}'</span> | sort -u &gt; urls.txt
+
+<span class="hljs-comment"># Extract User-Agents</span>
+tshark -r capture.pcap -Y <span class="hljs-string">"http.request"</span> -T fields <span class="hljs-_">-e</span> http.user_agent | sort | uniq -c | sort -rn
+
+<span class="hljs-comment"># Extract file hashes (if file transfers captured)</span>
+<span class="hljs-comment"># After extracting files with tcpflow:</span>
+sha256sum /forensics/files/* | tee file_hashes.txt
+
+<span class="hljs-comment"># Check hashes against VirusTotal</span>
+<span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> <span class="hljs-built_in">hash</span> filename; <span class="hljs-keyword">do</span>
+  result=$(curl <span class="hljs-_">-s</span> <span class="hljs-string">"https://www.virustotal.com/vtapi/v2/file/report?apikey=YOUR_KEY&amp;resource=<span class="hljs-variable">$hash</span>"</span>)
+  <span class="hljs-built_in">echo</span> <span class="hljs-string">"<span class="hljs-variable">$hash</span>: <span class="hljs-variable">$(echo $result | jq '.positives')</span>/<span class="hljs-variable">$(echo $result | jq '.total')</span>"</span>
+<span class="hljs-keyword">done</span> &lt; file_hashes.txt
+
+<span class="hljs-comment"># Check IPs/domains against threat intel</span>
+<span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> ip; <span class="hljs-keyword">do</span>
+  response=$(curl <span class="hljs-_">-s</span> <span class="hljs-string">"https://api.abuseipdb.com/api/v2/check?ipAddress=<span class="hljs-variable">$ip</span>"</span> \
+    -H <span class="hljs-string">"Key: YOUR_KEY"</span> -H <span class="hljs-string">"Accept: application/json"</span>)
+  score=$(<span class="hljs-built_in">echo</span> <span class="hljs-variable">$response</span> | jq <span class="hljs-string">'.data.abuseConfidenceScore'</span>)
+  <span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$score</span>"</span> <span class="hljs-_">-gt</span> <span class="hljs-string">"50"</span> ]; <span class="hljs-keyword">then</span>
+    <span class="hljs-built_in">echo</span> <span class="hljs-string">"MALICIOUS: <span class="hljs-variable">$ip</span> (score: <span class="hljs-variable">$score</span>)"</span>
+  <span class="hljs-keyword">fi</span>
+<span class="hljs-keyword">done</span> &lt; ips.txt
+</code></pre>
+<hr>
+<h2 id="11-8-network-forensics-tools-summary">11.8 Network Forensics Tools Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+<th>Key Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wireshark</strong></td>
+<td>Packet capture and analysis</td>
+<td>Deep protocol inspection, follow streams</td>
+</tr>
+<tr>
+<td><strong>tcpdump</strong></td>
+<td>CLI packet capture</td>
+<td>Remote capture, scripted analysis</td>
+</tr>
+<tr>
+<td><strong>tshark</strong></td>
+<td>CLI Wireshark</td>
+<td>Batch analysis, field extraction</td>
+</tr>
+<tr>
+<td><strong>NetworkMiner</strong></td>
+<td>Passive analyzer</td>
+<td>Extract files, credentials, sessions from pcap</td>
+</tr>
+<tr>
+<td><strong>Zeek (Bro)</strong></td>
+<td>Network security monitor</td>
+<td>Generate logs from traffic, detect anomalies</td>
+</tr>
+<tr>
+<td><strong>Suricata</strong></td>
+<td>IDS/IPS + NSM</td>
+<td>Alert generation, pcap analysis</td>
+</tr>
+<tr>
+<td><strong>Snort</strong></td>
+<td>IDS/IPS</td>
+<td>Signature-based detection</td>
+</tr>
+<tr>
+<td><strong>Arkime (Moloch)</strong></td>
+<td>Full packet capture system</td>
+<td>Long-term capture storage and search</td>
+</tr>
+<tr>
+<td><strong>Security Onion</strong></td>
+<td>NSM platform</td>
+<td>Combines Zeek, Suricata, Elasticsearch</td>
+</tr>
+<tr>
+<td><strong>RITA</strong></td>
+<td>Beacon detection</td>
+<td>Find C2 beaconing in Zeek logs</td>
+</tr>
+<tr>
+<td><strong>tcpflow</strong></td>
+<td>TCP stream extractor</td>
+<td>Extract file transfers from pcap</td>
+</tr>
+<tr>
+<td><strong>ngrep</strong></td>
+<td>Grep for network packets</td>
+<td>Search packet payload for patterns</td>
+</tr>
+<tr>
+<td><strong>dsniff</strong></td>
+<td>Password sniffer suite</td>
+<td>Capture cleartext credentials</td>
+</tr>
+<tr>
+<td><strong>ettercap</strong></td>
+<td>MITM attack tool</td>
+<td>ARP poison, credential capture</td>
+</tr>
+<tr>
+<td><strong>Volatility</strong></td>
+<td>Memory forensics</td>
+<td>Extract network artifacts from RAM dumps</td>
+</tr>
+</tbody>
+</table>
+<h3 id="zeek-bro-log-analysis">Zeek (Bro) Log Analysis</h3>
+<pre><code class="lang-bash"><span class="hljs-comment"># Zeek generates structured logs automatically</span>
+<span class="hljs-comment"># Key log files:</span>
+<span class="hljs-comment"># conn.log - All connections (start, end, bytes, protocol)</span>
+<span class="hljs-comment"># dns.log - DNS queries and responses</span>
+<span class="hljs-comment"># http.log - HTTP requests and responses</span>
+<span class="hljs-comment"># ssl.log - SSL/TLS connections</span>
+<span class="hljs-comment"># files.log - File transfers</span>
+<span class="hljs-comment"># weird.log - Unusual/unexpected protocol behavior</span>
+
+<span class="hljs-comment"># Analyze conn.log</span>
+cat conn.<span class="hljs-built_in">log</span> | zeek-cut <span class="hljs-built_in">id</span>.orig_h <span class="hljs-built_in">id</span>.resp_h <span class="hljs-built_in">id</span>.resp_p proto duration | \
+  sort -k3 -n | tail <span class="hljs-number">-20</span>                    <span class="hljs-comment"># Longest connections</span>
+
+<span class="hljs-comment"># Find external connections</span>
+cat conn.<span class="hljs-built_in">log</span> | zeek-cut <span class="hljs-built_in">id</span>.orig_h <span class="hljs-built_in">id</span>.resp_h <span class="hljs-built_in">id</span>.resp_p proto orig_bytes | \
+  awk '$<span class="hljs-number">1</span> !~ /^<span class="hljs-number">192</span>\<span class="hljs-number">.168</span>\.|^<span class="hljs-number">10</span>\.|^<span class="hljs-number">172</span>\.(<span class="hljs-number">1</span>[<span class="hljs-number">6</span><span class="hljs-number">-9</span>]|<span class="hljs-number">2</span>[<span class="hljs-number">0</span><span class="hljs-number">-9</span>]|<span class="hljs-number">3</span>[<span class="hljs-number">0</span><span class="hljs-number">-1</span>])\./ {print}' | \
+  sort -k5 -rn | head <span class="hljs-number">-20</span>                   <span class="hljs-comment"># Largest external transfers</span>
+
+<span class="hljs-comment"># DNS analysis</span>
+cat dns.<span class="hljs-built_in">log</span> | zeek-cut <span class="hljs-built_in">id</span>.orig_h query qtype_name answers | grep -v <span class="hljs-string">"192.168\."</span>
+
+<span class="hljs-comment"># HTTP suspicious paths</span>
+cat http.<span class="hljs-built_in">log</span> | zeek-cut <span class="hljs-built_in">id</span>.orig_h <span class="hljs-built_in">id</span>.resp_h uri method user_agent | \
+  grep -E <span class="hljs-string">"\.php\?|shell|cmd|exec|passwd"</span>
+
+<span class="hljs-comment"># RITA (Real Intelligence Threat Analytics) for beacon detection</span>
+rita import /opt/zeek/logs/current/ <span class="hljs-keyword">my</span>-dataset
+rita show-beacons <span class="hljs-keyword">my</span>-dataset | head <span class="hljs-number">-20</span>
+rita show-bl-hostnames <span class="hljs-keyword">my</span>-dataset | head <span class="hljs-number">-20</span>
+</code></pre>
+<hr>
+<h2 id="11-9-common-attack-signatures-in-network-traffic">11.9 Common Attack Signatures in Network Traffic</h2>
+<h3 id="reconnaissance-signatures">Reconnaissance Signatures</h3>
+<pre><code># Nmap SYN scan:
+-<span class="ruby"> Many SYN packets from one source to many destination ports
+</span>-<span class="ruby"> Most get RST back (no service listening)
+</span>-<span class="ruby"> Very short inter-packet delay
+</span>-<span class="ruby"> Source port often changes each probe
+</span>
+# UDP scan:
+-<span class="ruby"> UDP packets to many ports
+</span>-<span class="ruby"> ICMP port unreachable responses back from target
+</span>-<span class="ruby"> DNS, DHCP, SNMP ports usually open
+</span>
+# OS fingerprinting:
+-<span class="ruby"> Unusual TCP flag combinations (FIN only, Xmas, Null)
+</span>-<span class="ruby"> Nmap<span class="hljs-string">'s test probes: ECE, CWR flags, unusual options</span></span>
+</code></pre><h3 id="brute-force-signatures">Brute Force Signatures</h3>
+<pre><code># SSH brute force:
+-<span class="ruby"> Many TCP connections to port <span class="hljs-number">22</span> from same source
+</span>-<span class="ruby"> Each connection very short (&lt; <span class="hljs-number">5</span> seconds)
+</span>-<span class="ruby"> <span class="hljs-symbol">Pattern:</span> connect → auth → fail → disconnect → repeat
+</span>-<span class="ruby"> <span class="hljs-symbol">Filter:</span> tcp.flags.syn == <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> tcp.dstport == <span class="hljs-number">22</span>
+</span>
+# HTTP brute force:
+-<span class="ruby"> Many POST requests to same URL (login page)
+</span>-<span class="ruby"> Same User-Agent string
+</span>-<span class="ruby"> Rapid succession (hundreds per minute)</span>
+</code></pre><h3 id="data-exfiltration-signatures">Data Exfiltration Signatures</h3>
+<pre><code># DNS tunneling:
+-<span class="ruby"> DNS TXT queries with base64 content
+</span>-<span class="ruby"> Long subdomain labels (&gt; <span class="hljs-number">40</span> chars each)
+</span>-<span class="ruby"> High DNS query volume from single host
+</span>-<span class="ruby"> Responses to unknown domains
+</span>
+# ICMP tunneling:
+-<span class="ruby"> ICMP echo requests with large/unusual payloads
+</span>-<span class="ruby"> Non-standard ICMP payload length
+</span>-<span class="ruby"> High volume, sustained pattern
+</span>
+# HTTP exfiltration:
+-<span class="ruby"> Large POST requests to unusual hosts
+</span>-<span class="ruby"> Base64 data <span class="hljs-keyword">in</span> URL parameters
+</span>-<span class="ruby"> Unusual destination countries
+</span>
+# Encrypted exfiltration:
+-<span class="ruby"> New TLS connections to unusual hosts
+</span>-<span class="ruby"> High volume to residential IPs
+</span>-<span class="ruby"> Connections at unusual hours</span>
+</code></pre><h3 id="lateral-movement-signatures">Lateral Movement Signatures</h3>
+<pre><code><span class="hljs-comment"># SMB spreading (like WannaCry/NotPetya):</span>
+- Connection <span class="hljs-keyword">from</span> workstation <span class="hljs-keyword">to</span> many other workstations <span class="hljs-keyword">on</span> port <span class="hljs-number">445</span>
+- SMB traffic <span class="hljs-keyword">between</span> workstations (should only go <span class="hljs-keyword">to</span> servers)
+- Large volume <span class="hljs-keyword">of</span> failed SMB authentications
+
+<span class="hljs-comment"># Pass-the-Hash:</span>
+- Successful SMB authentication <span class="hljs-keyword">without</span> prior NTLM challenge
+- Rapid lateral movement <span class="hljs-keyword">to</span> many hosts
+- Service account used <span class="hljs-keyword">from</span> unusual source
+
+<span class="hljs-comment"># Kerberoasting:</span>
+- Service ticket requests <span class="hljs-keyword">for</span> many different SPNs <span class="hljs-keyword">from</span> one client
+- Tickets requested <span class="hljs-keyword">with</span> RC4 (etype <span class="hljs-number">23</span>) <span class="hljs-keyword">instead of</span> AES
+- No corresponding pre-authentication tickets
+</code></pre><hr>
+</body></html>

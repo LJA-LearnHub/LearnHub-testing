@@ -1,0 +1,647 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-5-routing-static-dynamic-and-protocols">SECTION 5: Routing — Static, Dynamic, and Protocols</h1>
+<hr>
+<h2 id="5-1-routing-fundamentals">5.1 Routing Fundamentals</h2>
+<p>A <strong>router</strong> forwards packets between networks using <strong>routing tables</strong> to determine the best next-hop. Routing is a Layer 3 function.</p>
+<h3 id="routing-table-components">Routing Table Components</h3>
+<pre><code>Router# show <span class="hljs-built_in">ip</span> route
+<span class="hljs-symbol">Codes:</span> C - connected, S - static, R - <span class="hljs-built_in">RIP</span>, O - OSPF, D - EIGRP
+       B - BGP, i - IS-IS, L - local
+
+C   <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span>/<span class="hljs-number">24</span> is directly connected, GigabitEthernet0/<span class="hljs-number">0</span>
+L   <span class="hljs-number">192.168</span><span class="hljs-meta">.1</span><span class="hljs-meta">.1</span>/<span class="hljs-number">32</span> is directly connected, GigabitEthernet0/<span class="hljs-number">0</span>
+O   <span class="hljs-number">10.0</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span>/<span class="hljs-number">24</span> [<span class="hljs-number">110</span>/<span class="hljs-number">2</span>] via <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.2</span>, <span class="hljs-number">00</span>:<span class="hljs-number">05</span>:<span class="hljs-number">23</span>, GigabitEthernet0/<span class="hljs-number">1</span>
+S   <span class="hljs-number">0.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span>/<span class="hljs-number">0</span> [<span class="hljs-number">1</span>/<span class="hljs-number">0</span>] via <span class="hljs-number">203.0</span><span class="hljs-meta">.113</span><span class="hljs-meta">.1</span>
+</code></pre><ul>
+<li><strong>Network/prefix:</strong> Destination</li>
+<li><strong>[AD/Metric]:</strong> Administrative distance / metric</li>
+<li><strong>via:</strong> Next-hop IP address</li>
+<li><strong>Interface:</strong> Outgoing interface</li>
+</ul>
+<h3 id="route-selection-longest-prefix-match-">Route Selection (Longest Prefix Match)</h3>
+<p>Router always chooses the <strong>most specific route</strong> (longest prefix / highest CIDR number):</p>
+<pre><code><span class="hljs-symbol">Destination:</span> <span class="hljs-number">10.1</span><span class="hljs-meta">.1</span><span class="hljs-meta">.5</span>
+Routes available:
+  <span class="hljs-number">10.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span>/<span class="hljs-number">8</span>     → less specific
+  <span class="hljs-number">10.1</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span>/<span class="hljs-number">16</span>    → more specific
+  <span class="hljs-number">10.1</span><span class="hljs-meta">.1</span><span class="hljs-meta">.0</span>/<span class="hljs-number">24</span>    → most specific ← WINS
+  <span class="hljs-number">0.0</span><span class="hljs-meta">.0</span><span class="hljs-meta">.0</span>/<span class="hljs-number">0</span>      → <span class="hljs-meta">default</span> (last resort)
+</code></pre><h3 id="administrative-distance-ad-">Administrative Distance (AD)</h3>
+<p>When multiple routing sources have routes to the same destination, AD determines trustworthiness. <strong>Lower AD = more trusted, preferred.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>AD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connected</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Static</td>
+<td>1</td>
+</tr>
+<tr>
+<td>EIGRP Summary</td>
+<td>5</td>
+</tr>
+<tr>
+<td>External BGP (eBGP)</td>
+<td>20</td>
+</tr>
+<tr>
+<td>EIGRP Internal</td>
+<td>90</td>
+</tr>
+<tr>
+<td>IGRP (legacy)</td>
+<td>100</td>
+</tr>
+<tr>
+<td>OSPF</td>
+<td>110</td>
+</tr>
+<tr>
+<td>IS-IS</td>
+<td>115</td>
+</tr>
+<tr>
+<td>RIP</td>
+<td>120</td>
+</tr>
+<tr>
+<td>EIGRP External</td>
+<td>170</td>
+</tr>
+<tr>
+<td>Internal BGP (iBGP)</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Unknown</td>
+<td>255 (never used)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Floating static route:</strong> Static route with AD higher than dynamic protocol. Used as backup:</p>
+<pre><code class="lang-cisco">ip route <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span> <span class="hljs-number">130</span>   ! AD=<span class="hljs-number">130</span>, loses to OSPF (<span class="hljs-number">110</span>)
+</code></pre>
+<hr>
+<h2 id="5-2-static-routing">5.2 Static Routing</h2>
+<p>Manually configured routes. Simple, predictable, no overhead. Doesn&#39;t adapt to topology changes.</p>
+<h3 id="types-of-static-routes">Types of Static Routes</h3>
+<p><strong>Standard static route:</strong></p>
+<pre><code class="lang-cisco">ip route <span class="hljs-number">192.168</span><span class="hljs-number">.2</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span>       ! Via next-hop IP
+ip route <span class="hljs-number">192.168</span><span class="hljs-number">.2</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> GigabitEthernet0/<span class="hljs-number">1</span>  ! Via interface (careful with multi-access)
+ip route <span class="hljs-number">192.168</span><span class="hljs-number">.2</span><span class="hljs-number">.0</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span> GigabitEthernet0/<span class="hljs-number">1</span>  ! Both (best for point-to-point)
+</code></pre>
+<p><strong>Default route:</strong></p>
+<pre><code class="lang-cisco">ip route <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.1</span>              ! Send all unknown traffic here
+ip route <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> GigabitEthernet0/<span class="hljs-number">0</span>        ! Via interface (common on ISP-facing)
+</code></pre>
+<p><strong>Summary route:</strong></p>
+<pre><code class="lang-cisco"><span class="hljs-selector-tag">ip</span> <span class="hljs-selector-tag">route</span> 10<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span> 255<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span> 10<span class="hljs-selector-class">.255</span><span class="hljs-selector-class">.255</span><span class="hljs-selector-class">.1</span>          ! <span class="hljs-selector-tag">Summarizes</span> 10<span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span><span class="hljs-selector-class">.x</span> <span class="hljs-selector-tag">traffic</span>
+</code></pre>
+<p><strong>Host route (/32):</strong></p>
+<pre><code class="lang-cisco"><span class="hljs-selector-tag">ip</span> <span class="hljs-selector-tag">route</span> 192<span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.100</span> 255<span class="hljs-selector-class">.255</span><span class="hljs-selector-class">.255</span><span class="hljs-selector-class">.255</span> 10<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.2</span>    ! <span class="hljs-selector-tag">Route</span> <span class="hljs-selector-tag">to</span> <span class="hljs-selector-tag">single</span> <span class="hljs-selector-tag">host</span>
+</code></pre>
+<p><strong>IPv6 static routes:</strong></p>
+<pre><code class="lang-cisco"><span class="hljs-selector-tag">ipv6</span> <span class="hljs-selector-tag">route</span> <span class="hljs-selector-tag">2001</span><span class="hljs-selector-pseudo">:db8</span><span class="hljs-selector-pseudo">:1</span>::/<span class="hljs-selector-tag">64</span> <span class="hljs-selector-tag">2001</span><span class="hljs-selector-pseudo">:db8</span><span class="hljs-selector-pseudo">:ff</span><span class="hljs-selector-pseudo">::2</span>
+<span class="hljs-selector-tag">ipv6</span> <span class="hljs-selector-tag">route</span> ::/<span class="hljs-selector-tag">0</span> <span class="hljs-selector-tag">2001</span><span class="hljs-selector-pseudo">:db8</span><span class="hljs-selector-pseudo">:ff</span><span class="hljs-selector-pseudo">::1</span>                     ! <span class="hljs-selector-tag">IPv6</span> <span class="hljs-selector-tag">default</span> <span class="hljs-selector-tag">route</span>
+</code></pre>
+<h3 id="when-to-use-static-routing">When to Use Static Routing</h3>
+<ul>
+<li>Small networks that don&#39;t change often</li>
+<li>Stub networks (one path in/out)</li>
+<li>Security (only allow specific routes)</li>
+<li>Reducing routing protocol overhead</li>
+<li>Pointing to ISP (default route)</li>
+</ul>
+<hr>
+<h2 id="5-3-dynamic-routing-concepts">5.3 Dynamic Routing Concepts</h2>
+<p><strong>Interior Gateway Protocols (IGP):</strong> Used within an Autonomous System (AS)</p>
+<ul>
+<li>RIP, OSPF, EIGRP, IS-IS</li>
+</ul>
+<p><strong>Exterior Gateway Protocols (EGP):</strong> Used between Autonomous Systems</p>
+<ul>
+<li>BGP</li>
+</ul>
+<p><strong>Autonomous System (AS):</strong> A collection of networks under one administrative domain with a common routing policy. Identified by <strong>ASN (Autonomous System Number):</strong></p>
+<ul>
+<li>16-bit: 1–65535 (public 1–64511, private 64512–65535)</li>
+<li>32-bit: Extended ASN space</li>
+</ul>
+<h3 id="routing-protocol-categories">Routing Protocol Categories</h3>
+<p><strong>Distance-Vector:</strong></p>
+<ul>
+<li>Each router only knows its neighbors&#39; distances to destinations</li>
+<li>Shares entire routing table with neighbors periodically</li>
+<li>Simple but slower convergence; prone to routing loops</li>
+<li>Uses <strong>split horizon</strong>, <strong>route poisoning</strong>, <strong>holddown timers</strong> to prevent loops</li>
+<li>Examples: RIP, RIPv2, IGRP</li>
+</ul>
+<p><strong>Link-State:</strong></p>
+<ul>
+<li>Each router knows full topology of the network</li>
+<li>Shares LSAs (Link State Advertisements) describing directly connected links</li>
+<li>Builds topological map using <strong>Dijkstra&#39;s SPF algorithm</strong></li>
+<li>Faster convergence; more complex</li>
+<li>Examples: OSPF, IS-IS</li>
+</ul>
+<p><strong>Path-Vector:</strong></p>
+<ul>
+<li>Like distance-vector but shares the full path to destinations</li>
+<li>Prevents loops because path is known</li>
+<li>Example: BGP</li>
+</ul>
+<p><strong>Advanced Distance-Vector (Hybrid):</strong></p>
+<ul>
+<li>Combines features of distance-vector and link-state</li>
+<li>Example: EIGRP — uses DUAL algorithm, fast convergence</li>
+</ul>
+<hr>
+<h2 id="5-4-rip-routing-information-protocol-">5.4 RIP (Routing Information Protocol)</h2>
+<p><strong>RIPv1:</strong> Classful, broadcast updates, no authentication (obsolete)
+<strong>RIPv2:</strong> Classless (supports CIDR), multicast updates (224.0.0.9), MD5 authentication</p>
+<h3 id="rip-characteristics">RIP Characteristics</h3>
+<ul>
+<li>Metric: <strong>Hop count</strong> (max 15; 16 = unreachable)</li>
+<li>Administrative Distance: <strong>120</strong></li>
+<li>Update interval: every <strong>30 seconds</strong></li>
+<li><strong>Split horizon:</strong> Don&#39;t advertise route back out the interface it was learned on</li>
+<li><strong>Route poisoning:</strong> When route fails, advertise it with metric 16 (immediately)</li>
+<li><strong>Holddown timer:</strong> 180 seconds after route marked invalid — ignore updates for that route</li>
+<li><strong>Flush timer:</strong> 240 seconds — remove route from table if not updated</li>
+</ul>
+<h3 id="ripv2-configuration">RIPv2 Configuration</h3>
+<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># router rip</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># version 2</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># network 192.168.1.0</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># network 10.0.0.0</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># no auto-summary            ! Required for classless</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># passive-interface gi0/0    ! Don't send updates out this interface</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-comment"># default-information originate  ! Advertise default route</span>
+
+! Authentication
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># key chain RIP-KEYS</span>
+Router(<span class="hljs-built_in">config</span>-keychain)<span class="hljs-comment"># key 1</span>
+Router(<span class="hljs-built_in">config</span>-keychain-key)<span class="hljs-comment"># key-string Secr3t</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># interface gi0/1</span>
+Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># ip rip authentication mode md5</span>
+Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># ip rip authentication key-chain RIP-KEYS</span>
+
+Router<span class="hljs-comment"># show ip rip database</span>
+Router<span class="hljs-comment"># show ip protocols</span>
+Router<span class="hljs-comment"># debug ip rip</span>
+</code></pre>
+<hr>
+<h2 id="5-5-ospf-open-shortest-path-first-">5.5 OSPF (Open Shortest Path First)</h2>
+<p>OSPF is the most widely deployed IGP. It&#39;s a <strong>link-state protocol</strong> using <strong>Dijkstra&#39;s SPF algorithm</strong>.</p>
+<h3 id="ospf-characteristics">OSPF Characteristics</h3>
+<ul>
+<li>Metric: <strong>Cost</strong> (100 Mbps / interface bandwidth; default reference = 100 Mbps)</li>
+<li>Administrative Distance: <strong>110</strong></li>
+<li>Uses <strong>multicast:</strong> 224.0.0.5 (all OSPF routers), 224.0.0.6 (DR/BDR)</li>
+<li>Protocol number: <strong>89</strong> (directly in IP, not TCP/UDP)</li>
+<li><strong>Classless:</strong> Supports VLSM and CIDR</li>
+<li>Supports <strong>areas</strong> for scalability</li>
+</ul>
+<h3 id="ospf-areas">OSPF Areas</h3>
+<p>OSPF uses a hierarchical <strong>area</strong> structure to scale:</p>
+<ul>
+<li><strong>Area 0 (Backbone area):</strong> All other areas must connect here</li>
+<li><strong>Non-backbone areas:</strong> Areas 1, 2, 3, etc.</li>
+<li>Every inter-area traffic must go through Area 0</li>
+</ul>
+<p><strong>Router types:</strong></p>
+<ul>
+<li><strong>IR (Internal Router):</strong> All interfaces in same area</li>
+<li><strong>ABR (Area Border Router):</strong> Interfaces in multiple areas; connects to backbone</li>
+<li><strong>ASBR (AS Boundary Router):</strong> Redistributes routes from other routing domains</li>
+<li><strong>Backbone Router:</strong> Has interface in Area 0</li>
+</ul>
+<p><strong>LSA Types:</strong></p>
+<ul>
+<li><strong>Type 1 (Router LSA):</strong> Generated by each router; describes its links</li>
+<li><strong>Type 2 (Network LSA):</strong> Generated by DR; describes all routers on multi-access segment</li>
+<li><strong>Type 3 (Summary LSA):</strong> Generated by ABR; inter-area routes</li>
+<li><strong>Type 4 (ASBR Summary):</strong> Tells other areas where the ASBR is</li>
+<li><strong>Type 5 (External LSA):</strong> Generated by ASBR; external routes (redistributed)</li>
+<li><strong>Type 7 (NSSA External):</strong> External routes in NSSA areas</li>
+</ul>
+<p><strong>Area types:</strong></p>
+<ul>
+<li><strong>Standard area:</strong> Accepts all LSA types</li>
+<li><strong>Stub area:</strong> No external LSAs (Type 5); default route from ABR replaces them</li>
+<li><strong>Totally stubby area:</strong> No Type 3, 4, or 5 LSAs; only default from ABR (Cisco)</li>
+<li><strong>NSSA (Not-So-Stubby Area):</strong> No Type 5 from backbone; allows local external routes via Type 7</li>
+</ul>
+<h3 id="ospf-neighbor-formation">OSPF Neighbor Formation</h3>
+<p>OSPF routers form <strong>adjacencies</strong> before exchanging routing information.</p>
+<p><strong>OSPF neighbor states:</strong></p>
+<ol>
+<li><strong>Down:</strong> No Hello received</li>
+<li><strong>Attempt:</strong> Sending Hellos (NBMA only)</li>
+<li><strong>Init:</strong> Hello received, but our Router ID not in their Hello</li>
+<li><strong>2-Way:</strong> Bidirectional — our RID seen in their Hello; DR/BDR election happens here</li>
+<li><strong>ExStart:</strong> Master/slave relationship established for DBD exchange</li>
+<li><strong>Exchange:</strong> Exchanging DBD (Database Description) packets</li>
+<li><strong>Loading:</strong> Requesting missing LSAs with LSRs; receiving LSUs</li>
+<li><strong>Full:</strong> Synchronized LSDB — adjacency complete</li>
+</ol>
+<p><strong>Hello packet matching requirements:</strong></p>
+<ul>
+<li>Same area ID</li>
+<li>Same subnet and mask</li>
+<li>Same Hello and Dead intervals</li>
+<li>Same MTU (optional, can disable check)</li>
+<li>Same authentication</li>
+<li>Same stub area flags</li>
+</ul>
+<h3 id="dr-and-bdr-election-multi-access-networks-">DR and BDR Election (Multi-access networks)</h3>
+<p>On Ethernet segments, OSPF elects a <strong>DR (Designated Router)</strong> and <strong>BDR (Backup DR)</strong> to reduce LSA flooding:</p>
+<ul>
+<li>All routers form full adjacency with DR and BDR only (not each other)</li>
+<li><strong>DROther</strong> routers exchange only to DR/BDR (2-Way with each other)</li>
+</ul>
+<p><strong>DR/BDR election:</strong></p>
+<ol>
+<li>Highest <strong>OSPF priority</strong> (0–255, default 1; 0 = never becomes DR/BDR)</li>
+<li>Highest <strong>Router ID</strong> (tiebreaker)</li>
+</ol>
+<p><strong>OSPF Router ID selection:</strong></p>
+<ol>
+<li>Manually configured: <code>router-id 1.1.1.1</code></li>
+<li>Highest IP on loopback interface</li>
+<li>Highest IP on active interface</li>
+</ol>
+<blockquote>
+<p>⚠️ DR/BDR is non-preemptive — existing DR won&#39;t step down if a router with higher priority joins.</p>
+</blockquote>
+<h3 id="ospf-cost">OSPF Cost</h3>
+<p>Cost = <strong>Reference bandwidth / Interface bandwidth</strong></p>
+<ul>
+<li>Default reference = 100 Mbps (10^8)</li>
+<li>100 Mbps FastEthernet: 100M/100M = <strong>1</strong></li>
+<li>10 Mbps Ethernet: 100M/10M = <strong>10</strong></li>
+<li>1 Gbps: 100M/1000M = <strong>0.1 → rounds to 1</strong> (same as FastEthernet!)</li>
+</ul>
+<p><strong>Fix for Gigabit and above:</strong></p>
+<pre><code class="lang-cisco">Router(config-router)<span class="hljs-comment"># auto-cost reference-bandwidth 10000   ! 10 Gbps reference</span>
+! Now: <span class="hljs-number">1</span><span class="hljs-attr">Gbps</span> = <span class="hljs-number">10</span>, <span class="hljs-number">10</span><span class="hljs-attr">Gbps</span> = <span class="hljs-number">1</span>
+</code></pre>
+<p><strong>Manual cost:</strong></p>
+<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip ospf cost 50</span>
+</code></pre>
+<h3 id="ospf-configuration-ospfv2-">OSPF Configuration (OSPFv2)</h3>
+<pre><code class="lang-cisco">! Basic OSPF
+Router(<span class="hljs-keyword">config</span>)# router ospf <span class="hljs-number">1</span>                         ! Process ID (<span class="hljs-keyword">local</span> significance only)
+Router(<span class="hljs-keyword">config</span>-router)# router-id <span class="hljs-number">1</span><span class="hljs-variable">.1</span><span class="hljs-variable">.1</span><span class="hljs-variable">.1</span>
+Router(<span class="hljs-keyword">config</span>-router)# network <span class="hljs-number">192</span><span class="hljs-variable">.168</span><span class="hljs-variable">.1</span><span class="hljs-variable">.0</span> <span class="hljs-number">0</span><span class="hljs-variable">.0</span><span class="hljs-variable">.0</span><span class="hljs-variable">.255</span> area <span class="hljs-number">0</span>   ! Wildcard mask
+Router(<span class="hljs-keyword">config</span>-router)# network <span class="hljs-number">10</span><span class="hljs-variable">.0</span><span class="hljs-variable">.0</span><span class="hljs-variable">.0</span> <span class="hljs-number">0</span><span class="hljs-variable">.0</span><span class="hljs-variable">.0</span><span class="hljs-variable">.3</span> area <span class="hljs-number">1</span>
+Router(<span class="hljs-keyword">config</span>-router)# passive-<span class="hljs-keyword">interface</span> GigabitEthernet0/<span class="hljs-number">0</span>   ! Don't send Hellos out <span class="hljs-keyword">this</span> <span class="hljs-keyword">interface</span>
+
+! Change timers
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf hello-interval <span class="hljs-number">5</span>
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf dead-interval <span class="hljs-number">20</span>
+
+! Authentication
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf authentication message-digest
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf message-digest-key <span class="hljs-number">1</span> md5 OsprPassword
+
+! Stub areas
+Router(<span class="hljs-keyword">config</span>-router)# area <span class="hljs-number">1</span> stub
+Router(<span class="hljs-keyword">config</span>-router)# area <span class="hljs-number">1</span> stub no-summary           ! Totally stubby
+
+! Redistribute <span class="hljs-keyword">default</span> route
+Router(<span class="hljs-keyword">config</span>-router)# <span class="hljs-keyword">default</span>-information originate     ! Must have a <span class="hljs-keyword">default</span> route
+Router(<span class="hljs-keyword">config</span>-router)# <span class="hljs-keyword">default</span>-information originate <span class="hljs-keyword">always</span>  ! Even without <span class="hljs-keyword">default</span> route
+
+! Manual cost on <span class="hljs-keyword">interface</span>
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf cost <span class="hljs-number">100</span>
+
+! DR/BDR <span class="hljs-keyword">priority</span>
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf <span class="hljs-keyword">priority</span> <span class="hljs-number">255</span>    ! Highest → <span class="hljs-keyword">always</span> DR
+Router(<span class="hljs-keyword">config</span>-<span class="hljs-keyword">if</span>)# ip ospf <span class="hljs-keyword">priority</span> <span class="hljs-number">0</span>     ! Never becomes DR
+
+! Verification
+Router# show ip ospf
+Router# show ip ospf neighbor
+Router# show ip ospf neighbor detail
+Router# show ip ospf database
+Router# show ip ospf <span class="hljs-keyword">interface</span>
+Router# show ip ospf <span class="hljs-keyword">interface</span> gi0/<span class="hljs-number">0</span>
+Router# show ip route ospf
+Router# debug ip ospf events
+Router# debug ip ospf hello
+</code></pre>
+<h3 id="ospfv3-ipv6-">OSPFv3 (IPv6)</h3>
+<pre><code class="lang-cisco">! IPv6 OSPF
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># ipv6 unicast-routing</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># ipv6 router ospf 1</span>
+Router(<span class="hljs-built_in">config</span>-rtr)<span class="hljs-comment"># router-id 1.1.1.1</span>
+
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-comment"># interface gi0/0</span>
+Router(<span class="hljs-built_in">config</span>-if)<span class="hljs-comment"># ipv6 ospf 1 area 0         ! Enable OSPF on interface directly</span>
+
+Router<span class="hljs-comment"># show ipv6 ospf neighbor</span>
+Router<span class="hljs-comment"># show ipv6 route ospf</span>
+</code></pre>
+<hr>
+<h2 id="5-6-eigrp-enhanced-interior-gateway-routing-protocol-">5.6 EIGRP (Enhanced Interior Gateway Routing Protocol)</h2>
+<p>Cisco proprietary <strong>hybrid</strong> routing protocol (advanced distance-vector / diffusing update). Very fast convergence.</p>
+<h3 id="eigrp-characteristics">EIGRP Characteristics</h3>
+<ul>
+<li>Metric: <strong>Composite metric</strong> (bandwidth + delay by default; can add reliability, load, MTU)</li>
+<li>Administrative Distance: <strong>90</strong> (internal), <strong>170</strong> (external)</li>
+<li>Uses <strong>multicast:</strong> 224.0.0.10</li>
+<li>Protocol number: <strong>88</strong></li>
+<li><strong>Classless:</strong> Supports VLSM and CIDR</li>
+<li>Supports unequal-cost load balancing (variance)</li>
+<li>Uses <strong>DUAL (Diffusing Update Algorithm)</strong> for loop-free paths</li>
+</ul>
+<h3 id="eigrp-terminology">EIGRP Terminology</h3>
+<ul>
+<li><strong>Reported Distance (RD) / Advertised Distance:</strong> Neighbor&#39;s metric to the destination</li>
+<li><strong>Feasible Distance (FD):</strong> Best metric from this router to destination</li>
+<li><strong>Successor:</strong> Best route to destination (in routing table)</li>
+<li><strong>Feasible Successor (FS):</strong> Backup route (in topology table); must satisfy feasibility condition</li>
+<li><strong>Feasibility Condition:</strong> RD &lt; FD of current successor (guarantees loop-free alternate path)</li>
+</ul>
+<h3 id="eigrp-metric-calculation">EIGRP Metric Calculation</h3>
+<p>Default metric = (10^7 / BW) + (Delay/10) × 256</p>
+<ul>
+<li><strong>BW:</strong> Lowest bandwidth on path (Kbps)</li>
+<li><strong>Delay:</strong> Sum of delays on path (tens of microseconds)</li>
+</ul>
+<h3 id="eigrp-configuration">EIGRP Configuration</h3>
+<pre><code class="lang-cisco">! Classic EIGRP
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># router eigrp 100                    ! AS number — must match neighbors</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># network 192.168.1.0 0.0.0.255</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># network 10.0.0.0 0.0.0.255</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># no auto-summary</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># passive-interface gi0/0</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># eigrp router-id 1.1.1.1</span>
+
+! Authentication
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># key chain EIGRP-KEYS</span>
+Router(<span class="hljs-built_in">config</span>-keychain)<span class="hljs-meta"># key 1</span>
+Router(<span class="hljs-built_in">config</span>-keychain-key)<span class="hljs-meta"># key-string Secr3t</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface gi0/1</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip authentication mode eigrp 100 md5</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip authentication key-chain eigrp 100 EIGRP-KEYS</span>
+
+! Unequal-cost load balancing
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># variance 2                   ! Use routes up to 2x the FD</span>
+
+! Summarization
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip summary-address eigrp 100 10.0.0.0 255.0.0.0</span>
+
+! Verification
+Router<span class="hljs-meta"># show ip eigrp neighbors</span>
+Router<span class="hljs-meta"># show ip eigrp topology</span>
+Router<span class="hljs-meta"># show ip eigrp topology all-links</span>
+Router<span class="hljs-meta"># show ip eigrp traffic</span>
+Router<span class="hljs-meta"># show ip route eigrp</span>
+Router<span class="hljs-meta"># debug eigrp packets</span>
+</code></pre>
+<h3 id="named-eigrp-modern-syntax-">Named EIGRP (Modern syntax)</h3>
+<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># router eigrp MYCOMPANY</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># address-family ipv4 autonomous-system 100</span>
+Router(<span class="hljs-built_in">config</span>-router-af)<span class="hljs-meta"># network 192.168.1.0</span>
+Router(<span class="hljs-built_in">config</span>-router-af)<span class="hljs-meta"># eigrp router-id 1.1.1.1</span>
+Router(<span class="hljs-built_in">config</span>-router-af)<span class="hljs-meta"># af-interface GigabitEthernet0/0</span>
+Router(<span class="hljs-built_in">config</span>-router-af-interface)<span class="hljs-meta"># passive-interface</span>
+</code></pre>
+<hr>
+<h2 id="5-7-bgp-border-gateway-protocol-">5.7 BGP (Border Gateway Protocol)</h2>
+<p><strong>BGP</strong> is the routing protocol of the internet. It routes traffic between <strong>Autonomous Systems (AS)</strong>.</p>
+<h3 id="bgp-types">BGP Types</h3>
+<p><strong>eBGP (External BGP):</strong> Between routers in different ASes</p>
+<ul>
+<li>Default AD: 20</li>
+<li>TTL of BGP packets = 1 (must be directly connected, unless multihop configured)</li>
+<li>Next-hop changes when advertising to eBGP peers</li>
+</ul>
+<p><strong>iBGP (Internal BGP):</strong> Between routers in the same AS</p>
+<ul>
+<li>Default AD: 200</li>
+<li>Next-hop unchanged when advertising within AS</li>
+<li><strong>Full-mesh requirement:</strong> Every iBGP router must peer with every other (or use route reflectors)</li>
+</ul>
+<h3 id="bgp-characteristics">BGP Characteristics</h3>
+<ul>
+<li>Uses <strong>TCP port 179</strong> for peer sessions</li>
+<li><strong>Path-vector</strong> protocol — shares full path (AS_PATH attribute)</li>
+<li>Not a metric-based routing protocol — uses <strong>path attributes</strong> for best path selection</li>
+<li>Slow convergence by design (prevents instability)</li>
+</ul>
+<h3 id="bgp-path-attributes">BGP Path Attributes</h3>
+<p>BGP uses attributes to select best path. <strong>WEIGHT</strong> (highest) through <strong>ROUTER ID</strong> (lowest):</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Attribute</th>
+<th>Prefer</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>WEIGHT</td>
+<td>Highest</td>
+<td>Cisco, local only</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LOCAL_PREF</td>
+<td>Highest</td>
+<td>iBGP, AS-wide</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Locally originated</td>
+<td>—</td>
+<td>Prefer locally injected</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AS_PATH</td>
+<td>Shortest</td>
+<td>Prefer fewer AS hops</td>
+</tr>
+<tr>
+<td>5</td>
+<td>ORIGIN</td>
+<td>Lowest</td>
+<td>i &lt; e &lt; ?</td>
+</tr>
+<tr>
+<td>6</td>
+<td>MED</td>
+<td>Lowest</td>
+<td>Suggest entry point to neighbors</td>
+</tr>
+<tr>
+<td>7</td>
+<td>eBGP over iBGP</td>
+<td>eBGP preferred</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td>IGP metric to next-hop</td>
+<td>Lowest</td>
+<td>—</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Oldest eBGP path</td>
+<td>—</td>
+<td>Stability</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Neighbor BGP Router ID</td>
+<td>Lowest</td>
+<td>—</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Neighbor IP address</td>
+<td>Lowest</td>
+<td>Last tiebreaker</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mnemonic:</strong> &quot;We Love Oranges AS Oranges Mean Pure Refreshment&quot; (Weight, Local-pref, Originate, AS-path, Origin, MED, Paths-eBGP, Router-id)</p>
+<h3 id="bgp-configuration">BGP Configuration</h3>
+<pre><code class="lang-cisco">! Basic eBGP
+Router(config)# router bgp <span class="hljs-number">65001</span>                    ! Local AS number
+Router(config-router)# bgp router-id <span class="hljs-number">1.1</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>
+Router(config-router)# neighbor <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.2</span> remote-as <span class="hljs-number">65002</span>    ! eBGP peer
+Router(config-router)# network <span class="hljs-number">192.168</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> mask <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span>  ! Advertise network
+
+! Basic iBGP
+Router(config-router)# neighbor <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span> remote-as <span class="hljs-number">65001</span>       ! iBGP peer (same AS)
+Router(config-router)# neighbor <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span> update-source Loopback0
+
+! Route Reflector (avoids iBGP full mesh)
+Router(config-router)# neighbor <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.2</span> route-reflector-client
+
+! Path attribute manipulation
+Router(config-router)# neighbor <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.2</span> weight <span class="hljs-number">200</span>         ! Prefer this neighbor
+Router(config-router)# bgp <span class="hljs-section">default</span> local-preference <span class="hljs-number">200</span>        ! Prefer this AS for outbound
+
+! Authentication (MD5)
+Router(config-router)# neighbor <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.2</span> password BGP-Secret
+
+! Verification
+Router# show bgp summary
+Router# show bgp ipv4 unicast
+Router# show bgp ipv4 unicast <span class="hljs-number">192.168</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>
+Router# show bgp neighbors
+Router# show bgp neighbors <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.2</span> advertised-routes
+Router# show bgp neighbors <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.2</span> received-routes
+</code></pre>
+<hr>
+<h2 id="5-8-route-redistribution">5.8 Route Redistribution</h2>
+<p>Moving routes between different routing protocols.</p>
+<pre><code class="lang-cisco">! Redistribute OSPF into EIGRP
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># router eigrp 100</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># redistribute ospf 1 metric 10000 100 255 1 1500</span>
+!                                          BW     <span class="hljs-built_in">delay</span> rel load MTU
+
+! Redistribute EIGRP into OSPF
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># router ospf 1</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># redistribute eigrp 100 subnets metric 20 metric-type e2</span>
+
+! Redistribute <span class="hljs-keyword">static</span> routes into OSPF
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># router ospf 1</span>
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># redistribute static subnets</span>
+
+! Redistribute <span class="hljs-built_in">connected</span> networks
+Router(<span class="hljs-built_in">config</span>-router)<span class="hljs-meta"># redistribute connected subnets</span>
+</code></pre>
+<hr>
+<h2 id="5-9-policy-based-routing-pbr-">5.9 Policy-Based Routing (PBR)</h2>
+<p>Route packets based on criteria other than destination IP (source IP, protocol, port, size).</p>
+<pre><code class="lang-cisco">! Route web traffic via ISP1, everything <span class="hljs-built_in">else</span> via ISP2
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># access-list 101 permit tcp any any eq 80</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># route-map PBR-WEB permit 10</span>
+Router(<span class="hljs-built_in">config</span>-route-<span class="hljs-built_in">map</span>)<span class="hljs-meta"># match ip address 101</span>
+Router(<span class="hljs-built_in">config</span>-route-<span class="hljs-built_in">map</span>)<span class="hljs-meta"># set ip next-hop 203.0.113.1      ! ISP1</span>
+
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface gi0/0                            ! Apply to incoming interface</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip policy route-map PBR-WEB</span>
+
+Router<span class="hljs-meta"># show route-map</span>
+Router<span class="hljs-meta"># debug ip policy</span>
+</code></pre>
+<hr>
+<h2 id="5-10-first-hop-redundancy-protocols-fhrp-">5.10 First Hop Redundancy Protocols (FHRP)</h2>
+<p>Provides redundant default gateway for hosts. If the primary gateway fails, a backup takes over transparently.</p>
+<h3 id="hsrp-hot-standby-router-protocol-cisco-proprietary">HSRP (Hot Standby Router Protocol) — Cisco Proprietary</h3>
+<ul>
+<li><strong>Virtual IP and MAC</strong> shared between active and standby routers</li>
+<li><strong>Active router:</strong> Handles all traffic; highest priority wins (default 100)</li>
+<li><strong>Standby router:</strong> Monitors active; takes over on failure</li>
+<li>Uses <strong>UDP 1985</strong> (v1) or multicast 224.0.0.2 (v1) / 224.0.0.102 (v2)</li>
+<li><strong>Hello timer:</strong> 3 seconds | <strong>Hold timer:</strong> 10 seconds</li>
+</ul>
+<pre><code class="lang-cisco">! Router <span class="hljs-number">1</span> (active)
+Router1(config)# interface gi0/<span class="hljs-number">0</span>
+Router1(config-if)# ip address <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.2</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span>
+Router1(config-if)# standby <span class="hljs-number">1</span> ip <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>              ! Virtual IP
+Router1(config-if)# standby <span class="hljs-number">1</span> priority <span class="hljs-number">110</span>                 ! Higher than <span class="hljs-section">default</span> (<span class="hljs-number">100</span>)
+Router1(config-if)# standby <span class="hljs-number">1</span> preempt                      ! Take over if higher priority
+
+! Router <span class="hljs-number">2</span> (standby)
+Router2(config)# interface gi0/<span class="hljs-number">0</span>
+Router2(config-if)# ip address <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.3</span> <span class="hljs-number">255.255</span><span class="hljs-number">.255</span><span class="hljs-number">.0</span>
+Router2(config-if)# standby <span class="hljs-number">1</span> ip <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span>
+
+Router# show standby
+Router# show standby brief
+</code></pre>
+<p><strong>HSRP v1 vs v2:</strong></p>
+<ul>
+<li>v2 supports IPv6, more groups, millisecond timers</li>
+<li>v2 uses multicast 224.0.0.102</li>
+</ul>
+<h3 id="vrrp-virtual-router-redundancy-protocol-ieee-802-118">VRRP (Virtual Router Redundancy Protocol) — IEEE 802.118</h3>
+<ul>
+<li>Open standard (like HSRP but vendor-neutral)</li>
+<li><strong>Master</strong> (highest priority) + <strong>Backup</strong> routers</li>
+<li>The master router owns the real IP — it also serves as virtual IP</li>
+<li><strong>Preemption enabled by default</strong></li>
+<li>Uses multicast 224.0.0.18</li>
+<li>Supports millisecond timers</li>
+</ul>
+<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># vrrp 1 ip 192.168.1.1</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># vrrp 1 priority 200</span>
+</code></pre>
+<h3 id="glbp-gateway-load-balancing-protocol-cisco-proprietary">GLBP (Gateway Load Balancing Protocol) — Cisco Proprietary</h3>
+<ul>
+<li>Adds <strong>load balancing</strong> to gateway redundancy</li>
+<li>All routers in group can actively forward traffic (unlike HSRP/VRRP)</li>
+<li><strong>AVG (Active Virtual Gateway):</strong> Manages virtual MAC assignments</li>
+<li><strong>AVF (Active Virtual Forwarder):</strong> Each router forwards some traffic</li>
+<li><strong>Weighted, round-robin, or host-dependent</strong> load balancing</li>
+</ul>
+<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># glbp 1 ip 192.168.1.1</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># glbp 1 priority 150</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># glbp 1 preempt</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># glbp 1 load-balancing round-robin</span>
+Router<span class="hljs-meta"># show glbp</span>
+</code></pre>
+<hr>
+</body></html>

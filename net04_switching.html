@@ -1,0 +1,544 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-4-switching-vlans-stp-etherchannel-and-more">SECTION 4: Switching — VLANs, STP, EtherChannel, and More</h1>
+<hr>
+<h2 id="4-1-vlans-virtual-local-area-networks-">4.1 VLANs (Virtual Local Area Networks)</h2>
+<p>A <strong>VLAN</strong> is a logical grouping of devices into separate broadcast domains on one or more switches — regardless of physical location.</p>
+<h3 id="why-use-vlans-">Why Use VLANs?</h3>
+<ul>
+<li><strong>Security:</strong> Isolate sensitive data (HR, Finance) from general users</li>
+<li><strong>Performance:</strong> Reduce broadcast domain size; limit broadcast storms</li>
+<li><strong>Flexibility:</strong> Group users logically (by function, not location)</li>
+<li><strong>Simplify management:</strong> Apply consistent policies per VLAN</li>
+<li><strong>Cost:</strong> One switch can logically become many</li>
+</ul>
+<h3 id="vlan-membership">VLAN Membership</h3>
+<ul>
+<li><strong>Port-based (static) VLANs:</strong> Ports assigned manually to VLANs (most common)</li>
+<li><strong>Dynamic VLANs:</strong> VMPS server assigns VLAN based on MAC address</li>
+<li><strong>Voice VLANs:</strong> Special VLAN for IP phones (QoS, separate subnet)</li>
+</ul>
+<h3 id="vlan-id-ranges">VLAN ID Ranges</h3>
+<ul>
+<li><strong>1:</strong> Default VLAN (all ports belong by default)</li>
+<li><strong>2–1001:</strong> Normal range (configurable)</li>
+<li><strong>1002–1005:</strong> Reserved for legacy (FDDI, Token Ring)</li>
+<li><strong>1006–4094:</strong> Extended range (requires VTP transparent or off mode)</li>
+</ul>
+<h3 id="access-ports">Access Ports</h3>
+<ul>
+<li>Belongs to <strong>one VLAN</strong> only</li>
+<li>Connects end devices (PCs, phones, printers)</li>
+<li>Sends and receives <strong>untagged</strong> frames</li>
+<li>When device sends frame → switch adds VLAN tag internally</li>
+<li>When switch sends to device → tag is removed</li>
+</ul>
+<h3 id="trunk-ports">Trunk Ports</h3>
+<ul>
+<li>Carries <strong>multiple VLANs</strong> on one link</li>
+<li>Used between switches, between switch and router, between switch and server</li>
+<li>Frames are <strong>tagged</strong> with VLAN ID using <strong>802.1Q</strong></li>
+</ul>
+<h3 id="802-1q-vlan-tagging">802.1Q VLAN Tagging</h3>
+<p>IEEE standard that inserts a 4-byte tag into the Ethernet frame:</p>
+<pre><code>|<span class="hljs-string"> Dest MAC </span>|<span class="hljs-string"> Src MAC </span>|<span class="hljs-string"> 802.1Q Tag </span>|<span class="hljs-string"> EtherType </span>|<span class="hljs-string"> Data </span>|<span class="hljs-string"> FCS </span>|
+                      |<span class="hljs-string">TPID</span>|<span class="hljs-string">PCP</span>|<span class="hljs-string">DEI</span>|<span class="hljs-string">VID</span>|
+                      |<span class="hljs-string">0x8100</span>|<span class="hljs-string"> 3b</span>|<span class="hljs-string"> 1b</span>|<span class="hljs-string">12b</span>|
+</code></pre><ul>
+<li><strong>TPID:</strong> 0x8100 — identifies this as 802.1Q tagged frame</li>
+<li><strong>PCP (Priority Code Point):</strong> 3 bits — 802.1p QoS (0-7)</li>
+<li><strong>DEI (Drop Eligible Indicator):</strong> 1 bit — congestion marking</li>
+<li><strong>VID (VLAN ID):</strong> 12 bits — VLAN number (0–4095)</li>
+</ul>
+<p><strong>Native VLAN:</strong> One VLAN on each trunk that sends/receives <strong>untagged</strong> frames. Default = VLAN 1. Should be changed for security.</p>
+<blockquote>
+<p>⚠️ <strong>Security:</strong> Native VLAN mismatch can lead to <strong>VLAN hopping</strong> attacks. Best practice: change native VLAN to unused VLAN.</p>
+</blockquote>
+<h3 id="cisco-vlan-configuration">Cisco VLAN Configuration</h3>
+<pre><code class="lang-cisco">! <span class="hljs-keyword">Create</span> VLANs
+<span class="hljs-keyword">Switch</span># conf t
+<span class="hljs-keyword">Switch</span>(config)# vlan <span class="hljs-number">10</span>
+<span class="hljs-keyword">Switch</span>(config-vlan)# <span class="hljs-keyword">name</span> Sales
+<span class="hljs-keyword">Switch</span>(config-vlan)# vlan <span class="hljs-number">20</span>
+<span class="hljs-keyword">Switch</span>(config-vlan)# <span class="hljs-keyword">name</span> Engineering
+<span class="hljs-keyword">Switch</span>(config-vlan)# <span class="hljs-keyword">exit</span>
+
+! Configure <span class="hljs-keyword">access</span> port
+<span class="hljs-keyword">Switch</span>(config)# <span class="hljs-keyword">interface</span> fa0/<span class="hljs-number">1</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# switchport <span class="hljs-keyword">mode</span> <span class="hljs-keyword">access</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# switchport <span class="hljs-keyword">access</span> vlan <span class="hljs-number">10</span>
+
+! Configure trunk port
+<span class="hljs-keyword">Switch</span>(config)# <span class="hljs-keyword">interface</span> gi0/<span class="hljs-number">1</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# switchport <span class="hljs-keyword">mode</span> trunk
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# switchport trunk encapsulation dot1q   ! <span class="hljs-keyword">Required</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">some</span> switches
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# switchport trunk <span class="hljs-keyword">native</span> vlan <span class="hljs-number">99</span>        ! <span class="hljs-keyword">Change</span> <span class="hljs-keyword">native</span> VLAN
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# switchport trunk allowed vlan <span class="hljs-number">10</span>,<span class="hljs-number">20</span>,<span class="hljs-number">30</span> ! Restrict VLANs
+
+! <span class="hljs-keyword">Verify</span>
+<span class="hljs-keyword">Switch</span># <span class="hljs-keyword">show</span> vlan brief
+<span class="hljs-keyword">Switch</span># <span class="hljs-keyword">show</span> interfaces trunk
+<span class="hljs-keyword">Switch</span># <span class="hljs-keyword">show</span> interfaces fa0/<span class="hljs-number">1</span> switchport
+</code></pre>
+<h3 id="inter-vlan-routing">Inter-VLAN Routing</h3>
+<p>VLANs are separate networks — routing is needed for them to communicate.</p>
+<p><strong>Method 1: Router-on-a-Stick</strong></p>
+<ul>
+<li>One physical router interface connected to a trunk port</li>
+<li>Subinterfaces created for each VLAN<pre><code class="lang-cisco">Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface gi0/0</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># interface gi0/0.10</span>
+Router(<span class="hljs-built_in">config</span>-subif)<span class="hljs-meta"># encapsulation dot1Q 10</span>
+Router(<span class="hljs-built_in">config</span>-subif)<span class="hljs-meta"># ip address 192.168.10.1 255.255.255.0</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># interface gi0/0.20</span>
+Router(<span class="hljs-built_in">config</span>-subif)<span class="hljs-meta"># encapsulation dot1Q 20</span>
+Router(<span class="hljs-built_in">config</span>-subif)<span class="hljs-meta"># ip address 192.168.20.1 255.255.255.0</span>
+</code></pre>
+</li>
+</ul>
+<p><strong>Method 2: Layer 3 Switch (SVIs)</strong></p>
+<ul>
+<li>Most efficient — routing in hardware</li>
+<li><strong>SVI (Switched Virtual Interface):</strong> Virtual Layer 3 interface for each VLAN<pre><code class="lang-cisco">Switch(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip routing                              ! Enable routing</span>
+Switch(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface vlan 10</span>
+Switch(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 192.168.10.1 255.255.255.0</span>
+Switch(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown</span>
+Switch(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface vlan 20</span>
+Switch(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 192.168.20.1 255.255.255.0</span>
+Switch(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># no shutdown</span>
+</code></pre>
+</li>
+</ul>
+<hr>
+<h2 id="4-2-vtp-vlan-trunking-protocol-">4.2 VTP (VLAN Trunking Protocol)</h2>
+<p><strong>VTP</strong> (Cisco proprietary) propagates VLAN configuration automatically across all switches in a domain.</p>
+<h3 id="vtp-modes">VTP Modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Server</strong></td>
+<td>Create/modify/delete VLANs; advertise to others; default mode</td>
+</tr>
+<tr>
+<td><strong>Client</strong></td>
+<td>Cannot create/modify/delete; receive and forward VTP ads</td>
+</tr>
+<tr>
+<td><strong>Transparent</strong></td>
+<td>Ignores VTP ads; forward them; local VLANs only</td>
+</tr>
+<tr>
+<td><strong>Off</strong> (v3)</td>
+<td>Does not participate; does not forward ads</td>
+</tr>
+</tbody>
+</table>
+<h3 id="vtp-process">VTP Process</h3>
+<ul>
+<li>VTP messages sent every 5 minutes or on change</li>
+<li><strong>Domain name:</strong> All switches must match</li>
+<li><strong>Configuration revision number:</strong> Higher wins; new VLAN updates increment number</li>
+<li><strong>VTP password:</strong> Optional authentication</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>VTP Risk:</strong> Adding a switch with higher revision number can <strong>wipe out VLAN database</strong> of entire domain!</p>
+</blockquote>
+<pre><code class="lang-cisco"><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vtp mode server</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vtp domain CompanyXYZ</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vtp password Secr3t</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vtp version 2</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show vtp status</span>
+</code></pre>
+<p><strong>VTP Pruning:</strong> Automatically removes unnecessary VLAN traffic from trunk links (reduces broadcast traffic).</p>
+<hr>
+<h2 id="4-3-spanning-tree-protocol-stp-">4.3 Spanning Tree Protocol (STP)</h2>
+<p><strong>Problem:</strong> Redundant physical links between switches create <strong>Layer 2 loops</strong>, causing:</p>
+<ul>
+<li><strong>Broadcast storms:</strong> Broadcasts loop infinitely, consuming all bandwidth</li>
+<li><strong>MAC table instability:</strong> Same MAC address seen on multiple ports</li>
+<li><strong>Multiple frame delivery:</strong> Duplicate frames to destination</li>
+</ul>
+<p><strong>STP (IEEE 802.1D)</strong> prevents loops by <strong>logically blocking</strong> redundant links while keeping them available for failover.</p>
+<h3 id="stp-election-process">STP Election Process</h3>
+<p><strong>Step 1: Elect Root Bridge</strong></p>
+<ul>
+<li>All switches start claiming to be root</li>
+<li>Switch with <strong>lowest Bridge ID (BID) wins</strong></li>
+<li>BID = Priority (2 bytes) + MAC address (6 bytes)</li>
+<li>Default priority = 32768 (can be changed in multiples of 4096)</li>
+<li>Lower priority = more likely to become root</li>
+</ul>
+<p><strong>Step 2: Elect Root Ports</strong></p>
+<ul>
+<li>Every <strong>non-root switch</strong> selects one port closest to root</li>
+<li><strong>Lowest cost path</strong> to root bridge wins</li>
+<li>Port costs by interface speed:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Speed</th>
+<th>STP Cost (Old)</th>
+<th>STP Cost (New/IEEE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10 Mbps</td>
+<td>100</td>
+<td>2,000,000</td>
+</tr>
+<tr>
+<td>100 Mbps</td>
+<td>19</td>
+<td>200,000</td>
+</tr>
+<tr>
+<td>1 Gbps</td>
+<td>4</td>
+<td>20,000</td>
+</tr>
+<tr>
+<td>10 Gbps</td>
+<td>2</td>
+<td>2,000</td>
+</tr>
+<tr>
+<td>100 Gbps</td>
+<td>—</td>
+<td>200</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tiebreakers for root port selection (in order):</strong></p>
+<ol>
+<li>Lowest <strong>root path cost</strong></li>
+<li>Lowest <strong>upstream BID</strong></li>
+<li>Lowest <strong>upstream port ID</strong> (port priority + port number)</li>
+</ol>
+<p><strong>Step 3: Elect Designated Ports</strong></p>
+<ul>
+<li>Each segment (link) must have one <strong>designated port</strong> — the one sending traffic toward leaves</li>
+<li>Root bridge: all ports = designated</li>
+<li>Other switches: Port with <strong>lowest root path cost</strong> = designated</li>
+<li>Remaining ports = <strong>blocking</strong></li>
+</ul>
+<h3 id="stp-port-states-802-1d-">STP Port States (802.1D)</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Duration</th>
+<th>Forwarding?</th>
+<th>Learning MAC?</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Blocking</strong></td>
+<td>Up to 20s</td>
+<td>No</td>
+<td>No</td>
+<td>Discards frames, listens for BPDUs</td>
+</tr>
+<tr>
+<td><strong>Listening</strong></td>
+<td>15s (forward delay)</td>
+<td>No</td>
+<td>No</td>
+<td>Not forwarding; building STP topology</td>
+</tr>
+<tr>
+<td><strong>Learning</strong></td>
+<td>15s (forward delay)</td>
+<td>No</td>
+<td>Yes</td>
+<td>Building MAC table</td>
+</tr>
+<tr>
+<td><strong>Forwarding</strong></td>
+<td>Ongoing</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Normal operation</td>
+</tr>
+<tr>
+<td><strong>Disabled</strong></td>
+<td>—</td>
+<td>No</td>
+<td>No</td>
+<td>Administratively shut down</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total time from blocking to forwarding (802.1D):</strong> Up to <strong>50 seconds</strong>!</p>
+<ul>
+<li>Blocking: 20s (Max Age)</li>
+<li>Listening: 15s</li>
+<li>Learning: 15s</li>
+</ul>
+<h3 id="bpdu-bridge-protocol-data-unit-">BPDU (Bridge Protocol Data Unit)</h3>
+<ul>
+<li>STP control messages exchanged between switches</li>
+<li>Sent every <strong>2 seconds</strong> (Hello interval)</li>
+<li>Contains: Root BID, Sender BID, Root path cost, Port ID, Timers</li>
+</ul>
+<p><strong>STP timers (802.1D):</strong></p>
+<ul>
+<li><strong>Hello timer:</strong> 2 seconds (BPDUs sent)</li>
+<li><strong>Forward Delay:</strong> 15 seconds (listening and learning phases)</li>
+<li><strong>Max Age:</strong> 20 seconds (BPDU timeout)</li>
+</ul>
+<h3 id="rapid-stp-rstp-802-1w-">Rapid STP (RSTP — 802.1w)</h3>
+<p>Addresses STP&#39;s slow convergence (~50 seconds → sub-second):</p>
+<ul>
+<li><strong>New port states:</strong> Discarding, Learning, Forwarding (no Blocking/Listening)</li>
+<li><strong>New port roles:</strong> Root, Designated, Alternate, Backup</li>
+<li><strong>Alternate port:</strong> Pre-calculated backup for root port</li>
+<li><strong>Backup port:</strong> Backup for designated port on shared media</li>
+<li><strong>Proposal/Agreement mechanism:</strong> Handshake between switches for fast transition</li>
+<li><strong>Edge ports (PortFast):</strong> Immediately go to forwarding — no negotiation</li>
+</ul>
+<p><strong>RSTP port roles:</strong></p>
+<ul>
+<li><strong>Root port:</strong> Best path to root bridge</li>
+<li><strong>Designated port:</strong> Best port on each segment toward leaves</li>
+<li><strong>Alternate port:</strong> Backup root port (blocks normally)</li>
+<li><strong>Backup port:</strong> Backup designated port (blocks normally)</li>
+</ul>
+<h3 id="multiple-stp-variants">Multiple STP Variants</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Standard</th>
+<th>Per-VLAN</th>
+<th>Convergence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STP</td>
+<td>802.1D</td>
+<td>No (one instance)</td>
+<td>~50s</td>
+</tr>
+<tr>
+<td>RSTP</td>
+<td>802.1w</td>
+<td>No</td>
+<td>Sub-second</td>
+</tr>
+<tr>
+<td>PVST+</td>
+<td>Cisco</td>
+<td>Yes</td>
+<td>~50s per VLAN</td>
+</tr>
+<tr>
+<td>Rapid PVST+</td>
+<td>Cisco</td>
+<td>Yes</td>
+<td>Sub-second per VLAN</td>
+</tr>
+<tr>
+<td>MSTP</td>
+<td>802.1s</td>
+<td>Multiple VLANs per instance</td>
+<td>Sub-second</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cisco-stp-configuration">Cisco STP Configuration</h3>
+<pre><code class="lang-cisco">! <span class="hljs-keyword">Set</span> bridge <span class="hljs-keyword">priority</span> (<span class="hljs-keyword">lower</span> = more likely <span class="hljs-keyword">to</span> be root)
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree vlan <span class="hljs-number">10</span> <span class="hljs-keyword">priority</span> <span class="hljs-number">4096</span>
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree vlan <span class="hljs-number">10</span> root primary    ! <span class="hljs-keyword">Sets</span> <span class="hljs-keyword">to</span> <span class="hljs-number">24576</span> <span class="hljs-keyword">or</span> <span class="hljs-number">4096</span> below <span class="hljs-keyword">current</span>
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree vlan <span class="hljs-number">10</span> root secondary  ! <span class="hljs-keyword">Sets</span> <span class="hljs-keyword">priority</span> <span class="hljs-keyword">to</span> <span class="hljs-number">28672</span>
+
+! <span class="hljs-keyword">Change</span> STP <span class="hljs-keyword">mode</span>
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree <span class="hljs-keyword">mode</span> rapid-pvst
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree <span class="hljs-keyword">mode</span> pvst
+
+! PortFast — <span class="hljs-keyword">access</span> ports <span class="hljs-keyword">only</span> (<span class="hljs-keyword">skip</span> listening/learning)
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# spanning-tree portfast
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree portfast <span class="hljs-keyword">default</span>  ! <span class="hljs-keyword">Enable</span> <span class="hljs-keyword">on</span> all <span class="hljs-keyword">access</span> ports
+
+! BPDU <span class="hljs-keyword">Guard</span> — <span class="hljs-keyword">disable</span> port <span class="hljs-keyword">if</span> BPDU received (protects PortFast ports)
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)# spanning-tree bpduguard <span class="hljs-keyword">enable</span>
+<span class="hljs-keyword">Switch</span>(config)# spanning-tree portfast bpduguard <span class="hljs-keyword">default</span>
+
+! BPDU Filter — don<span class="hljs-string">'t send or receive BPDUs
+Switch(config-if)# spanning-tree bpdufilter enable
+
+! Root Guard — prevents port from becoming root port
+Switch(config-if)# spanning-tree guard root
+
+! Loop Guard — protects against unidirectional link failures
+Switch(config-if)# spanning-tree guard loop
+
+! Verify STP
+Switch# show spanning-tree
+Switch# show spanning-tree vlan 10
+Switch# show spanning-tree vlan 10 detail
+Switch# show spanning-tree interface gi0/1</span>
+</code></pre>
+<hr>
+<h2 id="4-4-etherchannel-link-aggregation">4.4 EtherChannel / Link Aggregation</h2>
+<p><strong>EtherChannel (Cisco)</strong> / <strong>LAG (Link Aggregation Group)</strong> bundles multiple physical links into one logical link:</p>
+<ul>
+<li>Increases bandwidth (up to 8 links × 10 Gbps = 80 Gbps)</li>
+<li>Provides redundancy (if one link fails, others continue)</li>
+<li>STP sees it as one logical link — no blocking!</li>
+</ul>
+<h3 id="etherchannel-protocols">EtherChannel Protocols</h3>
+<p><strong>PAgP (Port Aggregation Protocol):</strong> Cisco proprietary</p>
+<ul>
+<li><strong>Desirable:</strong> Actively negotiates EtherChannel</li>
+<li><strong>Auto:</strong> Passively waits; forms if other side is Desirable</li>
+<li>Desirable + Desirable = ✓ | Desirable + Auto = ✓ | Auto + Auto = ✗</li>
+</ul>
+<p><strong>LACP (Link Aggregation Control Protocol):</strong> IEEE 802.3ad standard (preferred)</p>
+<ul>
+<li><strong>Active:</strong> Actively negotiates</li>
+<li><strong>Passive:</strong> Waits; forms if other side is Active</li>
+<li>Active + Active = ✓ | Active + Passive = ✓ | Passive + Passive = ✗</li>
+</ul>
+<p><strong>Static (mode ON):</strong></p>
+<ul>
+<li>No negotiation — just bundles links</li>
+<li>Both sides must be <code>on</code></li>
+<li>No protocol overhead but no dynamic management</li>
+</ul>
+<h3 id="etherchannel-load-balancing">EtherChannel Load Balancing</h3>
+<p>Traffic is distributed across member links based on a configurable hash:</p>
+<ul>
+<li>Source MAC, Destination MAC</li>
+<li>Source IP, Destination IP</li>
+<li>Source + Destination IP (XOR hash — best balance)</li>
+<li>Source TCP port, Destination TCP port</li>
+</ul>
+<h3 id="etherchannel-configuration-cisco-">EtherChannel Configuration (Cisco)</h3>
+<pre><code class="lang-cisco">! LACP EtherChannel
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface range gi0/1 - 2</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>-range)<span class="hljs-meta"># channel-group 1 mode active</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>-range)<span class="hljs-meta"># exit</span>
+
+! Configure the Port-Channel interface
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface port-channel 1</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode trunk</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport trunk allowed vlan 10,20</span>
+
+! PAgP EtherChannel
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface range fa0/1 - 2</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>-range)<span class="hljs-meta"># channel-group 2 mode desirable</span>
+
+! <span class="hljs-keyword">Static</span> EtherChannel
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface range gi0/3 - 4</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>-range)<span class="hljs-meta"># channel-group 3 mode on</span>
+
+! Verification
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show etherchannel summary</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show etherchannel 1 detail</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show interfaces port-channel 1</span>
+</code></pre>
+<p><strong>Requirements for EtherChannel:</strong></p>
+<ul>
+<li>Same speed and duplex</li>
+<li>Same VLAN configuration (both access on same VLAN, or both trunk with same VLANs)</li>
+<li>Same STP settings</li>
+</ul>
+<hr>
+<h2 id="4-5-port-security">4.5 Port Security</h2>
+<p>Limits which MAC addresses can use a switch port. Mitigates MAC flooding attacks.</p>
+<pre><code class="lang-cisco">! Enable port security
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface fa0/<span class="hljs-number">1</span></span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode access</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security                 ! Enable</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security maximum <span class="hljs-number">2</span>       ! Max <span class="hljs-number">2</span> MACs</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security mac-address <span class="hljs-number">0011.2233</span><span class="hljs-number">.4455</span>  ! Static MAC</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security mac-address sticky  ! Learn dynamically and save</span>
+
+! Violation modes:
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security violation shutdown    ! (default) Err-disable port</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security violation restrict    ! Drop packets, log</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport port-security violation protect     ! Drop packets, no log</span>
+
+! Re-enable <span class="hljs-keyword">err</span>-disabled port
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface fa0/<span class="hljs-number">1</span></span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># shutdown</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># no shutdown</span>
+
+! Verification
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show port-security</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show port-security interface fa0/<span class="hljs-number">1</span></span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show port-security address</span>
+</code></pre>
+<hr>
+<h2 id="4-6-other-switch-security-features">4.6 Other Switch Security Features</h2>
+<h3 id="dhcp-snooping">DHCP Snooping</h3>
+<p>Prevents rogue DHCP servers on the network.</p>
+<ul>
+<li><strong>Trusted ports:</strong> Uplinks to real DHCP servers (allow DHCP offers)</li>
+<li><strong>Untrusted ports:</strong> All access ports (block DHCP offers/replies)</li>
+<li>Builds DHCP binding table (MAC → IP mapping)</li>
+</ul>
+<pre><code class="lang-cisco"><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># ip dhcp snooping                     ! Enable globally</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># ip dhcp snooping vlan 10,20           ! Enable per VLAN</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface gi0/24                     ! Uplink to DHCP server</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># ip dhcp snooping trust</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show ip dhcp snooping</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show ip dhcp snooping binding</span>
+</code></pre>
+<h3 id="dynamic-arp-inspection-dai-">Dynamic ARP Inspection (DAI)</h3>
+<p>Uses DHCP snooping binding table to validate ARP packets. Prevents ARP poisoning.</p>
+<pre><code class="lang-cisco"><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># ip arp inspection vlan 10,20</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface gi0/24</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># ip arp inspection trust          ! Trust uplink ports</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show ip arp inspection</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show ip arp inspection vlan 10</span>
+</code></pre>
+<h3 id="ip-source-guard-ipsg-">IP Source Guard (IPSG)</h3>
+<p>Validates source IP against DHCP snooping binding table. Prevents IP spoofing.</p>
+<pre><code class="lang-cisco"><span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface fa0/1</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># ip verify source</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show ip verify source</span>
+</code></pre>
+<h3 id="storm-control">Storm Control</h3>
+<p>Limits broadcast, multicast, or unknown unicast storms.</p>
+<pre><code class="lang-cisco"><span class="hljs-keyword">Switch(config-if)# </span>storm-control <span class="hljs-keyword">broadcast </span>level <span class="hljs-number">20</span>    ! Alert <span class="hljs-built_in">at</span> <span class="hljs-number">20</span>% of <span class="hljs-keyword">bandwidth
+</span><span class="hljs-keyword">Switch(config-if)# </span>storm-control <span class="hljs-keyword">broadcast </span>level <span class="hljs-number">20</span> <span class="hljs-number">10</span> ! <span class="hljs-keyword">Shutdown </span><span class="hljs-built_in">at</span> <span class="hljs-number">20</span>%, restart <span class="hljs-built_in">at</span> <span class="hljs-number">10</span>%
+<span class="hljs-keyword">Switch(config-if)# </span>storm-control action <span class="hljs-keyword">shutdown</span>
+</code></pre>
+<h3 id="span-switched-port-analyzer-port-mirroring">SPAN (Switched Port Analyzer) — Port Mirroring</h3>
+<p>Copies traffic from one or more ports to a monitoring port for capture/analysis.</p>
+<pre><code class="lang-cisco">! SPAN — <span class="hljs-keyword">local</span> monitoring
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># monitor session 1 source interface fa0/1 both     ! Monitor fa0/1 TX+RX</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># monitor session 1 destination interface fa0/24   ! Send copy to fa0/24</span>
+
+! RSPAN — remote monitoring (across switches)
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># vlan 99</span>
+<span class="hljs-keyword">Switch</span>(config-vlan)<span class="hljs-meta"># remote-span</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># monitor session 1 source interface fa0/1</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># monitor session 1 destination remote vlan 99</span>
+
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show monitor session 1</span>
+</code></pre>
+<hr>
+<h2 id="4-7-switch-stacking">4.7 Switch Stacking</h2>
+<p>Multiple physical switches act as one logical switch:</p>
+<ul>
+<li><strong>Cisco StackWise:</strong> Proprietary 80 Gbps ring; up to 9 switches</li>
+<li><strong>HP IRF (Intelligent Resilient Framework):</strong> Similar concept</li>
+<li>Shared single IP, single management plane, single STP instance</li>
+<li>Benefits: Simplified management, redundancy, increased port density</li>
+</ul>
+<hr>
+</body></html>

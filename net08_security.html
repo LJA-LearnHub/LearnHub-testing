@@ -1,0 +1,533 @@
+<html><head><style>body {
+   color: black;
+}
+</style></head><body><h1 id="section-8-network-security">SECTION 8: Network Security</h1>
+<hr>
+<h2 id="8-1-access-control-lists-acls-">8.1 Access Control Lists (ACLs)</h2>
+<p>ACLs are ordered lists of permit/deny rules applied to router or switch interfaces. They filter traffic based on IP addresses, protocols, and port numbers.</p>
+<h3 id="acl-types-cisco-">ACL Types (Cisco)</h3>
+<p><strong>Standard ACL (1–99, 1300–1999):</strong></p>
+<ul>
+<li>Matches source IP address only</li>
+<li>Apply close to the <strong>destination</strong> (to avoid blocking legitimate traffic)</li>
+</ul>
+<p><strong>Extended ACL (100–199, 2000–2699):</strong></p>
+<ul>
+<li>Matches source IP, destination IP, protocol, source port, destination port</li>
+<li>Apply close to the <strong>source</strong> (block traffic early)</li>
+</ul>
+<p><strong>Named ACL:</strong></p>
+<ul>
+<li>More descriptive, easier to edit (can add/remove individual entries)</li>
+<li>Can be standard or extended</li>
+</ul>
+<h3 id="acl-rules-and-logic">ACL Rules and Logic</h3>
+<ul>
+<li><strong>Processed top-down:</strong> First match wins</li>
+<li><strong>Implicit deny:</strong> Every ACL ends with an invisible <code>deny any</code> — if nothing matches, packet is denied</li>
+<li><strong>Wildcards:</strong> Used in ACLs (inverse of subnet mask): 0 = must match, 1 = ignore<ul>
+<li><code>0.0.0.0</code> = host (must match all bits)</li>
+<li><code>0.0.0.255</code> = match any host in that /24</li>
+<li><code>255.255.255.255</code> = any (all bits ignored)</li>
+</ul>
+</li>
+</ul>
+<h3 id="standard-acl-configuration">Standard ACL Configuration</h3>
+<pre><code class="lang-cisco">! Numbered standard ACL
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">10</span> permit <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.255</span>
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">10</span> deny any
+
+! Apply to interface
+Router(config)# interface GigabitEthernet0/<span class="hljs-number">1</span>
+Router(config-if)# ip access-group <span class="hljs-number">10</span> in      ! Filter incoming traffic
+Router(config-if)# ip access-group <span class="hljs-number">10</span> out     ! Filter outgoing traffic
+
+! Named standard ACL
+Router(config)# ip access-<span class="hljs-type">list</span> standard BLOCK-GUESTS
+Router(config-std-nacl)# permit <span class="hljs-number">10.0</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.255</span>
+Router(config-std-nacl)# deny any log
+</code></pre>
+<h3 id="extended-acl-configuration">Extended ACL Configuration</h3>
+<pre><code class="lang-cisco">! Numbered extended ACL
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">101</span> permit tcp <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.255</span> any eq <span class="hljs-number">80</span>
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">101</span> permit tcp <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.255</span> any eq <span class="hljs-number">443</span>
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">101</span> permit udp any any eq <span class="hljs-number">53</span>
+Router(config)# access-<span class="hljs-type">list</span> <span class="hljs-number">101</span> deny ip any any log
+
+! Named extended ACL
+Router(config)# ip access-<span class="hljs-type">list</span> extended WAN-INBOUND
+Router(config-ext-nacl)# <span class="hljs-number">10</span> deny ip <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">0.255</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span> any      ! Block RFC1918 from internet
+Router(config-ext-nacl)# <span class="hljs-number">20</span> deny ip <span class="hljs-number">172.16</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">0.15</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span> any
+Router(config-ext-nacl)# <span class="hljs-number">30</span> deny ip <span class="hljs-number">192.168</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span> <span class="hljs-number">0.0</span><span class="hljs-number">.255</span><span class="hljs-number">.255</span> any
+Router(config-ext-nacl)# <span class="hljs-number">40</span> permit tcp any host <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.10</span> eq <span class="hljs-number">80</span>   ! Allow web traffic to server
+Router(config-ext-nacl)# <span class="hljs-number">50</span> permit tcp any host <span class="hljs-number">203.0</span><span class="hljs-number">.113</span><span class="hljs-number">.10</span> eq <span class="hljs-number">443</span>
+Router(config-ext-nacl)# <span class="hljs-number">60</span> permit icmp any any echo-reply            ! Allow ping replies back in
+Router(config-ext-nacl)# <span class="hljs-number">70</span> deny ip any any log
+
+! Common ACL keywords
+permit tcp any any established   ! Allow established TCP sessions (return traffic)
+permit icmp any any echo-reply   ! Allow ping replies
+permit udp any any gt <span class="hljs-number">1023</span>       ! Allow high ports (established UDP)
+deny ip any any log              ! Explicit deny with logging
+
+! Verification
+Router# show access-lists
+Router# show ip access-lists
+Router# show interfaces GigabitEthernet0/<span class="hljs-number">0</span> | include access <span class="hljs-type">list</span>
+Router# show ip interface GigabitEthernet0/<span class="hljs-number">0</span> | include access <span class="hljs-type">list</span>
+</code></pre>
+<h3 id="acl-best-practices">ACL Best Practices</h3>
+<ul>
+<li><strong>Most specific first:</strong> Put narrow rules before broad ones</li>
+<li><strong>Standard ACLs:</strong> Apply near destination</li>
+<li><strong>Extended ACLs:</strong> Apply near source (save bandwidth)</li>
+<li><strong>Always include explicit deny with log</strong> to track blocked traffic</li>
+<li><strong>Use named ACLs:</strong> Easier to manage and modify</li>
+<li><strong>Document:</strong> Comment your ACLs</li>
+<li><strong>Use <code>established</code> for return TCP traffic</strong> (avoids complex permit rules)</li>
+</ul>
+<hr>
+<h2 id="8-2-firewall-deep-dive">8.2 Firewall Deep Dive</h2>
+<h3 id="packet-filtering-stateless-">Packet Filtering (Stateless)</h3>
+<ul>
+<li>Examines each packet independently</li>
+<li>Rules based on: source/destination IP, source/destination port, protocol</li>
+<li>Fast but limited intelligence — can&#39;t track connections</li>
+<li><strong>Doesn&#39;t understand relationships</strong> — must permit return traffic explicitly</li>
+</ul>
+<h3 id="stateful-inspection">Stateful Inspection</h3>
+<ul>
+<li><strong>Tracks TCP/UDP connection state</strong> in a state table</li>
+<li>Automatically permits return traffic for established sessions</li>
+<li><strong>State table entry:</strong> Source IP, Dest IP, Source Port, Dest Port, Protocol, Connection state</li>
+<li>TCP states tracked: SYN → SYN-ACK → ESTABLISHED → FIN → CLOSED</li>
+</ul>
+<pre><code><span class="hljs-selector-tag">State</span> <span class="hljs-selector-tag">table</span> <span class="hljs-selector-tag">example</span>:
+<span class="hljs-selector-tag">Src</span> <span class="hljs-selector-tag">IP</span>      <span class="hljs-selector-tag">Src</span> <span class="hljs-selector-tag">Port</span>  <span class="hljs-selector-tag">Dst</span> <span class="hljs-selector-tag">IP</span>     <span class="hljs-selector-tag">Dst</span> <span class="hljs-selector-tag">Port</span>  <span class="hljs-selector-tag">Proto</span>  <span class="hljs-selector-tag">State</span>
+192<span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.5</span>  54321    8<span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.8</span>    53        <span class="hljs-selector-tag">UDP</span>    <span class="hljs-selector-tag">Established</span>
+192<span class="hljs-selector-class">.168</span><span class="hljs-selector-class">.1</span><span class="hljs-selector-class">.5</span>  49152    93<span class="hljs-selector-class">.184</span><span class="hljs-selector-class">.216</span><span class="hljs-selector-class">.34</span>  80    <span class="hljs-selector-tag">TCP</span>    <span class="hljs-selector-tag">Established</span>
+</code></pre><h3 id="application-layer-inspection-deep-packet-inspection-">Application Layer Inspection (Deep Packet Inspection)</h3>
+<ul>
+<li>Understands application-layer protocols</li>
+<li>Can detect:<ul>
+<li>HTTP tunneling over port 80</li>
+<li>Protocol anomalies (valid port but wrong protocol)</li>
+<li>Specific application traffic (YouTube, Skype) regardless of port</li>
+</ul>
+</li>
+<li>Required for: IPS signatures, URL filtering, SSL inspection</li>
+</ul>
+<h3 id="next-generation-firewall-ngfw-">Next-Generation Firewall (NGFW)</h3>
+<p>Combines traditional firewall with:</p>
+<ul>
+<li><strong>Application awareness:</strong> Identify and control apps (not just ports)</li>
+<li><strong>User identity awareness:</strong> Policy based on username, not just IP</li>
+<li><strong>SSL/TLS inspection:</strong> Decrypt, inspect, re-encrypt HTTPS traffic</li>
+<li><strong>IPS:</strong> Inline intrusion prevention</li>
+<li><strong>URL filtering:</strong> Block websites by category</li>
+<li><strong>Antivirus/antimalware:</strong> Scan file transfers</li>
+<li><strong>Sandboxing:</strong> Execute suspicious files in isolated environment</li>
+</ul>
+<p><strong>NGFW vendors:</strong> Palo Alto Networks, Fortinet FortiGate, Cisco Firepower/ASA, Check Point, Juniper SRX</p>
+<h3 id="cisco-asa-configuration-basics">Cisco ASA Configuration Basics</h3>
+<pre><code class="lang-cisco">! Interface configuration
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/0</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># nameif outside</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># security-level 0           ! 0=untrusted (internet)</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 203.0.113.1 255.255.255.0</span>
+
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/1</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># nameif inside</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># security-level 100        ! 100=most trusted (LAN)</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 192.168.1.1 255.255.255.0</span>
+
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/2</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># nameif dmz</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># security-level 50</span>
+ASA(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip address 10.0.1.1 255.255.255.0</span>
+
+! ACL <span class="hljs-built_in">for</span> inbound traffic (outside → inside requires <span class="hljs-keyword">explicit</span> permit)
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># access-list OUTSIDE-IN extended permit tcp any host 10.0.1.10 eq 80</span>
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># access-list OUTSIDE-IN extended permit tcp any host 10.0.1.10 eq 443</span>
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># access-list OUTSIDE-IN extended deny ip any any log</span>
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># access-group OUTSIDE-IN in interface outside</span>
+
+! NAT
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># object network INSIDE-NET</span>
+ASA(<span class="hljs-built_in">config</span>-network-object)<span class="hljs-meta"># subnet 192.168.1.0 255.255.255.0</span>
+ASA(<span class="hljs-built_in">config</span>-network-object)<span class="hljs-meta"># nat (inside,outside) dynamic interface</span>
+
+! Static NAT (port forward to DMZ server)
+ASA(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># object network WEB-SERVER</span>
+ASA(<span class="hljs-built_in">config</span>-network-object)<span class="hljs-meta"># host 10.0.1.10</span>
+ASA(<span class="hljs-built_in">config</span>-network-object)<span class="hljs-meta"># nat (dmz,outside) static 203.0.113.10 service tcp 80 80</span>
+
+ASA<span class="hljs-meta"># show conn</span>
+ASA<span class="hljs-meta"># show xlate</span>
+ASA<span class="hljs-meta"># show access-list OUTSIDE-IN</span>
+</code></pre>
+<hr>
+<h2 id="8-3-vpn-virtual-private-network-deep-dive">8.3 VPN (Virtual Private Network) Deep Dive</h2>
+<p>VPNs create encrypted tunnels over untrusted networks (internet) to protect data in transit.</p>
+<h3 id="ipsec-vpn">IPsec VPN</h3>
+<p>IPsec is a suite of protocols for authenticating and encrypting IP packets.</p>
+<p><strong>IPsec protocols:</strong></p>
+<ul>
+<li><strong>AH (Authentication Header, Protocol 51):</strong> Integrity and authentication only — no encryption</li>
+<li><strong>ESP (Encapsulating Security Payload, Protocol 50):</strong> Integrity, authentication, AND encryption</li>
+</ul>
+<p><strong>IPsec modes:</strong></p>
+<ul>
+<li><strong>Transport mode:</strong> Original IP header preserved; only payload encrypted. Used for host-to-host.</li>
+<li><strong>Tunnel mode:</strong> Entire original packet encapsulated and encrypted; new IP header added. Used for site-to-site VPN.</li>
+</ul>
+<p><strong>IKE (Internet Key Exchange):</strong> Negotiates security parameters (ISAKMP framework)</p>
+<p><strong>IKE Phase 1 (IKE SA / ISAKMP SA):</strong></p>
+<ul>
+<li>Establish secure channel to negotiate Phase 2</li>
+<li>Exchange: Encryption algorithm, hash, authentication method, DH group, lifetime</li>
+<li><strong>Main mode:</strong> 6 messages — more secure, slower</li>
+<li><strong>Aggressive mode:</strong> 3 messages — faster, less secure (identity in clear)</li>
+<li><strong>IKEv2:</strong> Modern replacement — simpler, faster, more secure</li>
+</ul>
+<p><strong>IKE Phase 2 (IPsec SA):</strong></p>
+<ul>
+<li>Negotiate IPsec tunnel parameters (Quick Mode)</li>
+<li>Two SAs created (one each direction)</li>
+<li>Uses PFS (Perfect Forward Secrecy) with new DH exchange if configured</li>
+</ul>
+<p><strong>Algorithms commonly used:</strong></p>
+<ul>
+<li><strong>Encryption:</strong> AES-128/256 (preferred), 3DES (legacy)</li>
+<li><strong>Integrity/Hash:</strong> SHA-256/384/512 (preferred), MD5 (avoid), SHA-1 (avoid)</li>
+<li><strong>DH Group (key exchange):</strong> Group 14+ (2048-bit), Group 19 (256-bit ECC) preferred; avoid Group 1/2/5</li>
+<li><strong>Authentication:</strong> PSK (Pre-shared key) or RSA certificates</li>
+</ul>
+<h3 id="cisco-ios-ipsec-site-to-site-vpn">Cisco IOS IPsec Site-to-Site VPN</h3>
+<pre><code class="lang-cisco">! Step <span class="hljs-number">1</span>: ISAKMP Policy (Phase <span class="hljs-number">1</span>)
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># crypto isakmp policy 10</span>
+Router(<span class="hljs-built_in">config</span>-isakmp)<span class="hljs-meta"># encryption aes 256</span>
+Router(<span class="hljs-built_in">config</span>-isakmp)<span class="hljs-meta"># hash sha256</span>
+Router(<span class="hljs-built_in">config</span>-isakmp)<span class="hljs-meta"># authentication pre-share</span>
+Router(<span class="hljs-built_in">config</span>-isakmp)<span class="hljs-meta"># group 14</span>
+Router(<span class="hljs-built_in">config</span>-isakmp)<span class="hljs-meta"># lifetime 86400</span>
+
+! Step <span class="hljs-number">2</span>: Pre-shared key <span class="hljs-built_in">for</span> peer
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># crypto isakmp key Sup3rS3cr3t address 203.0.113.2</span>
+
+! Step <span class="hljs-number">3</span>: IPsec Transform Set (Phase <span class="hljs-number">2</span>)
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># crypto ipsec transform-set STRONG-CRYPTO esp-aes 256 esp-sha256-hmac</span>
+Router(cfg-crypto-trans)<span class="hljs-meta"># mode tunnel</span>
+
+! Step <span class="hljs-number">4</span>: ACL defining interesting traffic
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip access-list extended VPN-TRAFFIC</span>
+Router(<span class="hljs-built_in">config</span>-ext-nacl)<span class="hljs-meta"># permit ip 192.168.1.0 0.0.0.255 10.10.10.0 0.0.0.255</span>
+
+! Step <span class="hljs-number">5</span>: Crypto Map
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># crypto map SITE-TO-SITE 10 ipsec-isakmp</span>
+Router(<span class="hljs-built_in">config</span>-crypto-<span class="hljs-built_in">map</span>)<span class="hljs-meta"># set peer 203.0.113.2</span>
+Router(<span class="hljs-built_in">config</span>-crypto-<span class="hljs-built_in">map</span>)<span class="hljs-meta"># set transform-set STRONG-CRYPTO</span>
+Router(<span class="hljs-built_in">config</span>-crypto-<span class="hljs-built_in">map</span>)<span class="hljs-meta"># match address VPN-TRAFFIC</span>
+Router(<span class="hljs-built_in">config</span>-crypto-<span class="hljs-built_in">map</span>)<span class="hljs-meta"># set pfs group14</span>
+
+! Step <span class="hljs-number">6</span>: Apply to WAN interface
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/1</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># crypto map SITE-TO-SITE</span>
+
+! Verification
+Router<span class="hljs-meta"># show crypto isakmp sa        ! Phase 1 SA</span>
+Router<span class="hljs-meta"># show crypto ipsec sa         ! Phase 2 SA</span>
+Router<span class="hljs-meta"># show crypto map</span>
+Router<span class="hljs-meta"># show crypto session</span>
+Router<span class="hljs-meta"># debug crypto isakmp</span>
+</code></pre>
+<h3 id="ssl-tls-vpn">SSL/TLS VPN</h3>
+<ul>
+<li>Uses HTTPS (port 443) — passes through most firewalls easily</li>
+<li><strong>Clientless:</strong> Web browser only — access web apps via portal</li>
+<li><strong>Client-based (Full tunnel):</strong> VPN client installed — all or specific traffic through VPN</li>
+<li>Popular solutions: Cisco AnyConnect, OpenVPN, Palo Alto GlobalProtect, Pulse Secure</li>
+</ul>
+<h3 id="wireguard-vpn">WireGuard VPN</h3>
+<ul>
+<li>Modern, simple, high-performance VPN protocol</li>
+<li>Uses state-of-the-art cryptography: ChaCha20, Poly1305, Curve25519, BLAKE2</li>
+<li>Much simpler than IPsec (fewer lines of code = less attack surface)</li>
+<li>Built into Linux kernel since 5.6</li>
+</ul>
+<pre><code class="lang-bash"><span class="hljs-comment"># WireGuard server setup</span>
+wg genkey | tee server_private.key | wg pubkey &gt; server_public.key
+wg genkey | tee client_private.key | wg pubkey &gt; client_public.key
+
+<span class="hljs-comment"># /etc/wireguard/wg0.conf (server)</span>
+[Interface]
+<span class="hljs-attr">Address</span> = <span class="hljs-number">10.0</span>.<span class="hljs-number">0.1</span>/<span class="hljs-number">24</span>
+<span class="hljs-attr">ListenPort</span> = <span class="hljs-number">51820</span>
+<span class="hljs-attr">PrivateKey</span> = &lt;server_private_key&gt;
+
+[Peer]
+<span class="hljs-attr">PublicKey</span> = &lt;client_public_key&gt;
+<span class="hljs-attr">AllowedIPs</span> = <span class="hljs-number">10.0</span>.<span class="hljs-number">0.2</span>/<span class="hljs-number">32</span>
+
+<span class="hljs-comment"># Client config</span>
+[Interface]
+<span class="hljs-attr">Address</span> = <span class="hljs-number">10.0</span>.<span class="hljs-number">0.2</span>/<span class="hljs-number">24</span>
+<span class="hljs-attr">PrivateKey</span> = &lt;client_private_key&gt;
+
+[Peer]
+<span class="hljs-attr">PublicKey</span> = &lt;server_public_key&gt;
+<span class="hljs-attr">Endpoint</span> = server.example.com:<span class="hljs-number">51820</span>
+<span class="hljs-attr">AllowedIPs</span> = <span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span>/<span class="hljs-number">0</span>       <span class="hljs-comment"># Full tunnel</span>
+<span class="hljs-comment"># AllowedIPs = 10.0.0.0/24   # Split tunnel (only VPN subnet)</span>
+</code></pre>
+<hr>
+<h2 id="8-4-aaa-authentication-authorization-accounting-">8.4 AAA (Authentication, Authorization, Accounting)</h2>
+<h3 id="radius">RADIUS</h3>
+<p><strong>Remote Authentication Dial-In User Service</strong></p>
+<ul>
+<li>Client/server protocol for centralized AAA</li>
+<li>Client = network device (NAS — Network Access Server)</li>
+<li>Server = RADIUS server (Cisco ISE, FreeRADIUS, Microsoft NPS)</li>
+<li><strong>UDP 1812</strong> (authentication), <strong>UDP 1813</strong> (accounting)</li>
+<li>Encrypts only the password field (not entire payload)</li>
+<li>Combines authentication and authorization in one response</li>
+</ul>
+<p><strong>RADIUS flow:</strong></p>
+<pre><code>Client → <span class="hljs-keyword">Access</span>-Request → RADIUS Server
+Client ← <span class="hljs-keyword">Access</span>-<span class="hljs-keyword">Accept</span> (<span class="hljs-keyword">with</span> attributes) ← RADIUS Server
+   <span class="hljs-keyword">OR</span>
+Client ← <span class="hljs-keyword">Access</span>-Reject ← RADIUS Server
+   <span class="hljs-keyword">OR</span>
+Client ← <span class="hljs-keyword">Access</span>-Challenge ← RADIUS Server (MFA prompt)
+</code></pre><h3 id="tacacs-">TACACS+</h3>
+<p><strong>Terminal Access Controller Access Control System Plus</strong></p>
+<ul>
+<li>Cisco proprietary (original TACACS was open; TACACS+ is Cisco)</li>
+<li><strong>TCP 49</strong></li>
+<li><strong>Encrypts entire payload</strong> (more secure than RADIUS)</li>
+<li><strong>Separates</strong> Authentication, Authorization, and Accounting</li>
+<li>Better for <strong>device administration</strong> (router/switch management)</li>
+</ul>
+<p><strong>RADIUS vs TACACS+ comparison:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>RADIUS</th>
+<th>TACACS+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>UDP</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>Port</td>
+<td>1812/1813</td>
+<td>49</td>
+</tr>
+<tr>
+<td>Encryption</td>
+<td>Password only</td>
+<td>Full payload</td>
+</tr>
+<tr>
+<td>AAA separation</td>
+<td>Combined</td>
+<td>Separated</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>Open standard</td>
+<td>Cisco proprietary</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Network access (Wi-Fi, VPN)</td>
+<td>Device administration</td>
+</tr>
+</tbody>
+</table>
+<h3 id="cisco-aaa-configuration">Cisco AAA Configuration</h3>
+<pre><code class="lang-cisco">! Enable AAA
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa new-model</span>
+
+! RADIUS server group
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># radius server ISE1</span>
+Router(<span class="hljs-built_in">config</span>-radius-server)<span class="hljs-meta"># address ipv4 192.168.1.100 auth-port 1812 acct-port 1813</span>
+Router(<span class="hljs-built_in">config</span>-radius-server)<span class="hljs-meta"># key R4DiusS3cr3t</span>
+
+! TACACS+ server
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># tacacs server TACACS-SRV</span>
+Router(<span class="hljs-built_in">config</span>-server-tacacs)<span class="hljs-meta"># address ipv4 192.168.1.101</span>
+Router(<span class="hljs-built_in">config</span>-server-tacacs)<span class="hljs-meta"># key T4C4CSS3cr3t</span>
+
+! <span class="hljs-built_in">Server</span> groups
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa group server radius RADIUS-GROUP</span>
+Router(<span class="hljs-built_in">config</span>-sg-radius)<span class="hljs-meta"># server name ISE1</span>
+
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa group server tacacs+ TACACS-GROUP</span>
+Router(<span class="hljs-built_in">config</span>-sg-tacacs+)<span class="hljs-meta"># server name TACACS-SRV</span>
+
+! Authentication policies
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa authentication login default group tacacs+ local   ! Use TACACS+, fallback to local</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa authentication login VTY-AUTH group radius local</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa authentication enable default group tacacs+ enable ! Enable password via TACACS+</span>
+
+! Authorization
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa authorization exec default group tacacs+ local     ! Authorize exec shell</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa authorization commands 15 default group tacacs+ local</span>
+
+! Accounting
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa accounting exec default start-stop group tacacs+</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># aaa accounting commands 15 default start-stop group tacacs+</span>
+
+! Apply to VTY lines
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># <span class="hljs-meta-keyword">line</span> vty 0 15</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># login authentication VTY-AUTH</span>
+</code></pre>
+<h3 id="802-1x-network-access-control">802.1X Network Access Control</h3>
+<pre><code class="lang-cisco">! Enable <span class="hljs-number">802.1</span>X globally
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># aaa new-model</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># dot1x system-auth-control</span>
+
+! Configure RADIUS server
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># radius server ISE</span>
+<span class="hljs-keyword">Switch</span>(config-radius-server)<span class="hljs-meta"># address ipv4 <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span> auth-port <span class="hljs-number">1812</span> acct-port <span class="hljs-number">1813</span></span>
+<span class="hljs-keyword">Switch</span>(config-radius-server)<span class="hljs-meta"># key R4DiusS3cr3t</span>
+
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># aaa group server radius ISE-GROUP</span>
+<span class="hljs-keyword">Switch</span>(config-sg-radius)<span class="hljs-meta"># server name ISE</span>
+
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># aaa authentication dot1x default group ISE-GROUP</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># aaa authorization network default group ISE-GROUP</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># aaa accounting dot1x default start-stop group ISE-GROUP</span>
+
+! Configure <span class="hljs-number">802.1</span>X <span class="hljs-keyword">on</span> access port
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># interface GigabitEthernet0/<span class="hljs-number">1</span></span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># switchport mode access</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># authentication port-control auto    ! Enable <span class="hljs-number">802.1</span>X</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># dot1x pae authenticator</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># mab                                 ! MAC Authentication Bypass (for non<span class="hljs-number">-802.1</span>X devices)</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># authentication order dot1x mab</span>
+<span class="hljs-keyword">Switch</span>(config-<span class="hljs-keyword">if</span>)<span class="hljs-meta"># authentication priority dot1x mab</span>
+
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show dot1x all</span>
+<span class="hljs-keyword">Switch</span><span class="hljs-meta"># show authentication sessions</span>
+</code></pre>
+<hr>
+<h2 id="8-5-network-monitoring-and-detection">8.5 Network Monitoring and Detection</h2>
+<h3 id="netflow-ipfix">NetFlow / IPFIX</h3>
+<p><strong>NetFlow</strong> (Cisco proprietary) / <strong>IPFIX</strong> (IETF standard, based on NetFlow v9):</p>
+<ul>
+<li>Collects metadata about IP flows (not the packet content)</li>
+<li><strong>Flow:</strong> All packets sharing same: src IP, dst IP, src port, dst port, protocol, TOS, input interface</li>
+</ul>
+<p><strong>Flow record fields:</strong></p>
+<ul>
+<li>Source/Destination IP and port</li>
+<li>Protocol and TOS</li>
+<li>Input/output interface</li>
+<li>Timestamps, packet count, byte count</li>
+<li>TCP flags (for TCP flows)</li>
+</ul>
+<p><strong>NetFlow components:</strong></p>
+<ul>
+<li><strong>Exporter:</strong> Router/switch generating flow records</li>
+<li><strong>Collector:</strong> Server receiving and storing flow data</li>
+<li><strong>Analyzer:</strong> Tool for viewing and reporting (ntopng, SolarWinds NTA, ELK)</li>
+</ul>
+<pre><code class="lang-cisco">! Enable NetFlow on interface
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># interface GigabitEthernet0/0</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip flow ingress</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">if</span>)<span class="hljs-meta"># ip flow egress</span>
+
+! Export to collector
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip flow-export version 9</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip flow-export destination 192.168.1.200 2055   ! UDP port 2055</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip flow-cache timeout active 60</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip flow-cache timeout inactive 15</span>
+
+Router<span class="hljs-meta"># show ip flow export</span>
+Router<span class="hljs-meta"># show ip cache flow</span>
+</code></pre>
+<h3 id="port-mirroring-span-review-">Port Mirroring / SPAN (Review)</h3>
+<pre><code class="lang-cisco">! Mirror traffic <span class="hljs-keyword">to</span> IDS/packet capture station
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># monitor session 1 source interface GigabitEthernet0/1 - 10 both</span>
+<span class="hljs-keyword">Switch</span>(config)<span class="hljs-meta"># monitor session 1 destination interface GigabitEthernet0/24</span>
+</code></pre>
+<h3 id="ids-ips-signatures-and-rules">IDS/IPS Signatures and Rules</h3>
+<p><strong>Snort (open-source IDS/IPS):</strong></p>
+<pre><code># Snort rule format:
+action protocol src_ip src_port direction dst_ip dst_port (options)
+
+alert tcp any any -&gt; any <span class="hljs-number">80</span> (msg:<span class="hljs-string">"HTTP request"</span>; <span class="hljs-attribute">content</span>:<span class="hljs-string">"GET"</span>; sid:<span class="hljs-number">1000001</span>;)
+alert tcp <span class="hljs-variable">$EXTERNAL_NET</span> any -&gt; <span class="hljs-variable">$HOME_NET</span> 22 (msg:<span class="hljs-string">"SSH Brute Force"</span>; threshold:type threshold, track by_src, count <span class="hljs-number">5</span>, seconds <span class="hljs-number">60</span>; sid:<span class="hljs-number">1000002</span>;)
+alert udp any any -&gt; any 53 (msg:<span class="hljs-string">"DNS query to external"</span>; <span class="hljs-attribute">content</span>:<span class="hljs-string">"|00 01 00 00 00 00 00 00|"</span>; sid:<span class="hljs-number">1000003</span>;)
+
+# Drop (IPS mode)
+drop tcp any any -&gt; any 23 (msg:<span class="hljs-string">"Telnet blocked"</span>; sid:<span class="hljs-number">1000004</span>;)
+</code></pre><hr>
+<h2 id="8-6-network-hardening">8.6 Network Hardening</h2>
+<h3 id="device-hardening-checklist">Device Hardening Checklist</h3>
+<pre><code class="lang-cisco">! Disable unused services
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no cdp run                     ! Disable CDP globally (or per interface)</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no ip http server              ! Disable HTTP management</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no ip http secure-server       ! Disable HTTPS (<span class="hljs-meta-keyword">if</span> not needed)</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no service finger</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no ip bootp server</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no service pad</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no ip source-route</span>
+
+! Secure management
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># service password-encryption    ! Encrypt passwords in config</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># security passwords min-length 12</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># enable secret Str0ng-En4ble    ! Use secret (MD5), not password (plaintext)</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># username admin privilege 15 secret Str0ng-Admin</span>
+
+! Secure SNMP
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no snmp-server community public</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># no snmp-server community private</span>
+
+! Secure console and VTY
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># <span class="hljs-meta-keyword">line</span> console 0</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># login local</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># exec-timeout 5 0         ! Timeout after 5 minutes</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># logging synchronous</span>
+
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># <span class="hljs-meta-keyword">line</span> vty 0 15</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># login local</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># transport input ssh      ! Only allow SSH, not Telnet</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># exec-timeout 5 0</span>
+Router(<span class="hljs-built_in">config</span>-<span class="hljs-built_in">line</span>)<span class="hljs-meta"># access-class MGMT-ONLY in</span>
+
+! SSH configuration
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip domain-name example.com</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># crypto key generate rsa modulus 4096</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip ssh version 2</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip ssh time-out 60</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip ssh authentication-retries 3</span>
+
+! Management ACL
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># ip access-list standard MGMT-ONLY</span>
+Router(<span class="hljs-built_in">config</span>-std-nacl)<span class="hljs-meta"># permit 192.168.100.0 0.0.0.255   ! Management subnet only</span>
+Router(<span class="hljs-built_in">config</span>-std-nacl)<span class="hljs-meta"># deny any log</span>
+
+! Banners
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># banner motd # Unauthorized access is prohibited. #</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># banner login # Authorized users only. All access logged. #</span>
+
+! Logging
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging on</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging 192.168.1.200</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging trap informational</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># service timestamps log datetime msec</span>
+Router(<span class="hljs-built_in">config</span>)<span class="hljs-meta"># archive</span>
+Router(<span class="hljs-built_in">config</span>-archive)<span class="hljs-meta"># log config</span>
+Router(<span class="hljs-built_in">config</span>-archive-log-<span class="hljs-built_in">config</span>)<span class="hljs-meta"># logging enable</span>
+Router(<span class="hljs-built_in">config</span>-archive-log-<span class="hljs-built_in">config</span>)<span class="hljs-meta"># notify syslog</span>
+</code></pre>
+<hr>
+</body></html>
