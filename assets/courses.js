@@ -29946,41 +29946,5 @@ window.COURSES = [
         ]
       }
     ]
-  },
-
-  {
-    "id": "all",
-    "name": "All topics",
-    "section": "Full review",
-    "difficulty": "Difficulty: Expert",
-    "description": "A full guide for all topics and more covered in the guide.",
-    "emoji": "🌐",
-    "color": "#2672e4",
-    "units": [
-      {
-        "title": "HTML",
-        "items": [
-          {
-            "type": "lesson",
-            "id": "full-html-01",
-            "title": "What is HTML?",
-            "readTime": "5 min read"
-          },
-          {
-            "type": "lesson",
-            "id": "full-html-02",
-            "title": "HTML Elements, Tags, and Attributes",
-            "readTime": "10 min read"
-          },
-          {
-            "type": "lesson",
-            "id": "full-html-03",
-            "title": "HTML Content Elements and lists",
-            "readTime": "20 min read"
-          }
-        ],
-        
-      }
-    ]
   }
 ];
