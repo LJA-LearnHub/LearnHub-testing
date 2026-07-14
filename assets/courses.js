@@ -29946,5 +29946,2212 @@ window.COURSES = [
         ]
       }
     ]
+  },
+
+  {
+    "id": "study-guide",
+    "name": "Complete Study Guide",
+    "section": "Reference",
+    "difficulty": "Difficulty: Reference",
+    "description": "A complete, self-contained reference covering HTML, CSS, JavaScript, Python, SQL, Java, PowerShell, and CompTIA Tech+, Network+, Security+, PenTest+, and Linux+, broken into short focused chapters.",
+    "emoji": "📚",
+    "color": "#059669",
+    "units": [
+      {
+        "title": "Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-overview",
+            "title": "Overview & how to use this guide",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is HTML?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-01",
+            "title": "HTML: 1. What Is HTML?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. HTML Document Structure",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-02",
+            "title": "HTML: 2. HTML Document Structure",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. HTML Elements, Tags, and Attributes",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-03",
+            "title": "HTML: 3. HTML Elements, Tags, and Attributes",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Text Content Elements",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-04",
+            "title": "HTML: 4. Text Content Elements",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Lists",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-05",
+            "title": "HTML: 5. Lists",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Links and Navigation",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-06",
+            "title": "HTML: 6. Links and Navigation",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Images and Media",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-07",
+            "title": "HTML: 7. Images and Media",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Tables",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-08",
+            "title": "HTML: 8. Tables",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Forms",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-09",
+            "title": "HTML: 9. Forms",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Semantic HTML5 Elements",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-10",
+            "title": "HTML: 10. Semantic HTML5 Elements",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. Div and Span (Non-Semantic Containers)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-11",
+            "title": "HTML: 11. Div and Span (Non-Semantic Containers)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. HTML Metadata and the <head>",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-12",
+            "title": "HTML: 12. HTML Metadata and the <head>",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. HTML Entities and Special Characters",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-13",
+            "title": "HTML: 13. HTML Entities and Special Characters",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Accessibility (A11y)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-14",
+            "title": "HTML: 14. Accessibility (A11y)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. HTML Comments and Best Practices",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-15",
+            "title": "HTML: 15. HTML Comments and Best Practices",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. HTML5 APIs Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-16",
+            "title": "HTML: 16. HTML5 APIs Overview",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "17. Common HTML Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-html-17",
+            "title": "HTML: 17. Common HTML Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is CSS?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-01",
+            "title": "CSS: 1. What Is CSS?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Adding CSS to HTML",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-02",
+            "title": "CSS: 2. Adding CSS to HTML",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. CSS Syntax",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-03",
+            "title": "CSS: 3. CSS Syntax",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Selectors (The Core of CSS)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-04",
+            "title": "CSS: 4. Selectors (The Core of CSS)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. The Cascade, Specificity, and Inheritance",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-05",
+            "title": "CSS: 5. The Cascade, Specificity, and Inheritance",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. The Box Model",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-06",
+            "title": "CSS: 6. The Box Model",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Display Property",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-07",
+            "title": "CSS: 7. Display Property",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Flexbox (1-Dimensional Layout)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-08",
+            "title": "CSS: 8. Flexbox (1-Dimensional Layout)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. CSS Grid (2-Dimensional Layout)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-09",
+            "title": "CSS: 9. CSS Grid (2-Dimensional Layout)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. CSS Positioning",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-10",
+            "title": "CSS: 10. CSS Positioning",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. Typography",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-11",
+            "title": "CSS: 11. Typography",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Colors and Backgrounds",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-12",
+            "title": "CSS: 12. Colors and Backgrounds",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Shadows and Filters",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-13",
+            "title": "CSS: 13. Shadows and Filters",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. CSS Transitions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-14",
+            "title": "CSS: 14. CSS Transitions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. CSS Animations",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-15",
+            "title": "CSS: 15. CSS Animations",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. CSS Variables (Custom Properties)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-16",
+            "title": "CSS: 16. CSS Variables (Custom Properties)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "17. Responsive Design and Media Queries",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-17",
+            "title": "CSS: 17. Responsive Design and Media Queries",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "18. CSS Architecture Patterns",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-18",
+            "title": "CSS: 18. CSS Architecture Patterns",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "19. Common CSS Patterns and Tricks",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-19",
+            "title": "CSS: 19. Common CSS Patterns and Tricks",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "20. CSS Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-css-20",
+            "title": "CSS: 20. CSS Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is JavaScript?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-01",
+            "title": "JavaScript (JS): 1. What Is JavaScript?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Including JavaScript",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-02",
+            "title": "JavaScript (JS): 2. Including JavaScript",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Variables",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-03",
+            "title": "JavaScript (JS): 3. Variables",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Data Types",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-04",
+            "title": "JavaScript (JS): 4. Data Types",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Strings",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-05",
+            "title": "JavaScript (JS): 5. Strings",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Numbers and Math",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-06",
+            "title": "JavaScript (JS): 6. Numbers and Math",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Operators",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-07",
+            "title": "JavaScript (JS): 7. Operators",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Control Flow",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-08",
+            "title": "JavaScript (JS): 8. Control Flow",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-09",
+            "title": "JavaScript (JS): 9. Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Arrays",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-10",
+            "title": "JavaScript (JS): 10. Arrays",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. Objects",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-11",
+            "title": "JavaScript (JS): 11. Objects",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Classes",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-12",
+            "title": "JavaScript (JS): 12. Classes",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Destructuring and Spread (Advanced)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-13",
+            "title": "JavaScript (JS): 13. Destructuring and Spread (Advanced)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Promises and Async/Await",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-14",
+            "title": "JavaScript (JS): 14. Promises and Async/Await",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Error Handling",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-15",
+            "title": "JavaScript (JS): 15. Error Handling",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. DOM Manipulation",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-16",
+            "title": "JavaScript (JS): 16. DOM Manipulation",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "17. Events",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-17",
+            "title": "JavaScript (JS): 17. Events",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "18. Fetch API and HTTP Requests",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-18",
+            "title": "JavaScript (JS): 18. Fetch API and HTTP Requests",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "19. Web Storage",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-19",
+            "title": "JavaScript (JS): 19. Web Storage",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "20. Modules (ES Modules)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-20",
+            "title": "JavaScript (JS): 20. Modules (ES Modules)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "21. Iterators and Generators",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-21",
+            "title": "JavaScript (JS): 21. Iterators and Generators",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "22. Common Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-js-22",
+            "title": "JavaScript (JS): 22. Common Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is Python?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-01",
+            "title": "Python: 1. What Is Python?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Python Setup and Running Code",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-02",
+            "title": "Python: 2. Python Setup and Running Code",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Variables and Data Types",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-03",
+            "title": "Python: 3. Variables and Data Types",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Numbers",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-04",
+            "title": "Python: 4. Numbers",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Strings",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-05",
+            "title": "Python: 5. Strings",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Lists",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-06",
+            "title": "Python: 6. Lists",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Tuples",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-07",
+            "title": "Python: 7. Tuples",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Dictionaries",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-08",
+            "title": "Python: 8. Dictionaries",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Sets",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-09",
+            "title": "Python: 9. Sets",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Control Flow",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-10",
+            "title": "Python: 10. Control Flow",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-11",
+            "title": "Python: 11. Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Object-Oriented Programming",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-12",
+            "title": "Python: 12. Object-Oriented Programming",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. File I/O",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-13",
+            "title": "Python: 13. File I/O",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Exception Handling",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-14",
+            "title": "Python: 14. Exception Handling",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Iterators, Generators, and Comprehensions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-15",
+            "title": "Python: 15. Iterators, Generators, and Comprehensions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. Common Built-in Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-16",
+            "title": "Python: 16. Common Built-in Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "17. Python Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-python-17",
+            "title": "Python: 17. Python Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is SQL?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-01",
+            "title": "SQL: 1. What Is SQL?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Database Concepts",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-02",
+            "title": "SQL: 2. Database Concepts",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Data Types",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-03",
+            "title": "SQL: 3. Data Types",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. DDL — Data Definition Language",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-04",
+            "title": "SQL: 4. DDL — Data Definition Language",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. DML — Data Manipulation Language",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-05",
+            "title": "SQL: 5. DML — Data Manipulation Language",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. JOINs",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-06",
+            "title": "SQL: 6. JOINs",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Aggregate Functions and GROUP BY",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-07",
+            "title": "SQL: 7. Aggregate Functions and GROUP BY",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Subqueries",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-08",
+            "title": "SQL: 8. Subqueries",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Common Table Expressions (CTEs)",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-09",
+            "title": "SQL: 9. Common Table Expressions (CTEs)",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Window Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-10",
+            "title": "SQL: 10. Window Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. String Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-11",
+            "title": "SQL: 11. String Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Date and Time Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-12",
+            "title": "SQL: 12. Date and Time Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Transactions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-13",
+            "title": "SQL: 13. Transactions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Views",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-14",
+            "title": "SQL: 14. Views",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Stored Procedures and Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-15",
+            "title": "SQL: 15. Stored Procedures and Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. Performance and Query Optimization",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-16",
+            "title": "SQL: 16. Performance and Query Optimization",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "17. Advanced SQL Concepts",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-17",
+            "title": "SQL: 17. Advanced SQL Concepts",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "18. SQL Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-sql-18",
+            "title": "SQL: 18. SQL Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is Java?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-01",
+            "title": "Java: 1. What Is Java?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Java Basics",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-02",
+            "title": "Java: 2. Java Basics",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Variables and Primitive Types",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-03",
+            "title": "Java: 3. Variables and Primitive Types",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Strings",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-04",
+            "title": "Java: 4. Strings",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Arrays",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-05",
+            "title": "Java: 5. Arrays",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Control Flow",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-06",
+            "title": "Java: 6. Control Flow",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Methods",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-07",
+            "title": "Java: 7. Methods",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Object-Oriented Programming",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-08",
+            "title": "Java: 8. Object-Oriented Programming",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Generics",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-09",
+            "title": "Java: 9. Generics",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Collections Framework",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-10",
+            "title": "Java: 10. Collections Framework",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. Streams API",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-11",
+            "title": "Java: 11. Streams API",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Exception Handling",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-12",
+            "title": "Java: 12. Exception Handling",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Functional Interfaces and Lambdas",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-13",
+            "title": "Java: 13. Functional Interfaces and Lambdas",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Optional",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-14",
+            "title": "Java: 14. Optional",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Multithreading Basics",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-15",
+            "title": "Java: 15. Multithreading Basics",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. Java Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-java-16",
+            "title": "Java: 16. Java Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. What Is PowerShell?",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-01",
+            "title": "PowerShell: 1. What Is PowerShell?",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. PowerShell Basics",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-02",
+            "title": "PowerShell: 2. PowerShell Basics",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Cmdlet Naming Convention",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-03",
+            "title": "PowerShell: 3. Cmdlet Naming Convention",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Variables",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-04",
+            "title": "PowerShell: 4. Variables",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Data Types and Strings",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-05",
+            "title": "PowerShell: 5. Data Types and Strings",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Numbers and Math",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-06",
+            "title": "PowerShell: 6. Numbers and Math",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Arrays and Collections",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-07",
+            "title": "PowerShell: 7. Arrays and Collections",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Control Flow",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-08",
+            "title": "PowerShell: 8. Control Flow",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Functions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-09",
+            "title": "PowerShell: 9. Functions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. The Pipeline",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-10",
+            "title": "PowerShell: 10. The Pipeline",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. File System and I/O",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-11",
+            "title": "PowerShell: 11. File System and I/O",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Process and Service Management",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-12",
+            "title": "PowerShell: 12. Process and Service Management",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Error Handling",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-13",
+            "title": "PowerShell: 13. Error Handling",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Remoting",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-14",
+            "title": "PowerShell: 14. Remoting",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Modules and Scripts",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-15",
+            "title": "PowerShell: 15. Modules and Scripts",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. Common Administrative Tasks",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-16",
+            "title": "PowerShell: 16. Common Administrative Tasks",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "17. PowerShell Interview Questions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-powershell-17",
+            "title": "PowerShell: 17. PowerShell Interview Questions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. Exam Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-01",
+            "title": "CompTIA Tech+ (FC0-U71): 1. Exam Overview",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Domain 1: IT Concepts and Terminology",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-02",
+            "title": "CompTIA Tech+ (FC0-U71): 2. Domain 1: IT Concepts and Terminology",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Domain 2: Infrastructure",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-03",
+            "title": "CompTIA Tech+ (FC0-U71): 3. Domain 2: Infrastructure",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Domain 3: Applications and Software",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-04",
+            "title": "CompTIA Tech+ (FC0-U71): 4. Domain 3: Applications and Software",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Domain 4: Software Development Concepts",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-05",
+            "title": "CompTIA Tech+ (FC0-U71): 5. Domain 4: Software Development Concepts",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Domain 5: Database Fundamentals",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-06",
+            "title": "CompTIA Tech+ (FC0-U71): 6. Domain 5: Database Fundamentals",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Domain 6: Security",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-07",
+            "title": "CompTIA Tech+ (FC0-U71): 7. Domain 6: Security",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Quick Review: Key Terms",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-techplus-08",
+            "title": "CompTIA Tech+ (FC0-U71): 8. Quick Review: Key Terms",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. Exam Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-01",
+            "title": "CompTIA Network+ (N10-009): 1. Exam Overview",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. The OSI Model",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-02",
+            "title": "CompTIA Network+ (N10-009): 2. The OSI Model",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. TCP/IP Model",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-03",
+            "title": "CompTIA Network+ (N10-009): 3. TCP/IP Model",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. IP Addressing",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-04",
+            "title": "CompTIA Network+ (N10-009): 4. IP Addressing",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Network Ports and Protocols",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-05",
+            "title": "CompTIA Network+ (N10-009): 5. Network Ports and Protocols",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. DNS",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-06",
+            "title": "CompTIA Network+ (N10-009): 6. DNS",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. DHCP",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-07",
+            "title": "CompTIA Network+ (N10-009): 7. DHCP",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Network Devices Deep Dive",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-08",
+            "title": "CompTIA Network+ (N10-009): 8. Network Devices Deep Dive",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Wireless Networking",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-09",
+            "title": "CompTIA Network+ (N10-009): 9. Wireless Networking",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Routing",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-10",
+            "title": "CompTIA Network+ (N10-009): 10. Routing",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. WAN Technologies",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-11",
+            "title": "CompTIA Network+ (N10-009): 11. WAN Technologies",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Network Security",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-12",
+            "title": "CompTIA Network+ (N10-009): 12. Network Security",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Network Operations",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-13",
+            "title": "CompTIA Network+ (N10-009): 13. Network Operations",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Troubleshooting Tools",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-14",
+            "title": "CompTIA Network+ (N10-009): 14. Troubleshooting Tools",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Cabling and Physical Layer",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-15",
+            "title": "CompTIA Network+ (N10-009): 15. Cabling and Physical Layer",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. Network+ Quick Reference",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-networkplus-16",
+            "title": "CompTIA Network+ (N10-009): 16. Network+ Quick Reference",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. Exam Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-01",
+            "title": "CompTIA Security+ (SY0-701): 1. Exam Overview",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Domain 1: General Security Concepts",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-02",
+            "title": "CompTIA Security+ (SY0-701): 2. Domain 1: General Security Concepts",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Domain 2: Threats, Vulnerabilities, and Mitigations",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-03",
+            "title": "CompTIA Security+ (SY0-701): 3. Domain 2: Threats, Vulnerabilities, and Mitigations",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Domain 3: Security Architecture",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-04",
+            "title": "CompTIA Security+ (SY0-701): 4. Domain 3: Security Architecture",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Domain 4: Security Operations",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-05",
+            "title": "CompTIA Security+ (SY0-701): 5. Domain 4: Security Operations",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Domain 5: Security Program Management",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-06",
+            "title": "CompTIA Security+ (SY0-701): 6. Domain 5: Security Program Management",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Security+ Quick Reference",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-securityplus-07",
+            "title": "CompTIA Security+ (SY0-701): 7. Security+ Quick Reference",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. Exam Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-01",
+            "title": "CompTIA PenTest+ (PT0-003): 1. Exam Overview",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Domain 1: Engagement Management",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-02",
+            "title": "CompTIA PenTest+ (PT0-003): 2. Domain 1: Engagement Management",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Domain 2: Reconnaissance and Enumeration",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-03",
+            "title": "CompTIA PenTest+ (PT0-003): 3. Domain 2: Reconnaissance and Enumeration",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. Domain 3: Vulnerability Discovery and Analysis",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-04",
+            "title": "CompTIA PenTest+ (PT0-003): 4. Domain 3: Vulnerability Discovery and Analysis",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Domain 4: Attacks and Exploits",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-05",
+            "title": "CompTIA PenTest+ (PT0-003): 5. Domain 4: Attacks and Exploits",
+            "readTime": "5 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Domain 5: Reporting and Communication",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-06",
+            "title": "CompTIA PenTest+ (PT0-003): 6. Domain 5: Reporting and Communication",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Domain 6: Tools and Code Analysis",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-07",
+            "title": "CompTIA PenTest+ (PT0-003): 7. Domain 6: Tools and Code Analysis",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. PenTest+ Key Concepts Summary",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-pentestplus-08",
+            "title": "CompTIA PenTest+ (PT0-003): 8. PenTest+ Key Concepts Summary",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "1. Exam Overview",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-01",
+            "title": "CompTIA Linux+ (XK0-005): 1. Exam Overview",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "2. Linux Fundamentals",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-02",
+            "title": "CompTIA Linux+ (XK0-005): 2. Linux Fundamentals",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "3. Command Line Essentials",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-03",
+            "title": "CompTIA Linux+ (XK0-005): 3. Command Line Essentials",
+            "readTime": "4 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "4. User and Group Management",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-04",
+            "title": "CompTIA Linux+ (XK0-005): 4. User and Group Management",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "5. Permissions",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-05",
+            "title": "CompTIA Linux+ (XK0-005): 5. Permissions",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "6. Package Management",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-06",
+            "title": "CompTIA Linux+ (XK0-005): 6. Package Management",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "7. Process Management",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-07",
+            "title": "CompTIA Linux+ (XK0-005): 7. Process Management",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "8. Systemd and Services",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-08",
+            "title": "CompTIA Linux+ (XK0-005): 8. Systemd and Services",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "9. Networking",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-09",
+            "title": "CompTIA Linux+ (XK0-005): 9. Networking",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "10. Storage and File Systems",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-10",
+            "title": "CompTIA Linux+ (XK0-005): 10. Storage and File Systems",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "11. SSH and Remote Access",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-11",
+            "title": "CompTIA Linux+ (XK0-005): 11. SSH and Remote Access",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "12. Security Hardening",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-12",
+            "title": "CompTIA Linux+ (XK0-005): 12. Security Hardening",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "13. Bash Scripting",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-13",
+            "title": "CompTIA Linux+ (XK0-005): 13. Bash Scripting",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "14. Containers and Automation",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-14",
+            "title": "CompTIA Linux+ (XK0-005): 14. Containers and Automation",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "15. Linux+ Troubleshooting Commands",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-15",
+            "title": "CompTIA Linux+ (XK0-005): 15. Linux+ Troubleshooting Commands",
+            "readTime": "3 min read"
+          }
+        ]
+      },
+
+      {
+        "title": "16. Linux+ Quick Reference",
+        "items": [
+          {
+            "type": "lesson",
+            "id": "study-guide-linuxplus-16",
+            "title": "CompTIA Linux+ (XK0-005): 16. Linux+ Quick Reference",
+            "readTime": "3 min read"
+          }
+        ]
+      }
+    ]
   }
 ];

